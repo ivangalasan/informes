@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Análisis de Conversión v2.1 — Grupo Aspasia</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js">
+
+// ---- showCohort ----
+function showCohort(id, el) {
+  document.querySelectorAll('.cohort-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.cohort-panel').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('cohort-' + id).classList.add('active');
+}
+
+// ---- REBOTE ----
+const reboteData = [
+  {name:'Docencia FP para el empleo',n:454,nota:'Máximo rebote del site. Revisar CTA, precio visible y velocidad mobile.'},
+  {name:'Agentes del cambio',n:284,nota:'Curso nuevo/reciente — revisar si el contenido está completo.'},
+  {name:'Aten. sociosanitaria domicilio',n:215,nota:'Alto rebote pese a ser de los más solicitados globalmente.'},
+  {name:'Gestión administrativa',n:185,nota:'Alta demanda pero baja conversión en entrada directa. Revisar formulario.'},
+  {name:'Vigilancia seg. privada personas',n:184,nota:'Nicho específico — revisar si el público está bien descrito.'},
+  {name:'Habilitación docencia FP (A-B-C)',n:181,nota:'Alta intención — revisar velocidad de carga en mobile.'},
+  {name:'Nóminas y Seg. Social I',n:172,nota:'Buen curso globalmente — revisar first-fold y CTA visible.'},
+  {name:'Gestión llamadas teleasistencia',n:159,nota:'Buen curso — revisar si precio es visible sin scroll.'},
+  {name:'Amadeus',n:134,nota:'Alta demanda — revisar si la modalidad está clara desde arriba.'},
+  {name:'Transporte sanitario',n:133,nota:'Revisar diferenciación con otros cursos sanitarios del catálogo.'},
+  {name:'Atención alumnado NEE',n:114,nota:'Público docente específico — revisar si la descripción conecta.'},
+  {name:'Aten. sociosanitaria instituciones',n:111,nota:'Revisar diferenciación con la ficha de atención domicilio.'},
+  {name:'Monitor de tiempo libre',n:111,nota:'Revisar claridad del perfil destinatario en la ficha.'},
+  {name:'Inglés B2',n:97,nota:'Nivel avanzado — puede haber desajuste de expectativa.'},
+  {name:'Inglés A1',n:97,nota:'Curso de alta demanda con rebote notable. Revisar CTA.'},
+  {name:'Acreditación docente e-learning',n:88,nota:'Revisar si el término "acreditación" genera confusión.'},
+  {name:'Gestión integrada RRHH',n:85,nota:'Revisar diferenciación con otros cursos de RRHH del catálogo.'},
+  {name:'Interpretación de planos',n:85,nota:'Nicho técnico — revisar si el temario detallado está visible.'},
+  {name:'Op. aux. servicios administrativos',n:82,nota:'Título poco descriptivo — revisar si el usuario entiende el contenido.'},
+  {name:'Lengua de signos',n:79,nota:'Nicho específico — revisar salidas profesionales visibles.'},
+  {name:'Inglés B1',n:77,nota:'Revisar si el nivel está bien comunicado vs inglés A1 y B2.'},
+  {name:'Repostería',n:77,nota:'Revisar duración y modalidad visibles desde arriba.'},
+  {name:'Actividades aux. de almacén',n:75,nota:'Revisar visibilidad del CTA en mobile.'},
+  {name:'Planif. dirección y gestión seguridad',n:71,nota:'Título largo — revisar si el beneficio del curso está claro.'},
+  {name:'Análisis datos Excel y Power BI',n:69,nota:'Título técnico — revisar si el nivel requerido está especificado.'},
+  {name:'Dinamización act. tiempo libre',n:64,nota:'Revisar si la modalidad (online/presencial) está destacada.'},
+  {name:'IA aplicada a la empresa',n:62,nota:'Temática trending — revisar nivel y docente bien comunicados.'},
+  {name:'Formación de formadores e-learning',n:59,nota:'Revisar diferenciación con otros cursos de formadores.'},
+  {name:'Inglés C1',n:57,nota:'Nivel alto — revisar si los requisitos previos están claros.'},
+  {name:'Inserción laboral discapacidad',n:52,nota:'Revisar si la descripción conecta con empresa/RRHH.'},
+];
+
+function initRebote() {
+  if (document.getElementById('chartRebote')._inited) return;
+  document.getElementById('chartRebote')._inited = true;
+  const labels = reboteData.map(d => d.name);
+  const values = reboteData.map(d => d.n);
+  const colors = values.map((v,i) => i===0?'#001F78':i<=2?'#2B88D8':i<=6?'#7685AF':'#B4B4B4');
+  new Chart(document.getElementById('chartRebote').getContext('2d'), {
+    type:'bar',
+    data:{labels,datasets:[{data:values,backgroundColor:colors,borderRadius:4}]},
+    options:{
+      indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.raw} rebotes`}}},
+      scales:{
+        x:{grid:{color:'rgba(0,31,120,0.06)'},ticks:{color:'#7685AF',font:{family:'Inter',size:11}}},
+        y:{grid:{display:false},ticks:{color:'#3a4a7a',font:{family:'Inter',size:11},autoSkip:false}}
+      }
+    }
+  });
+  const tbody = document.getElementById('reboteTableBody');
+  reboteData.forEach((d,i) => {
+    const color = i===0?'b-red':i<=2?'b-red':i<=6?'b-blue':'b-gray';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td style="color:var(--text3);font-size:12px;">${i+1}</td><td style="font-size:13px;color:var(--text2);">${d.name}</td><td class="num" style="text-align:right;">${d.n}</td><td style="font-size:12px;color:var(--text3);">${d.nota}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+// ---- SANKEY ----
+const nodeColors = {
+  ficha:'#1a7a45',home:'#001F78',destinatario:'#856404',tipo_curso:'#1e40af',
+  temática:'#6b21a8',organismo:'#155e75','categoría':'#9d174d',listado:'#5b21b6',
+  centro:'#854d0e',ciudad:'#166534',otros:'#475569'
+};
+
+function drawSankey(canvasId, transitions, isConv) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas || canvas._inited) return;
+  canvas._inited = true;
+  const W = canvas.parentElement.clientWidth - 40;
+  const H = 420;
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext('2d');
+
+  const col0 = ['home','organismo','otros'];
+  const col1 = ['destinatario','tipo_curso','temática','categoría','listado','centro','ciudad'];
+  const col2 = ['ficha'];
+  const nodeW = 90, nodeH = 18;
+  const colX = [20, W/2 - nodeW/2, W - nodeW - 20];
+
+  function getY(node) {
+    const cols = [col0,col1,col2];
+    for (let ci=0;ci<cols.length;ci++){
+      const idx = cols[ci].indexOf(node);
+      if(idx>=0){ const sp=H/(cols[ci].length+1); return sp*(idx+1); }
+    }
+    return H/2;
+  }
+  function getColIdx(node){ return col0.includes(node)?0:col2.includes(node)?2:1; }
+  function getX(node){ return colX[getColIdx(node)]; }
+
+  const total = Object.values(transitions).reduce((a,b)=>a+b,0);
+  const maxFlow = Math.max(...Object.values(transitions));
+
+  // Draw connections
+  Object.entries(transitions).forEach(([key,val])=>{
+    const [src,tgt] = key.split('|');
+    if(!getX(src) && getX(src)!==0) return;
+    const x1=getX(src)+nodeW, y1=getY(src);
+    const x2=getX(tgt), y2=getY(tgt);
+    const lw=Math.max(1.5,(val/maxFlow)*18);
+    const alpha=Math.min(0.75,0.1+(val/maxFlow)*0.65);
+    ctx.beginPath();
+    ctx.moveTo(x1,y1);
+    ctx.bezierCurveTo((x1+x2)/2,y1,(x1+x2)/2,y2,x2,y2);
+    ctx.strokeStyle = isConv ? `rgba(26,122,69,${alpha})` : `rgba(255,127,122,${alpha})`;
+    ctx.lineWidth=lw;
+    ctx.stroke();
+
+    // % label on connection midpoint
+    const pct = Math.round(val/total*100);
+    if(pct>=3){
+      const mx=(x1+x2)/2, my=(y1+y2)/2;
+      ctx.save();
+      ctx.font='bold 10px Inter,system-ui';
+      ctx.textAlign='center';
+      ctx.textBaseline='middle';
+      ctx.fillStyle='rgba(0,0,0,0.55)';
+      const tw=ctx.measureText(pct+'%').width;
+      ctx.fillStyle='rgba(255,255,255,0.85)';
+      ctx.fillRect(mx-tw/2-2,my-7,tw+4,14);
+      ctx.fillStyle=isConv?'#1a7a45':'#c0392b';
+      ctx.fillText(pct+'%',mx,my);
+      ctx.restore();
+    }
+  });
+
+  // Draw nodes
+  [...col0,...col1,...col2].forEach(node=>{
+    const x=getX(node), y=getY(node);
+    const c=nodeColors[node]||'#475569';
+    ctx.fillStyle=c;
+    ctx.beginPath();
+    if(ctx.roundRect){ ctx.roundRect(x,y-nodeH/2,nodeW,nodeH,4); }
+    else { ctx.rect(x,y-nodeH/2,nodeW,nodeH); }
+    ctx.fill();
+    ctx.fillStyle='#fff';
+    ctx.font='600 10px Inter,system-ui';
+    ctx.textAlign='center';
+    ctx.textBaseline='middle';
+    ctx.fillText(node,x+nodeW/2,y);
+  });
+}
+
+function initSankey() {
+  const transConv = {'destinatario|ficha':9904,'tipo_curso|ficha':9244,'ficha|tipo_curso':8071,'ficha|destinatario':7883,'organismo|ficha':5572,'ficha|organismo':4750,'categoría|ficha':4302,'home|destinatario':4209,'temática|ficha':3996,'listado|ficha':3809,'ciudad|ficha':3736,'ficha|categoría':3442,'ficha|temática':3282,'ficha|listado':3238,'ficha|ciudad':3121,'centro|ficha':2513,'home|ficha':1790};
+  const transNoConv = {'home|destinatario':3088,'destinatario|ficha':2924,'tipo_curso|ficha':2464,'ficha|destinatario':2199,'temática|ficha':2116,'ficha|tipo_curso':2077,'categoría|ficha':1732,'ficha|temática':1691,'organismo|ficha':1661,'ciudad|ficha':1555,'home|tipo_curso':1515,'ficha|categoría':1340,'ficha|organismo':1332,'centro|ficha':1276,'ficha|ciudad':1249,'home|ficha':1150};
+  drawSankey('sankeyConv',transConv,true);
+  drawSankey('sankeyNoConv',transNoConv,false);
+}
+
+function initCohorts() {
+  if (document.getElementById('chartCohorts')._inited) return;
+  document.getElementById('chartCohorts')._inited = true;
+  new Chart(document.getElementById('chartCohorts').getContext('2d'),{
+    type:'bar',
+    data:{
+      labels:['Organic Google','Direct','Paid Meta','ChatGPT','Bing','Google CPC'],
+      datasets:[
+        {label:'Págs/sesión CON lead',data:[6.0,6.4,4.3,3.6,7.6,8.3],backgroundColor:'#001F78',borderRadius:4,yAxisID:'y'},
+        {label:'Págs/sesión SIN lead',data:[2.3,2.4,2.3,1.9,2.5,2.4],backgroundColor:'#DDEFFF',borderRadius:4,yAxisID:'y'},
+        {label:'Tasa %',data:[10.1,11.9,16.5,23.0,7.6,10.2],type:'line',borderColor:'#FF7F7A',backgroundColor:'rgba(255,127,122,0.08)',borderWidth:2.5,pointBackgroundColor:'#FF7F7A',pointRadius:5,yAxisID:'y2',tension:0.3},
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},
+      scales:{
+        y:{position:'left',grid:{color:'rgba(0,31,120,0.06)'},ticks:{color:'#7685AF',font:{family:'Inter',size:11},callback:v=>v+' págs'}},
+        y2:{position:'right',grid:{display:false},ticks:{color:'#FF7F7A',font:{family:'Inter',size:11},callback:v=>v+'%'},min:0,max:30},
+        x:{grid:{display:false},ticks:{color:'#3a4a7a',font:{family:'Inter',size:12}}}
+      }
+    }
+  });
+}
+
+// Hook into showPage to lazy-init charts
+const _origShowPage = showPage;
+showPage = function(id, el) {
+  _origShowPage(id, el);
+  if (id==='rebote') initRebote();
+  if (id==='sankey') initSankey();
+  if (id==='cohortes') initCohorts();
+};
+
+</script>
+<style>
+:root{--blue:#001F78;--blue2:#2B88D8;--blue-light:#DDEFFF;--blue-pale:#F3F8FF;--salmon:#FF7F7A;--salmon-bg:#FFF0EF;--grey:#7685AF;--grey-dark:#616268;--bg:#FFFFFF;--bg2:#F3F8FF;--bg3:#DDEFFF;--text:#001F78;--text2:#3a4a7a;--text3:#7685AF;--border:rgba(0,31,120,0.10);--border2:rgba(0,31,120,0.18);--sans:'Inter',system-ui,sans-serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:15px;line-height:1.7;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,0.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--border2);display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:58px;}
+.nav-brand{font-size:15px;font-weight:700;color:var(--blue);letter-spacing:-0.01em;}
+.nav-brand span{color:var(--salmon);}
+.nav-links{display:flex;gap:2px;}
+.nav-links a{font-size:13px;color:var(--text3);text-decoration:none;padding:6px 13px;border-radius:6px;transition:all .15s;font-weight:500;}
+.nav-links a:hover{background:var(--bg2);color:var(--blue);}
+.nav-links a.active{background:var(--blue);color:#fff;}
+.nav-badge{font-size:11px;color:var(--text3);letter-spacing:0.05em;font-weight:500;}
+
+.page{display:none;padding-top:58px;min-height:100vh;}
+.page.active{display:block;animation:fadeIn .25s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.container{max-width:1080px;margin:0 auto;padding:52px 40px;}
+
+.hero{background:var(--blue);padding:68px 40px 56px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-120px;right:-80px;width:480px;height:480px;background:radial-gradient(circle,rgba(43,136,216,0.25) 0%,transparent 70%);pointer-events:none;}
+.hero::after{content:'';position:absolute;bottom:-60px;left:180px;width:360px;height:360px;background:radial-gradient(circle,rgba(255,127,122,0.12) 0%,transparent 70%);pointer-events:none;}
+.hero-inner{max-width:1080px;margin:0 auto;position:relative;}
+.hero-eyebrow{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--salmon);margin-bottom:16px;font-weight:600;}
+.hero-title{font-size:clamp(32px,5vw,50px);font-weight:700;line-height:1.1;color:#fff;margin-bottom:16px;letter-spacing:-0.02em;}
+.hero-title em{color:var(--salmon);font-style:normal;}
+.hero-sub{font-size:16px;color:rgba(255,255,255,0.60);max-width:580px;line-height:1.65;margin-bottom:40px;}
+.hero-meta{display:flex;gap:44px;flex-wrap:wrap;}
+.hero-stat-num{font-size:38px;font-weight:700;color:var(--salmon);letter-spacing:-0.02em;line-height:1;}
+.hero-stat-label{font-size:12px;color:rgba(255,255,255,0.45);margin-top:4px;font-weight:500;}
+
+.section-eyebrow{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue2);margin-bottom:10px;font-weight:600;}
+.section-title{font-size:clamp(22px,3.5vw,32px);font-weight:700;color:var(--blue);line-height:1.15;margin-bottom:12px;letter-spacing:-0.02em;}
+.section-desc{font-size:15px;color:var(--text2);max-width:680px;line-height:1.7;margin-bottom:32px;}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;}
+.kpi-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px;}
+.kpi-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:22px 20px;}
+.kpi-card.accent{background:var(--blue);}
+.kpi-card.accent .kpi-num{color:var(--salmon);}
+.kpi-card.accent .kpi-label,.kpi-card.accent .kpi-sub{color:rgba(255,255,255,0.60);}
+.kpi-num{font-size:34px;font-weight:700;color:var(--blue);line-height:1;margin-bottom:6px;letter-spacing:-0.02em;}
+.kpi-label{font-size:13px;color:var(--text2);font-weight:500;}
+.kpi-sub{font-size:11px;color:var(--text3);margin-top:4px;}
+
+.insight-box{background:var(--blue-pale);border:1px solid var(--border);border-left:3px solid var(--blue2);border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:20px;font-size:14px;color:var(--text2);line-height:1.65;}
+.insight-box strong{color:var(--blue);font-weight:600;}
+.insight-box.warn{background:var(--salmon-bg);border-left-color:var(--salmon);}
+.insight-box.warn strong{color:#c0392b;}
+
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:20px;}
+.chart-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:24px 20px;}
+.chart-card.full{grid-column:1/-1;}
+.chart-title{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:18px;}
+
+.bar-item{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.bar-label{font-size:13px;color:var(--text2);width:180px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.bar-label.wide{width:260px;}
+.bar-track{flex:1;background:var(--bg3);border-radius:3px;height:8px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:3px;}
+.bar-val{font-size:12px;color:var(--text3);width:52px;text-align:right;flex-shrink:0;}
+.bar-val.bold{color:var(--blue);font-weight:600;}
+
+.badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:600;white-space:nowrap;}
+.b-blue{background:var(--blue-light);color:var(--blue);}
+.b-blue2{background:rgba(43,136,216,0.12);color:var(--blue2);}
+.b-red{background:var(--salmon-bg);color:#c0392b;}
+.b-gray{background:#f0f0f0;color:var(--grey-dark);}
+.b-green{background:#e8f5ee;color:#1a7a45;}
+.b-amber{background:#fff8e1;color:#856404;}
+
+.data-table{width:100%;border-collapse:collapse;}
+.data-table th{font-size:11px;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);font-weight:600;padding:8px 12px;border-bottom:2px solid var(--border2);text-align:left;}
+.data-table td{font-size:13px;color:var(--text2);padding:10px 12px;border-bottom:1px solid var(--border);}
+.data-table tr:last-child td{border-bottom:none;}
+.data-table tr:hover td{background:var(--bg2);}
+.data-table td.num{font-weight:700;color:var(--blue);font-size:15px;}
+
+.rate-pill{display:inline-block;font-size:13px;font-weight:700;padding:3px 10px;border-radius:20px;}
+.rate-high{background:#e8f5ee;color:#1a7a45;}
+.rate-mid{background:var(--blue-light);color:var(--blue);}
+.rate-low{background:var(--salmon-bg);color:#c0392b;}
+.rate-vlow{background:#fde8e6;color:#8b1a1a;}
+
+.chart-controls{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.ctrl-btn{font-size:12px;padding:5px 12px;border-radius:6px;border:1px solid var(--border2);cursor:pointer;color:var(--text3);background:transparent;font-family:var(--sans);font-weight:500;transition:all .15s;}
+.ctrl-btn:hover{background:var(--bg2);color:var(--blue);}
+.ctrl-btn.active{background:var(--blue);color:#fff;border-color:var(--blue);}
+
+.journey-wrap{display:flex;flex-direction:column;gap:8px;}
+.journey-row{display:flex;align-items:center;gap:0;flex-wrap:wrap;}
+.journey-step{padding:5px 11px;border-radius:6px;font-size:12px;font-weight:600;white-space:nowrap;flex-shrink:0;}
+.journey-arrow{color:var(--text3);font-size:13px;padding:0 5px;flex-shrink:0;}
+.journey-count{font-size:11px;color:var(--text3);margin-left:auto;padding-left:12px;white-space:nowrap;}
+.step-ficha{background:#e8f5ee;color:#1a7a45;}
+.step-home{background:var(--blue-light);color:var(--blue);}
+.step-destinatario{background:#fff3cd;color:#856404;}
+.step-tematica{background:#f3e8ff;color:#6b21a8;}
+.step-categoria{background:#fce7f3;color:#9d174d;}
+.step-organismo{background:#ecfeff;color:#155e75;}
+.step-listado{background:#ede9fe;color:#5b21b6;}
+.step-tipo_curso{background:#dbeafe;color:#1e40af;}
+.step-centro{background:#fef9c3;color:#854d0e;}
+.step-ciudad{background:#dcfce7;color:#166534;}
+.step-otros{background:#f1f5f9;color:#475569;}
+
+.funnel-item{margin-bottom:14px;}
+.funnel-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;font-size:13px;}
+.funnel-label span:first-child{color:var(--text2);font-weight:500;}
+.funnel-label span:last-child{color:var(--text3);font-size:12px;}
+.funnel-track{background:var(--bg3);border-radius:4px;height:14px;overflow:hidden;}
+.funnel-fill{height:100%;border-radius:4px;}
+
+footer{background:var(--blue);color:rgba(255,255,255,0.40);padding:28px 40px;text-align:center;font-size:12px;}
+footer strong{color:rgba(255,255,255,0.75);}
+
+.scroll-top{position:fixed;bottom:24px;right:24px;width:38px;height:38px;border-radius:50%;background:var(--salmon);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;opacity:0;transition:opacity .3s;z-index:99;border:none;font-weight:700;box-shadow:0 2px 8px rgba(255,127,122,0.4);}
+.scroll-top.visible{opacity:1;}
+
+@media(max-width:768px){
+  nav{padding:0 16px;}
+  .nav-links{display:none;}
+  .container{padding:36px 16px;}
+  .hero{padding:52px 16px 36px;}
+  .kpi-grid,.kpi-grid-3{grid-template-columns:1fr 1fr;}
+  .chart-grid{grid-template-columns:1fr;}
+  .chart-card.full{grid-column:1;}
+  .bar-label,.bar-label.wide{width:130px;}
+}
+
+/* ---- NEW v2.1 STYLES ---- */
+.cohort-tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:16px;}
+.cohort-btn{font-size:12px;padding:5px 13px;border-radius:6px;border:1px solid var(--border2);cursor:pointer;color:var(--text3);background:transparent;font-family:var(--sans);font-weight:500;transition:all .15s;white-space:nowrap;}
+.cohort-btn:hover{background:var(--bg2);color:var(--blue);}
+.cohort-btn.active{background:var(--blue);color:#fff;border-color:var(--blue);}
+.cohort-panel{display:none;}
+.cohort-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.seq-row{display:flex;align-items:center;gap:0;flex-wrap:wrap;margin-bottom:8px;}
+.seq-step{padding:4px 10px;border-radius:6px;font-size:12px;font-weight:600;white-space:nowrap;flex-shrink:0;}
+.seq-arrow{color:var(--text3);font-size:13px;padding:0 4px;flex-shrink:0;}
+.seq-bar{height:6px;border-radius:3px;margin:3px 0 4px;background:var(--bg3);overflow:hidden;}
+.seq-bar-fill{height:100%;border-radius:3px;}
+.seq-meta{font-size:11px;color:var(--text3);margin-bottom:10px;}
+.sankey-wrap{display:flex;gap:18px;margin-bottom:20px;}
+.sankey-box{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:20px;overflow:hidden;}
+.sankey-label{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.sankey-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.legend-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2);}
+.legend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
+.b-amber{background:#fff8e1;color:#856404;}
+@media(max-width:768px){.cohort-panel.active{grid-template-columns:1fr;}.sankey-wrap{flex-direction:column;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">Grupo <span>Aspasia</span> · Conversión v2.1</div>
+  <div class="nav-links">
+    <a href="#" class="active" onclick="showPage('resumen',this)">Resumen</a>
+    <a href="#" onclick="showPage('tendencia',this)">Tendencia</a>
+    <a href="#" onclick="showPage('canales',this)">Canales</a>
+    <a href="#" onclick="showPage('recorrido',this)">Recorrido</a>
+    <a href="#" onclick="showPage('abandono',this)">Abandono</a>
+    <a href="#" onclick="showPage('cro',this)">CRO</a>
+    <a href="#" onclick="showPage('rebote',this)">Fichas · rebote</a>
+    <a href="#" onclick="showPage('sankey',this)">Sankey</a>
+    <a href="#" onclick="showPage('cohortes',this)">Cohortes</a>
+  </div>
+  <div class="nav-badge">Nov 2025 – Mar 2026 · generate_lead</div>
+</nav>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- RESUMEN -->
+<div class="page active" id="page-resumen">
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Grupo Aspasia · grupoaspasia.com · BigQuery GA4</div>
+      <h1 class="hero-title">Análisis de conversión <em>v2</em></h1>
+      <p class="hero-sub">26.408 sesiones con lead en 5 meses. Con recorrido completo de usuario, tendencia mensual y análisis de abandono paso a paso por primera vez.</p>
+      <div class="hero-meta">
+        <div><div class="hero-stat-num">26.408</div><div class="hero-stat-label">Leads · Nov 25 – Mar 26</div></div>
+        <div><div class="hero-stat-num">10,8%</div><div class="hero-stat-label">Tasa de conversión (marzo)</div></div>
+        <div><div class="hero-stat-num">60,2%</div><div class="hero-stat-label">Abandonan en el 1er paso</div></div>
+        <div><div class="hero-stat-num">23,0%</div><div class="hero-stat-label">Tasa ChatGPT — mejor canal</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="section-eyebrow">Principales hallazgos v2</div>
+    <h2 class="section-title">Lo nuevo respecto al v1</h2>
+    <p class="section-desc">Con el recorrido completo emergen patrones invisibles hasta ahora. El dato más relevante: el 30% de las sesiones sin lead terminan en una ficha de curso — el usuario llega, lee y se va sin convertir.</p>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-num">6.507</div>
+        <div class="kpi-label">Leads desde entrada directa a ficha</div>
+        <div class="kpi-sub">Patrón más frecuente con conversión</div>
+      </div>
+      <div class="kpi-card accent">
+        <div class="kpi-num">30,5%</div>
+        <div class="kpi-label">Sin lead terminan en ficha de curso</div>
+        <div class="kpi-sub">14.609 sesiones — mayor oportunidad CRO</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">37,1%</div>
+        <div class="kpi-label">Tasa de conv. en 1ª visita</div>
+        <div class="kpi-sub">Baja progresivamente en visitas posteriores</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">6.168</div>
+        <div class="kpi-label">Leads en enero — pico del periodo</div>
+        <div class="kpi-sub">+56% vs diciembre · inicio de año fuerte</div>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <strong>El patrón de conversión es claro:</strong> quien convierte visita una ficha de curso. El 80%+ de los journeys con lead pasan por una ficha antes del evento. La diferencia entre conversor y no conversor no está en si llegan a la ficha, sino en lo que ocurre cuando están en ella.
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart-card">
+        <div class="chart-title">Top secuencias · sesiones CON lead</div>
+        <div class="journey-wrap">
+          <div class="journey-row"><span class="journey-step step-ficha">ficha</span><span class="journey-count">6.507 sesiones</span></div>
+          <div class="journey-row"><span class="journey-step step-ficha">ficha</span><span class="journey-arrow">›</span><span class="journey-step step-ficha">ficha</span><span class="journey-count">2.564</span></div>
+          <div class="journey-row"><span class="journey-step step-home">home</span><span class="journey-arrow">›</span><span class="journey-step step-destinatario">destinatario</span><span class="journey-count">2.261</span></div>
+          <div class="journey-row"><span class="journey-step step-tematica">temática</span><span class="journey-arrow">›</span><span class="journey-step step-ficha">ficha</span><span class="journey-count">1.508</span></div>
+          <div class="journey-row"><span class="journey-step step-organismo">organismo</span><span class="journey-arrow">›</span><span class="journey-step step-ficha">ficha</span><span class="journey-count">1.055</span></div>
+          <div class="journey-row"><span class="journey-step step-listado">listado</span><span class="journey-arrow">›</span><span class="journey-step step-ficha">ficha</span><span class="journey-count">1.049</span></div>
+          <div class="journey-row"><span class="journey-step step-categoria">categoría</span><span class="journey-arrow">›</span><span class="journey-step step-ficha">ficha</span><span class="journey-count">1.030</span></div>
+          <div class="journey-row"><span class="journey-step step-tipo_curso">tipo_curso</span><span class="journey-arrow">›</span><span class="journey-step step-ficha">ficha</span><span class="journey-count">939</span></div>
+          <div class="journey-row"><span class="journey-step step-centro">centro</span><span class="journey-arrow">›</span><span class="journey-step step-ficha">ficha</span><span class="journey-count">756</span></div>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Top secuencias · sesiones SIN lead</div>
+        <div class="journey-wrap">
+          <div class="journey-row"><span class="journey-step step-ficha">ficha</span><span style="font-size:11px;color:var(--salmon);margin-left:6px;font-weight:600;">✕</span><span class="journey-count">9.055 sesiones</span></div>
+          <div class="journey-row"><span class="journey-step step-otros">otros</span><span style="font-size:11px;color:var(--salmon);margin-left:6px;font-weight:600;">✕</span><span class="journey-count">6.548</span></div>
+          <div class="journey-row"><span class="journey-step step-home">home</span><span class="journey-arrow">›</span><span class="journey-step step-destinatario">destinatario</span><span class="journey-count">2.118</span></div>
+          <div class="journey-row"><span class="journey-step step-tematica">temática</span><span style="font-size:11px;color:var(--salmon);margin-left:6px;font-weight:600;">✕</span><span class="journey-count">2.547</span></div>
+          <div class="journey-row"><span class="journey-step step-ficha">ficha</span><span class="journey-arrow">›</span><span class="journey-step step-ficha">ficha</span><span class="journey-count">1.289</span></div>
+          <div class="journey-row"><span class="journey-step step-tematica">temática</span><span class="journey-arrow">›</span><span class="journey-step step-ficha">ficha</span><span class="journey-count">1.274</span></div>
+          <div class="journey-row"><span class="journey-step step-home">home</span><span class="journey-arrow">›</span><span class="journey-step step-tipo_curso">tipo_curso</span><span class="journey-count">902</span></div>
+          <div class="journey-row"><span class="journey-step step-organismo">organismo</span><span class="journey-arrow">›</span><span class="journey-step step-ficha">ficha</span><span class="journey-count">815</span></div>
+          <div class="journey-row"><span class="journey-step step-home">home</span><span style="font-size:11px;color:var(--salmon);margin-left:6px;font-weight:600;">✕</span><span class="journey-count">1.995</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TENDENCIA -->
+<div class="page" id="page-tendencia">
+  <div class="container">
+    <div class="section-eyebrow">Evolución mensual</div>
+    <h2 class="section-title">Tendencia de leads · Nov 2025 – Mar 2026</h2>
+    <p class="section-desc">5 meses de datos de conversión. La tasa de conversión solo se puede calcular para marzo, el único mes con datos completos de sesiones sin lead.</p>
+
+    <div class="insight-box">
+      <strong>Enero 2026 fue el mejor mes del periodo</strong> con 6.168 leads, un 56% más que diciembre. Febrero se mantuvo fuerte (6.128) y marzo muestra ligera bajada (5.809), posiblemente por no estar completo en el export.
+    </div>
+
+    <div class="chart-controls" id="trendControls">
+      <button class="ctrl-btn active" onclick="filterTrend('todos',this)">Todos los canales</button>
+      <button class="ctrl-btn" onclick="filterTrend('Organic Google',this)">Organic Google</button>
+      <button class="ctrl-btn" onclick="filterTrend('Direct',this)">Direct</button>
+      <button class="ctrl-btn" onclick="filterTrend('Paid Meta',this)">Paid Meta</button>
+      <button class="ctrl-btn" onclick="filterTrend('ChatGPT',this)">ChatGPT</button>
+      <button class="ctrl-btn" onclick="filterTrend('Bing',this)">Bing</button>
+      <button class="ctrl-btn" onclick="filterTrend('Google CPC',this)">Google CPC</button>
+    </div>
+
+    <div class="chart-card full" style="margin-bottom:18px;">
+      <div class="chart-title">Leads por mes</div>
+      <div style="position:relative;height:260px;"><canvas id="chartLeads"></canvas></div>
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart-card">
+        <div class="chart-title">Mix de canales por mes · % del total</div>
+        <div style="position:relative;height:240px;"><canvas id="chartMix"></canvas></div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;font-size:11px;color:var(--text3);">
+          <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#001F78;display:inline-block;"></span>Organic Google</span>
+          <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#2B88D8;display:inline-block;"></span>Paid Meta</span>
+          <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#7685AF;display:inline-block;"></span>Direct</span>
+          <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#1a7a45;display:inline-block;"></span>ChatGPT</span>
+          <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#B4B4B4;display:inline-block;"></span>Bing</span>
+          <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#FF7F7A;display:inline-block;"></span>Google CPC</span>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Tasa de conversión por canal · marzo 2026</div>
+        <p style="font-size:12px;color:var(--text3);margin-bottom:14px;">Calculada con las 47.858 sesiones sin lead de marzo.</p>
+        <div class="bar-item"><span class="bar-label">ChatGPT</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:#1a7a45;"></div></div><span class="bar-val bold">23,0%</span></div>
+        <div class="bar-item"><span class="bar-label">Paid Meta</span><div class="bar-track"><div class="bar-fill" style="width:72%;background:#2B88D8;"></div></div><span class="bar-val bold">16,5%</span></div>
+        <div class="bar-item"><span class="bar-label">Direct</span><div class="bar-track"><div class="bar-fill" style="width:52%;background:#7685AF;"></div></div><span class="bar-val">11,9%</span></div>
+        <div class="bar-item"><span class="bar-label">Google CPC</span><div class="bar-track"><div class="bar-fill" style="width:44%;background:#B4B4B4;"></div></div><span class="bar-val">10,2%</span></div>
+        <div class="bar-item"><span class="bar-label">Organic Google</span><div class="bar-track"><div class="bar-fill" style="width:44%;background:#B4B4B4;"></div></div><span class="bar-val">10,1%</span></div>
+        <div class="bar-item"><span class="bar-label">Bing</span><div class="bar-track"><div class="bar-fill" style="width:33%;background:#FF7F7A;"></div></div><span class="bar-val">7,6%</span></div>
+      </div>
+    </div>
+
+    <div class="chart-card full">
+      <div class="chart-title">Leads por mes y canal · detalle</div>
+      <div style="overflow-x:auto;">
+        <table class="data-table">
+          <thead><tr><th>Mes</th><th style="text-align:right;">Organic Google</th><th style="text-align:right;">Direct</th><th style="text-align:right;">Paid Meta</th><th style="text-align:right;">ChatGPT</th><th style="text-align:right;">Bing</th><th style="text-align:right;">Google CPC</th><th style="text-align:right;">Otros</th><th style="text-align:right;">Total</th></tr></thead>
+          <tbody>
+            <tr><td>Nov 2025</td><td style="text-align:right;">2.351</td><td style="text-align:right;">909</td><td style="text-align:right;">597</td><td style="text-align:right;">178</td><td style="text-align:right;">77</td><td style="text-align:right;">169</td><td style="text-align:right;">84</td><td style="text-align:right;" class="num">4.365</td></tr>
+            <tr><td>Dic 2025</td><td style="text-align:right;">2.331</td><td style="text-align:right;">584</td><td style="text-align:right;">677</td><td style="text-align:right;">98</td><td style="text-align:right;">93</td><td style="text-align:right;">84</td><td style="text-align:right;">71</td><td style="text-align:right;" class="num">3.938</td></tr>
+            <tr><td>Ene 2026</td><td style="text-align:right;">3.948</td><td style="text-align:right;">919</td><td style="text-align:right;">759</td><td style="text-align:right;">197</td><td style="text-align:right;">111</td><td style="text-align:right;">64</td><td style="text-align:right;">170</td><td style="text-align:right;" class="num">6.168</td></tr>
+            <tr><td>Feb 2026</td><td style="text-align:right;">4.013</td><td style="text-align:right;">1.018</td><td style="text-align:right;">660</td><td style="text-align:right;">136</td><td style="text-align:right;">108</td><td style="text-align:right;">35</td><td style="text-align:right;">158</td><td style="text-align:right;" class="num">6.128</td></tr>
+            <tr><td>Mar 2026</td><td style="text-align:right;">3.886</td><td style="text-align:right;">881</td><td style="text-align:right;">435</td><td style="text-align:right;">149</td><td style="text-align:right;">93</td><td style="text-align:right;">75</td><td style="text-align:right;">290</td><td style="text-align:right;" class="num">5.809</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CANALES -->
+<div class="page" id="page-canales">
+  <div class="container">
+    <div class="section-eyebrow">Origen del tráfico</div>
+    <h2 class="section-title">Rendimiento por canal</h2>
+    <p class="section-desc">ChatGPT lidera con el 23% de tasa de conversión. Google CPC no supera al orgánico, lo que cuestiona la eficiencia de la inversión.</p>
+
+    <div class="kpi-grid-3">
+      <div class="kpi-card accent">
+        <div class="kpi-num">23,0%</div>
+        <div class="kpi-label">ChatGPT — mejor tasa</div>
+        <div class="kpi-sub">149 leads · 649 sesiones en marzo</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">16,5%</div>
+        <div class="kpi-label">Paid Meta — 2º mejor canal</div>
+        <div class="kpi-sub">435 leads · 2.642 sesiones en marzo</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">10,2%</div>
+        <div class="kpi-label">Google CPC — igual que orgánico</div>
+        <div class="kpi-sub">75 leads · 733 sesiones en marzo</div>
+      </div>
+    </div>
+
+    <div class="chart-card full" style="margin-bottom:20px;">
+      <div class="chart-title">Comparativa completa por canal · marzo 2026</div>
+      <table class="data-table">
+        <thead><tr><th>Canal</th><th style="text-align:right;">Leads</th><th style="text-align:right;">Sin lead</th><th style="text-align:right;">Total</th><th style="text-align:center;">Tasa</th><th>Nota</th></tr></thead>
+        <tbody>
+          <tr><td><span class="badge b-green">ChatGPT</span></td><td style="text-align:right;" class="num">149</td><td style="text-align:right;color:var(--text3);">500</td><td style="text-align:right;color:var(--text3);">649</td><td style="text-align:center;"><span class="rate-pill rate-high">23,0%</span></td><td style="font-size:12px;color:var(--text3);">Máxima tasa. Intención muy alta. Potenciar con contenido Q&A en fichas clave.</td></tr>
+          <tr><td><span class="badge b-blue2">Paid Meta</span></td><td style="text-align:right;" class="num">435</td><td style="text-align:right;color:var(--text3);">2.207</td><td style="text-align:right;color:var(--text3);">2.642</td><td style="text-align:center;"><span class="rate-pill rate-high">16,5%</span></td><td style="font-size:12px;color:var(--text3);">Buen rendimiento. Llegan a fichas concretas desde el anuncio — recorrido corto.</td></tr>
+          <tr><td><span class="badge b-gray">Direct</span></td><td style="text-align:right;" class="num">881</td><td style="text-align:right;color:var(--text3);">6.500</td><td style="text-align:right;color:var(--text3);">7.381</td><td style="text-align:center;"><span class="rate-pill rate-mid">11,9%</span></td><td style="font-size:12px;color:var(--text3);">2º en volumen. Mezcla tráfico de retorno y paid mal atribuido.</td></tr>
+          <tr><td><span class="badge b-gray">Organic Google</span></td><td style="text-align:right;" class="num">3.886</td><td style="text-align:right;color:var(--text3);">34.659</td><td style="text-align:right;color:var(--text3);">38.545</td><td style="text-align:center;"><span class="rate-pill rate-mid">10,1%</span></td><td style="font-size:12px;color:var(--text3);">Motor principal de volumen. Tasa estándar con recorrido largo de exploración.</td></tr>
+          <tr><td><span class="badge b-red">Google CPC</span></td><td style="text-align:right;" class="num">75</td><td style="text-align:right;color:var(--text3);">658</td><td style="text-align:right;color:var(--text3);">733</td><td style="text-align:center;"><span class="rate-pill rate-low">10,2%</span></td><td style="font-size:12px;color:var(--text3);">Igual que orgánico. El coste de adquisición no se justifica con esta tasa.</td></tr>
+          <tr><td><span class="badge b-gray">Bing</span></td><td style="text-align:right;" class="num">93</td><td style="text-align:right;color:var(--text3);">1.123</td><td style="text-align:right;color:var(--text3);">1.216</td><td style="text-align:center;"><span class="rate-pill rate-low">7,6%</span></td><td style="font-size:12px;color:var(--text3);">Perfil más informacional, menos decisor. Tasa más baja de todos los canales.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="insight-box warn">
+      <strong>Google CPC al 10,2% vs Organic al 10,1%.</strong> Prácticamente la misma tasa que el tráfico gratuito. Sin mejora en las landing pages de campaña, la inversión en CPC no añade eficiencia de conversión.
+    </div>
+
+    <div class="chart-card full">
+      <div class="chart-title">Segmentación por visitas previas · tasa de conversión</div>
+      <p style="font-size:12px;color:var(--text3);margin-bottom:18px;">Cuantas más visitas previas acumula el usuario, menor es su probabilidad de convertir. La primera visita es la más valiosa.</p>
+      <table class="data-table">
+        <thead><tr><th>Segmento</th><th style="text-align:right;">Con lead</th><th style="text-align:right;">Sin lead</th><th style="text-align:center;">Tasa</th><th>Lectura</th></tr></thead>
+        <tbody>
+          <tr><td>1ª visita</td><td style="text-align:right;" class="num">18.289</td><td style="text-align:right;color:var(--text3);">30.945</td><td style="text-align:center;"><span class="rate-pill rate-high">37,1%</span></td><td style="font-size:12px;color:var(--text3);">La primera visita es la que más convierte. El usuario llega con intención y decide en esa sesión.</td></tr>
+          <tr><td>3-5 visitas previas</td><td style="text-align:right;" class="num">2.849</td><td style="text-align:right;color:var(--text3);">5.089</td><td style="text-align:center;"><span class="rate-pill rate-mid">35,9%</span></td><td style="font-size:12px;color:var(--text3);">Usuarios en proceso de decisión activo. Alta intención.</td></tr>
+          <tr><td>2ª visita</td><td style="text-align:right;" class="num">3.520</td><td style="text-align:right;color:var(--text3);">7.618</td><td style="text-align:center;"><span class="rate-pill rate-mid">31,6%</span></td><td style="font-size:12px;color:var(--text3);">Segunda oportunidad. Todavía buen momento para convertir.</td></tr>
+          <tr><td>5+ visitas</td><td style="text-align:right;" class="num">1.568</td><td style="text-align:right;color:var(--text3);">4.046</td><td style="text-align:center;"><span class="rate-pill rate-low">27,9%</span></td><td style="font-size:12px;color:var(--text3);">Usuarios indecisos crónicos. Necesitan un empujón — urgencia, oferta o contacto directo.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- RECORRIDO -->
+<div class="page" id="page-recorrido">
+  <div class="container">
+    <div class="section-eyebrow">Journey de usuario</div>
+    <h2 class="section-title">El recorrido del usuario que convierte vs. el que abandona</h2>
+    <p class="section-desc">Comparación directa de patrones de navegación. Las transiciones revelan qué páginas actúan como puentes hacia la conversión y cuáles son callejones sin salida.</p>
+
+    <div class="insight-box">
+      <strong>La transición clave es ficha → ficha:</strong> 13.191 veces en journeys con lead. El usuario que convierte compara cursos dentro del catálogo antes de decidirse. En sin lead esta transición existe pero con mucha menor frecuencia relativa (3.838 veces).
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart-card">
+        <div class="chart-title">Top transiciones · CON lead</div>
+        <div class="bar-item"><span class="bar-label">ficha → ficha</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:#1a7a45;"></div></div><span class="bar-val bold">13.191</span></div>
+        <div class="bar-item"><span class="bar-label">destinatario → ficha</span><div class="bar-track"><div class="bar-fill" style="width:75%;background:#2B88D8;"></div></div><span class="bar-val">9.904</span></div>
+        <div class="bar-item"><span class="bar-label">tipo_curso → ficha</span><div class="bar-track"><div class="bar-fill" style="width:70%;background:#2B88D8;"></div></div><span class="bar-val">9.244</span></div>
+        <div class="bar-item"><span class="bar-label">ficha → tipo_curso</span><div class="bar-track"><div class="bar-fill" style="width:61%;background:#7685AF;"></div></div><span class="bar-val">8.071</span></div>
+        <div class="bar-item"><span class="bar-label">ficha → destinatario</span><div class="bar-track"><div class="bar-fill" style="width:60%;background:#7685AF;"></div></div><span class="bar-val">7.883</span></div>
+        <div class="bar-item"><span class="bar-label">organismo → ficha</span><div class="bar-track"><div class="bar-fill" style="width:42%;background:#7685AF;"></div></div><span class="bar-val">5.572</span></div>
+        <div class="bar-item"><span class="bar-label">categoría → ficha</span><div class="bar-track"><div class="bar-fill" style="width:33%;background:#B4B4B4;"></div></div><span class="bar-val">4.302</span></div>
+        <div class="bar-item"><span class="bar-label">home → destinatario</span><div class="bar-track"><div class="bar-fill" style="width:32%;background:#B4B4B4;"></div></div><span class="bar-val">4.209</span></div>
+        <div class="bar-item"><span class="bar-label">temática → ficha</span><div class="bar-track"><div class="bar-fill" style="width:30%;background:#B4B4B4;"></div></div><span class="bar-val">3.996</span></div>
+        <div class="bar-item"><span class="bar-label">listado → ficha</span><div class="bar-track"><div class="bar-fill" style="width:29%;background:#B4B4B4;"></div></div><span class="bar-val">3.809</span></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Top transiciones · SIN lead</div>
+        <div class="bar-item"><span class="bar-label">ficha → ficha</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:#FF7F7A;"></div></div><span class="bar-val bold">3.838</span></div>
+        <div class="bar-item"><span class="bar-label">otros → otros</span><div class="bar-track"><div class="bar-fill" style="width:83%;background:#FF7F7A;"></div></div><span class="bar-val">3.190</span></div>
+        <div class="bar-item"><span class="bar-label">home → destinatario</span><div class="bar-track"><div class="bar-fill" style="width:80%;background:#FFA8A4;"></div></div><span class="bar-val">3.088</span></div>
+        <div class="bar-item"><span class="bar-label">destinatario → ficha</span><div class="bar-track"><div class="bar-fill" style="width:76%;background:#FFA8A4;"></div></div><span class="bar-val">2.924</span></div>
+        <div class="bar-item"><span class="bar-label">tipo_curso → ficha</span><div class="bar-track"><div class="bar-fill" style="width:64%;background:#FFA8A4;"></div></div><span class="bar-val">2.464</span></div>
+        <div class="bar-item"><span class="bar-label">ficha → destinatario</span><div class="bar-track"><div class="bar-fill" style="width:57%;background:#FFA8A4;"></div></div><span class="bar-val">2.199</span></div>
+        <div class="bar-item"><span class="bar-label">temática → ficha</span><div class="bar-track"><div class="bar-fill" style="width:55%;background:#B4B4B4;"></div></div><span class="bar-val">2.116</span></div>
+        <div class="bar-item"><span class="bar-label">ficha → tipo_curso</span><div class="bar-track"><div class="bar-fill" style="width:54%;background:#B4B4B4;"></div></div><span class="bar-val">2.077</span></div>
+        <div class="bar-item"><span class="bar-label">categoría → ficha</span><div class="bar-track"><div class="bar-fill" style="width:45%;background:#B4B4B4;"></div></div><span class="bar-val">1.732</span></div>
+        <div class="bar-item"><span class="bar-label">home → tipo_curso</span><div class="bar-track"><div class="bar-fill" style="width:39%;background:#B4B4B4;"></div></div><span class="bar-val">1.515</span></div>
+      </div>
+    </div>
+
+    <div class="chart-card full">
+      <div class="chart-title">Longitud del recorrido · pasos hasta lead vs. hasta abandono</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;">
+        <div>
+          <p style="font-size:12px;font-weight:600;color:#1a7a45;margin-bottom:12px;">CON lead — 26.408 sesiones</p>
+          <div class="bar-item"><span class="bar-label">1 página</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:#1a7a45;"></div></div><span class="bar-val">6.835</span></div>
+          <div class="bar-item"><span class="bar-label">2 páginas</span><div class="bar-track"><div class="bar-fill" style="width:45%;background:#2B88D8;"></div></div><span class="bar-val">3.072</span></div>
+          <div class="bar-item"><span class="bar-label">3 páginas</span><div class="bar-track"><div class="bar-fill" style="width:43%;background:#2B88D8;"></div></div><span class="bar-val">2.970</span></div>
+          <div class="bar-item"><span class="bar-label">4-5 páginas</span><div class="bar-track"><div class="bar-fill" style="width:57%;background:#7685AF;"></div></div><span class="bar-val">3.873</span></div>
+          <div class="bar-item"><span class="bar-label">6-10 páginas</span><div class="bar-track"><div class="bar-fill" style="width:72%;background:#7685AF;"></div></div><span class="bar-val">5.338</span></div>
+          <div class="bar-item"><span class="bar-label">10+ páginas</span><div class="bar-track"><div class="bar-fill" style="width:62%;background:#B4B4B4;"></div></div><span class="bar-val">4.320</span></div>
+        </div>
+        <div>
+          <p style="font-size:12px;font-weight:600;color:#c0392b;margin-bottom:12px;">SIN lead — 47.858 sesiones</p>
+          <div class="bar-item"><span class="bar-label">1 página (rebote)</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:#FF7F7A;"></div></div><span class="bar-val">28.788</span></div>
+          <div class="bar-item"><span class="bar-label">2 páginas</span><div class="bar-track"><div class="bar-fill" style="width:20%;background:#FFA8A4;"></div></div><span class="bar-val">5.829</span></div>
+          <div class="bar-item"><span class="bar-label">3 páginas</span><div class="bar-track"><div class="bar-fill" style="width:17%;background:#FFA8A4;"></div></div><span class="bar-val">4.800</span></div>
+          <div class="bar-item"><span class="bar-label">4-5 páginas</span><div class="bar-track"><div class="bar-fill" style="width:13%;background:#B4B4B4;"></div></div><span class="bar-val">3.912</span></div>
+          <div class="bar-item"><span class="bar-label">6-7 páginas</span><div class="bar-track"><div class="bar-fill" style="width:7%;background:#B4B4B4;"></div></div><span class="bar-val">1.948</span></div>
+          <div class="bar-item"><span class="bar-label">8+ páginas</span><div class="bar-track"><div class="bar-fill" style="width:9%;background:#B4B4B4;"></div></div><span class="bar-val">2.581</span></div>
+        </div>
+      </div>
+      <div class="insight-box" style="margin-top:20px;margin-bottom:0;">
+        <strong>El conversor explora más:</strong> el 37% de los journeys con lead tienen 6 o más páginas. El abandonador se va antes — el 82% no pasa del paso 3. Las páginas intermedias (destinatario, tipo_curso, categoría) son filtros de decisión que el conversor usa activamente.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABANDONO -->
+<div class="page" id="page-abandono">
+  <div class="container">
+    <div class="section-eyebrow">Análisis de abandono</div>
+    <h2 class="section-title">Dónde y cuándo se va el usuario sin convertir</h2>
+    <p class="section-desc">El 60% abandona en el primer paso. El 30% de todos los abandonos terminan en una ficha de curso — el usuario llega, lee y se va sin dejar lead.</p>
+
+    <div class="kpi-grid-3">
+      <div class="kpi-card accent">
+        <div class="kpi-num">60,2%</div>
+        <div class="kpi-label">Abandonan en el primer paso</div>
+        <div class="kpi-sub">28.788 de 47.858 sesiones sin lead</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">30,5%</div>
+        <div class="kpi-label">Terminan en ficha sin convertir</div>
+        <div class="kpi-sub">14.609 sesiones — mayor punto de fricción</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">9.055</div>
+        <div class="kpi-label">Solo visitaron 1 ficha y se fueron</div>
+        <div class="kpi-sub">Rebote puro en ficha — problema de primer impacto</div>
+      </div>
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart-card">
+        <div class="chart-title">En qué paso abandona el usuario</div>
+        <div class="funnel-item">
+          <div class="funnel-label"><span>Paso 1 — rebote</span><span>28.788 · 60,2%</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:100%;background:#FF7F7A;"></div></div>
+        </div>
+        <div class="funnel-item">
+          <div class="funnel-label"><span>Pasos 2-3</span><span>10.629 · 22,2%</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:37%;background:#FFA8A4;"></div></div>
+        </div>
+        <div class="funnel-item">
+          <div class="funnel-label"><span>Pasos 4-5</span><span>3.912 · 8,2%</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:14%;background:#7685AF;"></div></div>
+        </div>
+        <div class="funnel-item">
+          <div class="funnel-label"><span>Pasos 6-7</span><span>1.948 · 4,1%</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:7%;background:#7685AF;"></div></div>
+        </div>
+        <div class="funnel-item">
+          <div class="funnel-label"><span>Paso 8+ (límite export)</span><span>2.581 · 5,4%</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:9%;background:#B4B4B4;"></div></div>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Tipo de página donde termina el journey sin lead</div>
+        <div class="bar-item"><span class="bar-label">Ficha de curso</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:#FF7F7A;"></div></div><span class="bar-val bold">14.609</span></div>
+        <div class="bar-item"><span class="bar-label">Otros (SEO/info)</span><div class="bar-track"><div class="bar-fill" style="width:80%;background:#FFA8A4;"></div></div><span class="bar-val">11.672</span></div>
+        <div class="bar-item"><span class="bar-label">Temática</span><div class="bar-track"><div class="bar-fill" style="width:28%;background:#7685AF;"></div></div><span class="bar-val">4.033</span></div>
+        <div class="bar-item"><span class="bar-label">Home</span><div class="bar-track"><div class="bar-fill" style="width:24%;background:#7685AF;"></div></div><span class="bar-val">3.577</span></div>
+        <div class="bar-item"><span class="bar-label">Categoría</span><div class="bar-track"><div class="bar-fill" style="width:15%;background:#B4B4B4;"></div></div><span class="bar-val">2.218</span></div>
+        <div class="bar-item"><span class="bar-label">Tipo de curso</span><div class="bar-track"><div class="bar-fill" style="width:15%;background:#B4B4B4;"></div></div><span class="bar-val">2.185</span></div>
+        <div class="bar-item"><span class="bar-label">Organismo</span><div class="bar-track"><div class="bar-fill" style="width:15%;background:#B4B4B4;"></div></div><span class="bar-val">2.131</span></div>
+        <div class="bar-item"><span class="bar-label">Centro</span><div class="bar-track"><div class="bar-fill" style="width:13%;background:#B4B4B4;"></div></div><span class="bar-val">1.854</span></div>
+        <div class="bar-item"><span class="bar-label">Destinatario</span><div class="bar-track"><div class="bar-fill" style="width:12%;background:#B4B4B4;"></div></div><span class="bar-val">1.802</span></div>
+      </div>
+    </div>
+
+    <div class="insight-box warn">
+      <strong>14.609 sesiones terminan en una ficha sin dejar lead.</strong> De ellas 9.055 son rebote puro — solo visitaron esa ficha. Son usuarios con intención suficiente para llegar a la ficha correcta, pero algo no los convence. Es el mayor potencial CRO del site.
+    </div>
+
+    <div class="chart-card full">
+      <div class="chart-title">Desglose de las 14.609 sesiones que terminan en ficha sin lead</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;">
+        <div>
+          <div style="padding:20px;background:var(--bg2);border-radius:10px;margin-bottom:16px;">
+            <div style="font-size:28px;font-weight:700;color:var(--blue);">9.055</div>
+            <div style="font-size:13px;color:var(--text2);margin-top:4px;font-weight:500;">Rebote puro en ficha</div>
+            <div style="font-size:12px;color:var(--text3);margin-top:6px;line-height:1.5;">Solo visitaron esa ficha y se fueron. Problema de primer impacto: título, imagen, precio visible o carga lenta.</div>
+          </div>
+          <div style="padding:20px;background:var(--bg2);border-radius:10px;">
+            <div style="font-size:28px;font-weight:700;color:var(--blue);">5.554</div>
+            <div style="font-size:13px;color:var(--text2);margin-top:4px;font-weight:500;">Exploró y terminó en ficha</div>
+            <div style="font-size:12px;color:var(--text3);margin-top:6px;line-height:1.5;">Navegó varias páginas, llegó a una ficha y ahí se detuvo. Problema de cierre — la ficha no convence tras comparar.</div>
+          </div>
+        </div>
+        <div style="background:var(--bg2);border-radius:12px;padding:20px;">
+          <p style="font-size:12px;font-weight:600;color:var(--blue);margin-bottom:14px;">QUÉ REVISAR EN ESTAS FICHAS</p>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;gap:10px;font-size:13px;color:var(--text2);"><span style="color:var(--blue2);flex-shrink:0;font-weight:600;">→</span><span>CTA y formulario visibles sin hacer scroll</span></div>
+            <div style="display:flex;gap:10px;font-size:13px;color:var(--text2);"><span style="color:var(--blue2);flex-shrink:0;font-weight:600;">→</span><span>Precio, duración y modalidad claros desde arriba</span></div>
+            <div style="display:flex;gap:10px;font-size:13px;color:var(--text2);"><span style="color:var(--blue2);flex-shrink:0;font-weight:600;">→</span><span>Testimonios o valoraciones de alumnos</span></div>
+            <div style="display:flex;gap:10px;font-size:13px;color:var(--text2);"><span style="color:var(--blue2);flex-shrink:0;font-weight:600;">→</span><span>Próxima convocatoria visible — genera urgencia</span></div>
+            <div style="display:flex;gap:10px;font-size:13px;color:var(--text2);"><span style="color:var(--blue2);flex-shrink:0;font-weight:600;">→</span><span>Cursos relacionados al pie para retener al indeciso</span></div>
+            <div style="display:flex;gap:10px;font-size:13px;color:var(--text2);"><span style="color:var(--blue2);flex-shrink:0;font-weight:600;">→</span><span>Velocidad de carga — especialmente en mobile</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CRO -->
+<div class="page" id="page-cro">
+  <div class="container">
+    <div class="section-eyebrow">Oportunidades de optimización</div>
+    <h2 class="section-title">Prioridades con impacto cuantificado</h2>
+    <p class="section-desc">Cada acción respaldada por un dato real y con estimación de impacto en leads adicionales sin aumentar el tráfico.</p>
+
+    <div class="kpi-grid-3">
+      <div class="kpi-card accent">
+        <div class="kpi-num">+905</div>
+        <div class="kpi-label">Leads si fichas-rebote suben al 10%</div>
+        <div class="kpi-sub">9.055 rebotes en ficha × tasa media 10%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">+210</div>
+        <div class="kpi-label">Leads si desktop iguala a mobile</div>
+        <div class="kpi-sub">~20.000 sesiones desktop × (12,6%−8,3%)</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">6.168</div>
+        <div class="kpi-label">Leads en enero — el objetivo mensual</div>
+        <div class="kpi-sub">Mantener ese nivel es el benchmark interno</div>
+      </div>
+    </div>
+
+    <div class="chart-card full" style="margin-bottom:20px;">
+      <div class="chart-title">Plan de acción priorizado</div>
+      <table class="data-table">
+        <thead><tr><th>Acción</th><th style="text-align:center;">Prioridad</th><th>Dato que lo justifica</th><th>Siguiente paso concreto</th></tr></thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:600;color:var(--blue);">CRO en fichas con rebote alto</td>
+            <td style="text-align:center;"><span class="badge b-red">Muy alto</span></td>
+            <td style="font-size:12px;color:var(--text3);">9.055 sesiones de 1 paso en ficha sin lead. +905 leads potenciales mensuales si la tasa sube al 10%.</td>
+            <td style="font-size:12px;color:var(--text3);">Identificar top 10 fichas con más rebote y auditar CTA, precio y formulario.</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;color:var(--blue);">Mejorar experiencia desktop</td>
+            <td style="text-align:center;"><span class="badge b-red">Alto</span></td>
+            <td style="font-size:12px;color:var(--text3);">8,3% desktop vs 12,6% mobile. Gap de 4,3 puntos sobre ~20.000 sesiones desktop.</td>
+            <td style="font-size:12px;color:var(--text3);">Auditoría de posición del formulario y CTA en resoluciones de escritorio.</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;color:var(--blue);">Potenciar ChatGPT como canal</td>
+            <td style="text-align:center;"><span class="badge b-blue">Medio</span></td>
+            <td style="font-size:12px;color:var(--text3);">23% de tasa de conversión. Doble que el orgánico con menos de 700 sesiones/mes.</td>
+            <td style="font-size:12px;color:var(--text3);">Añadir sección Q&A estructurada en fichas de mayor demanda.</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;color:var(--blue);">Revisar landing pages Google CPC</td>
+            <td style="text-align:center;"><span class="badge b-blue">Medio</span></td>
+            <td style="font-size:12px;color:var(--text3);">10,2% de tasa — igual que el orgánico gratuito. El gasto no aporta ventaja en conversión.</td>
+            <td style="font-size:12px;color:var(--text3);">Redirigir campañas a fichas con tasa >25%: teleasistencia, inglés A1, amadeus.</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;color:var(--blue);">Mejorar home como entrada</td>
+            <td style="text-align:center;"><span class="badge b-blue">Medio</span></td>
+            <td style="font-size:12px;color:var(--text3);">3.577 sesiones abandonan en home sin navegar más. Mayor punto de rebote navegacional.</td>
+            <td style="font-size:12px;color:var(--text3);">Destacar en home los cursos con mayor tasa de conversión.</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;color:var(--blue);">Retención de usuarios recurrentes</td>
+            <td style="text-align:center;"><span class="badge b-gray">Bajo</span></td>
+            <td style="font-size:12px;color:var(--text3);">5+ visitas tienen tasa del 27,9% vs 37,1% en primera visita. La intención decrece con el tiempo.</td>
+            <td style="font-size:12px;color:var(--text3);">Email de seguimiento o retargeting con urgencia para indecisos crónicos.</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;color:var(--blue);">Verificar evento en /contacto</td>
+            <td style="text-align:center;"><span class="badge b-gray">Auditoría</span></td>
+            <td style="font-size:12px;color:var(--text3);">664 sesiones terminan en /contacto sin generar generate_lead en el registro de GA4.</td>
+            <td style="font-size:12px;color:var(--text3);">Confirmar en GTM si el formulario de /contacto dispara el evento correctamente.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="insight-box">
+      <strong>Para el v3:</strong> cruzar dispositivo × canal para saber si el gap desktop/mobile es homogéneo en todos los canales. Añadir resumen mensual en BigQuery para calcular tasa de conversión mes a mes con el mismo periodo en ambas hojas.
+    </div>
+  </div>
+</div>
+
+
+<!-- =================== FICHAS CON REBOTE =================== -->
+<div class="page" id="page-rebote">
+  <div class="container">
+    <div class="section-eyebrow">Abandono en ficha</div>
+    <h2 class="section-title">Fichas con más rebote · sesiones sin lead de 1 solo paso</h2>
+    <p class="section-desc">Sesiones en las que el usuario entró directamente a una ficha y se fue sin navegar más ni dejar lead. Son el mayor concentrado de oportunidad CRO del site.</p>
+
+    <div class="insight-box warn">
+      <strong>Docencia en FP acumula 454 rebotes</strong> — más del doble que la segunda ficha. Es el curso con más tráfico directo y la mayor brecha entre visitas y conversión. Mejorar esta ficha tiene el impacto más alto del catálogo.
+    </div>
+
+    <div class="kpi-grid-3">
+      <div class="kpi-card accent">
+        <div class="kpi-num">9.055</div>
+        <div class="kpi-label">Total rebotes en ficha (marzo)</div>
+        <div class="kpi-sub">30 fichas con más de 50 rebotes cada una</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">454</div>
+        <div class="kpi-label">Rebotes · Docencia en FP</div>
+        <div class="kpi-sub">Ficha con mayor rebote absoluto del site</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">284</div>
+        <div class="kpi-label">Rebotes · Agentes del Cambio</div>
+        <div class="kpi-sub">2ª ficha con mayor rebote</div>
+      </div>
+    </div>
+
+    <div class="chart-card full" style="margin-bottom:20px;">
+      <div class="chart-title">Top 30 fichas · rebote absoluto · marzo 2026</div>
+      <div style="position:relative;height:520px;"><canvas id="chartRebote"></canvas></div>
+    </div>
+
+    <div class="chart-card full">
+      <div class="chart-title">Detalle con hipótesis de mejora</div>
+      <table class="data-table">
+        <thead><tr><th>#</th><th>Ficha de curso</th><th style="text-align:right;">Rebotes</th><th>Hipótesis de mejora</th></tr></thead>
+        <tbody id="reboteTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- =================== SANKEY =================== -->
+<div class="page" id="page-sankey">
+  <div class="container">
+    <div class="section-eyebrow">Flujo de navegación</div>
+    <h2 class="section-title">Sankey · flujo entre tipos de página</h2>
+    <p class="section-desc">Comparativa del flujo de usuarios que convierten vs. los que abandonan. El grosor de cada línea representa el volumen. Los porcentajes muestran qué % del total de transiciones representa cada flujo.</p>
+
+    <div class="legend-row">
+      <div class="legend-item"><div class="legend-dot step-ficha"></div>Ficha</div>
+      <div class="legend-item"><div class="legend-dot step-home"></div>Home</div>
+      <div class="legend-item"><div class="legend-dot step-destinatario"></div>Destinatario</div>
+      <div class="legend-item"><div class="legend-dot step-tipo_curso"></div>Tipo curso</div>
+      <div class="legend-item"><div class="legend-dot step-tematica"></div>Temática</div>
+      <div class="legend-item"><div class="legend-dot step-organismo"></div>Organismo</div>
+      <div class="legend-item"><div class="legend-dot step-listado"></div>Listado</div>
+      <div class="legend-item"><div class="legend-dot step-categoria"></div>Categoría</div>
+      <div class="legend-item"><div class="legend-dot step-centro"></div>Centro</div>
+      <div class="legend-item"><div class="legend-dot step-ciudad"></div>Ciudad</div>
+    </div>
+
+    <div class="sankey-wrap">
+      <div class="sankey-box">
+        <div class="sankey-label"><span class="sankey-dot" style="background:#1a7a45;"></span>Con lead · 26.408 sesiones</div>
+        <canvas id="sankeyConv"></canvas>
+      </div>
+      <div class="sankey-box">
+        <div class="sankey-label"><span class="sankey-dot" style="background:#FF7F7A;"></span>Sin lead · 47.858 sesiones</div>
+        <canvas id="sankeyNoConv"></canvas>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <strong>La transición más diferencial:</strong> <code>destinatario → ficha</code> representa el 12,7% de todas las transiciones con lead vs. solo el 7,3% en sin lead. El conversor usa las páginas de destinatario como filtro previo — llega a la ficha con más contexto e intención.
+    </div>
+
+    <div class="chart-card full">
+      <div class="chart-title">Comparativa de transiciones · con lead vs. sin lead</div>
+      <table class="data-table">
+        <thead><tr><th>Transición</th><th style="text-align:right;">Con lead</th><th style="text-align:right;">% del total</th><th style="text-align:right;">Sin lead</th><th style="text-align:right;">% del total</th><th>Diferencia</th></tr></thead>
+        <tbody>
+          <tr><td>destinatario → ficha</td><td class="num" style="text-align:right;">9.904</td><td style="text-align:right;color:var(--text3);">12,7%</td><td style="text-align:right;color:var(--text3);">2.924</td><td style="text-align:right;color:var(--text3);">7,3%</td><td><span class="badge b-green">+5,4 pts con lead</span></td></tr>
+          <tr><td>tipo_curso → ficha</td><td class="num" style="text-align:right;">9.244</td><td style="text-align:right;color:var(--text3);">11,9%</td><td style="text-align:right;color:var(--text3);">2.464</td><td style="text-align:right;color:var(--text3);">6,2%</td><td><span class="badge b-green">+5,7 pts con lead</span></td></tr>
+          <tr><td>ficha → tipo_curso</td><td class="num" style="text-align:right;">8.071</td><td style="text-align:right;color:var(--text3);">10,4%</td><td style="text-align:right;color:var(--text3);">2.077</td><td style="text-align:right;color:var(--text3);">5,2%</td><td><span class="badge b-green">+5,2 pts con lead</span></td></tr>
+          <tr><td>ficha → destinatario</td><td class="num" style="text-align:right;">7.883</td><td style="text-align:right;color:var(--text3);">10,1%</td><td style="text-align:right;color:var(--text3);">2.199</td><td style="text-align:right;color:var(--text3);">5,5%</td><td><span class="badge b-green">+4,6 pts con lead</span></td></tr>
+          <tr><td>home → destinatario</td><td class="num" style="text-align:right;">4.209</td><td style="text-align:right;color:var(--text3);">5,4%</td><td style="text-align:right;color:var(--text3);">3.088</td><td style="text-align:right;color:var(--text3);">7,7%</td><td><span class="badge b-red">+2,3 pts sin lead</span></td></tr>
+          <tr><td>home → tipo_curso</td><td style="text-align:right;color:var(--text3);">—</td><td style="text-align:right;color:var(--text3);">—</td><td class="num" style="text-align:right;">1.515</td><td style="text-align:right;color:var(--text3);">3,8%</td><td><span class="badge b-red">Solo relevante sin lead</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- =================== COHORTES =================== -->
+<div class="page" id="page-cohortes">
+  <div class="container">
+    <div class="section-eyebrow">Recorrido por canal</div>
+    <h2 class="section-title">Cohortes · recorrido típico por canal</h2>
+    <p class="section-desc">Cada canal tiene un patrón de navegación diferente. ChatGPT y Paid Meta llegan directo a ficha. Organic Google y Bing exploran más. Google CPC tiene el recorrido más largo — señal de landing pages incorrectas.</p>
+
+    <div class="insight-box">
+      <strong>Google CPC tiene la media más alta de páginas (8,3) con lead.</strong> Un usuario de pago navega más que uno orgánico antes de convertir. Las campañas están apuntando a páginas genéricas en lugar de fichas específicas con alta tasa de conversión.
+    </div>
+
+    <div class="cohort-tabs">
+      <button class="cohort-btn active" onclick="showCohort('organic',this)">Organic Google</button>
+      <button class="cohort-btn" onclick="showCohort('direct',this)">Direct</button>
+      <button class="cohort-btn" onclick="showCohort('meta',this)">Paid Meta</button>
+      <button class="cohort-btn" onclick="showCohort('chatgpt',this)">ChatGPT</button>
+      <button class="cohort-btn" onclick="showCohort('bing',this)">Bing</button>
+      <button class="cohort-btn" onclick="showCohort('cpc',this)">Google CPC</button>
+    </div>
+
+    <div class="cohort-panel active" id="cohort-organic">
+      <div class="chart-card">
+        <div class="chart-title" style="color:#1a7a45;">Organic Google · CON lead · 16.529 ses. · media 6,0 págs.</div>
+        <div class="seq-row"><span class="journey-step step-ficha">ficha</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:100%;background:#1a7a45;"></div></div><div class="seq-meta">3.559 ses. · 21,5% — entrada directa a ficha</div>
+        <div class="seq-row"><span class="journey-step step-ficha">ficha</span><span class="journey-arrow">›</span><span class="journey-step step-ficha">ficha</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:19%;background:#2B88D8;"></div></div><div class="seq-meta">672 ses. · 4,1%</div>
+        <div class="seq-row"><span class="journey-step step-home">home</span><span class="journey-arrow">›</span><span class="journey-step step-destinatario">destinatario</span><span class="journey-arrow">›</span><span class="journey-step step-ficha">ficha</span><span class="journey-arrow">›</span><span class="journey-step step-destinatario">destinatario</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:18%;background:#7685AF;"></div></div><div class="seq-meta">639 ses. · 3,9%</div>
+        <div class="seq-row"><span class="journey-step step-organismo">organismo</span><span class="journey-arrow">›</span><span class="journey-step step-ficha">ficha</span><span class="journey-arrow">›</span><span class="journey-step step-organismo">organismo</span><span class="journey-arrow">›</span><span class="journey-step step-ficha">ficha</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:13%;background:#7685AF;"></div></div><div class="seq-meta">469 ses. · 2,8%</div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title" style="color:#c0392b;">Organic Google · SIN lead · 34.659 ses. · media 2,3 págs.</div>
+        <div class="seq-row"><span class="journey-step step-ficha">ficha</span><span style="font-size:11px;color:var(--salmon);margin-left:6px;font-weight:700;">✕</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:100%;background:#FF7F7A;"></div></div><div class="seq-meta">6.003 ses. · 17,3% — rebote en ficha</div>
+        <div class="seq-row"><span class="journey-step step-otros">otros</span><span style="font-size:11px;color:var(--salmon);margin-left:6px;font-weight:700;">✕</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:88%;background:#FFA8A4;"></div></div><div class="seq-meta">5.308 ses. · 15,3% — páginas SEO informacionales</div>
+        <div class="seq-row"><span class="journey-step step-tematica">temática</span><span style="font-size:11px;color:var(--salmon);margin-left:6px;font-weight:700;">✕</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:40%;background:#FFA8A4;"></div></div><div class="seq-meta">2.379 ses. · 6,9%</div>
+        <div class="insight-box" style="margin-top:14px;margin-bottom:0;">El 17% rebota en ficha directa, pero casi el mismo % rebota en páginas informacionales — tráfico SEO sin intención de lead.</div>
+      </div>
+    </div>
+
+    <div class="cohort-panel" id="cohort-direct">
+      <div class="chart-card">
+        <div class="chart-title" style="color:#1a7a45;">Direct · CON lead · 4.311 ses. · media 6,4 págs.</div>
+        <div class="seq-row"><span class="journey-step step-ficha">ficha</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:100%;background:#1a7a45;"></div></div><div class="seq-meta">925 ses. · 21,5%</div>
+        <div class="seq-row"><span class="journey-step step-ficha">ficha</span><span class="journey-arrow">›</span><span class="journey-step step-ficha">ficha</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:32%;background:#2B88D8;"></div></div><div class="seq-meta">292 ses. · 6,8%</div>
+        <div class="seq-row"><span class="journey-step step-home">home</span><span class="journey-arrow">›</span><span class="journey-step step-destinatario">destinatario</span><span class="journey-arrow">›</span><span class="journey-step step-ficha">ficha</span><span class="journey-arrow">›</span><span class="journey-step step-destinatario">destinatario</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:23%;background:#7685AF;"></div></div><div class="seq-meta">215 ses. · 5,0%</div>
+        <div class="insight-box" style="margin-top:14px;margin-bottom:0;">Patrón similar al orgánico con mayor peso de ficha→ficha. Tráfico de retorno con intención de comparar cursos.</div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title" style="color:#c0392b;">Direct · SIN lead · 6.500 ses. · media 2,4 págs.</div>
+        <div class="seq-row"><span class="journey-step step-ficha">ficha</span><span style="font-size:11px;color:var(--salmon);margin-left:6px;font-weight:700;">✕</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:100%;background:#FF7F7A;"></div></div><div class="seq-meta">1.173 ses. · 18,0%</div>
+        <div class="seq-row"><span class="journey-step step-otros">otros</span><span style="font-size:11px;color:var(--salmon);margin-left:6px;font-weight:700;">✕</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:70%;background:#FFA8A4;"></div></div><div class="seq-meta">824 ses. · 12,7%</div>
+        <div class="seq-row"><span class="journey-step step-home">home</span><span style="font-size:11px;color:var(--salmon);margin-left:6px;font-weight:700;">✕</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:37%;background:#FFA8A4;"></div></div><div class="seq-meta">429 ses. · 6,6%</div>
+        <div class="insight-box" style="margin-top:14px;margin-bottom:0;">El 6,6% se va desde la home sin navegar — mayor que en orgánico. Tráfico directo sin intención real.</div>
+      </div>
+    </div>
+
+    <div class="cohort-panel" id="cohort-meta">
+      <div class="chart-card">
+        <div class="chart-title" style="color:#1a7a45;">Paid Meta · CON lead · 3.128 ses. · media 4,3 págs.</div>
+        <div class="seq-row"><span class="journey-step step-ficha">ficha</span><span style="font-size:12px;color:#1a7a45;margin-left:8px;font-weight:700;">44,6% — máximo de todos los canales</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:100%;background:#1a7a45;"></div></div><div class="seq-meta">1.396 ses. · entrada directa a ficha</div>
+        <div class="seq-row"><span class="journey-step step-home">home</span><span class="journey-arrow">›</span><span class="journey-step step-destinatario">destinatario</span><span class="journey-arrow">›</span><span class="journey-step step-ficha">ficha</span><span class="journey-arrow">›</span><span class="journey-step step-destinatario">destinatario</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:12%;background:#2B88D8;"></div></div><div class="seq-meta">168 ses. · 5,4%</div>
+        <div class="insight-box" style="margin-top:14px;margin-bottom:0;"><strong>Paid Meta es el canal más enfocado.</strong> Los anuncios apuntan a fichas concretas y eso se refleja en la tasa del 16,5%.</div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title" style="color:#c0392b;">Paid Meta · SIN lead · 2.207 ses. · media 2,3 págs.</div>
+        <div class="seq-row"><span class="journey-step step-ficha">ficha</span><span style="font-size:11px;color:var(--salmon);margin-left:6px;font-weight:700;">✕</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:100%;background:#FF7F7A;"></div></div><div class="seq-meta">811 ses. · 36,7% — % de rebote en ficha más alto de todos los canales</div>
+        <div class="seq-row"><span class="journey-step step-listado">listado</span><span style="font-size:11px;color:var(--salmon);margin-left:6px;font-weight:700;">✕</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:45%;background:#FFA8A4;"></div></div><div class="seq-meta">361 ses. · 16,4%</div>
+        <div class="insight-box warn" style="margin-top:14px;margin-bottom:0;"><strong>36,7% de Meta sin lead rebota en ficha.</strong> Llegan a la ficha correcta pero no se convencen. Revisar precio, modalidad y CTA en las fichas de las campañas activas.</div>
+      </div>
+    </div>
+
+    <div class="cohort-panel" id="cohort-chatgpt">
+      <div class="chart-card">
+        <div class="chart-title" style="color:#1a7a45;">ChatGPT · CON lead · 758 ses. · media 3,6 págs.</div>
+        <div class="seq-row"><span class="journey-step step-ficha">ficha</span><span style="font-size:12px;color:#1a7a45;margin-left:8px;font-weight:700;">42,3% — segunda tasa de entrada directa</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:100%;background:#1a7a45;"></div></div><div class="seq-meta">321 ses.</div>
+        <div class="seq-row"><span class="journey-step step-ficha">ficha</span><span class="journey-arrow">›</span><span class="journey-step step-ficha">ficha</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:28%;background:#2B88D8;"></div></div><div class="seq-meta">90 ses. · 11,9% — compara fichas relacionadas</div>
+        <div class="seq-row"><span class="journey-step step-ficha">ficha</span><span class="journey-arrow">›</span><span class="journey-step step-ficha">ficha</span><span class="journey-arrow">›</span><span class="journey-step step-ficha">ficha</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:12%;background:#7685AF;"></div></div><div class="seq-meta">37 ses. · 4,9%</div>
+        <div class="insight-box" style="margin-top:14px;margin-bottom:0;"><strong>ChatGPT: journey puro ficha→ficha.</strong> El usuario viene con una pregunta muy concreta, llega a la ficha y compara dentro del catálogo. Recorrido corto, intención máxima.</div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title" style="color:#c0392b;">ChatGPT · SIN lead · 500 ses. · media 1,9 págs.</div>
+        <div class="seq-row"><span class="journey-step step-ficha">ficha</span><span style="font-size:11px;color:var(--salmon);margin-left:6px;font-weight:700;">✕</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:100%;background:#FF7F7A;"></div></div><div class="seq-meta">203 ses. · 40,6%</div>
+        <div class="insight-box warn" style="margin-top:14px;margin-bottom:0;">40% sin lead rebota en ficha. Las fichas que reciben tráfico de IA necesitan estructura Q&A que responda lo que el usuario acaba de preguntar al chatbot.</div>
+      </div>
+    </div>
+
+    <div class="cohort-panel" id="cohort-bing">
+      <div class="chart-card">
+        <div class="chart-title" style="color:#1a7a45;">Bing · CON lead · 482 ses. · media 7,6 págs.</div>
+        <div class="seq-row"><span class="journey-step step-ficha">ficha</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:100%;background:#1a7a45;"></div></div><div class="seq-meta">58 ses. · 12,0% — entrada directa baja vs. otros canales</div>
+        <div class="seq-row"><span class="journey-step step-home">home</span><span class="journey-arrow">›</span><span class="journey-step step-destinatario">destinatario</span><span class="journey-arrow">›</span><span class="journey-step step-ficha">ficha</span><span class="journey-arrow">›</span><span class="journey-step step-destinatario">destinatario</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:78%;background:#7685AF;"></div></div><div class="seq-meta">45 ses. · 9,3%</div>
+        <div class="insight-box" style="margin-top:14px;margin-bottom:0;"><strong>Bing: recorrido más largo (7,6 págs.).</strong> Perfil más reflexivo — navega el catálogo antes de decidirse. Duración de sesión con lead también la más alta (416s mediana).</div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title" style="color:#c0392b;">Bing · SIN lead · 1.123 ses. · media 2,5 págs.</div>
+        <div class="seq-row"><span class="journey-step step-otros">otros</span><span style="font-size:11px;color:var(--salmon);margin-left:6px;font-weight:700;">✕</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:100%;background:#FF7F7A;"></div></div><div class="seq-meta">131 ses. · 11,7% — mayor % de páginas informacionales</div>
+        <div class="seq-row"><span class="journey-step step-home">home</span><span style="font-size:11px;color:var(--salmon);margin-left:6px;font-weight:700;">✕</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:92%;background:#FFA8A4;"></div></div><div class="seq-meta">120 ses. · 10,7%</div>
+        <div class="seq-row"><span class="journey-step step-ficha">ficha</span><span style="font-size:11px;color:var(--salmon);margin-left:6px;font-weight:700;">✕</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:82%;background:#FFA8A4;"></div></div><div class="seq-meta">108 ses. · 9,6%</div>
+        <div class="insight-box" style="margin-top:14px;margin-bottom:0;">Distribución más uniforme — no hay un tipo de abandono dominante. Tráfico más informacional que en otros buscadores.</div>
+      </div>
+    </div>
+
+    <div class="cohort-panel" id="cohort-cpc">
+      <div class="chart-card">
+        <div class="chart-title" style="color:#1a7a45;">Google CPC · CON lead · 427 ses. · media 8,3 págs.</div>
+        <div class="seq-row"><span class="journey-step step-ficha">ficha</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:100%;background:#1a7a45;"></div></div><div class="seq-meta">57 ses. · 13,3% — entrada directa baja para un canal de pago</div>
+        <div class="seq-row"><span class="journey-step step-listado">listado</span><span class="journey-arrow">›</span><span class="journey-step step-ficha">ficha</span><span class="journey-arrow">›</span><span class="journey-step step-listado">listado</span><span class="journey-arrow">›</span><span class="journey-step step-ficha">ficha</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:37%;background:#7685AF;"></div></div><div class="seq-meta">21 ses. · 4,9%</div>
+        <div class="insight-box warn" style="margin-top:14px;margin-bottom:0;"><strong>CPC tiene la media más alta de todas (8,3 págs.).</strong> Las campañas llevan a páginas genéricas y el usuario tiene que buscar el curso por su cuenta. Redirigir a fichas con tasa &gt;25% solucionaría esto.</div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title" style="color:#c0392b;">Google CPC · SIN lead · 658 ses. · media 2,4 págs.</div>
+        <div class="seq-row"><span class="journey-step step-ficha">ficha</span><span style="font-size:11px;color:var(--salmon);margin-left:6px;font-weight:700;">✕</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:100%;background:#FF7F7A;"></div></div><div class="seq-meta">265 ses. · 40,3% — segundo % de rebote en ficha más alto</div>
+        <div class="seq-row"><span class="journey-step step-ficha">ficha</span><span class="journey-arrow">›</span><span class="journey-step step-ficha">ficha</span><span style="font-size:11px;color:var(--salmon);margin-left:6px;font-weight:700;">✕</span></div><div class="seq-bar"><div class="seq-bar-fill" style="width:12%;background:#FFA8A4;"></div></div><div class="seq-meta">32 ses. · 4,9%</div>
+        <div class="insight-box warn" style="margin-top:14px;margin-bottom:0;"><strong>40% del CPC sin lead rebota en ficha.</strong> Diagnóstico claro: las campañas no apuntan a las fichas correctas. Redirigir a teleasistencia, inglés A1 y amadeus (tasa &gt;28%).</div>
+      </div>
+    </div>
+
+    <div class="chart-card full" style="margin-top:20px;">
+      <div class="chart-title">Comparativa de canales · páginas/sesión vs tasa de conversión</div>
+      <div style="position:relative;height:280px;"><canvas id="chartCohorts"></canvas></div>
+      <div style="display:flex;gap:20px;margin-top:12px;font-size:11px;color:var(--text3);flex-wrap:wrap;">
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:12px;border-radius:2px;background:#001F78;display:inline-block;"></span>Págs/sesión con lead</span>
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:12px;border-radius:2px;background:#DDEFFF;display:inline-block;"></span>Págs/sesión sin lead</span>
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:12px;border-radius:50%;background:#FF7F7A;display:inline-block;"></span>Tasa conversión % (eje derecho)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Informe preparado por <strong>agenciaSEO.eu</strong> · Datos: BigQuery GA4 · Nov 2025 – Mar 2026</p>
+  <p style="margin-top:5px;">26.408 sesiones con conversión · 47.858 sin conversión · Evento: <code>generate_lead</code></p>
+</footer>
+
+<script>
+function showPage(id, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  if (el) el.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if (id === 'tendencia' && !window.chartsInited) {
+    setTimeout(initCharts, 80);
+    window.chartsInited = true;
+  }
+}
+
+window.addEventListener('scroll', () => {
+  document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 300);
+});
+
+const months = ['Nov 25','Dic 25','Ene 26','Feb 26','Mar 26'];
+const channelData = {
+  'todos':           [4365,3938,6168,6128,5809],
+  'Organic Google':  [2351,2331,3948,4013,3886],
+  'Direct':          [909,584,919,1018,881],
+  'Paid Meta':       [597,677,759,660,435],
+  'ChatGPT':         [178,98,197,136,149],
+  'Bing':            [77,93,111,108,93],
+  'Google CPC':      [169,84,64,35,75],
+};
+const channelColors = {
+  'todos':'#001F78','Organic Google':'#001F78','Direct':'#7685AF',
+  'Paid Meta':'#2B88D8','ChatGPT':'#1a7a45','Bing':'#B4B4B4','Google CPC':'#FF7F7A'
+};
+
+let leadsChart, mixChart;
+
+function initCharts() {
+  const ctx1 = document.getElementById('chartLeads').getContext('2d');
+  leadsChart = new Chart(ctx1, {
+    type: 'bar',
+    data: {
+      labels: months,
+      datasets: [{ label: 'Leads', data: channelData['todos'], backgroundColor: '#001F78', borderRadius: 6 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { grid: { color: 'rgba(0,31,120,0.06)' }, ticks: { color: '#7685AF', font: { family: 'Inter', size: 12 }, callback: v => v.toLocaleString('es') } },
+        x: { grid: { display: false }, ticks: { color: '#7685AF', font: { family: 'Inter', size: 12 } } }
+      }
+    }
+  });
+
+  const stackColors = ['#001F78','#2B88D8','#7685AF','#1a7a45','#B4B4B4','#FF7F7A','#FFA8A4'];
+  const channels = ['Organic Google','Paid Meta','Direct','ChatGPT','Bing','Google CPC','Otros'];
+  const rawData = {
+    'Organic Google':[2351,2331,3948,4013,3886],
+    'Paid Meta':[597,677,759,660,435],
+    'Direct':[909,584,919,1018,881],
+    'ChatGPT':[178,98,197,136,149],
+    'Bing':[77,93,111,108,93],
+    'Google CPC':[169,84,64,35,75],
+    'Otros':[84,71,170,158,290],
+  };
+  const totals = months.map((_,i) => channels.reduce((s,c) => s + rawData[c][i], 0));
+  const ctx2 = document.getElementById('chartMix').getContext('2d');
+  mixChart = new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: months,
+      datasets: channels.map((c,ci) => ({
+        label: c,
+        data: months.map((_,i) => Math.round(rawData[c][i]/totals[i]*100)),
+        backgroundColor: stackColors[ci],
+        borderRadius: ci === channels.length-1 ? 6 : 0,
+      }))
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.raw}%` } } },
+      scales: {
+        x: { stacked: true, grid: { display: false }, ticks: { color: '#7685AF', font: { family: 'Inter', size: 11 } } },
+        y: { stacked: true, max: 100, grid: { color: 'rgba(0,31,120,0.06)' }, ticks: { color: '#7685AF', font: { family: 'Inter', size: 11 }, callback: v => v + '%' } }
+      }
+    }
+  });
+}
+
+function filterTrend(channel, el) {
+  document.querySelectorAll('#trendControls .ctrl-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  if (!leadsChart) return;
+  leadsChart.data.datasets[0].data = channelData[channel] || channelData['todos'];
+  leadsChart.data.datasets[0].backgroundColor = channelColors[channel] || '#001F78';
+  leadsChart.update();
+}
+
+
+// ---- showCohort ----
+function showCohort(id, el) {
+  document.querySelectorAll('.cohort-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.cohort-panel').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('cohort-' + id).classList.add('active');
+}
+
+// ---- REBOTE ----
+const reboteData = [
+  {name:'Docencia FP para el empleo',n:454,nota:'Máximo rebote del site. Revisar CTA, precio visible y velocidad mobile.'},
+  {name:'Agentes del cambio',n:284,nota:'Curso nuevo/reciente — revisar si el contenido está completo.'},
+  {name:'Aten. sociosanitaria domicilio',n:215,nota:'Alto rebote pese a ser de los más solicitados globalmente.'},
+  {name:'Gestión administrativa',n:185,nota:'Alta demanda pero baja conversión en entrada directa. Revisar formulario.'},
+  {name:'Vigilancia seg. privada personas',n:184,nota:'Nicho específico — revisar si el público está bien descrito.'},
+  {name:'Habilitación docencia FP (A-B-C)',n:181,nota:'Alta intención — revisar velocidad de carga en mobile.'},
+  {name:'Nóminas y Seg. Social I',n:172,nota:'Buen curso globalmente — revisar first-fold y CTA visible.'},
+  {name:'Gestión llamadas teleasistencia',n:159,nota:'Buen curso — revisar si precio es visible sin scroll.'},
+  {name:'Amadeus',n:134,nota:'Alta demanda — revisar si la modalidad está clara desde arriba.'},
+  {name:'Transporte sanitario',n:133,nota:'Revisar diferenciación con otros cursos sanitarios del catálogo.'},
+  {name:'Atención alumnado NEE',n:114,nota:'Público docente específico — revisar si la descripción conecta.'},
+  {name:'Aten. sociosanitaria instituciones',n:111,nota:'Revisar diferenciación con la ficha de atención domicilio.'},
+  {name:'Monitor de tiempo libre',n:111,nota:'Revisar claridad del perfil destinatario en la ficha.'},
+  {name:'Inglés B2',n:97,nota:'Nivel avanzado — puede haber desajuste de expectativa.'},
+  {name:'Inglés A1',n:97,nota:'Curso de alta demanda con rebote notable. Revisar CTA.'},
+  {name:'Acreditación docente e-learning',n:88,nota:'Revisar si el término "acreditación" genera confusión.'},
+  {name:'Gestión integrada RRHH',n:85,nota:'Revisar diferenciación con otros cursos de RRHH del catálogo.'},
+  {name:'Interpretación de planos',n:85,nota:'Nicho técnico — revisar si el temario detallado está visible.'},
+  {name:'Op. aux. servicios administrativos',n:82,nota:'Título poco descriptivo — revisar si el usuario entiende el contenido.'},
+  {name:'Lengua de signos',n:79,nota:'Nicho específico — revisar salidas profesionales visibles.'},
+  {name:'Inglés B1',n:77,nota:'Revisar si el nivel está bien comunicado vs inglés A1 y B2.'},
+  {name:'Repostería',n:77,nota:'Revisar duración y modalidad visibles desde arriba.'},
+  {name:'Actividades aux. de almacén',n:75,nota:'Revisar visibilidad del CTA en mobile.'},
+  {name:'Planif. dirección y gestión seguridad',n:71,nota:'Título largo — revisar si el beneficio del curso está claro.'},
+  {name:'Análisis datos Excel y Power BI',n:69,nota:'Título técnico — revisar si el nivel requerido está especificado.'},
+  {name:'Dinamización act. tiempo libre',n:64,nota:'Revisar si la modalidad (online/presencial) está destacada.'},
+  {name:'IA aplicada a la empresa',n:62,nota:'Temática trending — revisar nivel y docente bien comunicados.'},
+  {name:'Formación de formadores e-learning',n:59,nota:'Revisar diferenciación con otros cursos de formadores.'},
+  {name:'Inglés C1',n:57,nota:'Nivel alto — revisar si los requisitos previos están claros.'},
+  {name:'Inserción laboral discapacidad',n:52,nota:'Revisar si la descripción conecta con empresa/RRHH.'},
+];
+
+function initRebote() {
+  if (document.getElementById('chartRebote')._inited) return;
+  document.getElementById('chartRebote')._inited = true;
+  const labels = reboteData.map(d => d.name);
+  const values = reboteData.map(d => d.n);
+  const colors = values.map((v,i) => i===0?'#001F78':i<=2?'#2B88D8':i<=6?'#7685AF':'#B4B4B4');
+  new Chart(document.getElementById('chartRebote').getContext('2d'), {
+    type:'bar',
+    data:{labels,datasets:[{data:values,backgroundColor:colors,borderRadius:4}]},
+    options:{
+      indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.raw} rebotes`}}},
+      scales:{
+        x:{grid:{color:'rgba(0,31,120,0.06)'},ticks:{color:'#7685AF',font:{family:'Inter',size:11}}},
+        y:{grid:{display:false},ticks:{color:'#3a4a7a',font:{family:'Inter',size:11},autoSkip:false}}
+      }
+    }
+  });
+  const tbody = document.getElementById('reboteTableBody');
+  reboteData.forEach((d,i) => {
+    const color = i===0?'b-red':i<=2?'b-red':i<=6?'b-blue':'b-gray';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td style="color:var(--text3);font-size:12px;">${i+1}</td><td style="font-size:13px;color:var(--text2);">${d.name}</td><td class="num" style="text-align:right;">${d.n}</td><td style="font-size:12px;color:var(--text3);">${d.nota}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+// ---- SANKEY ----
+const nodeColors = {
+  ficha:'#1a7a45',home:'#001F78',destinatario:'#856404',tipo_curso:'#1e40af',
+  temática:'#6b21a8',organismo:'#155e75','categoría':'#9d174d',listado:'#5b21b6',
+  centro:'#854d0e',ciudad:'#166534',otros:'#475569'
+};
+
+function drawSankey(canvasId, transitions, isConv) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas || canvas._inited) return;
+  canvas._inited = true;
+  const W = canvas.parentElement.clientWidth - 40;
+  const H = 420;
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext('2d');
+
+  const col0 = ['home','organismo','otros'];
+  const col1 = ['destinatario','tipo_curso','temática','categoría','listado','centro','ciudad'];
+  const col2 = ['ficha'];
+  const nodeW = 90, nodeH = 18;
+  const colX = [20, W/2 - nodeW/2, W - nodeW - 20];
+
+  function getY(node) {
+    const cols = [col0,col1,col2];
+    for (let ci=0;ci<cols.length;ci++){
+      const idx = cols[ci].indexOf(node);
+      if(idx>=0){ const sp=H/(cols[ci].length+1); return sp*(idx+1); }
+    }
+    return H/2;
+  }
+  function getColIdx(node){ return col0.includes(node)?0:col2.includes(node)?2:1; }
+  function getX(node){ return colX[getColIdx(node)]; }
+
+  const total = Object.values(transitions).reduce((a,b)=>a+b,0);
+  const maxFlow = Math.max(...Object.values(transitions));
+
+  // Draw connections
+  Object.entries(transitions).forEach(([key,val])=>{
+    const [src,tgt] = key.split('|');
+    if(!getX(src) && getX(src)!==0) return;
+    const x1=getX(src)+nodeW, y1=getY(src);
+    const x2=getX(tgt), y2=getY(tgt);
+    const lw=Math.max(1.5,(val/maxFlow)*18);
+    const alpha=Math.min(0.75,0.1+(val/maxFlow)*0.65);
+    ctx.beginPath();
+    ctx.moveTo(x1,y1);
+    ctx.bezierCurveTo((x1+x2)/2,y1,(x1+x2)/2,y2,x2,y2);
+    ctx.strokeStyle = isConv ? `rgba(26,122,69,${alpha})` : `rgba(255,127,122,${alpha})`;
+    ctx.lineWidth=lw;
+    ctx.stroke();
+
+    // % label on connection midpoint
+    const pct = Math.round(val/total*100);
+    if(pct>=3){
+      const mx=(x1+x2)/2, my=(y1+y2)/2;
+      ctx.save();
+      ctx.font='bold 10px Inter,system-ui';
+      ctx.textAlign='center';
+      ctx.textBaseline='middle';
+      ctx.fillStyle='rgba(0,0,0,0.55)';
+      const tw=ctx.measureText(pct+'%').width;
+      ctx.fillStyle='rgba(255,255,255,0.85)';
+      ctx.fillRect(mx-tw/2-2,my-7,tw+4,14);
+      ctx.fillStyle=isConv?'#1a7a45':'#c0392b';
+      ctx.fillText(pct+'%',mx,my);
+      ctx.restore();
+    }
+  });
+
+  // Draw nodes
+  [...col0,...col1,...col2].forEach(node=>{
+    const x=getX(node), y=getY(node);
+    const c=nodeColors[node]||'#475569';
+    ctx.fillStyle=c;
+    ctx.beginPath();
+    if(ctx.roundRect){ ctx.roundRect(x,y-nodeH/2,nodeW,nodeH,4); }
+    else { ctx.rect(x,y-nodeH/2,nodeW,nodeH); }
+    ctx.fill();
+    ctx.fillStyle='#fff';
+    ctx.font='600 10px Inter,system-ui';
+    ctx.textAlign='center';
+    ctx.textBaseline='middle';
+    ctx.fillText(node,x+nodeW/2,y);
+  });
+}
+
+function initSankey() {
+  const transConv = {'destinatario|ficha':9904,'tipo_curso|ficha':9244,'ficha|tipo_curso':8071,'ficha|destinatario':7883,'organismo|ficha':5572,'ficha|organismo':4750,'categoría|ficha':4302,'home|destinatario':4209,'temática|ficha':3996,'listado|ficha':3809,'ciudad|ficha':3736,'ficha|categoría':3442,'ficha|temática':3282,'ficha|listado':3238,'ficha|ciudad':3121,'centro|ficha':2513,'home|ficha':1790};
+  const transNoConv = {'home|destinatario':3088,'destinatario|ficha':2924,'tipo_curso|ficha':2464,'ficha|destinatario':2199,'temática|ficha':2116,'ficha|tipo_curso':2077,'categoría|ficha':1732,'ficha|temática':1691,'organismo|ficha':1661,'ciudad|ficha':1555,'home|tipo_curso':1515,'ficha|categoría':1340,'ficha|organismo':1332,'centro|ficha':1276,'ficha|ciudad':1249,'home|ficha':1150};
+  drawSankey('sankeyConv',transConv,true);
+  drawSankey('sankeyNoConv',transNoConv,false);
+}
+
+function initCohorts() {
+  if (document.getElementById('chartCohorts')._inited) return;
+  document.getElementById('chartCohorts')._inited = true;
+  new Chart(document.getElementById('chartCohorts').getContext('2d'),{
+    type:'bar',
+    data:{
+      labels:['Organic Google','Direct','Paid Meta','ChatGPT','Bing','Google CPC'],
+      datasets:[
+        {label:'Págs/sesión CON lead',data:[6.0,6.4,4.3,3.6,7.6,8.3],backgroundColor:'#001F78',borderRadius:4,yAxisID:'y'},
+        {label:'Págs/sesión SIN lead',data:[2.3,2.4,2.3,1.9,2.5,2.4],backgroundColor:'#DDEFFF',borderRadius:4,yAxisID:'y'},
+        {label:'Tasa %',data:[10.1,11.9,16.5,23.0,7.6,10.2],type:'line',borderColor:'#FF7F7A',backgroundColor:'rgba(255,127,122,0.08)',borderWidth:2.5,pointBackgroundColor:'#FF7F7A',pointRadius:5,yAxisID:'y2',tension:0.3},
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},
+      scales:{
+        y:{position:'left',grid:{color:'rgba(0,31,120,0.06)'},ticks:{color:'#7685AF',font:{family:'Inter',size:11},callback:v=>v+' págs'}},
+        y2:{position:'right',grid:{display:false},ticks:{color:'#FF7F7A',font:{family:'Inter',size:11},callback:v=>v+'%'},min:0,max:30},
+        x:{grid:{display:false},ticks:{color:'#3a4a7a',font:{family:'Inter',size:12}}}
+      }
+    }
+  });
+}
+
+// Hook into showPage to lazy-init charts
+const _origShowPage = showPage;
+showPage = function(id, el) {
+  _origShowPage(id, el);
+  if (id==='rebote') initRebote();
+  if (id==='sankey') initSankey();
+  if (id==='cohortes') initCohorts();
+};
+
+</script>
+</body>
+</html>
