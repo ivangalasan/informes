@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis Ecommerce | leatt.es | Q1 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #FFFFFF;
+            --bg-surface: #F3F8FF;
+            --bg-accent-soft: #DDEFFF;
+            --text-primary: #001F78;
+            --text-secondary: #3a4a7a;
+            --text-tertiary: #7685AF;
+            --blue-primary: #001F78;
+            --blue-medium: #2B88D8;
+            --blue-light: #DDEFFF;
+            --blue-pale: #F3F8FF;
+            --salmon-accent: #FF7F7A;
+            --salmon-bg: #FFF0EF;
+            --green-bg: #e8f5ee;
+            --green-text: #1a7a45;
+            --amber-bg: #fff8e1;
+            --amber-text: #856404;
+            --border-normal: rgba(0,31,120,0.10);
+            --border-emphasis: rgba(0,31,120,0.18);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            background: var(--bg-main);
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* NAV */
+        nav {
+            position: sticky;
+            top: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-emphasis);
+            z-index: 100;
+            padding: 16px 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-links a {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+            background: var(--bg-surface);
+        }
+
+        .nav-links a.active {
+            color: #fff;
+            background: var(--blue-primary);
+        }
+
+        /* HERO */
+        .hero {
+            background: var(--blue-primary);
+            background-image: 
+                radial-gradient(ellipse at 20% 80%, rgba(43,136,216,0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(255,127,122,0.2) 0%, transparent 50%);
+            padding: 72px 0 64px;
+            color: #fff;
+        }
+
+        .hero-eyebrow {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.65);
+            margin-bottom: 12px;
+        }
+
+        .hero-title {
+            font-size: clamp(28px, 4.5vw, 42px);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+
+        .hero-subtitle {
+            font-size: 17px;
+            color: rgba(255,255,255,0.75);
+            margin-bottom: 40px;
+        }
+
+        .hero-kpis {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .hero-kpi {
+            text-align: center;
+        }
+
+        .hero-kpi-value {
+            font-size: 34px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--salmon-accent);
+            margin-bottom: 4px;
+        }
+
+        .hero-kpi-label {
+            font-size: 12px;
+            color: rgba(255,255,255,0.65);
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 56px 0;
+        }
+
+        .section-header {
+            margin-bottom: 32px;
+        }
+
+        .section-eyebrow {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--blue-medium);
+            margin-bottom: 8px;
+        }
+
+        .section-title {
+            font-size: clamp(22px, 3.5vw, 32px);
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        /* CARDS */
+        .card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-normal);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .card-accent {
+            background: var(--blue-primary);
+            border: none;
+        }
+
+        .card-accent .card-value {
+            color: var(--salmon-accent);
+        }
+
+        .card-accent .card-label {
+            color: rgba(255,255,255,0.65);
+        }
+
+        .card-value {
+            font-size: 34px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .card-label {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            margin-top: 4px;
+        }
+
+        /* GRID LAYOUTS */
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+
+        /* TABLES */
+        .table-wrapper { overflow-x: auto; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead th {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: var(--text-tertiary);
+            text-align: left;
+            padding: 12px 16px;
+            border-bottom: 2px solid var(--border-emphasis);
+            white-space: nowrap;
+        }
+
+        tbody td {
+            font-size: 13px;
+            color: var(--text-secondary);
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border-normal);
+            vertical-align: middle;
+        }
+
+        tbody tr:hover {
+            background: var(--bg-surface);
+        }
+
+        .table-number {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-align: right;
+        }
+
+        .table-number-secondary {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-align: right;
+        }
+
+        /* BADGES */
+        .badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .badge-green { background: var(--green-bg); color: var(--green-text); }
+        .badge-red { background: var(--salmon-bg); color: #c0392b; }
+        .badge-amber { background: var(--amber-bg); color: var(--amber-text); }
+        .badge-blue { background: var(--blue-light); color: var(--text-primary); }
+
+        /* PROGRESS BARS */
+        .progress-bar {
+            background: var(--blue-light);
+            border-radius: 3px;
+            height: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: var(--blue-medium);
+            height: 100%;
+            border-radius: 3px;
+        }
+
+        .progress-fill.accent {
+            background: var(--salmon-accent);
+        }
+
+        /* INSIGHT BOXES */
+        .insight-box {
+            background: var(--bg-surface);
+            border-left: 3px solid var(--blue-medium);
+            border-radius: 0 10px 10px 0;
+            padding: 20px 24px;
+            margin: 24px 0;
+        }
+
+        .insight-box.alert {
+            background: var(--salmon-bg);
+            border-left-color: var(--salmon-accent);
+        }
+
+        .insight-box.success {
+            background: var(--green-bg);
+            border-left-color: var(--green-text);
+        }
+
+        .insight-box-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .insight-box p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* CHANNEL BARS */
+        .channel-row {
+            display: flex;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border-normal);
+        }
+
+        .channel-row:last-child { border-bottom: none; }
+
+        .channel-name {
+            width: 180px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .channel-bar-wrapper {
+            flex: 1;
+            margin: 0 20px;
+        }
+
+        .channel-stats {
+            display: flex;
+            gap: 24px;
+            min-width: 280px;
+        }
+
+        .channel-stat {
+            text-align: right;
+        }
+
+        .channel-stat-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .channel-stat-label {
+            font-size: 11px;
+            color: var(--text-tertiary);
+        }
+
+        /* FUNNEL */
+        .funnel {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            margin: 40px 0;
+        }
+
+        .funnel-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .funnel-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .funnel-label {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-top: 4px;
+        }
+
+        .funnel-arrow {
+            width: 60px;
+            height: 2px;
+            background: var(--border-emphasis);
+            margin: 0 16px;
+            position: relative;
+        }
+
+        .funnel-arrow::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: -4px;
+            border: 5px solid transparent;
+            border-left: 6px solid var(--border-emphasis);
+        }
+
+        .funnel-rate {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--blue-medium);
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+        }
+
+        /* RECOMMENDATIONS */
+        .recommendation {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-normal);
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 20px;
+        }
+
+        .recommendation-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .recommendation-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .recommendation-icon.alert {
+            background: var(--salmon-bg);
+            color: #c0392b;
+        }
+
+        .recommendation-icon.success {
+            background: var(--green-bg);
+            color: var(--green-text);
+        }
+
+        .recommendation-icon.info {
+            background: var(--blue-light);
+            color: var(--blue-primary);
+        }
+
+        .recommendation-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .recommendation p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--blue-primary);
+            padding: 48px 0;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-brand {
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.75);
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: rgba(255,255,255,0.40);
+        }
+
+        /* METRIC COMPARISON */
+        .metric-compare {
+            display: flex;
+            gap: 12px;
+            align-items: baseline;
+        }
+
+        .metric-main {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .metric-secondary {
+            font-size: 14px;
+            color: var(--text-tertiary);
+        }
+
+        /* SCROLL TO TOP */
+        .scroll-top {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            width: 48px;
+            height: 48px;
+            background: var(--salmon-accent);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(255,127,122,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .scroll-top.visible { opacity: 1; }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero-kpis { grid-template-columns: repeat(2, 1fr); }
+            .grid-4, .grid-3 { grid-template-columns: repeat(2, 1fr); }
+            .grid-2 { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .channel-row { flex-wrap: wrap; }
+            .channel-name { width: 100%; margin-bottom: 8px; }
+            .channel-bar-wrapper { width: 100%; margin: 0 0 8px 0; }
+            .channel-stats { width: 100%; justify-content: flex-start; }
+            .funnel { flex-wrap: wrap; gap: 20px; }
+            .funnel-arrow { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAV -->
+    <nav>
+        <div class="container">
+            <div class="nav-brand">agenciaSEO.eu</div>
+            <div class="nav-links">
+                <a href="#resumen" class="active">Resumen</a>
+                <a href="#canales">Canales</a>
+                <a href="#funnel">Funnel</a>
+                <a href="#productos">Productos</a>
+                <a href="#insights">Insights</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero" id="resumen">
+        <div class="container">
+            <p class="hero-eyebrow">Análisis de Conversión Ecommerce</p>
+            <h1 class="hero-title">leatt.es</h1>
+            <p class="hero-subtitle">Enero – Marzo 2026 · Fuente: GA4 vía BigQuery</p>
+            
+            <div class="hero-kpis">
+                <div class="hero-kpi">
+                    <div class="hero-kpi-value">22.528</div>
+                    <div class="hero-kpi-label">Sesiones (muestra)</div>
+                </div>
+                <div class="hero-kpi">
+                    <div class="hero-kpi-value">2.293</div>
+                    <div class="hero-kpi-label">Add to cart</div>
+                </div>
+                <div class="hero-kpi">
+                    <div class="hero-kpi-value">277</div>
+                    <div class="hero-kpi-label">Compras</div>
+                </div>
+                <div class="hero-kpi">
+                    <div class="hero-kpi-value">1,23%</div>
+                    <div class="hero-kpi-label">Tasa de conversión</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- FUNNEL -->
+    <section id="funnel">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-eyebrow">Embudo de conversión</p>
+                <h2 class="section-title">De la visita a la compra</h2>
+            </div>
+
+            <div class="funnel">
+                <div class="funnel-step">
+                    <div class="funnel-value">22.528</div>
+                    <div class="funnel-label">Sesiones</div>
+                </div>
+                <div class="funnel-arrow">
+                    <span class="funnel-rate">10,2%</span>
+                </div>
+                <div class="funnel-step">
+                    <div class="funnel-value">2.293</div>
+                    <div class="funnel-label">Add to cart</div>
+                </div>
+                <div class="funnel-arrow">
+                    <span class="funnel-rate">33%</span>
+                </div>
+                <div class="funnel-step">
+                    <div class="funnel-value">757</div>
+                    <div class="funnel-label">Checkout</div>
+                </div>
+                <div class="funnel-arrow">
+                    <span class="funnel-rate">37%</span>
+                </div>
+                <div class="funnel-step">
+                    <div class="funnel-value">277</div>
+                    <div class="funnel-label">Compra</div>
+                </div>
+            </div>
+
+            <div class="grid-3" style="margin-top: 32px;">
+                <div class="insight-box" style="margin: 0;">
+                    <p class="insight-box-title">Sesión → Add to cart</p>
+                    <p>El 10,2% de las sesiones añaden producto al carrito. Las sesiones que convierten navegan <strong>20 páginas de media</strong> vs 4 páginas las que no.</p>
+                </div>
+                <div class="insight-box alert" style="margin: 0;">
+                    <p class="insight-box-title">Add to cart → Checkout</p>
+                    <p>Solo el 33% de quienes añaden al carrito llegan a checkout. Hay fricción en el paso del carrito.</p>
+                </div>
+                <div class="insight-box" style="margin: 0;">
+                    <p class="insight-box-title">Checkout → Compra</p>
+                    <p>El 37% de quienes inician checkout completan la compra. Razonable para ecommerce de equipamiento.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CANALES -->
+    <section id="canales" style="background: var(--bg-surface);">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-eyebrow">Adquisición</p>
+                <h2 class="section-title">Rendimiento por canal</h2>
+            </div>
+
+            <div class="card" style="background: #fff;">
+                <div class="channel-row">
+                    <div class="channel-name">Google Ads (CPC)</div>
+                    <div class="channel-bar-wrapper">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div class="channel-stats">
+                        <div class="channel-stat">
+                            <div class="channel-stat-value">715</div>
+                            <div class="channel-stat-label">Add to cart</div>
+                        </div>
+                        <div class="channel-stat">
+                            <div class="channel-stat-value">99</div>
+                            <div class="channel-stat-label">Compras</div>
+                        </div>
+                        <div class="channel-stat">
+                            <div class="channel-stat-value"><span class="badge badge-green">13,3%</span></div>
+                            <div class="channel-stat-label">Tasa ATC</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="channel-row">
+                    <div class="channel-name">Google Organic</div>
+                    <div class="channel-bar-wrapper">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 78%"></div>
+                        </div>
+                    </div>
+                    <div class="channel-stats">
+                        <div class="channel-stat">
+                            <div class="channel-stat-value">556</div>
+                            <div class="channel-stat-label">Add to cart</div>
+                        </div>
+                        <div class="channel-stat">
+                            <div class="channel-stat-value">71</div>
+                            <div class="channel-stat-label">Compras</div>
+                        </div>
+                        <div class="channel-stat">
+                            <div class="channel-stat-value"><span class="badge badge-amber">8,7%</span></div>
+                            <div class="channel-stat-label">Tasa ATC</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="channel-row">
+                    <div class="channel-name">Direct</div>
+                    <div class="channel-bar-wrapper">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 53%"></div>
+                        </div>
+                    </div>
+                    <div class="channel-stats">
+                        <div class="channel-stat">
+                            <div class="channel-stat-value">380</div>
+                            <div class="channel-stat-label">Add to cart</div>
+                        </div>
+                        <div class="channel-stat">
+                            <div class="channel-stat-value">52</div>
+                            <div class="channel-stat-label">Compras</div>
+                        </div>
+                        <div class="channel-stat">
+                            <div class="channel-stat-value"><span class="badge badge-green">11,7%</span></div>
+                            <div class="channel-stat-label">Tasa ATC</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="channel-row">
+                    <div class="channel-name">Meta Ads</div>
+                    <div class="channel-bar-wrapper">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 48%"></div>
+                        </div>
+                    </div>
+                    <div class="channel-stats">
+                        <div class="channel-stat">
+                            <div class="channel-stat-value">342</div>
+                            <div class="channel-stat-label">Add to cart</div>
+                        </div>
+                        <div class="channel-stat">
+                            <div class="channel-stat-value">30</div>
+                            <div class="channel-stat-label">Compras</div>
+                        </div>
+                        <div class="channel-stat">
+                            <div class="channel-stat-value"><span class="badge badge-green">14,5%</span></div>
+                            <div class="channel-stat-label">Tasa ATC</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="channel-row">
+                    <div class="channel-name">Facebook Paid Social</div>
+                    <div class="channel-bar-wrapper">
+                        <div class="progress-bar">
+                            <div class="progress-fill accent" style="width: 11%"></div>
+                        </div>
+                    </div>
+                    <div class="channel-stats">
+                        <div class="channel-stat">
+                            <div class="channel-stat-value">78</div>
+                            <div class="channel-stat-label">Add to cart</div>
+                        </div>
+                        <div class="channel-stat">
+                            <div class="channel-stat-value">7</div>
+                            <div class="channel-stat-label">Compras</div>
+                        </div>
+                        <div class="channel-stat">
+                            <div class="channel-stat-value"><span class="badge badge-red">2,3%</span></div>
+                            <div class="channel-stat-label">Tasa ATC</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="channel-row">
+                    <div class="channel-name">Email (Connectif)</div>
+                    <div class="channel-bar-wrapper">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 11%"></div>
+                        </div>
+                    </div>
+                    <div class="channel-stats">
+                        <div class="channel-stat">
+                            <div class="channel-stat-value">77</div>
+                            <div class="channel-stat-label">Add to cart</div>
+                        </div>
+                        <div class="channel-stat">
+                            <div class="channel-stat-value">—</div>
+                            <div class="channel-stat-label">Compras</div>
+                        </div>
+                        <div class="channel-stat">
+                            <div class="channel-stat-value"><span class="badge badge-green">11,1%</span></div>
+                            <div class="channel-stat-label">Tasa ATC</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="insight-box alert">
+                <p class="insight-box-title">⚠️ Facebook Paid Social: revisión urgente</p>
+                <p>La campaña "social_alwayson" tiene un 60,5% de rebote (<10 seg) y solo 2,3% de tasa de conversión. Por comparación, Meta Ads convierte al 14,5%. Revisar segmentación, creatividades y landing pages de las campañas de Facebook.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CAMPAÑAS -->
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <p class="section-eyebrow">Google Ads</p>
+                <h2 class="section-title">Campañas con mejor conversión</h2>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Campaña</th>
+                            <th style="text-align: right;">Sesiones</th>
+                            <th style="text-align: right;">Add to cart</th>
+                            <th style="text-align: right;">Tasa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>shopping_tier1</strong></td>
+                            <td class="table-number-secondary">1.027</td>
+                            <td class="table-number">91</td>
+                            <td class="table-number"><span class="badge badge-green">8,9%</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>search</strong></td>
+                            <td class="table-number-secondary">1.515</td>
+                            <td class="table-number">117</td>
+                            <td class="table-number"><span class="badge badge-green">7,7%</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>shopping_tier2</strong></td>
+                            <td class="table-number-secondary">1.015</td>
+                            <td class="table-number">63</td>
+                            <td class="table-number"><span class="badge badge-amber">6,2%</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>social_alwayson</strong> (Meta)</td>
+                            <td class="table-number-secondary">4.967</td>
+                            <td class="table-number">133</td>
+                            <td class="table-number"><span class="badge badge-red">2,7%</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="insight-box success">
+                <p class="insight-box-title">Shopping Tier 1 lidera</p>
+                <p>Las campañas de Shopping tienen la mejor tasa de conversión (8,9%). Search también funciona bien (7,7%). Considerar reasignar presupuesto de social_alwayson hacia Shopping.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- DISPOSITIVOS Y USUARIOS -->
+    <section style="background: var(--bg-surface);">
+        <div class="container">
+            <div class="grid-2">
+                <div>
+                    <div class="section-header">
+                        <p class="section-eyebrow">Dispositivos</p>
+                        <h2 class="section-title">Mobile vs Desktop</h2>
+                    </div>
+
+                    <div class="card" style="background: #fff;">
+                        <div class="channel-row">
+                            <div class="channel-name">📱 Mobile</div>
+                            <div class="channel-stats" style="min-width: auto;">
+                                <div class="channel-stat">
+                                    <div class="channel-stat-value">1.677</div>
+                                    <div class="channel-stat-label">Add to cart</div>
+                                </div>
+                                <div class="channel-stat">
+                                    <div class="channel-stat-value">199</div>
+                                    <div class="channel-stat-label">Compras</div>
+                                </div>
+                                <div class="channel-stat">
+                                    <div class="channel-stat-value">9,9%</div>
+                                    <div class="channel-stat-label">Tasa</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="channel-row">
+                            <div class="channel-name">💻 Desktop</div>
+                            <div class="channel-stats" style="min-width: auto;">
+                                <div class="channel-stat">
+                                    <div class="channel-stat-value">580</div>
+                                    <div class="channel-stat-label">Add to cart</div>
+                                </div>
+                                <div class="channel-stat">
+                                    <div class="channel-stat-value">77</div>
+                                    <div class="channel-stat-label">Compras</div>
+                                </div>
+                                <div class="channel-stat">
+                                    <div class="channel-stat-value">11,1%</div>
+                                    <div class="channel-stat-label">Tasa</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p style="font-size: 13px; color: var(--text-tertiary); margin-top: 16px;">73% del tráfico es mobile. Desktop convierte ligeramente mejor pero el volumen está en mobile.</p>
+                </div>
+
+                <div>
+                    <div class="section-header">
+                        <p class="section-eyebrow">Tipo de usuario</p>
+                        <h2 class="section-title">Nuevos vs Recurrentes</h2>
+                    </div>
+
+                    <div class="card" style="background: #fff;">
+                        <div class="channel-row">
+                            <div class="channel-name">🆕 Nuevo</div>
+                            <div class="channel-stats" style="min-width: auto;">
+                                <div class="channel-stat">
+                                    <div class="channel-stat-value">956</div>
+                                    <div class="channel-stat-label">Add to cart</div>
+                                </div>
+                                <div class="channel-stat">
+                                    <div class="channel-stat-value">8,7%</div>
+                                    <div class="channel-stat-label">Tasa</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="channel-row">
+                            <div class="channel-name">🔄 Recurrente</div>
+                            <div class="channel-stats" style="min-width: auto;">
+                                <div class="channel-stat">
+                                    <div class="channel-stat-value">1.337</div>
+                                    <div class="channel-stat-label">Add to cart</div>
+                                </div>
+                                <div class="channel-stat">
+                                    <div class="channel-stat-value">11,6%</div>
+                                    <div class="channel-stat-label">Tasa</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p style="font-size: 13px; color: var(--text-tertiary); margin-top: 16px;">Los usuarios recurrentes convierten un 33% mejor. El remarketing y email tienen margen de crecimiento.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIEMPO HASTA CONVERSIÓN -->
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <p class="section-eyebrow">Comportamiento</p>
+                <h2 class="section-title">Tiempo hasta la conversión</h2>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <p class="section-eyebrow" style="margin-bottom: 16px;">Días desde primera visita hasta add_to_cart</p>
+                    <div class="channel-row" style="border: none; padding: 8px 0;">
+                        <span style="width: 120px;">Mismo día</span>
+                        <div class="channel-bar-wrapper">
+                            <div class="progress-bar" style="height: 24px;">
+                                <div class="progress-fill" style="width: 47%; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; color: #fff; font-size: 12px; font-weight: 600;">1.058</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="channel-row" style="border: none; padding: 8px 0;">
+                        <span style="width: 120px;">1-7 días</span>
+                        <div class="channel-bar-wrapper">
+                            <div class="progress-bar" style="height: 24px;">
+                                <div class="progress-fill" style="width: 17%; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; color: #fff; font-size: 12px; font-weight: 600;">380</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="channel-row" style="border: none; padding: 8px 0;">
+                        <span style="width: 120px;">8-14 días</span>
+                        <div class="channel-bar-wrapper">
+                            <div class="progress-bar" style="height: 24px;">
+                                <div class="progress-fill" style="width: 7%; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; color: #fff; font-size: 12px; font-weight: 600;">155</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="channel-row" style="border: none; padding: 8px 0;">
+                        <span style="width: 120px;">15-30 días</span>
+                        <div class="channel-bar-wrapper">
+                            <div class="progress-bar" style="height: 24px;">
+                                <div class="progress-fill" style="width: 10%; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; color: #fff; font-size: 12px; font-weight: 600;">221</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="channel-row" style="border: none; padding: 8px 0;">
+                        <span style="width: 120px;">31-60 días</span>
+                        <div class="channel-bar-wrapper">
+                            <div class="progress-bar" style="height: 24px;">
+                                <div class="progress-fill" style="width: 9%; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; color: #fff; font-size: 12px; font-weight: 600;">213</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="channel-row" style="border: none; padding: 8px 0;">
+                        <span style="width: 120px;">+60 días</span>
+                        <div class="channel-bar-wrapper">
+                            <div class="progress-bar" style="height: 24px;">
+                                <div class="progress-fill" style="width: 10%; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; color: #fff; font-size: 12px; font-weight: 600;">218</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="card card-accent" style="margin-bottom: 20px;">
+                        <div class="card-value">47%</div>
+                        <div class="card-label">Convierten el mismo día de la primera visita</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-value">64%</div>
+                        <div class="card-label">Convierten en la primera semana</div>
+                    </div>
+                    <p style="font-size: 13px; color: var(--text-tertiary); margin-top: 16px;">Aún así, el 36% tarda más de una semana. Hay oportunidad en secuencias de email y remarketing para el consideration period.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCTOS -->
+    <section id="productos" style="background: var(--bg-surface);">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-eyebrow">Catálogo</p>
+                <h2 class="section-title">Productos más añadidos al carrito</h2>
+            </div>
+
+            <div class="grid-2">
+                <div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Producto</th>
+                                    <th style="text-align: right;">Add to cart</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td><strong>Botas Moto 3.5 v23</strong></td>
+                                    <td class="table-number">236</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Braga de cuello ADV</td>
+                                    <td class="table-number">45</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Pantalón Moto 4.5 v23</td>
+                                    <td class="table-number">35</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Kit Moto 3.5 v26</td>
+                                    <td class="table-number">33</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Camiseta MTB Gravity 1.0 v24</td>
+                                    <td class="table-number">27</td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>Zapatillas MTB Flat 3.0 v24</td>
+                                    <td class="table-number">26</td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>Zapatillas Clip 5.0 v24</td>
+                                    <td class="table-number">24</td>
+                                </tr>
+                                <tr>
+                                    <td>8</td>
+                                    <td>Chaqueta Moto 4.5 Lite</td>
+                                    <td class="table-number">22</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="section-header">
+                        <p class="section-eyebrow">Por categoría</p>
+                        <h2 class="section-title">Tipos de producto</h2>
+                    </div>
+
+                    <div class="card" style="background: #fff;">
+                        <div class="channel-row">
+                            <div class="channel-name">Botas</div>
+                            <div class="channel-bar-wrapper">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <div class="channel-stat">
+                                <div class="channel-stat-value">366</div>
+                            </div>
+                        </div>
+                        <div class="channel-row">
+                            <div class="channel-name">Pantalones</div>
+                            <div class="channel-bar-wrapper">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 68%"></div>
+                                </div>
+                            </div>
+                            <div class="channel-stat">
+                                <div class="channel-stat-value">248</div>
+                            </div>
+                        </div>
+                        <div class="channel-row">
+                            <div class="channel-name">Cascos</div>
+                            <div class="channel-bar-wrapper">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 60%"></div>
+                                </div>
+                            </div>
+                            <div class="channel-stat">
+                                <div class="channel-stat-value">221</div>
+                            </div>
+                        </div>
+                        <div class="channel-row">
+                            <div class="channel-name">Camisetas</div>
+                            <div class="channel-bar-wrapper">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 54%"></div>
+                                </div>
+                            </div>
+                            <div class="channel-stat">
+                                <div class="channel-stat-value">198</div>
+                            </div>
+                        </div>
+                        <div class="channel-row">
+                            <div class="channel-name">Zapatillas</div>
+                            <div class="channel-bar-wrapper">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 52%"></div>
+                                </div>
+                            </div>
+                            <div class="channel-stat">
+                                <div class="channel-stat-value">190</div>
+                            </div>
+                        </div>
+                        <div class="channel-row">
+                            <div class="channel-name">Guantes</div>
+                            <div class="channel-bar-wrapper">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 48%"></div>
+                                </div>
+                            </div>
+                            <div class="channel-stat">
+                                <div class="channel-stat-value">177</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="insight-box success" style="margin-top: 32px;">
+                <p class="insight-box-title">🥾 Botas Moto 3.5 v23: producto estrella</p>
+                <p>Con 236 add_to_cart, las Botas Moto 3.5 v23 representan el 10% de todas las conversiones. El canal que más las impulsa es Google CPC (168 de 366 botas totales). Considerar ampliar campañas de Shopping para este producto.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- MTB vs MOTO -->
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <p class="section-eyebrow">Segmentos</p>
+                <h2 class="section-title">MTB vs Moto vs ADV</h2>
+            </div>
+
+            <div class="grid-3">
+                <div class="card card-accent">
+                    <p style="color: rgba(255,255,255,0.65); font-size: 12px; margin-bottom: 8px;">MOTO</p>
+                    <div class="card-value">607</div>
+                    <div class="card-label">Add to cart</div>
+                    <p style="color: rgba(255,255,255,0.65); font-size: 13px; margin-top: 12px;">73 compras · Tasa 13,1%</p>
+                </div>
+                <div class="card">
+                    <p style="color: var(--text-tertiary); font-size: 12px; margin-bottom: 8px;">MTB</p>
+                    <div class="card-value">595</div>
+                    <div class="card-label">Add to cart</div>
+                    <p style="color: var(--text-tertiary); font-size: 13px; margin-top: 12px;">79 compras · Tasa 8,3%</p>
+                </div>
+                <div class="card">
+                    <p style="color: var(--text-tertiary); font-size: 12px; margin-bottom: 8px;">ADV</p>
+                    <div class="card-value">149</div>
+                    <div class="card-label">Add to cart</div>
+                    <p style="color: var(--text-tertiary); font-size: 13px; margin-top: 12px;">11 compras · Tasa 7,9%</p>
+                </div>
+            </div>
+
+            <div class="insight-box">
+                <p class="insight-box-title">Moto convierte mejor que MTB</p>
+                <p>El segmento Moto tiene una tasa de conversión 58% superior a MTB (13,1% vs 8,3%). Aunque el volumen es similar, Moto genera más valor. Las campañas de Google CPC traen más conversiones de Moto (botas y pantalones), mientras que Meta Ads trae más MTB.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FRICCIONES -->
+    <section id="insights" style="background: var(--bg-surface);">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-eyebrow">Diagnóstico</p>
+                <h2 class="section-title">Fricciones detectadas</h2>
+            </div>
+
+            <div class="grid-2">
+                <div class="card" style="background: #fff;">
+                    <p style="font-size: 48px; font-weight: 700; color: var(--salmon-accent);">52%</p>
+                    <p style="font-size: 14px; color: var(--text-secondary); margin-top: 8px;">de las sesiones sin conversión duran <strong>menos de 10 segundos</strong></p>
+                    <p style="font-size: 13px; color: var(--text-tertiary); margin-top: 16px;">El problema está en la relevancia del tráfico o la primera impresión de las landing pages.</p>
+                </div>
+                <div class="card" style="background: #fff;">
+                    <p style="font-size: 48px; font-weight: 700; color: var(--salmon-accent);">67%</p>
+                    <p style="font-size: 14px; color: var(--text-secondary); margin-top: 8px;">de quienes añaden al carrito <strong>no llegan a checkout</strong></p>
+                    <p style="font-size: 13px; color: var(--text-tertiary); margin-top: 16px;">Hay fricción en el paso carrito → checkout. Revisar costes de envío, opciones de pago y UX del carrito.</p>
+                </div>
+            </div>
+
+            <div class="section-header" style="margin-top: 48px;">
+                <p class="section-eyebrow">Páginas</p>
+                <h2 class="section-title">Landings con más abandono inmediato</h2>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Página de entrada</th>
+                            <th style="text-align: right;">Abandonos <10s</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>/ (Home)</td>
+                            <td class="table-number">604</td>
+                        </tr>
+                        <tr>
+                            <td>/products/botas-moto-35-v23</td>
+                            <td class="table-number">328</td>
+                        </tr>
+                        <tr>
+                            <td>/collections/cascos-moto</td>
+                            <td class="table-number">185</td>
+                        </tr>
+                        <tr>
+                            <td>/collections/mtb</td>
+                            <td class="table-number">132</td>
+                        </tr>
+                        <tr>
+                            <td>/products/zapatillas-proclip-60-endurance-mujer</td>
+                            <td class="table-number">119</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="insight-box alert">
+                <p class="insight-box-title">Las Botas Moto 3.5 v23: éxito y problema a la vez</p>
+                <p>Es el producto más vendido (236 add_to_cart) pero también tiene 328 abandonos inmediatos. Esto indica que las campañas traen tráfico interesado pero hay problemas de expectativa/precio/UX en la ficha. Revisar velocidad de carga, imágenes, precio visible y tallas disponibles.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- RECOMENDACIONES -->
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <p class="section-eyebrow">Plan de acción</p>
+                <h2 class="section-title">Recomendaciones</h2>
+            </div>
+
+            <div class="recommendation">
+                <div class="recommendation-header">
+                    <div class="recommendation-icon alert">1</div>
+                    <h3 class="recommendation-title">Revisar campañas Facebook Paid Social</h3>
+                </div>
+                <p>La campaña "social_alwayson" genera mucho tráfico pero solo convierte al 2,3% vs 14,5% de Meta Ads. Tiene un 60% de rebote. Auditar segmentación, creatividades y landing pages. Considerar pausar y reasignar presupuesto a Shopping.</p>
+            </div>
+
+            <div class="recommendation">
+                <div class="recommendation-header">
+                    <div class="recommendation-icon alert">2</div>
+                    <h3 class="recommendation-title">Optimizar el paso carrito → checkout</h3>
+                </div>
+                <p>El 67% de los usuarios que añaden al carrito no llegan a checkout. Analizar si los costes de envío se muestran tarde, si hay opciones de pago limitadas, o si hay problemas de UX en mobile (donde está el 73% del tráfico).</p>
+            </div>
+
+            <div class="recommendation">
+                <div class="recommendation-header">
+                    <div class="recommendation-icon success">3</div>
+                    <h3 class="recommendation-title">Escalar Shopping Tier 1</h3>
+                </div>
+                <p>Con un 8,9% de tasa de conversión, Shopping Tier 1 es la campaña más eficiente. Aumentar presupuesto y ampliar el feed de productos, especialmente en Botas y Pantalones Moto que son los best-sellers.</p>
+            </div>
+
+            <div class="recommendation">
+                <div class="recommendation-header">
+                    <div class="recommendation-icon info">4</div>
+                    <h3 class="recommendation-title">Potenciar remarketing para el 36% que tarda más de 7 días</h3>
+                </div>
+                <p>Un tercio de las conversiones ocurren después de la primera semana. Crear secuencias de email (Connectif) y audiencias de remarketing para usuarios que visitaron fichas de producto sin comprar.</p>
+            </div>
+
+            <div class="recommendation">
+                <div class="recommendation-header">
+                    <div class="recommendation-icon info">5</div>
+                    <h3 class="recommendation-title">Auditar ficha de Botas Moto 3.5 v23</h3>
+                </div>
+                <p>Es el producto estrella pero tiene muchos abandonos inmediatos. Revisar: velocidad de carga, precio visible desde el primer scroll, stock de tallas, imágenes de calidad y reviews. Una mejora aquí impacta directamente en el 10% de las conversiones.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">agenciaSEO.eu</div>
+                <div class="footer-text">Análisis generado con datos de GA4 vía BigQuery · Enero–Marzo 2026</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCROLL TO TOP -->
+    <button class="scroll-top" id="scrollTop" aria-label="Volver arriba">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="20" height="20">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+        </svg>
+    </button>
+
+    <script>
+        const scrollTopBtn = document.getElementById('scrollTop');
+        
+        window.addEventListener('scroll', () => {
+            scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
