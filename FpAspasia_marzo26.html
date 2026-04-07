@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Análisis de Conversión v3 — FP Aspasia</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js">
+// ---- MADURACIÓN CHART ----
+function initMaduracion() {
+  const el = document.getElementById('chartMaduracion');
+  if (!el || el._inited) return;
+  el._inited = true;
+  new Chart(el.getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ['Mismo día (0)', '1-3 días', '4-7 días', '8-30 días', '+30 días'],
+      datasets: [{
+        data: [835, 20, 18, 37, 14],
+        backgroundColor: ['#2B88D8','#5aaae8','#7685AF','#FF7F7A','#c0392b'],
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: {
+          label: ctx => ` ${ctx.raw} leads (${(ctx.raw/925*100).toFixed(1)}%)`
+        }}
+      },
+      scales: {
+        y: { grid: { color: 'rgba(0,31,120,0.06)' }, ticks: { color: '#7685AF', font: { family: 'Inter', size: 11 } } },
+        x: { grid: { display: false }, ticks: { color: '#3a4a7a', font: { family: 'Inter', size: 12 } } }
+      }
+    }
+  });
+}
+
+// ---- GEO REGION BARS ----
+function initGeo() {
+  const el = document.getElementById('regionBars');
+  if (!el || el._inited) return;
+  el._inited = true;
+  const regions = [
+    {name:'Madrid',leads:234,tasa:3.6},
+    {name:'Andalucía',leads:145,tasa:2.3},
+    {name:'Cataluña',leads:145,tasa:3.4},
+    {name:'C. Valenciana',leads:125,tasa:3.1},
+    {name:'Galicia',leads:48,tasa:2.5},
+    {name:'País Vasco',leads:35,tasa:2.4},
+    {name:'Canarias',leads:32,tasa:2.1},
+    {name:'C. y León',leads:29,tasa:2.1},
+    {name:'Aragón',leads:27,tasa:2.8},
+    {name:'R. de Murcia',leads:23,tasa:2.3},
+    {name:'C.-La Mancha',leads:22,tasa:2.0},
+    {name:'Baleares',leads:11,tasa:1.9},
+    {name:'La Rioja',leads:5,tasa:4.2},
+    {name:'Navarra',leads:7,tasa:3.0},
+    {name:'Asturias',leads:7,tasa:1.7},
+  ];
+  const maxLeads = Math.max(...regions.map(r => r.leads));
+  regions.forEach(r => {
+    const div = document.createElement('div');
+    div.className = 'geo-bar-item';
+    const tasaColor = r.tasa >= 4 ? '#7ec4f0' : r.tasa >= 3 ? '#2B88D8' : r.tasa >= 2.5 ? '#7685AF' : '#B4B4B4';
+    div.innerHTML = `
+      <span class="geo-bar-label">${r.name}</span>
+      <div class="geo-bar-track"><div class="geo-bar-fill" style="width:${Math.round(r.leads/maxLeads*100)}%;background:#2B88D8;"></div></div>
+      <span class="geo-bar-val"><strong style="color:${tasaColor};">${r.tasa}%</strong> · ${r.leads}</span>
+    `;
+    el.appendChild(div);
+  });
+}
+
+// Hook into showPage
+const __origShowPage = showPage;
+showPage = function(id, el) {
+  __origShowPage(id, el);
+  if (id === 'maduracion') initMaduracion();
+  if (id === 'geo') initGeo();
+};
+
+</script>
+<style>
+:root {
+  --blue:       #001F78;
+  --blue2:      #2B88D8;
+  --blue-light: #DDEFFF;
+  --blue-pale:  #F3F8FF;
+  --salmon:     #FF7F7A;
+  --salmon-bg:  #FFF0EF;
+  --grey:       #7685AF;
+  --grey-dark:  #616268;
+  --bg:         #FFFFFF;
+  --bg2:        #F3F8FF;
+  --bg3:        #DDEFFF;
+  --ink:        #001F78;
+  --ink2:       #3a4a7a;
+  --ink3:       #7685AF;
+  --red:        var(--salmon);
+  --red2:       #FFA8A4;
+  --sage:       var(--blue2);
+  --sage2:      #5aaae8;
+  --gold:       #7685AF;
+  --border:     rgba(0,31,120,0.10);
+  --border2:    rgba(0,31,120,0.18);
+  --card:       #FFFFFF;
+  --sans:       'Inter', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--bg); color: var(--ink); font-size: 15px; line-height: 1.7; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(255,255,255,0.96); backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border2);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 58px;
+}
+.nav-brand { font-size: 15px; font-weight: 700; color: var(--blue); letter-spacing: -0.01em; }
+.nav-brand span { color: var(--salmon); }
+.nav-links { display: flex; gap: 2px; }
+.nav-links a {
+  font-size: 13px; color: var(--ink3); text-decoration: none;
+  padding: 6px 13px; border-radius: 6px; transition: all .15s;
+  font-weight: 500;
+}
+.nav-links a:hover { background: var(--bg2); color: var(--blue); }
+.nav-links a.active { background: var(--blue); color: #fff; }
+.nav-badge {
+  font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--ink3); font-weight: 500;
+}
+
+/* PAGES */
+.page { display: none; padding-top: 58px; min-height: 100vh; }
+.page.active { display: block; animation: fadeIn .25s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; } }
+.container { max-width: 1080px; margin: 0 auto; padding: 56px 40px; }
+
+/* HERO */
+.hero {
+  padding: 72px 40px 56px;
+  background: linear-gradient(135deg, #001F78 0%, #001560 100%);
+  position: relative; overflow: hidden;
+}
+.hero::after {
+  content: 'form_submit';
+  position: absolute; right: -20px; bottom: -40px;
+  font-family: var(--serif); font-size: 160px; font-weight: 500; font-style: italic;
+  color: var(--ink3); pointer-events: none; white-space: nowrap;
+  letter-spacing: -4px;
+}
+.hero-inner { max-width: 1080px; margin: 0 auto; position: relative; }
+.hero-eyebrow {
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--salmon); margin-bottom: 18px; font-weight: 600;
+}
+.hero-title {
+  font-family: var(--serif); font-size: clamp(34px, 5vw, 54px);
+  line-height: 1.1; color: var(--white); margin-bottom: 18px; font-weight: 700; letter-spacing: -0.02em;
+}
+.hero-title em { color: var(--red2); font-style: italic; }
+.hero-sub { font-size: 16px; color: rgba(255,255,255,0.65); max-width: 560px; line-height: 1.65; margin-bottom: 44px; }
+.hero-meta { display: flex; gap: 48px; flex-wrap: wrap; }
+.hero-stat-num { font-size: 40px; font-weight: 700; color: var(--salmon); letter-spacing: -0.02em; line-height: 1; }
+.hero-stat-label { font-size: 12px; color: rgba(255,255,255,0.50); margin-top: 4px; letter-spacing: 0.02em; }
+
+/* NOTICE */
+.notice {
+  background: #fff8e1; border: 1px solid #f0c040; border-radius: 10px;
+  padding: 14px 18px; font-size: 13px; color: #7a5f00; line-height: 1.6;
+  margin-bottom: 28px;
+}
+.notice strong { color: #5a4000; font-weight: 600; }
+
+/* SECTION */
+.section-eyebrow { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue2); margin-bottom: 10px; font-weight: 600; }
+.section-title { font-size: clamp(24px,4vw,36px); font-weight: 700; color: var(--blue); line-height: 1.15; margin-bottom: 14px; letter-spacing: -0.02em; }
+.section-desc { font-size: 15px; color: var(--ink2); max-width: 660px; line-height: 1.7; margin-bottom: 36px; }
+
+/* CARDS */
+.kpi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 32px; }
+.kpi-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 24px 20px; }
+.kpi-num { font-size: 40px; font-weight: 700; color: var(--blue); line-height: 1; margin-bottom: 8px; letter-spacing: -0.02em; }
+.kpi-label { font-size: 13px; color: var(--ink2); font-weight: 500; }
+.kpi-sub { font-size: 11px; color: var(--ink3); margin-top: 5px; }
+
+.insight-box {
+  background: var(--blue-pale); border: 1px solid var(--border);
+  border-left: 3px solid var(--blue2);
+  border-radius: 0 10px 10px 0; padding: 16px 20px;
+  font-size: 14px; color: var(--ink2); line-height: 1.65; margin-bottom: 24px;
+}
+.insight-box strong { color: var(--blue); font-weight: 600; }
+
+.chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 24px; }
+.chart-card { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 24px 20px; }
+.chart-card.full { grid-column: 1/-1; }
+.chart-title { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink3); margin-bottom: 18px; }
+
+/* BARS */
+.bar-item { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.bar-label { font-size: 13px; color: var(--ink2); width: 200px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bar-label.wide { width: 240px; }
+.bar-track { flex: 1; background: var(--bg3); border-radius: 3px; height: 8px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 3px; }
+.bar-val { font-size: 12px; color: var(--ink3); width: 52px; text-align: right; flex-shrink: 0; }
+
+/* BADGES */
+.badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+.b-red { background: var(--salmon-bg); color: #c0392b; }
+.b-sage { background: var(--blue-light); color: var(--blue); }
+.b-gold { background: #fff8e1; color: #856404; }
+.b-gray { background: #f0f0f0; color: var(--grey-dark); }
+.b-ink { background: linear-gradient(135deg, #001F78 0%, #001560 100%); color: var(--bg); }
+
+/* ROUTE */
+.route { display: inline-flex; align-items: center; gap: 0; flex-wrap: wrap; }
+.route-step { font-size: 12px; padding: 3px 9px; border-radius: 20px; background: var(--bg2); color: var(--ink2); }
+.route-step.hl { background: var(--salmon-bg); color: #c0392b; }
+.route-step.hl2 { background: var(--blue-light); color: var(--blue); }
+.route-arrow { font-size: 11px; color: var(--ink3); padding: 0 3px; }
+
+/* TABLE */
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th { font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink3); font-weight: 600; padding: 8px 12px; border-bottom: 2px solid var(--border2); text-align: left; }
+.data-table td { font-size: 13px; color: var(--ink2); padding: 11px 12px; border-bottom: 1px solid var(--border); }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table td.num { font-weight: 700; color: var(--blue); font-size: 16px; }
+
+/* TABS */
+.tab-nav { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--border2); }
+.tab-btn { font-size: 12px; padding: 5px 13px; border-radius: 6px; border: 1px solid var(--border2); cursor: pointer; color: var(--ink3); background: transparent; font-family: var(--sans); font-weight: 500; transition: all .15s; white-space: nowrap; }
+.tab-btn:hover { color: var(--blue); background: var(--bg2); }
+.tab-btn.active { color: #fff; background: var(--blue); border-color: var(--blue); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; animation: fadeIn .2s ease; }
+.tab-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; }
+.tab-title { font-size: 16px; font-weight: 600; color: var(--blue); }
+.tab-n { font-size: 12px; color: var(--ink3); }
+.tab-insight { font-size: 13px; color: var(--ink2); line-height: 1.6; background: var(--blue-pale); border-left: 2px solid var(--blue2); padding: 11px 15px; border-radius: 0 8px 8px 0; margin-bottom: 18px; }
+
+/* EFFICIENCY */
+.eff-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+.eff-row:last-child { border-bottom: none; }
+.eff-url { color: var(--ink2); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; }
+.eff-badge { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 20px; flex-shrink: 0; min-width: 44px; text-align: center; }
+.eff-good { background: #e8f5ee; color: #1a7a45; }
+.eff-warn { background: #fff8e1; color: #856404; }
+.eff-bad { background: var(--salmon-bg); color: #c0392b; }
+.eff-n { font-size: 11px; color: var(--ink3); min-width: 36px; text-align: right; }
+
+/* URL ROW */
+.url-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+.url-row:last-child { border-bottom: none; }
+.url-name { color: var(--ink2); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.url-meta { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+/* CRO TABLE */
+.cro-table { width: 100%; border-collapse: collapse; }
+.cro-table th { font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink3); font-weight: 600; padding: 8px 10px; border-bottom: 2px solid var(--border2); text-align: left; }
+.cro-table td { font-size: 12px; color: var(--ink2); padding: 10px 10px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+.cro-table tr:last-child td { border-bottom: none; }
+.rate-num { font-size: 17px; font-weight: 700; color: var(--blue); }
+
+footer { background: var(--blue); color: var(--ink3); padding: 28px 40px; text-align: center; font-size: 12px; }
+footer strong { color: var(--ink2); }
+
+.scroll-top { position: fixed; bottom: 24px; right: 24px; width: 38px; height: 38px; border-radius: 50%; background: var(--salmon); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px; opacity: 0; transition: opacity .3s; z-index: 99; border: none; font-weight: 700; }
+.scroll-top.visible { opacity: 1; }
+
+@media (max-width: 768px) {
+  nav { padding: 0 18px; }
+  .nav-links { display: none; }
+  .container { padding: 36px 18px; }
+  .hero { padding: 56px 18px 36px; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .chart-grid { grid-template-columns: 1fr; }
+  .chart-card.full { grid-column: 1; }
+  .bar-label, .bar-label.wide { width: 130px; }
+}
+
+/* v3 additions */
+.kpi-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 28px; }
+.geo-bar-item { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.geo-bar-label { font-size: 12px; color: var(--ink2); width: 180px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.geo-bar-track { flex: 1; background: var(--bg3); border-radius: 3px; height: 8px; overflow: hidden; }
+.geo-bar-fill { height: 100%; border-radius: 3px; }
+.geo-bar-val { font-size: 11px; color: var(--ink3); width: 80px; text-align: right; flex-shrink: 0; }
+.mad-band { display: flex; height: 36px; border-radius: 8px; overflow: hidden; margin-bottom: 10px; }
+.mad-segment { display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: #fff; transition: all .2s; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">FP <span>Aspasia</span> · Conversión v3</div>
+  <div class="nav-links">
+    <a href="#" class="active" onclick="showPage('resumen',this)">Resumen</a>
+    <a href="#" onclick="showPage('canales',this)">Canales</a>
+    <a href="#" onclick="showPage('rutas',this)">Rutas</a>
+    <a href="#" onclick="showPage('paginas',this)">Páginas</a>
+    <a href="#" onclick="showPage('perfiles',this)">Perfiles</a>
+    <a href="#" onclick="showPage('oportunidades',this)">Oportunidades CRO</a>
+    <a href="#" onclick="showPage('maduracion',this)">Maduración</a>
+    <a href="#" onclick="showPage('geo',this)">Geografía</a>
+  </div>
+  <div class="nav-badge">form_submit · 31 mar 2026</div>
+</nav>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- ===================== RESUMEN ===================== -->
+<div class="page active" id="page-resumen">
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">FP Aspasia · fpaspasia.com · Evento form_submit</div>
+      <h1 class="hero-title">Rutas de conversión<br><em>form_submit</em></h1>
+      <p class="hero-sub">Análisis de 83 sesiones que culminan con el envío de un formulario de solicitud de ciclo formativo. Se estudian los canales de entrada, el recorrido por el site y los ciclos que concentran las matriculaciones.</p>
+      <div class="hero-meta">
+        <div><div class="hero-stat-num">83</div><div class="hero-stat-label">Sesiones analizadas</div></div>
+        <div><div class="hero-stat-num">62,7%</div><div class="hero-stat-label">Canal Direct</div></div>
+        <div><div class="hero-stat-num">4,4</div><div class="hero-stat-label">Media de pasos</div></div>
+        <div><div class="hero-stat-num">11</div><div class="hero-stat-label">Ciclos identificados</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="notice">
+      <strong>Contexto importante:</strong> Este dataset recoge solo 83 sesiones frente a las 2.964 del informe generate_lead. Se trata de un volumen pequeño —posiblemente un periodo corto o un segmento específico de tráfico— lo que limita la significancia estadística de algunos datos. Las tendencias son orientativas; los ciclos con 1-2 conversiones no son concluyentes por sí solos.
+    </div>
+
+    <div class="section-eyebrow">Conclusiones principales</div>
+    <h2 class="section-title">Lo más relevante</h2>
+    <p class="section-desc">Site diferente al de cursos cortos: fpaspasia.com opera ciclos de FP (grado medio y superior), con journeys más largos y un perfil de usuario que compara opciones antes de decidir.</p>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-num">4,4</div>
+        <div class="kpi-label">Media de pasos hasta conversión</div>
+        <div class="kpi-sub">Vs. 2,8 en el informe generate_lead — recorrido más largo</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">11</div>
+        <div class="kpi-label">Leads: Coordinación de Emergencias</div>
+        <div class="kpi-sub">Ciclo más solicitado, muy por encima del resto</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">9</div>
+        <div class="kpi-label">Sesiones que entran por Muchas Gracias</div>
+        <div class="kpi-sub">Señal de tráfico de retorno o reengagement post-conversión</div>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <strong>Diferencia clave respecto al site de cursos cortos:</strong> El journey medio aquí es de 4,4 pasos (vs. 2,8), y el canal Direct domina con un 62,7%. Esto indica que muchos usuarios ya conocen el site —probablemente vienen de campañas de Meta que no se atribuyen correctamente a paid— y navegan varias páginas comparando ciclos antes de enviar el formulario.
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart-card">
+        <div class="chart-title">Ciclos con más solicitudes (form_submit)</div>
+        <div class="bar-item"><span class="bar-label">Coordinación emergencias/prot. civil</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--salmon);"></div></div><span class="bar-val">11</span></div>
+        <div class="bar-item"><span class="bar-label">Estilismo y dirección peluquería</span><div class="bar-track"><div class="bar-fill" style="width:63%;background:var(--salmon);"></div></div><span class="bar-val">7</span></div>
+        <div class="bar-item"><span class="bar-label">Administración y finanzas</span><div class="bar-track"><div class="bar-fill" style="width:63%;background:var(--salmon);"></div></div><span class="bar-val">7</span></div>
+        <div class="bar-item"><span class="bar-label">Patronaje y moda online</span><div class="bar-track"><div class="bar-fill" style="width:54%;background:var(--salmon);"></div></div><span class="bar-val">6</span></div>
+        <div class="bar-item"><span class="bar-label">Transporte y logística</span><div class="bar-track"><div class="bar-fill" style="width:54%;background:var(--salmon);"></div></div><span class="bar-val">6</span></div>
+        <div class="bar-item"><span class="bar-label">Peluquería y cosmética capilar</span><div class="bar-track"><div class="bar-fill" style="width:45%;background:var(--light-pink);"></div></div><span class="bar-val">5</span></div>
+        <div class="bar-item"><span class="bar-label">Dietética</span><div class="bar-track"><div class="bar-fill" style="width:36%;background:var(--light-pink);"></div></div><span class="bar-val">4</span></div>
+        <div class="bar-item"><span class="bar-label">Dirección de cocina</span><div class="bar-track"><div class="bar-fill" style="width:27%;background:var(--light-pink);"></div></div><span class="bar-val">3</span></div>
+        <div class="bar-item"><span class="bar-label">Educación infantil</span><div class="bar-track"><div class="bar-fill" style="width:27%;background:var(--light-pink);"></div></div><span class="bar-val">3</span></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Ciclos más visitados en el recorrido (intervención total)</div>
+        <p style="font-size:12px;color:var(--ink3);margin-bottom:14px;">Apariciones en cualquier paso, no solo en la conversión final</p>
+        <div class="bar-item"><span class="bar-label">Coord. emergencias/prot. civil</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--light-blue);"></div></div><span class="bar-val">21</span></div>
+        <div class="bar-item"><span class="bar-label">Administración y finanzas</span><div class="bar-track"><div class="bar-fill" style="width:47%;background:#5aaae8;"></div></div><span class="bar-val">10</span></div>
+        <div class="bar-item"><span class="bar-label">Estilismo y dirección peluquería</span><div class="bar-track"><div class="bar-fill" style="width:47%;background:#5aaae8;"></div></div><span class="bar-val">10</span></div>
+        <div class="bar-item"><span class="bar-label">Patronaje y moda online</span><div class="bar-track"><div class="bar-fill" style="width:33%;background:#5aaae8;"></div></div><span class="bar-val">7</span></div>
+        <div class="bar-item"><span class="bar-label">Dietética / transporte-log.</span><div class="bar-track"><div class="bar-fill" style="width:28%;background:#5aaae8;"></div></div><span class="bar-val">6</span></div>
+        <div class="bar-item"><span class="bar-label">Peluquería y cosmética</span><div class="bar-track"><div class="bar-fill" style="width:23%;background:#5aaae8;"></div></div><span class="bar-val">5</span></div>
+        <div class="bar-item"><span class="bar-label">Soldadura y calderería</span><div class="bar-track"><div class="bar-fill" style="width:14%;background:var(--grey-blue);"></div></div><span class="bar-val">3</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CANALES ===================== -->
+<div class="page" id="page-canales">
+  <div class="container">
+    <div class="section-eyebrow">Origen del tráfico</div>
+    <h2 class="section-title">Análisis por canal</h2>
+    <p class="section-desc">Direct domina de forma inusual (62,7%). En este contexto, es probable que recoja sesiones de campañas de Meta no atribuidas correctamente —el usuario hace clic en un anuncio, visita el site, lo cierra y vuelve después— y que GA4 registre esa segunda visita como directa.</p>
+
+    <div class="notice">
+      <strong>Sobre el sesgo de Direct:</strong> Las campañas de Meta (Instagram/Facebook) tienen una alta tasa de atribución a Direct porque el tráfico desde la app móvil de Instagram no pasa la cabecera de referrer a GA4. El utm_campaign <code>lead_gen_descartados</code> y <code>lead_gen_aprobados</code> aparece en sesiones etiquetadas como Direct, lo que confirma este fenómeno. El volumen real de paid Meta es mayor del que muestra el dato de canal.
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-num">52</div>
+        <div class="kpi-label">Leads desde Direct</div>
+        <div class="kpi-sub">62,7% — incluye probable tráfico paid Meta no atribuido</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">12</div>
+        <div class="kpi-label">Leads desde Referral (directorios)</div>
+        <div class="kpi-sub">escuelaoficios.net + institutoeuropa.com · 14,5%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">6</div>
+        <div class="kpi-label">Leads desde Paid Meta identificados</div>
+        <div class="kpi-sub">mt / paid — solo los que conservan UTM</div>
+      </div>
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart-card">
+        <div class="chart-title">Leads por canal (sesiones)</div>
+        <div class="bar-item"><span class="bar-label">Direct / none</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:#1a1612;"></div></div><span class="bar-val">52</span></div>
+        <div class="bar-item"><span class="bar-label">Referral (directorios)</span><div class="bar-track"><div class="bar-fill" style="width:23%;background:var(--light-blue);"></div></div><span class="bar-val">12</span></div>
+        <div class="bar-item"><span class="bar-label">Organic Google</span><div class="bar-track"><div class="bar-fill" style="width:15%;background:var(--light-blue);"></div></div><span class="bar-val">8</span></div>
+        <div class="bar-item"><span class="bar-label">Paid Meta/RRSS</span><div class="bar-track"><div class="bar-fill" style="width:11%;background:var(--salmon);"></div></div><span class="bar-val">6</span></div>
+        <div class="bar-item"><span class="bar-label">Paid Google</span><div class="bar-track"><div class="bar-fill" style="width:4%;background:var(--salmon);"></div></div><span class="bar-val">2</span></div>
+        <div class="bar-item"><span class="bar-label">ChatGPT / Email</span><div class="bar-track"><div class="bar-fill" style="width:4%;background:var(--grey-blue);"></div></div><span class="bar-val">2</span></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Media de pasos por canal</div>
+        <p style="font-size:12px;color:var(--ink3);margin-bottom:14px;">Los directorios convierten rápido. Organic Google y Paid Meta navegan mucho antes de decidir.</p>
+        <div class="bar-item"><span class="bar-label">Referral (directorios)</span><div class="bar-track"><div class="bar-fill" style="width:43%;background:var(--light-blue);"></div></div><span class="bar-val">×3,8</span></div>
+        <div class="bar-item"><span class="bar-label">Direct</span><div class="bar-track"><div class="bar-fill" style="width:48%;background:var(--grey-blue);"></div></div><span class="bar-val">×4,2</span></div>
+        <div class="bar-item"><span class="bar-label">Paid Google</span><div class="bar-track"><div class="bar-fill" style="width:63%;background:var(--salmon);"></div></div><span class="bar-val">×5,5</span></div>
+        <div class="bar-item"><span class="bar-label">Organic Google</span><div class="bar-track"><div class="bar-fill" style="width:73%;background:var(--salmon);"></div></div><span class="bar-val">×6,4</span></div>
+        <div class="bar-item"><span class="bar-label">Paid Meta/RRSS</span><div class="bar-track"><div class="bar-fill" style="width:78%;background:var(--salmon);"></div></div><span class="bar-val">×6,8</span></div>
+      </div>
+    </div>
+
+    <div class="chart-card full" style="margin-bottom:0;">
+      <div class="chart-title">Campañas de pago identificadas (utm_campaign)</div>
+      <p style="font-size:12px;color:var(--ink3);margin-bottom:18px;">Solo 19 sesiones conservan UTM de campaña. El resto (especialmente de Meta) se registra como Direct.</p>
+      <table class="data-table">
+        <thead><tr><th>Campaña</th><th>Plataforma</th><th>Sesiones</th><th>Media pasos</th><th>Nota</th></tr></thead>
+        <tbody>
+          <tr><td>lead_gen_aprobados</td><td><span class="badge b-ink">Meta Ads</span></td><td class="num">8</td><td>5,9</td><td style="font-size:12px;color:var(--ink3);">Audiencia validada — recorrido largo, usuario que compara</td></tr>
+          <tr><td>lead_gen_descartados</td><td><span class="badge b-ink">Meta Ads</span></td><td class="num">8</td><td>5,4</td><td style="font-size:12px;color:var(--ink3);">Audiencia descartada — aun así convierte; revisar segmentación</td></tr>
+          <tr><td>dircocin_gs_d_pmax</td><td><span class="badge b-red">Google PMax</span></td><td class="num">1</td><td>8</td><td style="font-size:12px;color:var(--ink3);">Dirección Cocina a distancia — recorrido máximo antes de submit</td></tr>
+          <tr><td>adminfin_gs_d_search</td><td><span class="badge b-red">Google Search</span></td><td class="num">1</td><td>4</td><td style="font-size:12px;color:var(--ink3);">Administración y Finanzas — conversión relativamente directa</td></tr>
+          <tr><td>eduinf_gs_d_search</td><td><span class="badge b-red">Google Search</span></td><td class="num">1</td><td>4</td><td style="font-size:12px;color:var(--ink3);">Educación Infantil — conversión relativamente directa</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== RUTAS ===================== -->
+<div class="page" id="page-rutas">
+  <div class="container">
+    <div class="section-eyebrow">Recorridos de usuario</div>
+    <h2 class="section-title">Rutas hasta la conversión</h2>
+    <p class="section-desc">A diferencia del site de cursos cortos, aquí el cluster final es casi siempre "Ciclo" seguido de "Muchas Gracias". El usuario visita la ficha del ciclo y ahí envía el formulario. Las rutas más largas pasan antes por varios filtros (Tipo de Formación, Familia Profesional).</p>
+
+    <div class="insight-box">
+      <strong>9 sesiones entran directamente desde Muchas Gracias.</strong> Esto indica usuarios que ya habían convertido previamente y vuelven al site (reengagement o segunda solicitud). GA4 puede registrar la sesión inicial como concluida y la vuelta como una nueva sesión que empieza en la URL de confirmación.
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart-card">
+        <div class="chart-title">Top rutas (secuencia de clusters)</div>
+        <div style="display:flex;flex-direction:column;gap:11px;">
+          <div class="url-row">
+            <div class="route"><span class="route-step hl">Ciclo</span><span class="route-arrow">›</span><span class="route-step">Muchas Gracias</span></div>
+            <div class="url-meta"><span class="badge b-red">11</span></div>
+          </div>
+          <div class="url-row">
+            <div class="route"><span class="route-step">Muchas Gracias</span></div>
+            <div class="url-meta"><span class="badge b-gray">9 (reengagement)</span></div>
+          </div>
+          <div class="url-row">
+            <div class="route"><span class="route-step hl">Ciclo</span><span class="route-arrow">›</span><span class="route-step hl">Ciclo</span><span class="route-arrow">›</span><span class="route-step">Muchas Gracias</span></div>
+            <div class="url-meta"><span class="badge b-red">6</span></div>
+          </div>
+          <div class="url-row">
+            <div class="route"><span class="route-step hl2">FP</span><span class="route-arrow">›</span><span class="route-step hl2">FP</span><span class="route-arrow">›</span><span class="route-step hl">Ciclo</span><span class="route-arrow">›</span><span class="route-step">Gracias</span></div>
+            <div class="url-meta"><span class="badge b-sage">3</span></div>
+          </div>
+          <div class="url-row">
+            <div class="route"><span class="route-step">Tipo Form.</span><span class="route-arrow">›</span><span class="route-step">Tipo Form.</span><span class="route-arrow">›</span><span class="route-step">Tipo Form.</span><span class="route-arrow">›</span><span class="route-step hl">Ciclo</span><span class="route-arrow">›</span><span class="route-step">Gracias</span></div>
+            <div class="url-meta"><span class="badge b-sage">3</span></div>
+          </div>
+          <div class="url-row">
+            <div class="route" style="font-size:11px;"><span class="route-step">Tipo F.</span><span class="route-arrow">›</span><span class="route-step">×6</span><span class="route-arrow">›</span><span class="route-step hl">Ciclo</span><span class="route-arrow">›</span><span class="route-step">Gracias</span></div>
+            <div class="url-meta"><span class="badge b-gold">3 (6 filtros)</span></div>
+          </div>
+          <div class="url-row">
+            <div class="route"><span class="route-step">Tipo Form.</span><span class="route-arrow">›</span><span class="route-step hl">Ciclo</span><span class="route-arrow">›</span><span class="route-step">Muchas Gracias</span></div>
+            <div class="url-meta"><span class="badge b-sage">2</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-title">Distribución de pasos hasta conversión</div>
+        <p style="font-size:12px;color:var(--ink3);margin-bottom:14px;">Distribución más uniforme que en generate_lead. Muchos usuarios necesitan 6-8 pasos.</p>
+        <div class="bar-item"><span class="bar-label">1 paso</span><div class="bar-track"><div class="bar-fill" style="width:55%;background:var(--light-blue);"></div></div><span class="bar-val">10 (12%)</span></div>
+        <div class="bar-item"><span class="bar-label">2 pasos</span><div class="bar-track"><div class="bar-fill" style="width:61%;background:#5aaae8;"></div></div><span class="bar-val">11 (13%)</span></div>
+        <div class="bar-item"><span class="bar-label">3 pasos</span><div class="bar-track"><div class="bar-fill" style="width:55%;background:#5aaae8;"></div></div><span class="bar-val">10 (12%)</span></div>
+        <div class="bar-item"><span class="bar-label">4 pasos</span><div class="bar-track"><div class="bar-fill" style="width:55%;background:#7685AF;"></div></div><span class="bar-val">10 (12%)</span></div>
+        <div class="bar-item"><span class="bar-label">5 pasos</span><div class="bar-track"><div class="bar-fill" style="width:50%;background:#7685AF;"></div></div><span class="bar-val">9 (11%)</span></div>
+        <div class="bar-item"><span class="bar-label">6 pasos</span><div class="bar-track"><div class="bar-fill" style="width:61%;background:var(--salmon);"></div></div><span class="bar-val">11 (13%)</span></div>
+        <div class="bar-item"><span class="bar-label">7 pasos</span><div class="bar-track"><div class="bar-fill" style="width:22%;background:var(--salmon);"></div></div><span class="bar-val">4 (5%)</span></div>
+        <div class="bar-item"><span class="bar-label">8 pasos (máx. export)</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--salmon);"></div></div><span class="bar-val">18 (22%)</span></div>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <strong>El 22% de las sesiones alcanza el límite de 8 pasos.</strong> Esto es una señal importante: la exportación tiene un límite de 8 pasos y hay un número relevante de usuarios que lo agota. El journey real de estos usuarios podría ser más largo. Para ciclos de FP, con decisiones de alta implicación (precio, duración, titulación oficial), es esperable un proceso de comparación más extenso.
+    </div>
+
+    <div class="chart-card full">
+      <div class="chart-title">Primer cluster visitado vs. último ciclo donde se envía el formulario</div>
+      <p style="font-size:12px;color:var(--ink3);margin-bottom:18px;">La mayoría de usuarios que entran por un ciclo específico convierten en ese mismo ciclo. Los que entran por filtros navegacionales acaban en ciclos más variados.</p>
+      <table class="data-table">
+        <thead><tr><th>Primer cluster</th><th>Sesiones</th><th>Patrón observado</th></tr></thead>
+        <tbody>
+          <tr><td>Ciclo (entrada directa)</td><td class="num">26</td><td style="font-size:12px;color:var(--ink3);">Alta intención — llegan buscando el ciclo concreto. Conversion casi inmediata.</td></tr>
+          <tr><td>Tipo De Formacion (online/presencial)</td><td class="num">20</td><td style="font-size:12px;color:var(--ink3);">Exploración por modalidad — navegan varios filtros antes de decidir el ciclo.</td></tr>
+          <tr><td>Inicio (home)</td><td class="num">9</td><td style="font-size:12px;color:var(--ink3);">Recorrido largo (media 7 pasos) — usuario sin ciclo definido al llegar.</td></tr>
+          <tr><td>Muchas Gracias</td><td class="num">9</td><td style="font-size:12px;color:var(--ink3);">Reengagement — ya habían convertido antes. Segunda solicitud o visita de confirmación.</td></tr>
+          <tr><td>Formacion Profesional (hub)</td><td class="num">8</td><td style="font-size:12px;color:var(--ink3);">Exploración por nivel — pasan por varias páginas de FP antes de llegar a un ciclo.</td></tr>
+          <tr><td>Familia Profesional</td><td class="num">4</td><td style="font-size:12px;color:var(--ink3);">Búsqueda por sector profesional (textil, hostelería…)</td></tr>
+          <tr><td>Tipo De Estudio (GM/GS)</td><td class="num">4</td><td style="font-size:12px;color:var(--ink3);">Exploración por nivel de titulación.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PÁGINAS ===================== -->
+<div class="page" id="page-paginas">
+  <div class="container">
+    <div class="section-eyebrow">Rendimiento de páginas de entrada</div>
+    <h2 class="section-title">Eficiencia por URL de inicio</h2>
+    <p class="section-desc">Las fichas de ciclo son las entradas más eficientes (pocos pasos). Las páginas de filtrado y exploración generan recorridos más largos, especialmente la home y las páginas de Formación Profesional.</p>
+
+    <div class="notice">
+      <strong>Nota de interpretación:</strong> Con volúmenes pequeños (muchas URLs con 1-2 sesiones) los datos individuales no son estadísticamente robustos. Las páginas con menos de 4 sesiones se excluyen del ranking de eficiencia.
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart-card">
+        <div class="chart-title" style="color:var(--sage);">Entradas más eficientes</div>
+        <div class="eff-row"><span class="eff-url">/ciclo/coord.-emergencias-prot.-civil/</span><span class="eff-badge eff-good">×3,3</span><span class="eff-n">n=12</span></div>
+        <div class="eff-row"><span class="eff-url">/ciclo/patronaje-y-moda-online/</span><span class="eff-badge eff-good">×2,5</span><span class="eff-n">n=2</span></div>
+        <div class="eff-row"><span class="eff-url">/ciclo/direccion-de-cocina-distancia/</span><span class="eff-badge eff-good">×3,5</span><span class="eff-n">n=2</span></div>
+        <div class="eff-row"><span class="eff-url">/tipo-de-formacion/online/</span><span class="eff-badge eff-warn">×5,7</span><span class="eff-n">n=18</span></div>
+        <div class="eff-row"><span class="eff-url">/tipo-de-estudio/grado-superior/</span><span class="eff-badge eff-warn">×5,8</span><span class="eff-n">n=4</span></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title" style="color:var(--red);">Entradas con recorrido más largo</div>
+        <div class="eff-row"><span class="eff-url">fpaspasia.com/ (home)</span><span class="eff-badge eff-bad">×7,0</span><span class="eff-n">n=9</span></div>
+        <div class="eff-row"><span class="eff-url">/tipo-de-formacion/presencial/</span><span class="eff-badge eff-bad">×6,0</span><span class="eff-n">n=2</span></div>
+        <div class="eff-row"><span class="eff-url">/formacion-profesional/</span><span class="eff-badge eff-bad">×5,9</span><span class="eff-n">n=7</span></div>
+        <div class="eff-row"><span class="eff-url">/tipo-de-estudio/grado-superior/</span><span class="eff-badge eff-warn">×5,8</span><span class="eff-n">n=4</span></div>
+        <div class="eff-row"><span class="eff-url">/tipo-de-formacion/online/</span><span class="eff-badge eff-warn">×5,7</span><span class="eff-n">n=18</span></div>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <strong>La home requiere 7 pasos de media.</strong> Es la entrada menos eficiente. El usuario que llega a la home no sabe aún qué ciclo quiere —navega por tipo de formación, familia profesional y varios ciclos antes de decidir. Una estructura de home con acceso directo a los ciclos más demandados (Coordinación de Emergencias, Estilismo, Administración) reduciría este recorrido.
+    </div>
+
+    <div class="insight-box">
+      <strong>/tipo-de-formacion/online/ es la entrada más frecuente (18 sesiones) pero con recorrido de ×5,7.</strong> Es la página de filtrado principal. Mejorar su ordenación (mostrando primero los ciclos con más solicitudes) y añadir recomendaciones personalizadas podría reducir los pasos intermedios.
+    </div>
+
+    <div class="chart-card full">
+      <div class="chart-title">Top páginas con mayor intervención en el recorrido completo</div>
+      <table class="data-table">
+        <thead><tr><th>URL</th><th>Tipo</th><th>Apariciones</th></tr></thead>
+        <tbody>
+          <tr><td style="font-size:12px;color:var(--sage);">fpaspasia.com/tipo-de-formacion/online/</td><td><span class="badge b-sage">Filtro</span></td><td class="num">—</td></tr>
+          <tr><td style="font-size:12px;color:var(--ink2);">/ciclo/grado-superior-en-coordinacion-emergencias/</td><td><span class="badge b-red">Convierte</span></td><td class="num">21 aparic.</td></tr>
+          <tr><td style="font-size:12px;color:var(--ink2);">/formacion-profesional/</td><td><span class="badge b-gray">Hub FP</span></td><td class="num">—</td></tr>
+          <tr><td style="font-size:12px;color:var(--ink2);">/ciclo/administracion-y-finanzas-a-distancia/</td><td><span class="badge b-red">Convierte</span></td><td class="num">10 aparic.</td></tr>
+          <tr><td style="font-size:12px;color:var(--ink2);">/ciclo/estilismo-y-direccion-de-peluqueria-a-distancia/</td><td><span class="badge b-red">Convierte</span></td><td class="num">10 aparic.</td></tr>
+          <tr><td style="font-size:12px;color:var(--ink2);">/tipo-de-estudio/grado-superior/</td><td><span class="badge b-sage">Filtro</span></td><td class="num">—</td></tr>
+          <tr><td style="font-size:12px;color:var(--ink2);">/ciclo/grado-superior-en-patronaje-y-moda-online/</td><td><span class="badge b-red">Convierte</span></td><td class="num">7 aparic.</td></tr>
+          <tr><td style="font-size:12px;color:var(--ink2);">/ciclo/dietetica-a-distancia/</td><td><span class="badge b-red">Convierte</span></td><td class="num">6 aparic.</td></tr>
+          <tr><td style="font-size:12px;color:var(--ink2);">/ciclo/transporte-y-logistica-a-distancia/</td><td><span class="badge b-red">Convierte</span></td><td class="num">6 aparic.</td></tr>
+          <tr><td style="font-size:12px;color:var(--ink2);">fpaspasia.com/ (home)</td><td><span class="badge b-gray">Inicio</span></td><td class="num">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PERFILES ===================== -->
+<div class="page" id="page-perfiles">
+  <div class="container">
+    <div class="section-eyebrow">Perfil de usuario × ciclo final</div>
+    <h2 class="section-title">¿Quién solicita qué ciclo?</h2>
+    <p class="section-desc">Cruzando la primera página visitada con el ciclo donde se envía el formulario. El volumen es reducido, por lo que los patrones son orientativos pero muestran tendencias claras en los segmentos con más sesiones.</p>
+
+    <div class="tab-nav" id="profileTabs2"></div>
+    <div id="profilePanels2"></div>
+  </div>
+</div>
+
+<!-- ===================== OPORTUNIDADES CRO ===================== -->
+<div class="page" id="page-oportunidades">
+  <div class="container">
+    <div class="section-eyebrow">Optimización de conversión</div>
+    <h2 class="section-title">Ciclos visitados que no cierran solicitud</h2>
+    <p class="section-desc">Ciclos que aparecen en el recorrido de varias sesiones pero que pocas veces son el punto donde se envía el formulario. En un site de FP, con decisiones de alta implicación, es normal que el usuario visite varios ciclos antes de decidirse. Aun así, hay casos donde la diferencia entre visitas y solicitudes es llamativa.</p>
+
+    <div class="notice">
+      <strong>Limitación del dato:</strong> Con 83 sesiones totales, los ciclos con 1-3 visitas sin conversión no son estadísticamente concluyentes. Este análisis es más válido para los ciclos con 5+ apariciones en el recorrido.
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-num" style="color:var(--red);">Coord. emergencias</div>
+        <div class="kpi-label">Ciclo más visitado Y más solicitado</div>
+        <div class="kpi-sub">21 apariciones en el recorrido · 11 solicitudes = 52% de conversión sobre visitas</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num" style="color:var(--gold);">Admin. y finanzas</div>
+        <div class="kpi-label">Aparece mucho, convierte menos</div>
+        <div class="kpi-sub">10 apariciones en el recorrido · 7 solicitudes = 70% — oportunidad de mejora</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num" style="color:var(--sage);">Soldadura y calderería</div>
+        <div class="kpi-label">Aparece pero no convierte en esta muestra</div>
+        <div class="kpi-sub">3 apariciones · 1 solicitud — ciclo muy de nicho, revisar ficha</div>
+      </div>
+    </div>
+
+    <div class="chart-card" style="margin-bottom:20px;">
+      <div class="chart-title">Ciclos: apariciones en el recorrido vs. solicitudes generadas</div>
+      <p style="font-size:12px;color:var(--ink3);margin-bottom:18px;">La diferencia entre la barra gris (visitas) y la barra de color (solicitudes) indica cuánto tráfico "escapa" en esa ficha.</p>
+      <div id="ciclosBars"></div>
+    </div>
+
+    <div class="chart-card" style="margin-bottom:20px;">
+      <div class="chart-title">Análisis detallado por ciclo</div>
+      <table class="cro-table" id="ciclosTable"></table>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-title">¿Qué revisar en una ficha de ciclo con baja conversión?</div>
+      <p style="font-size:13px;color:var(--ink2);line-height:1.6;margin-bottom:20px;">En ciclos de FP, la decisión implica más tiempo y más información que en cursos cortos. Los factores que más influyen son:</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div>
+          <div style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--sage);margin-bottom:12px;font-weight:500;">Información del ciclo</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;gap:10px;font-size:13px;color:var(--ink2);"><span style="color:var(--light-blue);flex-shrink:0;">→</span><span>Salidas profesionales claras y con ejemplos de empleos reales</span></div>
+            <div style="display:flex;gap:10px;font-size:13px;color:var(--ink2);"><span style="color:var(--light-blue);flex-shrink:0;">→</span><span>Duración, carga lectiva y compatibilidad con trabajo explicadas</span></div>
+            <div style="display:flex;gap:10px;font-size:13px;color:var(--ink2);"><span style="color:var(--light-blue);flex-shrink:0;">→</span><span>Precio, becas y formas de financiación visibles y contextualizadas</span></div>
+            <div style="display:flex;gap:10px;font-size:13px;color:var(--ink2);"><span style="color:var(--light-blue);flex-shrink:0;">→</span><span>Titulación oficial: certificación, equivalencias y convalidaciones</span></div>
+            <div style="display:flex;gap:10px;font-size:13px;color:var(--ink2);"><span style="color:var(--light-blue);flex-shrink:0;">→</span><span>Diferenciación respecto a otros centros que ofrecen el mismo ciclo</span></div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--red);margin-bottom:12px;font-weight:500;">CTA y proceso de solicitud</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;gap:10px;font-size:13px;color:var(--ink2);"><span style="color:var(--salmon);flex-shrink:0;">→</span><span>Formulario corto y visible: cuantos menos campos, mayor conversión</span></div>
+            <div style="display:flex;gap:10px;font-size:13px;color:var(--ink2);"><span style="color:var(--salmon);flex-shrink:0;">→</span><span>CTA secundario: descarga de guía del ciclo (lead magnet)</span></div>
+            <div style="display:flex;gap:10px;font-size:13px;color:var(--ink2);"><span style="color:var(--salmon);flex-shrink:0;">→</span><span>Testimonios de antiguos alumnos del ciclo específico</span></div>
+            <div style="display:flex;gap:10px;font-size:13px;color:var(--ink2);"><span style="color:var(--salmon);flex-shrink:0;">→</span><span>Chat o WhatsApp visible para resolver dudas sin salir de la ficha</span></div>
+            <div style="display:flex;gap:10px;font-size:13px;color:var(--ink2);"><span style="color:var(--salmon);flex-shrink:0;">→</span><span>Próximas fechas de matriculación como elemento de urgencia</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===== MADURACIÓN ===== -->
+<div class="page" id="page-maduracion">
+  <div class="container">
+    <div class="section-eyebrow">Tiempo hasta la conversión</div>
+    <h2 class="section-title">Maduración del lead</h2>
+    <p class="section-desc">Días que transcurren entre la primera visita del usuario al site y el momento en que envía el formulario. En FP Aspasia el funnel es casi inmediato: 9 de cada 10 usuarios convierten el mismo día que entran.</p>
+
+    <div class="notice">
+      <strong>Contexto del dato:</strong> La mayoría del tráfico llega desde campañas de Google CPC y PMax que apuntan directamente a landing pages con formulario. Eso explica la conversión casi inmediata. Los casos con maduración larga (+7 días) son principalmente tráfico directo y orgánico — usuarios que investigan antes de decidir.
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card accent">
+        <div class="kpi-num">90,3%</div>
+        <div class="kpi-label">Convierten el mismo día</div>
+        <div class="kpi-sub">835 de 925 sesiones · días_hasta_conversion = 0</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">0</div>
+        <div class="kpi-label">Mediana de días hasta conversión</div>
+        <div class="kpi-sub">El caso típico convierte en la primera visita</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">3,4</div>
+        <div class="kpi-label">Media de días (con cola larga)</div>
+        <div class="kpi-sub">La media la sube el 5,5% que tarda más de 7 días</div>
+      </div>
+    </div>
+
+    <div class="chart-card full" style="margin-bottom:20px;">
+      <div class="chart-title">Distribución de maduración · % de leads por franja de tiempo</div>
+      <div class="mad-band" style="margin:8px 0 18px;">
+        <div class="mad-segment" style="width:90.3%;background:#2B88D8;">90,3%</div>
+        <div class="mad-segment" style="width:2.2%;background:#5aaae8;font-size:9px;">2,2</div>
+        <div class="mad-segment" style="width:1.9%;background:#7685AF;font-size:9px;">1,9</div>
+        <div class="mad-segment" style="width:4.0%;background:#FF7F7A;">4,0%</div>
+        <div class="mad-segment" style="width:1.5%;background:#FF7F7A;font-size:9px;">1,5</div>
+      </div>
+      <div style="display:flex;gap:20px;flex-wrap:wrap;font-size:12px;color:var(--ink2);margin-bottom:20px;">
+        <span style="display:flex;align-items:center;gap:6px;"><span style="width:12px;height:12px;border-radius:2px;background:#2B88D8;display:inline-block;"></span>Mismo día (0) · 835 leads</span>
+        <span style="display:flex;align-items:center;gap:6px;"><span style="width:12px;height:12px;border-radius:2px;background:#5aaae8;display:inline-block;"></span>1-3 días · 20</span>
+        <span style="display:flex;align-items:center;gap:6px;"><span style="width:12px;height:12px;border-radius:2px;background:#7685AF;display:inline-block;"></span>4-7 días · 18</span>
+        <span style="display:flex;align-items:center;gap:6px;"><span style="width:12px;height:12px;border-radius:2px;background:#FF7F7A;display:inline-block;"></span>8-30 días · 37</span>
+        <span style="display:flex;align-items:center;gap:6px;"><span style="width:12px;height:12px;border-radius:2px;background:#FF7F7A;display:inline-block;"></span>+30 días · 14</span>
+      </div>
+      <div style="position:relative;height:220px;"><canvas id="chartMaduracion"></canvas></div>
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart-card">
+        <div class="chart-title">Maduración por canal · % que convierte el mismo día</div>
+        <div class="geo-bar-item"><span class="geo-bar-label">Otros (UTM variados)</span><div class="geo-bar-track"><div class="geo-bar-fill" style="width:100%;background:#2B88D8;"></div></div><span class="geo-bar-val" style="color:#7ec4f0;font-weight:700;">93,9% · n=412</span></div>
+        <div class="geo-bar-item"><span class="geo-bar-label">Google CPC</span><div class="geo-bar-track"><div class="geo-bar-fill" style="width:95%;background:#2B88D8;"></div></div><span class="geo-bar-val" style="color:#7ec4f0;font-weight:700;">89,3% · n=459</span></div>
+        <div class="geo-bar-item"><span class="geo-bar-label">Google PMax</span><div class="geo-bar-track"><div class="geo-bar-fill" style="width:93%;background:#7685AF;"></div></div><span class="geo-bar-val">87,5% · n=32</span></div>
+        <div class="geo-bar-item"><span class="geo-bar-label">Direct</span><div class="geo-bar-track"><div class="geo-bar-fill" style="width:57%;background:#FF7F7A;"></div></div><span class="geo-bar-val" style="color:#c0392b;">53,3% · n=15</span></div>
+        <div class="geo-bar-item"><span class="geo-bar-label">Paid Meta</span><div class="geo-bar-track"><div class="geo-bar-fill" style="width:35%;background:#FF7F7A;"></div></div><span class="geo-bar-val" style="color:#c0392b;">33,3% · n=3</span></div>
+        <div class="geo-bar-item"><span class="geo-bar-label">Organic Google</span><div class="geo-bar-track"><div class="geo-bar-fill" style="width:27%;background:#FF7F7A;"></div></div><span class="geo-bar-val" style="color:#c0392b;">25,0% · n=4</span></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">El 5,5% con maduración larga (&gt;7 días) · perfil</div>
+        <p style="font-size:13px;color:var(--ink2);line-height:1.6;margin-bottom:16px;">51 leads tardaron más de 7 días en convertir desde su primera visita. Media de 59 días — incluyen casos extremos.</p>
+        <table class="data-table">
+          <thead><tr><th>Característica</th><th>Detalle</th></tr></thead>
+          <tbody>
+            <tr><td style="color:var(--ink2);">Canal principal</td><td style="color:var(--ink3);">Google CPC (53%) — usuarios que vieron el anuncio, no convirtieron, y volvieron días después</td></tr>
+            <tr><td style="color:var(--ink2);">Dispositivo</td><td style="color:var(--ink3);">94% mobile — la mayoría vio el anuncio en móvil y completó el formulario más tarde</td></tr>
+            <tr><td style="color:var(--ink2);">Regiones top</td><td style="color:var(--ink3);">Madrid (25%), Cataluña (16%), Andalucía (14%)</td></tr>
+            <tr><td style="color:var(--ink2);">Implicación</td><td style="color:var(--ink3);">El retargeting tiene potencial real — hay un segmento que investiga antes de decidir</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <strong>Implicación para campañas:</strong> el 90% del tráfico de pago convierte en la primera sesión, lo que confirma que las landing pages están bien optimizadas para la conversión inmediata. El 5,5% con maduración larga es candidato a campañas de retargeting con urgencia — plazas limitadas, próxima convocatoria — para acortar ese tiempo de decisión.
+    </div>
+  </div>
+</div>
+
+<!-- ===== GEO ===== -->
+<div class="page" id="page-geo">
+  <div class="container">
+    <div class="section-eyebrow">Distribución geográfica</div>
+    <h2 class="section-title">¿Desde dónde convierten?</h2>
+    <p class="section-desc">El 99,6% de los leads viene de España. Madrid, Cataluña y Andalucía concentran el 57% del volumen. Pero las tasas de conversión por región revelan dónde la demanda supera a la oferta de publicidad.</p>
+
+    <div class="kpi-grid">
+      <div class="kpi-card accent">
+        <div class="kpi-num">99,6%</div>
+        <div class="kpi-label">Leads desde España</div>
+        <div class="kpi-sub">921 de 925 · el tráfico internacional no convierte</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">3,7%</div>
+        <div class="kpi-label">Tasa Madrid ciudad</div>
+        <div class="kpi-sub">191 leads · 5.171 sesiones totales</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">5,8%</div>
+        <div class="kpi-label">Mejor tasa · Comunidad de Madrid (municipios)</div>
+        <div class="kpi-sub">9 leads · 156 sesiones — tasa más alta de España</div>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <strong>El tráfico internacional (885 sesiones) genera solo 4 leads (0,5% de tasa).</strong> Colombia, México, Brasil y Perú suman más de 200 sesiones sin ningún lead. La FP española no es exportable — tiene sentido no invertir en captación internacional.
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart-card">
+        <div class="chart-title">Leads por región · volumen y tasa de conversión</div>
+        <div id="regionBars"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Top ciudades por volumen de leads</div>
+        <div class="geo-bar-item"><span class="geo-bar-label">Madrid</span><div class="geo-bar-track"><div class="geo-bar-fill" style="width:100%;background:#2B88D8;"></div></div><span class="geo-bar-val">191 · 3,7%</span></div>
+        <div class="geo-bar-item"><span class="geo-bar-label">Barcelona</span><div class="geo-bar-track"><div class="geo-bar-fill" style="width:42%;background:#2B88D8;"></div></div><span class="geo-bar-val">81 · 3,8%</span></div>
+        <div class="geo-bar-item"><span class="geo-bar-label">Valencia</span><div class="geo-bar-track"><div class="geo-bar-fill" style="width:31%;background:#7685AF;"></div></div><span class="geo-bar-val">60 · 2,6%</span></div>
+        <div class="geo-bar-item"><span class="geo-bar-label">Sevilla</span><div class="geo-bar-track"><div class="geo-bar-fill" style="width:18%;background:#7685AF;"></div></div><span class="geo-bar-val">34 · 2,3%</span></div>
+        <div class="geo-bar-item"><span class="geo-bar-label">Málaga</span><div class="geo-bar-track"><div class="geo-bar-fill" style="width:15%;background:#7685AF;"></div></div><span class="geo-bar-val">29 · 2,4%</span></div>
+        <div class="geo-bar-item"><span class="geo-bar-label">Vigo</span><div class="geo-bar-track"><div class="geo-bar-fill" style="width:11%;background:#B4B4B4;"></div></div><span class="geo-bar-val">21 · 3,1%</span></div>
+        <div class="geo-bar-item"><span class="geo-bar-label">Zaragoza</span><div class="geo-bar-track"><div class="geo-bar-fill" style="width:10%;background:#B4B4B4;"></div></div><span class="geo-bar-val">20 · 2,5%</span></div>
+        <div class="geo-bar-item"><span class="geo-bar-label">Bilbao</span><div class="geo-bar-track"><div class="geo-bar-fill" style="width:10%;background:#B4B4B4;"></div></div><span class="geo-bar-val">19 · 2,0%</span></div>
+        <div class="geo-bar-item"><span class="geo-bar-label">Donostia / San Sebastián</span><div class="geo-bar-track"><div class="geo-bar-fill" style="width:4%;background:#5aaae8;"></div></div><span class="geo-bar-val">7 · 6,4%</span></div>
+        <div class="geo-bar-item"><span class="geo-bar-label">Girona</span><div class="geo-bar-track"><div class="geo-bar-fill" style="width:4%;background:#5aaae8;"></div></div><span class="geo-bar-val">7 · 14,6%</span></div>
+      </div>
+    </div>
+
+    <div class="chart-card full" style="margin-bottom:20px;">
+      <div class="chart-title">Ciudades con mayor tasa de conversión · mínimo 15 sesiones totales</div>
+      <p style="font-size:12px;color:var(--ink3);margin-bottom:16px;">Ciudades donde la demanda relativa es más alta que el volumen absoluto indica. Candidatas para aumentar inversión en campaña.</p>
+      <table class="data-table">
+        <thead><tr><th>Ciudad</th><th>Región</th><th style="text-align:right;">Leads</th><th style="text-align:right;">Sesiones</th><th style="text-align:center;">Tasa conv.</th><th>Lectura</th></tr></thead>
+        <tbody>
+          <tr><td style="color:var(--blue);font-weight:500;">Gandia</td><td style="color:var(--ink3);">C. Valenciana</td><td class="num" style="text-align:right;">6</td><td style="text-align:right;color:var(--ink3);">38</td><td style="text-align:center;"><span style="font-weight:700;color:#7ec4f0;">15,8%</span></td><td style="font-size:12px;color:var(--ink3);">Alta conversión relativa — potencial para aumentar presupuesto local</td></tr>
+          <tr><td style="color:var(--blue);font-weight:500;">Girona</td><td style="color:var(--ink3);">Cataluña</td><td class="num" style="text-align:right;">7</td><td style="text-align:right;color:var(--ink3);">48</td><td style="text-align:center;"><span style="font-weight:700;color:#7ec4f0;">14,6%</span></td><td style="font-size:12px;color:var(--ink3);">Tasa muy alta con volumen aún pequeño — escalar campañas aquí</td></tr>
+          <tr><td style="color:var(--blue);font-weight:500;">Donostia / San Sebastián</td><td style="color:var(--ink3);">País Vasco</td><td class="num" style="text-align:right;">7</td><td style="text-align:right;color:var(--ink3);">110</td><td style="text-align:center;"><span style="font-weight:700;color:#7ec4f0;">6,4%</span></td><td style="font-size:12px;color:var(--ink3);">Doble de la media nacional — mercado receptivo y con poco competidor</td></tr>
+          <tr><td style="color:var(--blue);font-weight:500;">Getafe</td><td style="color:var(--ink3);">Madrid</td><td class="num" style="text-align:right;">7</td><td style="text-align:right;color:var(--ink3);">112</td><td style="text-align:center;"><span style="font-weight:700;color:#7ec4f0;">6,2%</span></td><td style="font-size:12px;color:var(--ink3);">Municipio de Madrid con alta tasa — segmentar geográficamente dentro de Madrid</td></tr>
+          <tr><td style="color:var(--blue);font-weight:500;">Elche</td><td style="color:var(--ink3);">C. Valenciana</td><td class="num" style="text-align:right;">6</td><td style="text-align:right;color:var(--ink3);">93</td><td style="text-align:center;"><span style="font-weight:700;color:#7ec4f0;">6,5%</span></td><td style="font-size:12px;color:var(--ink3);">Buena tasa — candidata a segmentación geográfica en campañas</td></tr>
+          <tr><td style="color:var(--blue);font-weight:500;">Salamanca</td><td style="color:var(--ink3);">Castilla y León</td><td class="num" style="text-align:right;">7</td><td style="text-align:right;color:var(--ink3);">129</td><td style="text-align:center;"><span style="font-weight:700;color:#2B88D8;">5,4%</span></td><td style="font-size:12px;color:var(--ink3);">Ciudad universitaria con alta receptividad a FP — subrepresentada en campañas</td></tr>
+          <tr><td style="color:var(--blue);font-weight:500;">Madrid ciudad</td><td style="color:var(--ink3);">Madrid</td><td class="num" style="text-align:right;">191</td><td style="text-align:right;color:var(--ink3);">5.171</td><td style="text-align:center;"><span style="font-weight:700;color:#2B88D8;">3,7%</span></td><td style="font-size:12px;color:var(--ink3);">Mayor volumen absoluto. Tasa estándar — mercado maduro y competido</td></tr>
+          <tr><td style="color:var(--blue);font-weight:500;">Barcelona</td><td style="color:var(--ink3);">Cataluña</td><td class="num" style="text-align:right;">81</td><td style="text-align:right;color:var(--ink3);">2.113</td><td style="text-align:center;"><span style="font-weight:700;color:#2B88D8;">3,8%</span></td><td style="font-size:12px;color:var(--ink3);">2º ciudad por volumen. Tasa similar a Madrid — mercado competido</td></tr>
+          <tr><td style="color:var(--ink);">Las Palmas de G. C.</td><td style="color:var(--ink3);">Canarias</td><td class="num" style="text-align:right;">8</td><td style="text-align:right;color:var(--ink3);">720</td><td style="text-align:center;"><span style="color:#FF7F7A;font-weight:700;">1,1%</span></td><td style="font-size:12px;color:var(--ink3);">Alto tráfico, baja conversión. Revisar si los ciclos ofertados encajan con la demanda canaria</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="insight-box">
+      <strong>Oportunidad de segmentación geográfica en Google Ads:</strong> ciudades como Girona (14,6%), Gandia (15,8%) y Donostia (6,4%) muestran tasas muy superiores a la media nacional (2,8%) con volúmenes todavía pequeños. Aumentar el bid adjustment geográfico en estas ciudades puede multiplicar el retorno sin necesidad de subir el presupuesto total.
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Informe preparado por <strong>Agencia SEO</strong> · agenciaseo.eu · Datos: GA4 export — 31 marzo 2026</p>
+  <p style="margin-top:5px;">83 sesiones analizadas. Evento: <code>form_submit</code> · Site: fpaspasia.com</p>
+</footer>
+
+<script>
+function showPage(id, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  if (el) el.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+window.addEventListener('scroll', () => {
+  document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 300);
+});
+
+// PROFILE DATA
+const profiles2 = [
+  {
+    id:'ciclo', label:'Ficha de ciclo (directa)', n:26,
+    insight:'Alta intención: llegan buscando el ciclo concreto. La mayoría convierte en el mismo ciclo o en uno muy relacionado. Recorrido corto.',
+    color:'#c0392b',
+    courses:[
+      {name:'Coord. emergencias / protección civil',n:12,pct:46.2},
+      {name:'Patronaje y moda online',n:2,pct:7.7},
+      {name:'Dirección de cocina',n:2,pct:7.7},
+      {name:'Educación infantil',n:2,pct:7.7},
+      {name:'Dietética',n:1,pct:3.8},
+      {name:'Otros ciclos',n:7,pct:26.9},
+    ]
+  },
+  {
+    id:'online', label:'Tipo formación: online', n:20,
+    insight:'Mayor volumen de entrada. Buscan formato online pero sin ciclo definido. Estilismo y Administración lideran como destinos finales. Recorrido de ×5,7 pasos.',
+    color:'#c0392b',
+    courses:[
+      {name:'Estilismo y dirección peluquería',n:5,pct:25.0},
+      {name:'Administración y finanzas',n:4,pct:20.0},
+      {name:'Peluquería y cosmética capilar',n:3,pct:15.0},
+      {name:'Patronaje y moda online',n:3,pct:15.0},
+      {name:'Transporte y logística',n:2,pct:10.0},
+      {name:'Otros',n:3,pct:15.0},
+    ]
+  },
+  {
+    id:'home', label:'Inicio (home)', n:9,
+    insight:'Usuarios sin ciclo definido. Recorrido más largo de todos (media ×7 pasos). Acaban principalmente en Coordinación de emergencias y Administración. La home necesita accesos directos a los ciclos más demandados.',
+    color:'#8a8480',
+    courses:[
+      {name:'Coord. emergencias / protección civil',n:3,pct:33.3},
+      {name:'Administración y finanzas',n:2,pct:22.2},
+      {name:'DAM a distancia',n:1,pct:11.1},
+      {name:'Comercio internacional',n:1,pct:11.1},
+      {name:'Otros',n:2,pct:22.2},
+    ]
+  },
+  {
+    id:'fp', label:'Hub Formación Profesional', n:8,
+    insight:'Usuarios que entran por la página general de FP y navegan hacia un ciclo concreto. Soldadura y calderería aparece aquí —perfil de adulto en reconversión profesional.',
+    color:'#b8860b',
+    courses:[
+      {name:'Coord. emergencias / protección civil',n:2,pct:25.0},
+      {name:'Soldadura y calderería',n:2,pct:25.0},
+      {name:'Construcciones metálicas',n:1,pct:12.5},
+      {name:'Administración y finanzas',n:1,pct:12.5},
+      {name:'Otros',n:2,pct:25.0},
+    ]
+  },
+  {
+    id:'reeng', label:'Reengagement (Muchas Gracias)', n:9,
+    insight:'Sesiones que empiezan en la página de confirmación — usuarios que ya habían convertido previamente y vuelven. Pueden estar comparando otro ciclo o revisando información post-solicitud.',
+    color:'#2e7d5e',
+    courses:[
+      {name:'Transporte y logística',n:3,pct:33.3},
+      {name:'Coord. emergencias',n:2,pct:22.2},
+      {name:'Educación infantil',n:2,pct:22.2},
+      {name:'Marketing y publicidad',n:1,pct:11.1},
+      {name:'Otros',n:1,pct:11.1},
+    ]
+  },
+];
+
+const tabNav2 = document.getElementById('profileTabs2');
+const tabPanels2 = document.getElementById('profilePanels2');
+profiles2.forEach((p,i) => {
+  const btn = document.createElement('button');
+  btn.className = 'tab-btn'+(i===0?' active':'');
+  btn.textContent = p.label;
+  btn.onclick = () => {
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(x=>x.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tp2-'+p.id).classList.add('active');
+  };
+  tabNav2.appendChild(btn);
+  const maxN = Math.max(...p.courses.map(c=>c.n));
+  const panel = document.createElement('div');
+  panel.className='tab-panel'+(i===0?' active':'');
+  panel.id='tp2-'+p.id;
+  panel.innerHTML=`<div class="chart-card">
+    <div class="tab-header"><span class="tab-title">${p.label}</span><span class="tab-n">${p.n} sesiones</span></div>
+    <div class="tab-insight">${p.insight}</div>
+    ${p.courses.map(c=>`<div class="bar-item">
+      <span class="bar-label wide" title="${c.name}">${c.name}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.round(c.n/maxN*100)}%;background:${p.color};"></div></div>
+      <span class="bar-val">${c.pct}% · n=${c.n}</span>
+    </div>`).join('')}
+    <p style="font-size:11px;color:var(--ink3);margin-top:14px;">Nota: volumen pequeño — datos orientativos. Solo sesiones con ciclo final identificado.</p>
+  </div>`;
+  tabPanels2.appendChild(panel);
+});
+
+// CRO CICLOS DATA
+const ciclosData = [
+  {name:'Coord. emergencias / prot. civil', visits:21, leads:11, rate:52},
+  {name:'Administración y finanzas', visits:10, leads:7, rate:70},
+  {name:'Estilismo y dirección peluquería', visits:10, leads:7, rate:70},
+  {name:'Patronaje y moda online', visits:7, leads:6, rate:86},
+  {name:'Dietética', visits:6, leads:4, rate:67},
+  {name:'Transporte y logística', visits:6, leads:6, rate:100},
+  {name:'Peluquería y cosmética capilar', visits:5, leads:5, rate:100},
+  {name:'Soldadura y calderería', visits:3, leads:1, rate:33},
+];
+
+// Render bars
+const barsEl = document.getElementById('ciclosBars');
+ciclosData.forEach(c => {
+  const maxV = 21;
+  const rateColor = c.rate >= 80 ? '#7ec4f0' : c.rate >= 60 ? '#b0bdd8' : '#ffa8a4';
+  barsEl.innerHTML += `<div style="margin-bottom:14px;">
+    <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ink2);margin-bottom:5px;">
+      <span>${c.name}</span>
+      <span style="color:${rateColor};font-weight:500;">${c.rate}% conv.</span>
+    </div>
+    <div style="position:relative;background:var(--bg2);border-radius:4px;height:10px;overflow:hidden;">
+      <div style="position:absolute;left:0;top:0;height:100%;width:${Math.round(c.visits/maxV*100)}%;background:var(--bg3);border-radius:4px;"></div>
+      <div style="position:absolute;left:0;top:0;height:100%;width:${Math.round(c.leads/maxV*100)}%;background:${rateColor};border-radius:4px;"></div>
+    </div>
+    <div style="display:flex;gap:16px;font-size:11px;color:var(--ink3);margin-top:4px;">
+      <span>Visitas en recorrido: ${c.visits}</span>
+      <span>Solicitudes: ${c.leads}</span>
+    </div>
+  </div>`;
+});
+
+// Render table
+const tableEl = document.getElementById('ciclosTable');
+tableEl.innerHTML = `<thead><tr>
+  <th>Ciclo</th><th>Visitas</th><th>Solicitudes</th><th>Tasa</th><th>Lectura</th>
+</tr></thead>`;
+const tbody = document.createElement('tbody');
+ciclosData.forEach(c => {
+  const rateColor = c.rate>=80?'#1a7a45':c.rate>=60?'#856404':'#c0392b';
+  const nota = c.rate===100?'Convierte todo el tráfico que recibe — ficha optimizada o nicho muy definido'
+    :c.rate>=80?'Alta conversión — pequeña mejora con testimonios o urgencia de plazas'
+    :c.rate>=60?'Conversión aceptable — revisar descripción de salidas profesionales y CTA'
+    :'Oportunidad clara — el usuario visita pero no solicita. Revisar ficha en profundidad';
+  tbody.innerHTML+=`<tr>
+    <td style="color:var(--ink2);font-size:13px;">${c.name}</td>
+    <td class="num">${c.visits}</td>
+    <td class="num">${c.leads}</td>
+    <td><span class="rate-num" style="color:${rateColor};">${c.rate}%</span></td>
+    <td style="font-size:12px;color:var(--ink3);line-height:1.5;">${nota}</td>
+  </tr>`;
+});
+tableEl.appendChild(tbody);
+
+// ---- MADURACIÓN CHART ----
+function initMaduracion() {
+  const el = document.getElementById('chartMaduracion');
+  if (!el || el._inited) return;
+  el._inited = true;
+  new Chart(el.getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ['Mismo día (0)', '1-3 días', '4-7 días', '8-30 días', '+30 días'],
+      datasets: [{
+        data: [835, 20, 18, 37, 14],
+        backgroundColor: ['#2B88D8','#5aaae8','#7685AF','#FF7F7A','#c0392b'],
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: {
+          label: ctx => ` ${ctx.raw} leads (${(ctx.raw/925*100).toFixed(1)}%)`
+        }}
+      },
+      scales: {
+        y: { grid: { color: 'rgba(0,31,120,0.06)' }, ticks: { color: '#7685AF', font: { family: 'Inter', size: 11 } } },
+        x: { grid: { display: false }, ticks: { color: '#3a4a7a', font: { family: 'Inter', size: 12 } } }
+      }
+    }
+  });
+}
+
+// ---- GEO REGION BARS ----
+function initGeo() {
+  const el = document.getElementById('regionBars');
+  if (!el || el._inited) return;
+  el._inited = true;
+  const regions = [
+    {name:'Madrid',leads:234,tasa:3.6},
+    {name:'Andalucía',leads:145,tasa:2.3},
+    {name:'Cataluña',leads:145,tasa:3.4},
+    {name:'C. Valenciana',leads:125,tasa:3.1},
+    {name:'Galicia',leads:48,tasa:2.5},
+    {name:'País Vasco',leads:35,tasa:2.4},
+    {name:'Canarias',leads:32,tasa:2.1},
+    {name:'C. y León',leads:29,tasa:2.1},
+    {name:'Aragón',leads:27,tasa:2.8},
+    {name:'R. de Murcia',leads:23,tasa:2.3},
+    {name:'C.-La Mancha',leads:22,tasa:2.0},
+    {name:'Baleares',leads:11,tasa:1.9},
+    {name:'La Rioja',leads:5,tasa:4.2},
+    {name:'Navarra',leads:7,tasa:3.0},
+    {name:'Asturias',leads:7,tasa:1.7},
+  ];
+  const maxLeads = Math.max(...regions.map(r => r.leads));
+  regions.forEach(r => {
+    const div = document.createElement('div');
+    div.className = 'geo-bar-item';
+    const tasaColor = r.tasa >= 4 ? '#7ec4f0' : r.tasa >= 3 ? '#2B88D8' : r.tasa >= 2.5 ? '#7685AF' : '#B4B4B4';
+    div.innerHTML = `
+      <span class="geo-bar-label">${r.name}</span>
+      <div class="geo-bar-track"><div class="geo-bar-fill" style="width:${Math.round(r.leads/maxLeads*100)}%;background:#2B88D8;"></div></div>
+      <span class="geo-bar-val"><strong style="color:${tasaColor};">${r.tasa}%</strong> · ${r.leads}</span>
+    `;
+    el.appendChild(div);
+  });
+}
+
+// Hook into showPage
+const __origShowPage = showPage;
+showPage = function(id, el) {
+  __origShowPage(id, el);
+  if (id === 'maduracion') initMaduracion();
+  if (id === 'geo') initGeo();
+};
+
+</script>
+</body>
+</html>
