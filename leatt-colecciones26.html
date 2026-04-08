@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Colecciones | leatt.es</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #FFFFFF;
+            --bg-surface: #F3F8FF;
+            --text-primary: #001F78;
+            --text-secondary: #3a4a7a;
+            --text-tertiary: #7685AF;
+            --blue-primary: #001F78;
+            --blue-medium: #2B88D8;
+            --blue-light: #DDEFFF;
+            --salmon-accent: #FF7F7A;
+            --salmon-bg: #FFF0EF;
+            --green-bg: #e8f5ee;
+            --green-text: #1a7a45;
+            --amber-bg: #fff8e1;
+            --amber-text: #856404;
+            --border-normal: rgba(0,31,120,0.10);
+            --border-emphasis: rgba(0,31,120,0.18);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            background: var(--bg-main);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* HEADER */
+        header {
+            background: var(--blue-primary);
+            padding: 48px 0;
+            color: #fff;
+        }
+
+        .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .header-nav a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .header-nav a:hover {
+            color: #fff;
+        }
+
+        h1 {
+            font-size: clamp(24px, 4vw, 36px);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: rgba(255,255,255,0.7);
+            font-size: 15px;
+        }
+
+        /* CONTROLS */
+        .controls {
+            background: var(--bg-surface);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-emphasis);
+        }
+
+        .controls-inner {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .control-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        select {
+            padding: 10px 16px;
+            border: 1px solid var(--border-emphasis);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            color: var(--text-primary);
+            background: #fff;
+            cursor: pointer;
+            min-width: 180px;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--blue-medium);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 6px;
+        }
+
+        .filter-btn {
+            padding: 8px 14px;
+            border: 1px solid var(--border-normal);
+            border-radius: 20px;
+            background: #fff;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            background: var(--bg-surface);
+            color: var(--text-primary);
+        }
+
+        .filter-btn.active {
+            background: var(--blue-primary);
+            color: #fff;
+            border-color: var(--blue-primary);
+        }
+
+        /* STATS */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            padding: 24px 0;
+        }
+
+        .stat-card {
+            background: var(--bg-surface);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-top: 4px;
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 40px 0;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+
+        /* TABLE */
+        .table-wrapper {
+            overflow-x: auto;
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid var(--border-normal);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead th {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: var(--text-tertiary);
+            text-align: left;
+            padding: 14px 16px;
+            border-bottom: 2px solid var(--border-emphasis);
+            white-space: nowrap;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        thead th:hover {
+            color: var(--text-primary);
+        }
+
+        thead th.sorted {
+            color: var(--blue-medium);
+        }
+
+        tbody td {
+            font-size: 13px;
+            color: var(--text-secondary);
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border-normal);
+        }
+
+        tbody tr:hover {
+            background: var(--bg-surface);
+        }
+
+        .col-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .col-number {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 20px;
+        }
+
+        .badge-mtb { background: #e3f2fd; color: #1565c0; }
+        .badge-moto { background: #fce4ec; color: #c62828; }
+        .badge-adv { background: #fff3e0; color: #e65100; }
+        .badge-ofertas { background: var(--green-bg); color: var(--green-text); }
+        .badge-lifestyle { background: #f3e5f5; color: #7b1fa2; }
+        .badge-general { background: #f5f5f5; color: #616161; }
+
+        .rate-good { color: var(--green-text); font-weight: 600; }
+        .rate-medium { color: var(--amber-text); font-weight: 600; }
+        .rate-bad { color: #c0392b; font-weight: 600; }
+
+        /* FLOW DIAGRAM */
+        .flow-section {
+            background: var(--bg-surface);
+            padding: 40px 0;
+        }
+
+        .flow-container {
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid var(--border-normal);
+            padding: 24px;
+        }
+
+        .flow-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
+        }
+
+        .flow-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: var(--bg-surface);
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        .flow-origin {
+            font-weight: 600;
+            color: var(--text-primary);
+            min-width: 100px;
+        }
+
+        .flow-arrow {
+            color: var(--blue-medium);
+            margin: 0 12px;
+            font-size: 16px;
+        }
+
+        .flow-dest {
+            color: var(--text-secondary);
+            flex: 1;
+        }
+
+        .flow-count {
+            font-weight: 700;
+            color: var(--salmon-accent);
+            margin-left: 12px;
+        }
+
+        /* INSIGHTS */
+        .insight-box {
+            background: var(--bg-surface);
+            border-left: 3px solid var(--blue-medium);
+            border-radius: 0 10px 10px 0;
+            padding: 20px 24px;
+            margin: 24px 0;
+        }
+
+        .insight-box.alert {
+            background: var(--salmon-bg);
+            border-left-color: var(--salmon-accent);
+        }
+
+        .insight-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .controls-inner { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-nav">
+                <a href="https://ivangalasan.github.io/informes/leatt-marzo26.html">← Volver al informe principal</a>
+                <span style="font-size: 12px; opacity: 0.6;">agenciaSEO.eu</span>
+            </div>
+            <h1>Análisis de Colecciones</h1>
+            <p class="subtitle">Contribución de cada categoría al embudo de conversión · Q1 2026</p>
+        </div>
+    </header>
+
+    <div class="controls">
+        <div class="container">
+            <div class="controls-inner">
+                <div class="control-group">
+                    <span class="control-label">Canal:</span>
+                    <select id="canalSelect">
+                        <option value="todos">Todos los canales</option>
+                        <option value="google_ads">Google Ads</option>
+                        <option value="google_organic">Google Organic</option>
+                        <option value="meta_paid">Meta (Facebook/Instagram)</option>
+                        <option value="direct">Directo</option>
+                        <option value="email">Email</option>
+                        <option value="bing_organic">Bing Organic</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <span class="control-label">Categoría:</span>
+                    <div class="filter-buttons" id="categoryFilters">
+                        <button class="filter-btn active" data-category="all">Todas</button>
+                        <button class="filter-btn" data-category="MTB">MTB</button>
+                        <button class="filter-btn" data-category="Moto">Moto</button>
+                        <button class="filter-btn" data-category="ADV">ADV</button>
+                        <button class="filter-btn" data-category="Ofertas">Ofertas</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="stats-row" id="statsRow">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+
+    <section>
+        <div class="container">
+            <h2 class="section-title">Colecciones por rendimiento</h2>
+            <div id="insightBox"></div>
+            <div class="table-wrapper">
+                <table id="collectionsTable">
+                    <thead>
+                        <tr>
+                            <th data-sort="nombre">Colección</th>
+                            <th data-sort="categoria">Categoría</th>
+                            <th data-sort="sesiones" class="col-number">Sesiones</th>
+                            <th data-sort="es_entrada" class="col-number">Entrada</th>
+                            <th data-sort="sesiones_con_atc" class="col-number">Add to Cart</th>
+                            <th data-sort="tasa_atc" class="col-number">Tasa ATC</th>
+                            <th data-sort="sesiones_con_compra" class="col-number">Compras</th>
+                            <th data-sort="tasa_compra" class="col-number">Tasa Compra</th>
+                        </tr>
+                    </thead>
+                    <tbody id="collectionsBody">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="flow-section">
+        <div class="container">
+            <h2 class="section-title">Flujos entre colecciones</h2>
+            <p style="color: var(--text-tertiary); font-size: 13px; margin-bottom: 20px;">Navegación más frecuente entre categorías de producto</p>
+            <div class="flow-container">
+                <div class="flow-grid" id="flowGrid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+    const DATA = {"canales":{"todos":[{"id":"mtb","nombre":"MTB","categoria":"MTB","sesiones":869,"sesiones_con_atc":137,"sesiones_con_compra":16,"es_entrada":766,"tasa_atc":15.8,"tasa_compra":1.8},{"id":"cascos-mtb","nombre":"Cascos MTB","categoria":"MTB","sesiones":832,"sesiones_con_atc":109,"sesiones_con_compra":5,"es_entrada":521,"tasa_atc":13.1,"tasa_compra":0.6},{"id":"outlet","nombre":"Outlet","categoria":"Ofertas","sesiones":781,"sesiones_con_atc":140,"sesiones_con_compra":16,"es_entrada":623,"tasa_atc":17.9,"tasa_compra":2.0},{"id":"cascos-moto","nombre":"Cascos Moto","categoria":"Moto","sesiones":731,"sesiones_con_atc":100,"sesiones_con_compra":10,"es_entrada":529,"tasa_atc":13.7,"tasa_compra":1.4},{"id":"moto-hot-deals","nombre":"Moto Hot Deals","categoria":"Moto","sesiones":603,"sesiones_con_atc":172,"sesiones_con_compra":14,"es_entrada":296,"tasa_atc":28.5,"tasa_compra":2.3},{"id":"zapatillas-mtb","nombre":"Zapatillas MTB","categoria":"MTB","sesiones":568,"sesiones_con_atc":86,"sesiones_con_compra":13,"es_entrada":398,"tasa_atc":15.1,"tasa_compra":2.3},{"id":"botas-moto","nombre":"Botas Moto","categoria":"Moto","sesiones":542,"sesiones_con_atc":142,"sesiones_con_compra":12,"es_entrada":330,"tasa_atc":26.2,"tasa_compra":2.2},{"id":"mtb-hot-deals","nombre":"MTB Hot Deals","categoria":"MTB","sesiones":537,"sesiones_con_atc":146,"sesiones_con_compra":11,"es_entrada":216,"tasa_atc":27.2,"tasa_compra":2.0},{"id":"moto","nombre":"Moto","categoria":"Moto","sesiones":474,"sesiones_con_atc":101,"sesiones_con_compra":10,"es_entrada":383,"tasa_atc":21.3,"tasa_compra":2.1},{"id":"trajes-moto","nombre":"Trajes Moto","categoria":"Moto","sesiones":445,"sesiones_con_atc":108,"sesiones_con_compra":6,"es_entrada":253,"tasa_atc":24.3,"tasa_compra":1.3},{"id":"pantalones-moto","nombre":"Pantalones Moto","categoria":"Moto","sesiones":431,"sesiones_con_atc":122,"sesiones_con_compra":5,"es_entrada":168,"tasa_atc":28.3,"tasa_compra":1.2},{"id":"equipacion-mtb","nombre":"Equipación MTB","categoria":"MTB","sesiones":405,"sesiones_con_atc":77,"sesiones_con_compra":6,"es_entrada":306,"tasa_atc":19.0,"tasa_compra":1.5},{"id":"pantalones-mtb","nombre":"Pantalones MTB","categoria":"MTB","sesiones":384,"sesiones_con_atc":100,"sesiones_con_compra":6,"es_entrada":230,"tasa_atc":26.0,"tasa_compra":1.6},{"id":"chaquetas-moto","nombre":"Chaquetas Moto","categoria":"Moto","sesiones":363,"sesiones_con_atc":79,"sesiones_con_compra":6,"es_entrada":165,"tasa_atc":21.8,"tasa_compra":1.7},{"id":"camisetas-mtb","nombre":"Camisetas MTB","categoria":"MTB","sesiones":355,"sesiones_con_atc":114,"sesiones_con_compra":8,"es_entrada":169,"tasa_atc":32.1,"tasa_compra":2.3},{"id":"chaquetas-adv","nombre":"Chaquetas ADV","categoria":"ADV","sesiones":312,"sesiones_con_atc":62,"sesiones_con_compra":4,"es_entrada":152,"tasa_atc":19.9,"tasa_compra":1.3},{"id":"rodilleras-mtb","nombre":"Rodilleras MTB","categoria":"MTB","sesiones":288,"sesiones_con_atc":66,"sesiones_con_compra":8,"es_entrada":176,"tasa_atc":22.9,"tasa_compra":2.8},{"id":"leatt-mujer","nombre":"Leatt Mujer","categoria":"General","sesiones":280,"sesiones_con_atc":19,"sesiones_con_compra":3,"es_entrada":233,"tasa_atc":6.8,"tasa_compra":1.1},{"id":"camisetas-moto","nombre":"Camisetas Moto","categoria":"Moto","sesiones":259,"sesiones_con_atc":82,"sesiones_con_compra":4,"es_entrada":101,"tasa_atc":31.7,"tasa_compra":1.5},{"id":"petos-mtb","nombre":"Petos MTB","categoria":"MTB","sesiones":251,"sesiones_con_atc":49,"sesiones_con_compra":4,"es_entrada":131,"tasa_atc":19.5,"tasa_compra":1.6},{"id":"chaquetas-mtb","nombre":"Chaquetas MTB","categoria":"MTB","sesiones":249,"sesiones_con_atc":108,"sesiones_con_compra":9,"es_entrada":113,"tasa_atc":43.4,"tasa_compra":3.6},{"id":"petos-integrales-moto","nombre":"Petos Integrales Moto","categoria":"Moto","sesiones":236,"sesiones_con_atc":35,"sesiones_con_compra":3,"es_entrada":90,"tasa_atc":14.8,"tasa_compra":1.3},{"id":"rodilleras-moto","nombre":"Rodilleras Moto","categoria":"Moto","sesiones":229,"sesiones_con_atc":45,"sesiones_con_compra":7,"es_entrada":120,"tasa_atc":19.7,"tasa_compra":3.1},{"id":"conjuntos-mtb","nombre":"Conjuntos MTB","categoria":"MTB","sesiones":228,"sesiones_con_atc":84,"sesiones_con_compra":5,"es_entrada":90,"tasa_atc":36.8,"tasa_compra":2.2},{"id":"pantalones-cortos-mtb","nombre":"Pantalones Cortos MTB","categoria":"MTB","sesiones":221,"sesiones_con_atc":61,"sesiones_con_compra":2,"es_entrada":97,"tasa_atc":27.6,"tasa_compra":0.9},{"id":"cascos-adv","nombre":"Cascos ADV","categoria":"ADV","sesiones":221,"sesiones_con_atc":36,"sesiones_con_compra":3,"es_entrada":117,"tasa_atc":16.3,"tasa_compra":1.4},{"id":"gafas-mtb","nombre":"Gafas MTB","categoria":"MTB","sesiones":219,"sesiones_con_atc":47,"sesiones_con_compra":5,"es_entrada":127,"tasa_atc":21.5,"tasa_compra":2.3},{"id":"pantalones-adv","nombre":"Pantalones ADV","categoria":"ADV","sesiones":215,"sesiones_con_atc":54,"sesiones_con_compra":5,"es_entrada":113,"tasa_atc":25.1,"tasa_compra":2.3},{"id":"guantes-moto","nombre":"Guantes Moto","categoria":"Moto","sesiones":208,"sesiones_con_atc":67,"sesiones_con_compra":8,"es_entrada":123,"tasa_atc":32.2,"tasa_compra":3.8},{"id":"equipacion-moto","nombre":"Equipación Moto","categoria":"Moto","sesiones":207,"sesiones_con_atc":58,"sesiones_con_compra":6,"es_entrada":131,"tasa_atc":28.0,"tasa_compra":2.9},{"id":"rodilleras-integrales-moto","nombre":"Rodilleras Integrales Moto","categoria":"Moto","sesiones":196,"sesiones_con_atc":41,"sesiones_con_compra":6,"es_entrada":71,"tasa_atc":20.9,"tasa_compra":3.1},{"id":"petos-moto","nombre":"Petos Moto","categoria":"Moto","sesiones":194,"sesiones_con_atc":34,"sesiones_con_compra":1,"es_entrada":101,"tasa_atc":17.5,"tasa_compra":0.5},{"id":"guantes-mtb","nombre":"Guantes MTB","categoria":"MTB","sesiones":189,"sesiones_con_atc":62,"sesiones_con_compra":6,"es_entrada":101,"tasa_atc":32.8,"tasa_compra":3.2},{"id":"botas-adv","nombre":"Botas ADV","categoria":"ADV","sesiones":186,"sesiones_con_atc":36,"sesiones_con_compra":3,"es_entrada":96,"tasa_atc":19.4,"tasa_compra":1.6},{"id":"adv","nombre":"ADV","categoria":"ADV","sesiones":181,"sesiones_con_atc":31,"sesiones_con_compra":4,"es_entrada":105,"tasa_atc":17.1,"tasa_compra":2.2},{"id":"gafas-moto","nombre":"Gafas Moto","categoria":"Moto","sesiones":169,"sesiones_con_atc":63,"sesiones_con_compra":3,"es_entrada":78,"tasa_atc":37.3,"tasa_compra":1.8},{"id":"petos-integrales-mtb","nombre":"Petos Integrales MTB","categoria":"MTB","sesiones":167,"sesiones_con_atc":36,"sesiones_con_compra":3,"es_entrada":52,"tasa_atc":21.6,"tasa_compra":1.8},{"id":"protecciones-mtb","nombre":"Protecciones MTB","categoria":"MTB","sesiones":157,"sesiones_con_atc":34,"sesiones_con_compra":3,"es_entrada":113,"tasa_atc":21.7,"tasa_compra":1.9},{"id":"equipacion-adv","nombre":"Equipación ADV","categoria":"ADV","sesiones":152,"sesiones_con_atc":14,"sesiones_con_compra":1,"es_entrada":109,"tasa_atc":9.2,"tasa_compra":0.7},{"id":"protecciones-moto","nombre":"Protecciones Moto","categoria":"Moto","sesiones":148,"sesiones_con_atc":24,"sesiones_con_compra":2,"es_entrada":91,"tasa_atc":16.2,"tasa_compra":1.4},{"id":"culottes-mtb","nombre":"Culottes MTB","categoria":"MTB","sesiones":141,"sesiones_con_atc":34,"sesiones_con_compra":8,"es_entrada":71,"tasa_atc":24.1,"tasa_compra":5.7},{"id":"guantes-adv","nombre":"Guantes ADV","categoria":"ADV","sesiones":138,"sesiones_con_atc":39,"sesiones_con_compra":4,"es_entrada":59,"tasa_atc":28.3,"tasa_compra":2.9},{"id":"collarines","nombre":"Collarines","categoria":"General","sesiones":123,"sesiones_con_atc":33,"sesiones_con_compra":3,"es_entrada":47,"tasa_atc":26.8,"tasa_compra":2.4},{"id":"adv-hot-deals","nombre":"ADV Hot Deals","categoria":"ADV","sesiones":121,"sesiones_con_atc":31,"sesiones_con_compra":2,"es_entrada":34,"tasa_atc":25.6,"tasa_compra":1.7},{"id":"mochilas-mtb","nombre":"Mochilas MTB","categoria":"MTB","sesiones":121,"sesiones_con_atc":37,"sesiones_con_compra":3,"es_entrada":52,"tasa_atc":30.6,"tasa_compra":2.5},{"id":"casual-wear","nombre":"Casual Wear","categoria":"Lifestyle","sesiones":111,"sesiones_con_atc":38,"sesiones_con_compra":3,"es_entrada":41,"tasa_atc":34.2,"tasa_compra":2.7},{"id":"rebajas","nombre":"Rebajas","categoria":"Ofertas","sesiones":109,"sesiones_con_atc":102,"sesiones_con_compra":7,"es_entrada":66,"tasa_atc":93.6,"tasa_compra":6.4},{"id":"mochilas-moto","nombre":"Mochilas Moto","categoria":"Moto","sesiones":97,"sesiones_con_atc":36,"sesiones_con_compra":5,"es_entrada":30,"tasa_atc":37.1,"tasa_compra":5.2},{"id":"casual","nombre":"Casual","categoria":"Lifestyle","sesiones":96,"sesiones_con_atc":29,"sesiones_con_compra":4,"es_entrada":71,"tasa_atc":30.2,"tasa_compra":4.2}],"google_ads":[{"id":"mtb","nombre":"MTB","categoria":"MTB","sesiones":429,"sesiones_con_atc":69,"sesiones_con_compra":8,"es_entrada":400,"tasa_atc":16.1,"tasa_compra":1.9},{"id":"moto","nombre":"Moto","categoria":"Moto","sesiones":263,"sesiones_con_atc":58,"sesiones_con_compra":6,"es_entrada":226,"tasa_atc":22.1,"tasa_compra":2.3},{"id":"cascos-mtb","nombre":"Cascos MTB","categoria":"MTB","sesiones":251,"sesiones_con_atc":35,"sesiones_con_compra":3,"es_entrada":129,"tasa_atc":13.9,"tasa_compra":1.2},{"id":"moto-hot-deals","nombre":"Moto Hot Deals","categoria":"Moto","sesiones":250,"sesiones_con_atc":73,"sesiones_con_compra":6,"es_entrada":147,"tasa_atc":29.2,"tasa_compra":2.4},{"id":"outlet","nombre":"Outlet","categoria":"Ofertas","sesiones":210,"sesiones_con_atc":43,"sesiones_con_compra":6,"es_entrada":155,"tasa_atc":20.5,"tasa_compra":2.9},{"id":"cascos-moto","nombre":"Cascos Moto","categoria":"Moto","sesiones":171,"sesiones_con_atc":37,"sesiones_con_compra":4,"es_entrada":102,"tasa_atc":21.6,"tasa_compra":2.3},{"id":"botas-moto","nombre":"Botas Moto","categoria":"Moto","sesiones":170,"sesiones_con_atc":48,"sesiones_con_compra":5,"es_entrada":99,"tasa_atc":28.2,"tasa_compra":2.9},{"id":"zapatillas-mtb","nombre":"Zapatillas MTB","categoria":"MTB","sesiones":150,"sesiones_con_atc":35,"sesiones_con_compra":6,"es_entrada":90,"tasa_atc":23.3,"tasa_compra":4.0},{"id":"mtb-hot-deals","nombre":"MTB Hot Deals","categoria":"MTB","sesiones":135,"sesiones_con_atc":36,"sesiones_con_compra":3,"es_entrada":44,"tasa_atc":26.7,"tasa_compra":2.2},{"id":"chaquetas-moto","nombre":"Chaquetas Moto","categoria":"Moto","sesiones":121,"sesiones_con_atc":26,"sesiones_con_compra":1,"es_entrada":53,"tasa_atc":21.5,"tasa_compra":0.8}],"google_organic":[{"id":"cascos-moto","nombre":"Cascos Moto","categoria":"Moto","sesiones":413,"sesiones_con_atc":30,"sesiones_con_compra":2,"es_entrada":347,"tasa_atc":7.3,"tasa_compra":0.5},{"id":"cascos-mtb","nombre":"Cascos MTB","categoria":"MTB","sesiones":335,"sesiones_con_atc":39,"sesiones_con_compra":1,"es_entrada":228,"tasa_atc":11.6,"tasa_compra":0.3},{"id":"equipacion-mtb","nombre":"Equipación MTB","categoria":"MTB","sesiones":224,"sesiones_con_atc":36,"sesiones_con_compra":2,"es_entrada":193,"tasa_atc":16.1,"tasa_compra":0.9},{"id":"botas-moto","nombre":"Botas Moto","categoria":"Moto","sesiones":209,"sesiones_con_atc":47,"sesiones_con_compra":5,"es_entrada":126,"tasa_atc":22.5,"tasa_compra":2.4},{"id":"zapatillas-mtb","nombre":"Zapatillas MTB","categoria":"MTB","sesiones":194,"sesiones_con_atc":19,"sesiones_con_compra":4,"es_entrada":151,"tasa_atc":9.8,"tasa_compra":2.1},{"id":"trajes-moto","nombre":"Trajes Moto","categoria":"Moto","sesiones":193,"sesiones_con_atc":34,"sesiones_con_compra":1,"es_entrada":139,"tasa_atc":17.6,"tasa_compra":0.5},{"id":"pantalones-mtb","nombre":"Pantalones MTB","categoria":"MTB","sesiones":184,"sesiones_con_atc":35,"sesiones_con_compra":2,"es_entrada":135,"tasa_atc":19.0,"tasa_compra":1.1},{"id":"mtb","nombre":"MTB","categoria":"MTB","sesiones":167,"sesiones_con_atc":33,"sesiones_con_compra":4,"es_entrada":126,"tasa_atc":19.8,"tasa_compra":2.4},{"id":"outlet","nombre":"Outlet","categoria":"Ofertas","sesiones":163,"sesiones_con_atc":39,"sesiones_con_compra":6,"es_entrada":103,"tasa_atc":23.9,"tasa_compra":3.7},{"id":"pantalones-moto","nombre":"Pantalones Moto","categoria":"Moto","sesiones":158,"sesiones_con_atc":33,"sesiones_con_compra":1,"es_entrada":72,"tasa_atc":20.9,"tasa_compra":0.6}],"meta_paid":[{"id":"leatt-mujer","nombre":"Leatt Mujer","categoria":"General","sesiones":196,"sesiones_con_atc":9,"sesiones_con_compra":2,"es_entrada":189,"tasa_atc":4.6,"tasa_compra":1.0},{"id":"mtb","nombre":"MTB","categoria":"MTB","sesiones":152,"sesiones_con_atc":9,"sesiones_con_compra":0,"es_entrada":149,"tasa_atc":5.9,"tasa_compra":0.0},{"id":"zapatillas-mtb","nombre":"Zapatillas MTB","categoria":"MTB","sesiones":118,"sesiones_con_atc":16,"sesiones_con_compra":1,"es_entrada":76,"tasa_atc":13.6,"tasa_compra":0.8},{"id":"mtb-hot-deals","nombre":"MTB Hot Deals","categoria":"MTB","sesiones":90,"sesiones_con_atc":23,"sesiones_con_compra":1,"es_entrada":47,"tasa_atc":25.6,"tasa_compra":1.1},{"id":"moto-hot-deals","nombre":"Moto Hot Deals","categoria":"Moto","sesiones":69,"sesiones_con_atc":25,"sesiones_con_compra":0,"es_entrada":36,"tasa_atc":36.2,"tasa_compra":0.0},{"id":"cascos-mtb","nombre":"Cascos MTB","categoria":"MTB","sesiones":64,"sesiones_con_atc":6,"sesiones_con_compra":0,"es_entrada":35,"tasa_atc":9.4,"tasa_compra":0.0},{"id":"pantalones-moto","nombre":"Pantalones Moto","categoria":"Moto","sesiones":61,"sesiones_con_atc":19,"sesiones_con_compra":0,"es_entrada":17,"tasa_atc":31.1,"tasa_compra":0.0},{"id":"outlet","nombre":"Outlet","categoria":"Ofertas","sesiones":60,"sesiones_con_atc":11,"sesiones_con_compra":1,"es_entrada":54,"tasa_atc":18.3,"tasa_compra":1.7},{"id":"camisetas-mtb","nombre":"Camisetas MTB","categoria":"MTB","sesiones":59,"sesiones_con_atc":20,"sesiones_con_compra":2,"es_entrada":30,"tasa_atc":33.9,"tasa_compra":3.4},{"id":"trajes-moto","nombre":"Trajes Moto","categoria":"Moto","sesiones":53,"sesiones_con_atc":18,"sesiones_con_compra":1,"es_entrada":27,"tasa_atc":34.0,"tasa_compra":1.9}],"direct":[{"id":"cascos-mtb","nombre":"Cascos MTB","categoria":"MTB","sesiones":116,"sesiones_con_atc":23,"sesiones_con_compra":1,"es_entrada":83,"tasa_atc":19.8,"tasa_compra":0.9},{"id":"outlet","nombre":"Outlet","categoria":"Ofertas","sesiones":98,"sesiones_con_atc":16,"sesiones_con_compra":1,"es_entrada":82,"tasa_atc":16.3,"tasa_compra":1.0},{"id":"botas-moto","nombre":"Botas Moto","categoria":"Moto","sesiones":87,"sesiones_con_atc":22,"sesiones_con_compra":1,"es_entrada":59,"tasa_atc":25.3,"tasa_compra":1.1},{"id":"mtb-hot-deals","nombre":"MTB Hot Deals","categoria":"MTB","sesiones":85,"sesiones_con_atc":28,"sesiones_con_compra":2,"es_entrada":49,"tasa_atc":32.9,"tasa_compra":2.4},{"id":"zapatillas-mtb","nombre":"Zapatillas MTB","categoria":"MTB","sesiones":83,"sesiones_con_atc":12,"sesiones_con_compra":2,"es_entrada":68,"tasa_atc":14.5,"tasa_compra":2.4},{"id":"cascos-moto","nombre":"Cascos Moto","categoria":"Moto","sesiones":81,"sesiones_con_atc":12,"sesiones_con_compra":0,"es_entrada":51,"tasa_atc":14.8,"tasa_compra":0.0},{"id":"moto-hot-deals","nombre":"Moto Hot Deals","categoria":"Moto","sesiones":80,"sesiones_con_atc":22,"sesiones_con_compra":3,"es_entrada":34,"tasa_atc":27.5,"tasa_compra":3.8},{"id":"pantalones-moto","nombre":"Pantalones Moto","categoria":"Moto","sesiones":77,"sesiones_con_atc":24,"sesiones_con_compra":0,"es_entrada":33,"tasa_atc":31.2,"tasa_compra":0.0},{"id":"chaquetas-adv","nombre":"Chaquetas ADV","categoria":"ADV","sesiones":75,"sesiones_con_atc":14,"sesiones_con_compra":1,"es_entrada":45,"tasa_atc":18.7,"tasa_compra":1.3},{"id":"mtb","nombre":"MTB","categoria":"MTB","sesiones":66,"sesiones_con_atc":14,"sesiones_con_compra":1,"es_entrada":53,"tasa_atc":21.2,"tasa_compra":1.5}],"email":[{"id":"outlet","nombre":"Outlet","categoria":"Ofertas","sesiones":215,"sesiones_con_atc":17,"sesiones_con_compra":1,"es_entrada":206,"tasa_atc":7.9,"tasa_compra":0.5},{"id":"mtb-hot-deals","nombre":"MTB Hot Deals","categoria":"MTB","sesiones":69,"sesiones_con_atc":9,"sesiones_con_compra":0,"es_entrada":22,"tasa_atc":13.0,"tasa_compra":0.0},{"id":"moto-hot-deals","nombre":"Moto Hot Deals","categoria":"Moto","sesiones":65,"sesiones_con_atc":14,"sesiones_con_compra":1,"es_entrada":21,"tasa_atc":21.5,"tasa_compra":1.5},{"id":"botas-moto","nombre":"Botas Moto","categoria":"Moto","sesiones":20,"sesiones_con_atc":8,"sesiones_con_compra":0,"es_entrada":13,"tasa_atc":40.0,"tasa_compra":0.0},{"id":"cascos-mtb","nombre":"Cascos MTB","categoria":"MTB","sesiones":18,"sesiones_con_atc":2,"sesiones_con_compra":0,"es_entrada":15,"tasa_atc":11.1,"tasa_compra":0.0},{"id":"cascos-moto","nombre":"Cascos Moto","categoria":"Moto","sesiones":17,"sesiones_con_atc":7,"sesiones_con_compra":1,"es_entrada":10,"tasa_atc":41.2,"tasa_compra":5.9},{"id":"adv-hot-deals","nombre":"ADV Hot Deals","categoria":"ADV","sesiones":14,"sesiones_con_atc":2,"sesiones_con_compra":0,"es_entrada":1,"tasa_atc":14.3,"tasa_compra":0.0},{"id":"equipacion-mtb","nombre":"Equipación MTB","categoria":"MTB","sesiones":13,"sesiones_con_atc":6,"sesiones_con_compra":0,"es_entrada":6,"tasa_atc":46.2,"tasa_compra":0.0}],"bing_organic":[{"id":"mtb","nombre":"MTB","categoria":"MTB","sesiones":37,"sesiones_con_atc":9,"sesiones_con_compra":3,"es_entrada":25,"tasa_atc":24.3,"tasa_compra":8.1},{"id":"outlet","nombre":"Outlet","categoria":"Ofertas","sesiones":22,"sesiones_con_atc":10,"sesiones_con_compra":1,"es_entrada":13,"tasa_atc":45.5,"tasa_compra":4.5},{"id":"cascos-mtb","nombre":"Cascos MTB","categoria":"MTB","sesiones":21,"sesiones_con_atc":1,"sesiones_con_compra":0,"es_entrada":11,"tasa_atc":4.8,"tasa_compra":0.0},{"id":"mtb-hot-deals","nombre":"MTB Hot Deals","categoria":"MTB","sesiones":13,"sesiones_con_atc":4,"sesiones_con_compra":0,"es_entrada":7,"tasa_atc":30.8,"tasa_compra":0.0},{"id":"moto","nombre":"Moto","categoria":"Moto","sesiones":12,"sesiones_con_atc":2,"sesiones_con_compra":0,"es_entrada":6,"tasa_atc":16.7,"tasa_compra":0.0},{"id":"moto-hot-deals","nombre":"Moto Hot Deals","categoria":"Moto","sesiones":11,"sesiones_con_atc":8,"sesiones_con_compra":0,"es_entrada":5,"tasa_atc":72.7,"tasa_compra":0.0},{"id":"cascos-moto","nombre":"Cascos Moto","categoria":"Moto","sesiones":10,"sesiones_con_atc":3,"sesiones_con_compra":1,"es_entrada":3,"tasa_atc":30.0,"tasa_compra":10.0}]},"flujos":{"todos":[{"origen":"outlet","destino":"mtb-hot-deals","count":156},{"origen":"mtb","destino":"cascos-mtb","count":148},{"origen":"outlet","destino":"moto-hot-deals","count":137},{"origen":"rodilleras-moto","destino":"rodilleras-integrales-moto","count":75},{"origen":"trajes-moto","destino":"pantalones-moto","count":74},{"origen":"mtb","destino":"zapatillas-mtb","count":56},{"origen":"petos-moto","destino":"petos-integrales-moto","count":56},{"origen":"trajes-moto","destino":"camisetas-moto","count":47},{"origen":"chaquetas-moto","destino":"trajes-moto","count":47},{"origen":"petos-mtb","destino":"petos-integrales-mtb","count":45},{"origen":"chaquetas-adv","destino":"pantalones-adv","count":43},{"origen":"mtb","destino":"equipacion-mtb","count":42},{"origen":"outlet","destino":"adv-hot-deals","count":34},{"origen":"petos-integrales-mtb","destino":"petos-mtb","count":33},{"origen":"chaquetas-moto","destino":"chaquetas-adv","count":32},{"origen":"camisetas-moto","destino":"pantalones-moto","count":31},{"origen":"botas-moto","destino":"cascos-moto","count":30},{"origen":"rodilleras-integrales-moto","destino":"rodilleras-moto","count":29},{"origen":"moto","destino":"cascos-moto","count":29},{"origen":"botas-adv","destino":"botas-moto","count":28}],"google_ads":[{"origen":"mtb","destino":"cascos-mtb","count":80},{"origen":"outlet","destino":"mtb-hot-deals","count":45},{"origen":"outlet","destino":"moto-hot-deals","count":39},{"origen":"mtb","destino":"zapatillas-mtb","count":32},{"origen":"rodilleras-moto","destino":"rodilleras-integrales-moto","count":30},{"origen":"mtb","destino":"equipacion-mtb","count":20},{"origen":"petos-moto","destino":"petos-integrales-moto","count":19},{"origen":"trajes-moto","destino":"pantalones-moto","count":19},{"origen":"moto","destino":"equipacion-moto","count":16},{"origen":"petos-mtb","destino":"petos-integrales-mtb","count":15}],"google_organic":[{"origen":"outlet","destino":"mtb-hot-deals","count":39},{"origen":"mtb","destino":"cascos-mtb","count":38},{"origen":"trajes-moto","destino":"pantalones-moto","count":31},{"origen":"rodilleras-moto","destino":"rodilleras-integrales-moto","count":30},{"origen":"petos-moto","destino":"petos-integrales-moto","count":26},{"origen":"outlet","destino":"moto-hot-deals","count":23},{"origen":"chaquetas-moto","destino":"trajes-moto","count":22},{"origen":"petos-mtb","destino":"petos-integrales-mtb","count":21},{"origen":"petos-integrales-mtb","destino":"petos-mtb","count":18},{"origen":"petos-integrales-moto","destino":"petos-moto","count":17}],"meta_paid":[{"origen":"trajes-moto","destino":"pantalones-moto","count":14},{"origen":"outlet","destino":"moto-hot-deals","count":11},{"origen":"outlet","destino":"mtb-hot-deals","count":10},{"origen":"leatt-mujer","destino":"pantalones-moto","count":10},{"origen":"leatt-mujer","destino":"zapatillas-mtb","count":9},{"origen":"trajes-moto","destino":"camisetas-moto","count":8},{"origen":"chaquetas-moto","destino":"trajes-moto","count":8}],"direct":[{"origen":"outlet","destino":"moto-hot-deals","count":21},{"origen":"chaquetas-adv","destino":"pantalones-adv","count":18},{"origen":"outlet","destino":"mtb-hot-deals","count":14},{"origen":"mtb","destino":"cascos-mtb","count":12},{"origen":"rodilleras-moto","destino":"rodilleras-integrales-moto","count":9},{"origen":"trajes-moto","destino":"pantalones-moto","count":8}],"email":[{"origen":"outlet","destino":"mtb-hot-deals","count":42},{"origen":"outlet","destino":"moto-hot-deals","count":34},{"origen":"outlet","destino":"adv-hot-deals","count":6}],"bing_organic":[{"origen":"mtb","destino":"cascos-mtb","count":7},{"origen":"outlet","destino":"moto-hot-deals","count":5}]}};
+
+    let currentCanal = 'todos';
+    let currentCategory = 'all';
+    let currentSort = { field: 'sesiones', asc: false };
+
+    function init() {
+        document.getElementById('canalSelect').addEventListener('change', (e) => {
+            currentCanal = e.target.value;
+            render();
+        });
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCategory = btn.dataset.category;
+                render();
+            });
+        });
+
+        document.querySelectorAll('th[data-sort]').forEach(th => {
+            th.addEventListener('click', () => {
+                const field = th.dataset.sort;
+                if (currentSort.field === field) {
+                    currentSort.asc = !currentSort.asc;
+                } else {
+                    currentSort.field = field;
+                    currentSort.asc = false;
+                }
+                render();
+            });
+        });
+
+        render();
+    }
+
+    function render() {
+        const collections = DATA.canales[currentCanal] || [];
+        const flows = DATA.flujos[currentCanal] || [];
+
+        let filtered = collections;
+        if (currentCategory !== 'all') {
+            filtered = collections.filter(c => c.categoria === currentCategory);
+        }
+
+        // Sort
+        filtered.sort((a, b) => {
+            let va = a[currentSort.field];
+            let vb = b[currentSort.field];
+            if (typeof va === 'string') {
+                return currentSort.asc ? va.localeCompare(vb) : vb.localeCompare(va);
+            }
+            return currentSort.asc ? va - vb : vb - va;
+        });
+
+        // Stats
+        const totalSesiones = filtered.reduce((s, c) => s + c.sesiones, 0);
+        const totalATC = filtered.reduce((s, c) => s + c.sesiones_con_atc, 0);
+        const totalCompras = filtered.reduce((s, c) => s + c.sesiones_con_compra, 0);
+        const avgTasa = totalSesiones > 0 ? (totalATC / totalSesiones * 100).toFixed(1) : 0;
+
+        document.getElementById('statsRow').innerHTML = `
+            <div class="stat-card">
+                <div class="stat-value">${filtered.length}</div>
+                <div class="stat-label">Colecciones</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">${totalSesiones.toLocaleString()}</div>
+                <div class="stat-label">Sesiones totales</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">${totalATC.toLocaleString()}</div>
+                <div class="stat-label">Add to Cart</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">${totalCompras}</div>
+                <div class="stat-label">Compras</div>
+            </div>
+        `;
+
+        // Find best/worst
+        const sorted = [...filtered].sort((a, b) => b.tasa_compra - a.tasa_compra);
+        const best = sorted[0];
+        const worst = sorted.filter(c => c.sesiones > 50).slice(-1)[0];
+        
+        let insightHtml = '';
+        if (best && worst) {
+            insightHtml = `<div class="insight-box">
+                <div class="insight-title">📊 Mejor y peor colección</div>
+                <p><strong>${best.nombre}</strong> tiene la mejor tasa de compra (${best.tasa_compra}%), mientras que <strong>${worst.nombre}</strong> tiene la peor entre colecciones con más de 50 sesiones (${worst.tasa_compra}%).</p>
+            </div>`;
+        }
+        document.getElementById('insightBox').innerHTML = insightHtml;
+
+        // Table
+        const tbody = document.getElementById('collectionsBody');
+        tbody.innerHTML = filtered.map(c => `
+            <tr>
+                <td class="col-name">${c.nombre}</td>
+                <td><span class="badge badge-${c.categoria.toLowerCase()}">${c.categoria}</span></td>
+                <td class="col-number">${c.sesiones.toLocaleString()}</td>
+                <td class="col-number">${c.es_entrada.toLocaleString()}</td>
+                <td class="col-number">${c.sesiones_con_atc}</td>
+                <td class="col-number ${getRateClass(c.tasa_atc, 20, 10)}">${c.tasa_atc}%</td>
+                <td class="col-number">${c.sesiones_con_compra}</td>
+                <td class="col-number ${getRateClass(c.tasa_compra, 2, 1)}">${c.tasa_compra}%</td>
+            </tr>
+        `).join('');
+
+        // Flows
+        const flowsFiltered = currentCategory === 'all' ? flows.slice(0, 20) : flows.slice(0, 30);
+        document.getElementById('flowGrid').innerHTML = flowsFiltered.map(f => `
+            <div class="flow-item">
+                <span class="flow-origin">${prettify(f.origen)}</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-dest">${prettify(f.destino)}</span>
+                <span class="flow-count">${f.count}</span>
+            </div>
+        `).join('');
+
+        // Update sort indicators
+        document.querySelectorAll('th[data-sort]').forEach(th => {
+            th.classList.toggle('sorted', th.dataset.sort === currentSort.field);
+        });
+    }
+
+    function getRateClass(rate, good, medium) {
+        if (rate >= good) return 'rate-good';
+        if (rate >= medium) return 'rate-medium';
+        return 'rate-bad';
+    }
+
+    function prettify(name) {
+        return name.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
+            .replace('Mtb', 'MTB').replace('Adv', 'ADV');
+    }
+
+    init();
+    </script>
+</body>
+</html>
