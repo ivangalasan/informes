@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informe Analytics — quadest.net</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#FFFFFF;--bg-surface:#F3F8FF;--bg-accent:#DDEFFF;
+--text-primary:#001F78;--text-secondary:#3a4a7a;--text-tertiary:#7685AF;
+--blue-primary:#001F78;--blue-mid:#2B88D8;--blue-light:#DDEFFF;--blue-pale:#F3F8FF;
+--salmon:#FF7F7A;--salmon-bg:#FFF0EF;
+--grey-mid:#7685AF;--grey-dark:#616268;--grey-light:#B4B4B4;
+--border:rgba(0,31,120,0.10);--border-emphasis:rgba(0,31,120,0.18);
+--radius:12px;--max-w:1080px;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-secondary);font-size:15px;line-height:1.7}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border-emphasis);padding:0 24px}
+.nav-inner{max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;gap:8px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;padding:12px 0}
+.nav-inner::-webkit-scrollbar{display:none}
+.nav-brand{font-weight:700;color:var(--blue-primary);font-size:14px;white-space:nowrap;margin-right:12px}
+.nav-link{font-size:12px;color:var(--grey-mid);text-decoration:none;padding:6px 12px;border-radius:8px;white-space:nowrap;transition:all .2s}
+.nav-link:hover{color:var(--blue-primary);background:var(--bg-surface)}
+.nav-link.active{color:#fff;background:var(--blue-primary)}
+
+/* HERO */
+.hero{background:var(--blue-primary);padding:60px 0 50px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(43,136,216,0.15) 0%,transparent 70%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-30%;left:10%;width:400px;height:400px;background:radial-gradient(circle,rgba(255,127,122,0.08) 0%,transparent 70%);pointer-events:none}
+.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--salmon);margin-bottom:8px}
+.hero-title{font-size:clamp(28px,5vw,42px);font-weight:700;color:#fff;letter-spacing:-0.02em;margin-bottom:6px}
+.hero-subtitle{font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:32px}
+.hero-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.hero-kpi{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);border-radius:var(--radius);padding:20px;text-align:center}
+.hero-kpi-value{font-size:34px;font-weight:700;color:var(--salmon);letter-spacing:-0.02em}
+.hero-kpi-label{font-size:12px;color:rgba(255,255,255,0.55);margin-top:4px}
+.hero-kpi.accent{background:rgba(255,127,122,0.10);border-color:rgba(255,127,122,0.20)}
+
+/* SECTIONS */
+section{padding:52px 0}
+section.alt{background:var(--bg-surface)}
+.section-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue-mid);margin-bottom:6px}
+.section-title{font-size:clamp(22px,3.5vw,32px);font-weight:700;color:var(--text-primary);letter-spacing:-0.02em;margin-bottom:28px}
+
+/* CARDS */
+.card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+.card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.card-value{font-size:28px;font-weight:700;color:var(--text-primary);letter-spacing:-0.02em}
+.card-label{font-size:12px;color:var(--text-tertiary);margin-top:2px}
+.card-sub{font-size:12px;color:var(--text-tertiary);margin-top:6px}
+
+/* BADGES */
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600}
+.badge-green{background:#e8f5ee;color:#1a7a45}
+.badge-amber{background:#fff8e1;color:#856404}
+.badge-red{background:var(--salmon-bg);color:#c0392b}
+.badge-blue{background:var(--blue-light);color:var(--blue-primary)}
+.badge-grey{background:#f0f0f0;color:var(--grey-dark)}
+
+/* TABLES */
+table{width:100%;border-collapse:collapse}
+th{font-size:11px;text-transform:uppercase;letter-spacing:0.07em;font-weight:600;color:var(--text-tertiary);text-align:left;padding:10px 12px;border-bottom:2px solid var(--border-emphasis)}
+td{font-size:13px;color:var(--text-secondary);padding:12px;border-bottom:1px solid var(--border)}
+tr:hover td{background:var(--bg-surface)}
+.td-value{font-weight:700;color:var(--text-primary);font-size:15px}
+.td-small{font-size:12px;color:var(--text-tertiary)}
+
+/* PROGRESS BARS */
+.bar-track{background:var(--blue-light);border-radius:3px;height:8px;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px;background:var(--blue-mid);transition:width .6s ease}
+.bar-fill.salmon{background:var(--salmon)}
+
+/* INSIGHT BOXES */
+.insight-box{background:var(--bg-surface);border-left:3px solid var(--blue-mid);border-radius:0 10px 10px 0;padding:16px 20px;margin:20px 0}
+.insight-box.alert{background:var(--salmon-bg);border-left-color:var(--salmon)}
+.insight-box.success{background:#e8f5ee;border-left-color:#1a7a45}
+.insight-box-title{font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:4px}
+.insight-box p{font-size:14px;color:var(--text-secondary);line-height:1.6}
+
+/* FUNNEL */
+.funnel{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;margin:24px 0}
+.funnel-step{text-align:center;padding:20px 16px;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);min-width:120px;flex:1}
+.funnel-value{font-size:24px;font-weight:700;color:var(--text-primary)}
+.funnel-label{font-size:11px;color:var(--text-tertiary);margin-top:2px;text-transform:uppercase;letter-spacing:0.05em}
+.funnel-arrow{display:flex;flex-direction:column;align-items:center;padding:0 6px;color:var(--blue-mid)}
+.funnel-arrow svg{width:24px;height:24px}
+.funnel-rate{font-size:11px;font-weight:700;color:var(--salmon);margin-top:2px}
+
+/* CHANNEL ROW */
+.channel-row{display:grid;grid-template-columns:180px 1fr 200px;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--border)}
+.channel-name{font-size:13px;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.channel-stats{display:flex;gap:20px}
+.channel-stat{text-align:right}
+.channel-stat-value{font-size:14px;font-weight:700;color:var(--text-primary)}
+.channel-stat-label{font-size:11px;color:var(--text-tertiary)}
+
+/* RECOMMENDATIONS */
+.rec{display:flex;gap:16px;padding:20px;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px}
+.rec-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0}
+.rec-icon.alert{background:var(--salmon)}
+.rec-icon.info{background:var(--blue-mid)}
+.rec-icon.success{background:#1a7a45}
+.rec h3{font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:4px}
+.rec p{font-size:13px;color:var(--text-secondary);line-height:1.6}
+
+/* ANALYSIS GRID */
+.analysis-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.analysis-block{background:#fff;border-radius:var(--radius);padding:24px;border:1px solid var(--border)}
+.analysis-block.full-width{grid-column:1/-1}
+.analysis-block h3{font-size:15px;font-weight:600;color:var(--text-primary);margin-bottom:12px}
+.analysis-block p,.analysis-block li{font-size:14px;color:var(--text-secondary);line-height:1.7}
+.findings-list{list-style:none;padding:0}
+.findings-list li{padding:8px 0;border-bottom:1px solid rgba(0,31,120,0.08)}
+.findings-list li:last-child{border-bottom:none}
+.action-list{padding-left:20px}
+.action-list li{padding:6px 0}
+
+/* FOOTER */
+footer{background:var(--blue-primary);padding:40px 0;text-align:center}
+footer p{font-size:13px;color:rgba(255,255,255,0.40)}
+footer strong{color:rgba(255,255,255,0.75)}
+
+/* SCROLL TOP */
+.scroll-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--salmon);color:#fff;border:none;cursor:pointer;font-size:20px;box-shadow:0 2px 8px rgba(255,127,122,0.4);opacity:0;transition:opacity .3s;z-index:50}
+.scroll-top.visible{opacity:1}
+
+/* TABS */
+.tab-nav{display:flex;gap:4px;margin-bottom:32px;border-bottom:2px solid var(--border)}
+.tab-btn{padding:10px 20px;font-size:13px;font-weight:600;color:var(--grey-mid);background:transparent;border:none;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .2s}
+.tab-btn:hover{color:var(--text-primary)}
+.tab-btn.active{color:var(--blue-primary);border-bottom-color:var(--blue-primary)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* TWO COLS */
+.two-cols{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+
+/* WF CARD */
+.wf-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px}
+.wf-card h4{font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:6px}
+.wf-card .wf-trigger{font-size:12px;color:var(--blue-mid);font-weight:600;margin-bottom:8px}
+.wf-card .wf-flow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.wf-step{background:var(--blue-light);color:var(--text-primary);font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px}
+.wf-arrow{color:var(--blue-mid);font-size:12px}
+.wf-card .wf-status{font-size:12px}
+.wf-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.wf-metric{text-align:center;padding:8px;background:#fff;border-radius:8px;border:1px solid var(--border)}
+.wf-metric-val{font-size:18px;font-weight:700;color:var(--text-primary)}
+.wf-metric-label{font-size:10px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.05em}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+.hero-kpis{grid-template-columns:repeat(2,1fr)}
+.card-grid{grid-template-columns:1fr}
+.channel-row{grid-template-columns:1fr;gap:8px}
+.two-cols{grid-template-columns:1fr}
+.analysis-grid{grid-template-columns:1fr}
+.funnel{flex-direction:column}
+.funnel-arrow{transform:rotate(90deg)}
+.tab-nav{overflow-x:auto;flex-wrap:nowrap}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+<div class="nav-inner">
+<span class="nav-brand">quadest.net</span>
+<a href="#resumen" class="nav-link active">Resumen</a>
+<a href="#funnel" class="nav-link">Funnel</a>
+<a href="#canales" class="nav-link">Canales</a>
+<a href="#dispositivos" class="nav-link">Dispositivos</a>
+<a href="#landing" class="nav-link">Landing Pages</a>
+<a href="#journeys" class="nav-link">Journeys</a>
+<a href="#tiempo" class="nav-link">Tiempo</a>
+<a href="#geo" class="nav-link">Geografía</a>
+<a href="#connectif" class="nav-link">Connectif</a>
+<a href="#recomendaciones" class="nav-link">Recomendaciones</a>
+</div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="resumen">
+<div class="container">
+<p class="hero-eyebrow">INFORME ECOMMERCE · GA4 + BIGQUERY</p>
+<h1 class="hero-title">quadest.net</h1>
+<p class="hero-subtitle">8 – 13 abril 2026 · Dataset analytics_297520053 · Eventos: add_to_cart + purchase</p>
+<div class="hero-kpis">
+<div class="hero-kpi">
+<div class="hero-kpi-value">4.568</div>
+<div class="hero-kpi-label">Sesiones</div>
+</div>
+<div class="hero-kpi accent">
+<div class="hero-kpi-value">73</div>
+<div class="hero-kpi-label">Conversiones</div>
+</div>
+<div class="hero-kpi">
+<div class="hero-kpi-value">1,60%</div>
+<div class="hero-kpi-label">Tasa de conversión</div>
+</div>
+<div class="hero-kpi">
+<div class="hero-kpi-value">63,4%</div>
+<div class="hero-kpi-label">Tasa de rebote</div>
+</div>
+</div>
+</div>
+</header>
+
+<!-- FUNNEL -->
+<section id="funnel">
+<div class="container">
+<p class="section-eyebrow">EMBUDO DE CONVERSIÓN</p>
+<h2 class="section-title">Funnel de compra</h2>
+
+<div class="funnel">
+<div class="funnel-step">
+<div class="funnel-value">4.568</div>
+<div class="funnel-label">Sesiones</div>
+</div>
+<div class="funnel-arrow">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+<span class="funnel-rate">4,4%</span>
+</div>
+<div class="funnel-step">
+<div class="funnel-value">201</div>
+<div class="funnel-label">Checkout (/pedido)</div>
+</div>
+<div class="funnel-arrow">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+<span class="funnel-rate">19,4%</span>
+</div>
+<div class="funnel-step">
+<div class="funnel-value">39</div>
+<div class="funnel-label">Compras confirmadas</div>
+</div>
+</div>
+
+<div class="insight-box alert">
+<p class="insight-box-title">⚠️ 162 sesiones llegan a /pedido pero no compran</p>
+<p>El 80,6% de las sesiones que llegan al checkout abandonan sin completar la compra. Este es el punto de mayor fricción del funnel. Revisar proceso de pago, costes de envío y opciones de pago.</p>
+</div>
+
+<div class="insight-box">
+<p class="insight-box-title">📊 Nota sobre datos de carrito</p>
+<p>Solo 6 sesiones sin conversión registraron visita a /carrito, lo que sugiere que la mayoría de usuarios van directamente de ficha de producto a /pedido sin pasar por una página de carrito intermedia. El cuello de botella real está en el checkout, no en el add-to-cart.</p>
+</div>
+</div>
+</section>
+
+<!-- CANALES -->
+<section class="alt" id="canales">
+<div class="container">
+<p class="section-eyebrow">ADQUISICIÓN</p>
+<h2 class="section-title">Rendimiento por canal</h2>
+
+<div class="channel-row" style="border-bottom:2px solid var(--border-emphasis)">
+<div style="font-size:11px;text-transform:uppercase;letter-spacing:0.07em;font-weight:600;color:var(--text-tertiary)">Canal</div>
+<div style="font-size:11px;text-transform:uppercase;letter-spacing:0.07em;font-weight:600;color:var(--text-tertiary)">Volumen</div>
+<div class="channel-stats">
+<div class="channel-stat"><div class="channel-stat-label">Conv.</div></div>
+<div class="channel-stat"><div class="channel-stat-label">Tasa</div></div>
+</div>
+</div>
+
+<!-- Google Ads -->
+<div class="channel-row">
+<div class="channel-name">Google Ads (CPC)</div>
+<div>
+<div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px">2.567 sesiones <span class="badge badge-blue">56,2%</span></div>
+<div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+</div>
+<div class="channel-stats">
+<div class="channel-stat"><div class="channel-stat-value">42</div></div>
+<div class="channel-stat"><div class="channel-stat-value"><span class="badge badge-green">1,64%</span></div></div>
+</div>
+</div>
+
+<!-- Google Organic -->
+<div class="channel-row">
+<div class="channel-name">Google Organic</div>
+<div>
+<div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px">1.112 sesiones <span class="badge badge-blue">24,3%</span></div>
+<div class="bar-track"><div class="bar-fill" style="width:43.3%"></div></div>
+</div>
+<div class="channel-stats">
+<div class="channel-stat"><div class="channel-stat-value">13</div></div>
+<div class="channel-stat"><div class="channel-stat-value"><span class="badge badge-amber">1,17%</span></div></div>
+</div>
+</div>
+
+<!-- Direct -->
+<div class="channel-row">
+<div class="channel-name">Directo</div>
+<div>
+<div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px">735 sesiones <span class="badge badge-blue">16,1%</span></div>
+<div class="bar-track"><div class="bar-fill" style="width:28.6%"></div></div>
+</div>
+<div class="channel-stats">
+<div class="channel-stat"><div class="channel-stat-value">14</div></div>
+<div class="channel-stat"><div class="channel-stat-value"><span class="badge badge-green">1,90%</span></div></div>
+</div>
+</div>
+
+<!-- Bing -->
+<div class="channel-row">
+<div class="channel-name">Bing Organic</div>
+<div>
+<div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px">40 sesiones</div>
+<div class="bar-track"><div class="bar-fill" style="width:1.6%"></div></div>
+</div>
+<div class="channel-stats">
+<div class="channel-stat"><div class="channel-stat-value">1</div></div>
+<div class="channel-stat"><div class="channel-stat-value"><span class="badge badge-green">2,50%</span></div></div>
+</div>
+</div>
+
+<!-- ChatGPT -->
+<div class="channel-row">
+<div class="channel-name">ChatGPT</div>
+<div>
+<div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px">33 sesiones</div>
+<div class="bar-track"><div class="bar-fill" style="width:1.3%"></div></div>
+</div>
+<div class="channel-stats">
+<div class="channel-stat"><div class="channel-stat-value">1</div></div>
+<div class="channel-stat"><div class="channel-stat-value"><span class="badge badge-green">3,03%</span></div></div>
+</div>
+</div>
+
+<!-- Facebook -->
+<div class="channel-row">
+<div class="channel-name">Facebook / Meta</div>
+<div>
+<div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px">11 sesiones</div>
+<div class="bar-track"><div class="bar-fill" style="width:0.4%"></div></div>
+</div>
+<div class="channel-stats">
+<div class="channel-stat"><div class="channel-stat-value">0</div></div>
+<div class="channel-stat"><div class="channel-stat-value"><span class="badge badge-red">0%</span></div></div>
+</div>
+</div>
+
+<!-- Connectif -->
+<div class="channel-row">
+<div class="channel-name">Connectif / Email</div>
+<div>
+<div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px">3 sesiones</div>
+<div class="bar-track"><div class="bar-fill salmon" style="width:0.1%"></div></div>
+</div>
+<div class="channel-stats">
+<div class="channel-stat"><div class="channel-stat-value">0</div></div>
+<div class="channel-stat"><div class="channel-stat-value"><span class="badge badge-red">0%</span></div></div>
+</div>
+</div>
+
+<div class="insight-box success" style="margin-top:24px">
+<p class="insight-box-title">✅ Google Ads funciona</p>
+<p>Google Ads genera el 57,5% de las conversiones (42 de 73) con una tasa del 1,64%. Es el motor principal del negocio. El tráfico directo también convierte bien al 1,90% — usuarios que ya conocen la marca.</p>
+</div>
+
+<div class="insight-box alert">
+<p class="insight-box-title">⚠️ Google Organic tiene margen de mejora</p>
+<p>Con 1.112 sesiones solo convierte al 1,17%. Tiene un 68,1% de rebote — la peor tasa entre los canales grandes. Hay oportunidad de mejorar las landing pages orgánicas para retener mejor a estos usuarios.</p>
+</div>
+
+<div class="insight-box">
+<p class="insight-box-title">📊 Tráfico IA emergente</p>
+<p>33 sesiones desde ChatGPT (combinando referral y directo) con 1 conversión (3,03%). Volumen bajo, pero tendencia a monitorizar. Gemini también genera 3 sesiones sin conversión.</p>
+</div>
+</div>
+</section>
+
+<!-- DISPOSITIVOS -->
+<section id="dispositivos">
+<div class="container">
+<p class="section-eyebrow">TECNOLOGÍA</p>
+<h2 class="section-title">Dispositivos y tipo de usuario</h2>
+
+<div class="two-cols">
+<div>
+<h3 style="font-size:15px;font-weight:600;color:var(--text-primary);margin-bottom:16px">Por dispositivo</h3>
+<table>
+<thead><tr><th>Dispositivo</th><th>Sesiones</th><th>Conv.</th><th>Tasa</th></tr></thead>
+<tbody>
+<tr>
+<td><strong>Mobile</strong></td>
+<td class="td-value">3.656</td>
+<td>55</td>
+<td><span class="badge badge-green">1,50%</span></td>
+</tr>
+<tr>
+<td><strong>Desktop</strong></td>
+<td class="td-value">863</td>
+<td>18</td>
+<td><span class="badge badge-green">2,09%</span></td>
+</tr>
+<tr>
+<td><strong>Tablet</strong></td>
+<td>49</td>
+<td>0</td>
+<td><span class="badge badge-red">0%</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div>
+<h3 style="font-size:15px;font-weight:600;color:var(--text-primary);margin-bottom:16px">Nuevo vs recurrente</h3>
+<table>
+<thead><tr><th>Tipo</th><th>Sesiones</th><th>Conv.</th><th>Tasa</th></tr></thead>
+<tbody>
+<tr>
+<td><strong>Nuevo</strong></td>
+<td class="td-value">2.418</td>
+<td>31</td>
+<td><span class="badge badge-amber">1,28%</span></td>
+</tr>
+<tr>
+<td><strong>Recurrente</strong></td>
+<td class="td-value">2.142</td>
+<td>42</td>
+<td><span class="badge badge-green">1,96%</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="insight-box" style="margin-top:24px">
+<p class="insight-box-title">📊 Desktop convierte un 39% más que mobile</p>
+<p>Desktop alcanza el 2,09% frente al 1,50% de mobile. El 80% del tráfico es mobile, así que mejorar la experiencia móvil tiene un impacto directo y grande. Google Ads en mobile tiene un 65,4% de rebote — casi 10 puntos más que en desktop (56,7%).</p>
+</div>
+
+<div class="insight-box success">
+<p class="insight-box-title">✅ Los recurrentes compran más</p>
+<p>Los usuarios recurrentes convierten al 1,96% vs 1,28% de los nuevos — un 53% más. Esto refuerza la importancia de las estrategias de retención y email marketing (donde Connectif debería jugar un papel clave).</p>
+</div>
+</div>
+</section>
+
+<!-- LANDING PAGES -->
+<section class="alt" id="landing">
+<div class="container">
+<p class="section-eyebrow">PÁGINAS DE ENTRADA</p>
+<h2 class="section-title">Rendimiento por tipo de landing</h2>
+
+<table>
+<thead><tr><th>Tipo de página</th><th>Sesiones</th><th>Conversiones</th><th>Tasa</th><th>Estado</th></tr></thead>
+<tbody>
+<tr>
+<td><strong>Home</strong></td>
+<td class="td-value">493</td>
+<td>18</td>
+<td class="td-value">3,65%</td>
+<td><span class="badge badge-green">Mejor tasa</span></td>
+</tr>
+<tr>
+<td><strong>Categoría / Marca</strong></td>
+<td class="td-value">1.122</td>
+<td>19</td>
+<td class="td-value">1,69%</td>
+<td><span class="badge badge-green">OK</span></td>
+</tr>
+<tr>
+<td><strong>Producto (ficha)</strong></td>
+<td class="td-value">2.391</td>
+<td>27</td>
+<td class="td-value">1,13%</td>
+<td><span class="badge badge-amber">A mejorar</span></td>
+</tr>
+<tr>
+<td><strong>Otro</strong></td>
+<td>332</td>
+<td>6</td>
+<td>1,81%</td>
+<td><span class="badge badge-grey">Variado</span></td>
+</tr>
+</tbody>
+</table>
+
+<div class="insight-box alert" style="margin-top:24px">
+<p class="insight-box-title">⚠️ El 52% del tráfico entra por fichas de producto y convierte peor</p>
+<p>2.391 sesiones entran directo a fichas de producto (la mayoría desde Google Ads), pero solo convierten al 1,13%. La Home triplica esa tasa (3,65%). Esto sugiere que las fichas de producto necesitan mejorar: información más clara, CTAs más visibles, confianza (reseñas, garantías) y quizá cross-selling para retener al usuario.</p>
+</div>
+</div>
+</section>
+
+<!-- JOURNEYS -->
+<section id="journeys">
+<div class="container">
+<p class="section-eyebrow">COMPORTAMIENTO</p>
+<h2 class="section-title">Rutas de conversión</h2>
+
+<div class="two-cols" style="margin-bottom:24px">
+<div class="card">
+<div class="card-value">14,3</div>
+<div class="card-label">Páginas/sesión (conversores)</div>
+<div class="card-sub">vs 2,5 páginas en sesiones sin conversión</div>
+</div>
+<div class="card">
+<div class="card-value">15 min</div>
+<div class="card-label">Duración media (conversores)</div>
+<div class="card-sub">vs 2,8 min en sesiones sin conversión</div>
+</div>
+</div>
+
+<h3 style="font-size:15px;font-weight:600;color:var(--text-primary);margin-bottom:16px">Patrones que convierten</h3>
+<table style="margin-bottom:24px">
+<thead><tr><th>Journey</th><th>Sesiones</th><th>Tipo</th></tr></thead>
+<tbody>
+<tr>
+<td>Producto → Checkout → Confirmación</td>
+<td class="td-value">4</td>
+<td><span class="badge badge-green">Directo</span></td>
+</tr>
+<tr>
+<td>Home → Categoría → Producto → Checkout → Confirmación</td>
+<td class="td-value">2</td>
+<td><span class="badge badge-blue">Navegación completa</span></td>
+</tr>
+<tr>
+<td>Producto → Categoría → Producto → … (explorador)</td>
+<td class="td-value">8+</td>
+<td><span class="badge badge-blue">Comparador</span></td>
+</tr>
+<tr>
+<td>Producto (solo 1 página)</td>
+<td class="td-value">8</td>
+<td><span class="badge badge-amber">Mínimo</span></td>
+</tr>
+</tbody>
+</table>
+
+<h3 style="font-size:15px;font-weight:600;color:var(--text-primary);margin-bottom:16px">Patrones que NO convierten</h3>
+<table>
+<thead><tr><th>Journey</th><th>Sesiones</th><th>Problema</th></tr></thead>
+<tbody>
+<tr>
+<td>Producto (solo 1 página, rebote)</td>
+<td class="td-value">2.069</td>
+<td><span class="badge badge-red">46% del total sin conversión</span></td>
+</tr>
+<tr>
+<td>Categoría (solo 1 página)</td>
+<td class="td-value">701</td>
+<td><span class="badge badge-red">No exploran</span></td>
+</tr>
+<tr>
+<td>Home (solo 1 página)</td>
+<td class="td-value">204</td>
+<td><span class="badge badge-amber">Rebote en home</span></td>
+</tr>
+<tr>
+<td>Producto → Checkout (sin completar)</td>
+<td class="td-value">39</td>
+<td><span class="badge badge-red">Abandono checkout</span></td>
+</tr>
+<tr>
+<td>Solo Checkout (entrada directa)</td>
+<td class="td-value">28</td>
+<td><span class="badge badge-amber">Usuarios perdidos</span></td>
+</tr>
+</tbody>
+</table>
+
+<div class="insight-box alert" style="margin-top:24px">
+<p class="insight-box-title">⚠️ 2.069 sesiones entran a ficha de producto y rebotan</p>
+<p>Casi la mitad de las sesiones sin conversión aterrizan en una ficha de producto y se van sin hacer nada más. El patrón dominante es: llegar desde Google Ads → ver una ficha → irse. La ficha de producto es el mayor punto de fuga del sitio.</p>
+</div>
+
+<div class="insight-box">
+<p class="insight-box-title">📊 Los conversores navegan 6× más</p>
+<p>Quien compra visita 14 páginas de media y pasa 15 minutos en el sitio. Quien no compra ve 2,5 páginas y se queda menos de 3 minutos. La clave está en retener al usuario tras la primera ficha y facilitarle la exploración de productos relacionados.</p>
+</div>
+</div>
+</section>
+
+<!-- TIEMPO HASTA CONVERSIÓN -->
+<section class="alt" id="tiempo">
+<div class="container">
+<p class="section-eyebrow">CICLO DE COMPRA</p>
+<h2 class="section-title">Tiempo hasta conversión</h2>
+
+<table>
+<thead><tr><th>Días desde 1ª visita</th><th>Conversiones</th><th>% del total</th><th></th></tr></thead>
+<tbody>
+<tr>
+<td><strong>Mismo día (0)</strong></td>
+<td class="td-value">33</td>
+<td>49%</td>
+<td><div class="bar-track" style="width:200px"><div class="bar-fill" style="width:100%"></div></div></td>
+</tr>
+<tr>
+<td>1 – 3 días</td>
+<td class="td-value">10</td>
+<td>15%</td>
+<td><div class="bar-track" style="width:200px"><div class="bar-fill" style="width:30%"></div></div></td>
+</tr>
+<tr>
+<td>4 – 7 días</td>
+<td class="td-value">2</td>
+<td>3%</td>
+<td><div class="bar-track" style="width:200px"><div class="bar-fill" style="width:6%"></div></div></td>
+</tr>
+<tr>
+<td>8 – 30 días</td>
+<td class="td-value">4</td>
+<td>6%</td>
+<td><div class="bar-track" style="width:200px"><div class="bar-fill" style="width:12%"></div></div></td>
+</tr>
+<tr>
+<td>31 – 90 días</td>
+<td class="td-value">9</td>
+<td>13%</td>
+<td><div class="bar-track" style="width:200px"><div class="bar-fill" style="width:27%"></div></div></td>
+</tr>
+<tr>
+<td>90+ días</td>
+<td class="td-value">9</td>
+<td>13%</td>
+<td><div class="bar-track" style="width:200px"><div class="bar-fill salmon" style="width:27%"></div></div></td>
+</tr>
+</tbody>
+</table>
+
+<div class="insight-box" style="margin-top:24px">
+<p class="insight-box-title">📊 Dos perfiles de compra claros</p>
+<p>El 49% compra en su primera visita — impulso o necesidad inmediata (recambio roto, etc.). Pero hay un bloque importante (26%) que tarda más de 1 mes. Son los que comparan, investigan y vuelven. Para estos, el email marketing y el remarketing son fundamentales — y es donde Connectif debería hacer su trabajo.</p>
+</div>
+
+<h3 style="font-size:15px;font-weight:600;color:var(--text-primary);margin:24px 0 16px">Evolución diaria</h3>
+<table>
+<thead><tr><th>Fecha</th><th>Sesiones</th><th>Conv.</th><th>Tasa</th></tr></thead>
+<tbody>
+<tr><td>08/04</td><td>795</td><td class="td-value">22</td><td><span class="badge badge-green">2,8%</span></td></tr>
+<tr><td>09/04</td><td>758</td><td class="td-value">11</td><td><span class="badge badge-green">1,5%</span></td></tr>
+<tr><td>10/04</td><td>691</td><td class="td-value">8</td><td><span class="badge badge-amber">1,2%</span></td></tr>
+<tr><td>11/04</td><td>670</td><td class="td-value">8</td><td><span class="badge badge-amber">1,2%</span></td></tr>
+<tr><td>12/04 (sáb)</td><td>842</td><td class="td-value">9</td><td><span class="badge badge-amber">1,1%</span></td></tr>
+<tr><td>13/04 (dom)</td><td>812</td><td class="td-value">15</td><td><span class="badge badge-green">1,8%</span></td></tr>
+</tbody>
+</table>
+
+<div class="insight-box">
+<p class="insight-box-title">📊 Fin de semana: más tráfico, menos conversión</p>
+<p>El sábado 12 es el día con más sesiones (842) pero la peor tasa (1,1%). El martes 8 fue el mejor día con un 2,8%. Patrón típico de ecommerce: en fin de semana se navega y se compara; entre semana se compra.</p>
+</div>
+</div>
+</section>
+
+<!-- GEOGRAFÍA -->
+<section id="geo">
+<div class="container">
+<p class="section-eyebrow">GEOGRAFÍA</p>
+<h2 class="section-title">Distribución geográfica</h2>
+
+<div class="card" style="margin-bottom:24px">
+<div style="display:flex;justify-content:space-between;align-items:center">
+<div>
+<div class="card-value">97,3%</div>
+<div class="card-label">Conversiones desde España (71 de 73)</div>
+</div>
+<div>
+<span class="badge badge-amber">6% tráfico internacional sin conversión</span>
+</div>
+</div>
+</div>
+
+<h3 style="font-size:15px;font-weight:600;color:var(--text-primary);margin-bottom:16px">Top regiones (España)</h3>
+<table>
+<thead><tr><th>Región</th><th>Conversiones</th></tr></thead>
+<tbody>
+<tr><td><strong>Cataluña</strong></td><td class="td-value">12</td></tr>
+<tr><td><strong>Andalucía</strong></td><td class="td-value">12</td></tr>
+<tr><td><strong>Galicia</strong></td><td class="td-value">8</td></tr>
+<tr><td><strong>Madrid</strong></td><td class="td-value">7</td></tr>
+<tr><td>País Vasco</td><td>5</td></tr>
+<tr><td>C. Valenciana</td><td>5</td></tr>
+<tr><td>Castilla y León</td><td>4</td></tr>
+<tr><td>Murcia</td><td>3</td></tr>
+<tr><td>Castilla-La Mancha</td><td>3</td></tr>
+<tr><td>Aragón</td><td>3</td></tr>
+</tbody>
+</table>
+
+<div class="insight-box">
+<p class="insight-box-title">📊 Distribución coherente con la población</p>
+<p>Cataluña y Andalucía lideran con 12 conversiones cada una. Galicia (8) está por encima de lo esperado por población — probablemente hay una comunidad de quad/ATV fuerte allí. Madrid (7) está algo por debajo de lo esperado. El tráfico internacional (México, USA, Argentina) genera sesiones pero no convierte — normal si el envío es solo a España.</p>
+</div>
+</div>
+</section>
+
+<!-- ==================== CONNECTIF ==================== -->
+<section class="alt" id="connectif">
+<div class="container">
+<p class="section-eyebrow">AUTOMATIZACIÓN</p>
+<h2 class="section-title">Análisis de Connectif — Workflows y Email Marketing</h2>
+
+<div class="card-grid" style="grid-template-columns:repeat(3,1fr)">
+<div class="card" style="background:var(--salmon-bg);border-color:var(--salmon)">
+<div class="card-value" style="color:#c0392b">3</div>
+<div class="card-label">Sesiones desde Connectif</div>
+<div class="card-sub">0 conversiones — 0% tasa</div>
+</div>
+<div class="card">
+<div class="card-value">8</div>
+<div class="card-label">Workflows activos</div>
+<div class="card-sub">Carrito, reactivación, cross-sell, reviews, newsletter</div>
+</div>
+<div class="card">
+<div class="card-value">3</div>
+<div class="card-label">Sesiones UTM «carrito abandonado»</div>
+<div class="card-sub">1º y 2º envío · sin conversión</div>
+</div>
+</div>
+
+<div class="insight-box alert" style="margin-top:24px">
+<p class="insight-box-title">⚠️ Connectif no está generando resultados medibles</p>
+<p>En 6 días, solo 3 sesiones atribuidas a Connectif y 3 sesiones con UTM de «carrito abandonado». 0 conversiones de ambos. Con 162 sesiones que abandonan en /pedido, los workflows de carrito abandonado deberían generar mucho más tráfico de retorno. Hay un problema serio de volumen, activación o atribución.</p>
+</div>
+
+<!-- WORKFLOW CARDS -->
+<h3 style="font-size:18px;font-weight:700;color:var(--text-primary);margin:32px 0 20px">Análisis por workflow</h3>
+
+<!-- WF 1: Carrito abandonado anónimos -->
+<div class="wf-card">
+<h4>🛒 WF Carrito abandonado — Usuarios anónimos</h4>
+<div class="wf-trigger">Trigger: visitar /carrito con carrito abandonado · abandonar carrito</div>
+<div class="wf-flow">
+<span class="wf-step">Visita /carrito</span>
+<span class="wf-arrow">→</span>
+<span class="wf-step">Pop-up suscripción</span>
+<span class="wf-arrow">→</span>
+<span class="wf-step">2 días espera</span>
+<span class="wf-arrow">→</span>
+<span class="wf-step">Email recordatorio</span>
+</div>
+<div class="wf-flow">
+<span class="wf-step">Abandona carrito</span>
+<span class="wf-arrow">→</span>
+<span class="wf-step">¿Suscrito push?</span>
+<span class="wf-arrow">→</span>
+<span class="wf-step">Push / Email</span>
+</div>
+<div class="wf-metrics">
+<div class="wf-metric"><div class="wf-metric-val" style="color:#c0392b">6</div><div class="wf-metric-label">Visitas /carrito sin conv</div></div>
+<div class="wf-metric"><div class="wf-metric-val" style="color:#c0392b">1</div><div class="wf-metric-label">Sesión 1er envío</div></div>
+<div class="wf-metric"><div class="wf-metric-val" style="color:#c0392b">0</div><div class="wf-metric-label">Conversiones</div></div>
+</div>
+<div class="insight-box alert" style="margin:12px 0 0">
+<p><strong>Problema:</strong> Solo 6 sesiones visitaron /carrito sin convertir. El trigger depende de que el usuario visite una página de carrito, pero la mayoría va directo de ficha a /pedido. Este workflow tiene un trigger desalineado con el flujo real del usuario.</p>
+</div>
+</div>
+
+<!-- WF 2: Carrito abandonado por precios -->
+<div class="wf-card">
+<h4>💰 WF Carrito abandonado — Por precios</h4>
+<div class="wf-trigger">Trigger: usuario con email abandona carrito · comprueba precio y nº productos · email a los 2 días</div>
+<div class="wf-flow">
+<span class="wf-step">Abandona carrito</span>
+<span class="wf-arrow">→</span>
+<span class="wf-step">Check precio</span>
+<span class="wf-arrow">→</span>
+<span class="wf-step">Check nº productos</span>
+<span class="wf-arrow">→</span>
+<span class="wf-step">2 días espera</span>
+<span class="wf-arrow">→</span>
+<span class="wf-step">Email</span>
+</div>
+<div class="wf-metrics">
+<div class="wf-metric"><div class="wf-metric-val" style="color:#c0392b">2</div><div class="wf-metric-label">Sesiones UTM «carrito»</div></div>
+<div class="wf-metric"><div class="wf-metric-val" style="color:#c0392b">0</div><div class="wf-metric-label">Conversiones</div></div>
+<div class="wf-metric"><div class="wf-metric-val">—</div><div class="wf-metric-label">Open rate desconocido</div></div>
+</div>
+<div class="insight-box" style="margin:12px 0 0">
+<p><strong>Hipótesis:</strong> El email se envía a los 2 días — quizá demasiado tarde. El 49% de los compradores compran el mismo día. Un envío a las 1-2h del abandono podría capturar más compras impulsivas.</p>
+</div>
+</div>
+
+<!-- WF 3: Reactivación dormidos -->
+<div class="wf-card">
+<h4>😴 WF Reactivación — Clientes dormidos</h4>
+<div class="wf-trigger">Trigger: usuario entra en segmento «clientes dormidos» · cupón de descuento</div>
+<div class="wf-flow">
+<span class="wf-step">Segmento dormido</span>
+<span class="wf-arrow">→</span>
+<span class="wf-step">Asignar cupón</span>
+<span class="wf-arrow">→</span>
+<span class="wf-step">¿Anónimo?</span>
+<span class="wf-arrow">→</span>
+<span class="wf-step">Pop-up / Email</span>
+</div>
+<div class="wf-metrics">
+<div class="wf-metric"><div class="wf-metric-val">?</div><div class="wf-metric-label">Activaciones</div></div>
+<div class="wf-metric"><div class="wf-metric-val" style="color:#c0392b">0</div><div class="wf-metric-label">Sesiones atribuidas</div></div>
+<div class="wf-metric"><div class="wf-metric-val" style="color:#c0392b">0</div><div class="wf-metric-label">Conversiones</div></div>
+</div>
+<div class="insight-box" style="margin:12px 0 0">
+<p><strong>Contexto:</strong> Con un 26% de conversiones que tardan más de 1 mes, hay un segmento real de usuarios que vuelven tras un período largo. Este WF debería capturarlos, pero no hay datos de sesiones atribuidas. Revisar si el tracking UTM está bien configurado o si los cupones se están canjeando sin atribución.</p>
+</div>
+</div>
+
+<!-- WF 4: Inline recomendados -->
+<div class="wf-card">
+<h4>👓 WF Inline — Productos recomendados (gafas + botas)</h4>
+<div class="wf-trigger">Trigger: añadir botas al carrito · mostrar inline con gafas según precio al visitar /carrito</div>
+<div class="wf-flow">
+<span class="wf-step">Add botas</span>
+<span class="wf-arrow">→</span>
+<span class="wf-step">Visita /carrito</span>
+<span class="wf-arrow">→</span>
+<span class="wf-step">Inline gafas</span>
+</div>
+<div class="wf-metrics">
+<div class="wf-metric"><div class="wf-metric-val" style="color:#c0392b">6</div><div class="wf-metric-label">Visitas /carrito (sin conv)</div></div>
+<div class="wf-metric"><div class="wf-metric-val">?</div><div class="wf-metric-label">Impressions del inline</div></div>
+<div class="wf-metric"><div class="wf-metric-val">?</div><div class="wf-metric-label">Clicks</div></div>
+</div>
+<div class="insight-box" style="margin:12px 0 0">
+<p><strong>Problema estructural:</strong> Si solo 6 sesiones pasan por /carrito (sin contar las que convierten), el alcance de este inline es mínimo. Mover las recomendaciones a la ficha de producto o al checkout (/pedido) para alcanzar a los 201 usuarios que llegan ahí.</p>
+</div>
+</div>
+
+<!-- WF 5 & 6: Cross-selling -->
+<div class="wf-card">
+<h4>🔄 WF Cross-selling — LTZ + Raptor</h4>
+<div class="wf-trigger">Trigger: compra de producto LTZ o Raptor · espera 10 días · pop-up o email con productos relacionados</div>
+<div class="wf-flow">
+<span class="wf-step">Compra LTZ/Raptor</span>
+<span class="wf-arrow">→</span>
+<span class="wf-step">10 días espera</span>
+<span class="wf-arrow">→</span>
+<span class="wf-step">¿Tiene email?</span>
+<span class="wf-arrow">→</span>
+<span class="wf-step">Email / Pop-up</span>
+</div>
+<div class="wf-metrics">
+<div class="wf-metric"><div class="wf-metric-val">?</div><div class="wf-metric-label">Envíos (período)</div></div>
+<div class="wf-metric"><div class="wf-metric-val" style="color:#c0392b">0</div><div class="wf-metric-label">Sesiones atribuidas</div></div>
+<div class="wf-metric"><div class="wf-metric-val" style="color:#c0392b">0</div><div class="wf-metric-label">Conversiones</div></div>
+</div>
+<div class="insight-box" style="margin:12px 0 0">
+<p><strong>Valoración:</strong> El cross-selling post-compra tiene sentido para repuestos y accesorios de quad. Pero 10 días puede ser demasiado. El comprador aún está ilusionado con su quad a los 3-5 días. Probar un envío más temprano y con descuento para incentivar la segunda compra.</p>
+</div>
+</div>
+
+<!-- WF 7: Reviews -->
+<div class="wf-card">
+<h4>⭐ WF Reviews — Solicitud de reseña</h4>
+<div class="wf-trigger">Trigger: compra · 7 días espera · email pidiendo reseña</div>
+<div class="wf-flow">
+<span class="wf-step">Compra</span>
+<span class="wf-arrow">→</span>
+<span class="wf-step">7 días espera</span>
+<span class="wf-arrow">→</span>
+<span class="wf-step">Email reseña</span>
+</div>
+<div class="insight-box" style="margin:12px 0 0">
+<p><strong>Sin datos directos de reseñas generadas.</strong> Este WF no genera tráfico/conversión directamente pero es clave para la prueba social en fichas de producto. Si las fichas tienen pocas reseñas, este WF necesita refuerzo (quizá un incentivo tipo cupón por reseña).</p>
+</div>
+</div>
+
+<!-- WF 8: Newsletter -->
+<div class="wf-card">
+<h4>📩 WF Bienvenida — Newsletter footer</h4>
+<div class="wf-trigger">Trigger: envío del formulario de newsletter del footer · email de bienvenida</div>
+<div class="wf-flow">
+<span class="wf-step">Suscripción footer</span>
+<span class="wf-arrow">→</span>
+<span class="wf-step">Email bienvenida</span>
+</div>
+<div class="insight-box" style="margin:12px 0 0">
+<p><strong>Sin datos de suscripciones en este período.</strong> Este WF se activa solo cuando alguien se suscribe al newsletter. Revisar si el formulario del footer tiene visibilidad suficiente y si hay un incentivo para suscribirse (ej. descuento en primera compra).</p>
+</div>
+</div>
+
+<!-- CONNECTIF ANALYSIS SECTION -->
+<div style="margin-top:40px;padding-top:40px;border-top:1px solid var(--border)">
+<p class="section-eyebrow">ANÁLISIS</p>
+<h2 class="section-title">¿Qué significan estos datos de Connectif?</h2>
+
+<div class="analysis-grid">
+<div class="analysis-block">
+<h3>📊 Resumen ejecutivo</h3>
+<p>Connectif tiene 8 workflows activos pero genera solo 3 sesiones atribuidas y 0 conversiones en 6 días. Los workflows de carrito abandonado tienen un trigger desalineado (dependen de /carrito, pero los usuarios van directo a /pedido). No hay evidencia de que los WF de reactivación o cross-selling generen tráfico de retorno.</p>
+</div>
+<div class="analysis-block">
+<h3>🔍 Problema principal</h3>
+<p>El flujo real del usuario salta de ficha de producto a /pedido sin pasar por /carrito. Todos los workflows que dependen de la visita a /carrito están disparando para un público casi inexistente (6 sesiones). El checkout (/pedido) con 162 abandonos es donde debería actuar la automatización.</p>
+</div>
+<div class="analysis-block">
+<h3>⚠️ Problemas de atribución</h3>
+<p>Solo hay UTMs de «Carrito abandonado» y un envío de aperos. Los WF de reactivación, cross-selling y reviews no tienen UTMs visibles en los datos. Puede que estén activos pero sin tracking correcto, o puede que no estén generando sesiones en absoluto.</p>
+</div>
+<div class="analysis-block">
+<h3>🕐 Timing</h3>
+<p>Los emails de carrito se envían a los 2 días, pero el 49% de las compras se hacen el mismo día. El cross-selling se envía a los 10 días, cuando el «efecto compra» ya se ha enfriado. Los tiempos de los workflows no están alineados con el comportamiento real de los compradores.</p>
+</div>
+
+<div class="analysis-block full-width">
+<h3>🎯 Próximos pasos para Connectif</h3>
+<ol class="action-list">
+<li><strong>Cambiar el trigger de carrito abandonado</strong> — de /carrito a abandono de /pedido (checkout). Ahí hay 162 sesiones sin conversión. Enviar el primer email en 1-2h, no en 2 días.</li>
+<li><strong>Auditar UTMs de todos los workflows</strong> — cada email y push de Connectif debe tener UTMs únicos para poder medir. Sin esto es imposible saber qué funciona.</li>
+<li><strong>Reducir tiempos del cross-selling</strong> — de 10 días a 3-5 días. El comprador aún está pensando en su quad.</li>
+<li><strong>Añadir un WF de browse abandonment</strong> — 2.069 sesiones aterrizan en ficha de producto y rebotan. Si tienen email (o se les pide), enviar un «¿sigues buscando X?» a las pocas horas.</li>
+<li><strong>Mover el inline de recomendados</strong> — de /carrito a la ficha de producto o a /pedido, donde hay tráfico real.</li>
+<li><strong>Crear un WF de descuento en primera compra</strong> — el 53% de las sesiones son de usuarios nuevos. Capturar su email en la primera visita y ofrecer incentivo de conversión.</li>
+</ol>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- RECOMENDACIONES GENERALES -->
+<section id="recomendaciones">
+<div class="container">
+<p class="section-eyebrow">PLAN DE ACCIÓN</p>
+<h2 class="section-title">Recomendaciones</h2>
+
+<div class="rec">
+<div class="rec-icon alert">1</div>
+<div>
+<h3>Rediseñar las fichas de producto para móvil</h3>
+<p>2.069 sesiones rebotan desde fichas de producto — el 46% de las sesiones sin conversión. El 80% del tráfico es mobile y tiene peor tasa que desktop (1,50% vs 2,09%). Priorizar: CTA visible sin scroll, fotos de calidad, precio claro, stock visible, reseñas, y cross-selling dentro de la ficha.</p>
+</div>
+</div>
+
+<div class="rec">
+<div class="rec-icon alert">2</div>
+<div>
+<h3>Reducir el abandono de checkout</h3>
+<p>162 sesiones llegan a /pedido y no compran (80,6% de abandono). Revisar: costes de envío (¿se muestran tarde?), opciones de pago, formulario de datos, velocidad de carga. Añadir trust signals (garantías, devoluciones, reseñas).</p>
+</div>
+</div>
+
+<div class="rec">
+<div class="rec-icon alert">3</div>
+<div>
+<h3>Reconfigura Connectif para el flujo real</h3>
+<p>Los WF de carrito abandonado disparan sobre /carrito, pero los usuarios van directo a /pedido. Cambiar triggers a abandono de checkout. Enviar primer email en 1-2 horas, no en 2 días. Añadir un WF de «browse abandonment» para las 2.069 sesiones que rebotan en fichas.</p>
+</div>
+</div>
+
+<div class="rec">
+<div class="rec-icon info">4</div>
+<div>
+<h3>Mejorar retención post-primera vista</h3>
+<p>Los conversores ven 14 páginas de media — hay que ayudar al usuario a explorar más tras la primera ficha. Mejorar navegación entre productos relacionados, «otros clientes también compraron», y enlaces a categorías desde cada ficha.</p>
+</div>
+</div>
+
+<div class="rec">
+<div class="rec-icon info">5</div>
+<div>
+<h3>Optimizar landing pages de Google Organic</h3>
+<p>Google Organic genera 1.112 sesiones pero tiene un 68,1% de rebote — la peor tasa. Revisar las páginas que reciben tráfico orgánico: ¿coinciden con la intención de búsqueda? ¿La meta description es coherente con el contenido? ¿El contenido responde a la pregunta del usuario?</p>
+</div>
+</div>
+
+<div class="rec">
+<div class="rec-icon info">6</div>
+<div>
+<h3>Captura de emails en primera visita</h3>
+<p>El 53% de las sesiones son de usuarios nuevos que probablemente no volverán. Implementar captura de email con incentivo (descuento 5-10% en primera compra) en fichas de producto y categorías. Esto alimenta los WF de Connectif con leads reales.</p>
+</div>
+</div>
+
+<div class="rec">
+<div class="rec-icon success">7</div>
+<div>
+<h3>Escalar Google Ads — funciona bien</h3>
+<p>Google Ads genera el 57,5% de las conversiones con una tasa del 1,64%. Desktop convierte al 2,08%. Oportunidad de aumentar inversión en desktop y optimizar las campañas móviles donde el rebote es del 65,4%.</p>
+</div>
+</div>
+
+<div class="rec">
+<div class="rec-icon info">8</div>
+<div>
+<h3>Auditar atribución de Connectif</h3>
+<p>Solo 3 sesiones tienen UTM de Connectif en 6 días. Verificar que todos los emails, push y pop-ups tienen UTMs correctos. Sin atribución fiable, es imposible optimizar los workflows.</p>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- DETAILED ANALYSIS -->
+<section class="alt">
+<div class="container">
+<p class="section-eyebrow">ANÁLISIS</p>
+<h2 class="section-title">¿Qué significan estos datos?</h2>
+
+<div class="analysis-grid">
+<div class="analysis-block">
+<h3>📊 Resumen ejecutivo</h3>
+<p>Quadest.net convierte al 1,60% en 6 días (73 compras en 4.568 sesiones). Google Ads es el motor principal (57,5% de conversiones). El mayor problema es el rebote masivo en fichas de producto (2.069 sesiones) y el 80,6% de abandono en checkout. Connectif genera prácticamente 0 impacto medible.</p>
+</div>
+<div class="analysis-block">
+<h3>🔍 Hallazgos clave</h3>
+<ul class="findings-list">
+<li><strong>Fichas de producto = punto de fuga:</strong> 2.069 sesiones rebotan. Son el 46% de las no-conversiones.</li>
+<li><strong>Checkout perdido:</strong> 162 sesiones llegan a /pedido y se van. Tasa checkout→compra: 19,4%.</li>
+<li><strong>Desktop convierte 39% más:</strong> 2,09% vs 1,50% en mobile. El 80% del tráfico es mobile.</li>
+<li><strong>Recurrentes: +53% conversión:</strong> 1,96% vs 1,28%. La retención paga.</li>
+<li><strong>Connectif invisible:</strong> 3 sesiones, 0 conversiones, triggers desalineados.</li>
+</ul>
+</div>
+<div class="analysis-block">
+<h3>⚠️ Problemas detectados</h3>
+<p>Tres problemas principales: (1) las fichas de producto no retienen al usuario que llega desde anuncios, (2) el checkout pierde 4 de cada 5 usuarios que llegan, y (3) Connectif no está recuperando ninguno de estos abandonos porque sus triggers apuntan a páginas que los usuarios no visitan.</p>
+</div>
+<div class="analysis-block">
+<h3>✅ Qué escalar</h3>
+<p>Google Ads funciona — tasa sólida al 1,64% con margen para crecer en desktop. Los usuarios recurrentes compran más, así que cada suscriptor de email o push que se consiga tiene valor real. La Home convierte al 3,65% — usar la Home como destino para campañas de marca puede mejorar resultados.</p>
+</div>
+<div class="analysis-block full-width">
+<h3>🎯 Próximos pasos (priorizados)</h3>
+<ol class="action-list">
+<li><strong>Semana 1:</strong> Reconfigurar triggers de Connectif (carrito → checkout) y auditar UTMs</li>
+<li><strong>Semana 1-2:</strong> Análisis UX de ficha de producto en mobile — identificar por qué rebotan</li>
+<li><strong>Semana 2:</strong> Implementar captura de email con incentivo en fichas de producto</li>
+<li><strong>Semana 2-3:</strong> Revisar proceso de checkout — gastos de envío, opciones de pago, trust signals</li>
+<li><strong>Semana 3-4:</strong> Crear WF browse abandonment en Connectif para fichas de producto</li>
+<li><strong>Mes 2:</strong> Test A/B de fichas de producto con cross-selling integrado</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<div class="container">
+<p><strong>agenciaSEO.eu</strong> · Informe generado el 14/04/2026</p>
+<p>Fuente: GA4 + BigQuery · Dataset analytics_297520053 · Período: 8–13 abril 2026</p>
+</div>
+</footer>
+
+<!-- SCROLL TOP -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// Scroll spy nav
+const sections = document.querySelectorAll('section[id], header[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+const scrollBtn = document.getElementById('scrollTop');
+
+function updateNav() {
+    let current = '';
+    sections.forEach(s => {
+        const top = s.offsetTop - 80;
+        if (window.scrollY >= top) current = s.id;
+    });
+    navLinks.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+    });
+    scrollBtn.classList.toggle('visible', window.scrollY > 400);
+}
+
+window.addEventListener('scroll', updateNav);
+updateNav();
+
+// Smooth scroll
+navLinks.forEach(l => {
+    l.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(l.getAttribute('href'));
+        if (target) target.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+});
+</script>
+
+</body>
+</html>
