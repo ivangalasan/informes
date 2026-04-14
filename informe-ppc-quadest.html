@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Análisis PPC — quadest.net</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#FFFFFF;--bg-surface:#F3F8FF;--bg-accent:#DDEFFF;
+--text-primary:#001F78;--text-secondary:#3a4a7a;--text-tertiary:#7685AF;
+--blue-primary:#001F78;--blue-mid:#2B88D8;--blue-light:#DDEFFF;--blue-pale:#F3F8FF;
+--salmon:#FF7F7A;--salmon-bg:#FFF0EF;
+--grey-mid:#7685AF;--grey-dark:#616268;--grey-light:#B4B4B4;
+--border:rgba(0,31,120,0.10);--border-emphasis:rgba(0,31,120,0.18);
+--radius:12px;--max-w:1080px;
+--green:#1a7a45;--green-bg:#e8f5ee;--red:#c0392b;--amber:#856404;--amber-bg:#fff8e1;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-secondary);font-size:15px;line-height:1.7}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border-emphasis);padding:0 24px}
+.nav-inner{max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;gap:6px;overflow-x:auto;scrollbar-width:none;padding:12px 0}
+.nav-inner::-webkit-scrollbar{display:none}
+.nav-brand{font-weight:700;color:var(--blue-primary);font-size:14px;white-space:nowrap;margin-right:12px}
+.nav-link{font-size:12px;color:var(--grey-mid);text-decoration:none;padding:6px 10px;border-radius:8px;white-space:nowrap;transition:all .2s}
+.nav-link:hover{color:var(--blue-primary);background:var(--bg-surface)}
+.nav-link.active{color:#fff;background:var(--blue-primary)}
+/* HERO */
+.hero{background:var(--blue-primary);padding:60px 0 50px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(43,136,216,0.15) 0%,transparent 70%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-30%;left:10%;width:400px;height:400px;background:radial-gradient(circle,rgba(255,127,122,0.08) 0%,transparent 70%);pointer-events:none}
+.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--salmon);margin-bottom:8px}
+.hero-title{font-size:clamp(28px,5vw,42px);font-weight:700;color:#fff;letter-spacing:-0.02em;margin-bottom:6px}
+.hero-subtitle{font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:32px}
+.hero-kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.hero-kpi{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);border-radius:var(--radius);padding:18px 14px;text-align:center}
+.hero-kpi-value{font-size:28px;font-weight:700;color:var(--salmon);letter-spacing:-0.02em}
+.hero-kpi-label{font-size:11px;color:rgba(255,255,255,0.50);margin-top:3px}
+.hero-kpi.accent{background:rgba(255,127,122,0.12);border-color:rgba(255,127,122,0.25)}
+/* SECTIONS */
+section{padding:52px 0}
+section.alt{background:var(--bg-surface)}
+.section-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue-mid);margin-bottom:6px}
+.section-title{font-size:clamp(22px,3.5vw,32px);font-weight:700;color:var(--text-primary);letter-spacing:-0.02em;margin-bottom:28px}
+.section-subtitle{font-size:16px;font-weight:600;color:var(--text-primary);margin:28px 0 16px}
+/* CARDS */
+.card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:24px}
+.card-value{font-size:26px;font-weight:700;color:var(--text-primary);letter-spacing:-0.02em}
+.card-label{font-size:12px;color:var(--text-tertiary);margin-top:2px}
+.card-sub{font-size:12px;color:var(--text-tertiary);margin-top:6px}
+/* BADGES */
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600}
+.badge-green{background:var(--green-bg);color:var(--green)}
+.badge-amber{background:var(--amber-bg);color:var(--amber)}
+.badge-red{background:var(--salmon-bg);color:var(--red)}
+.badge-blue{background:var(--blue-light);color:var(--blue-primary)}
+.badge-grey{background:#f0f0f0;color:var(--grey-dark)}
+/* TABLES */
+table{width:100%;border-collapse:collapse;margin-bottom:16px}
+th{font-size:11px;text-transform:uppercase;letter-spacing:0.07em;font-weight:600;color:var(--text-tertiary);text-align:left;padding:10px 12px;border-bottom:2px solid var(--border-emphasis)}
+td{font-size:13px;color:var(--text-secondary);padding:12px;border-bottom:1px solid var(--border)}
+tr:hover td{background:var(--bg-surface)}
+.td-value{font-weight:700;color:var(--text-primary);font-size:15px}
+.td-small{font-size:12px;color:var(--text-tertiary)}
+.td-right{text-align:right}
+/* BARS */
+.bar-track{background:var(--blue-light);border-radius:3px;height:8px;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px;background:var(--blue-mid)}
+.bar-fill.salmon{background:var(--salmon)}
+.bar-fill.green{background:var(--green)}
+/* INSIGHT */
+.insight-box{background:var(--bg-surface);border-left:3px solid var(--blue-mid);border-radius:0 10px 10px 0;padding:16px 20px;margin:20px 0}
+.insight-box.alert{background:var(--salmon-bg);border-left-color:var(--salmon)}
+.insight-box.success{background:var(--green-bg);border-left-color:var(--green)}
+.insight-box-title{font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:4px}
+.insight-box p{font-size:14px;color:var(--text-secondary);line-height:1.6}
+/* CAMPAIGN BLOCK */
+.camp-block{margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border)}
+.camp-block:last-child{border-bottom:none}
+.camp-block-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.camp-block-title{font-size:22px;font-weight:700;color:var(--text-primary);letter-spacing:-0.01em}
+.camp-block-type{font-size:12px;color:var(--text-tertiary);margin-top:2px}
+.camp-kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:20px}
+.camp-kpi{text-align:center;padding:14px 8px;background:var(--bg-surface);border-radius:10px;border:1px solid var(--border)}
+.camp-kpi-val{font-size:20px;font-weight:700;color:var(--text-primary);letter-spacing:-0.02em}
+.camp-kpi-val.good{color:var(--green)}
+.camp-kpi-val.bad{color:var(--red)}
+.camp-kpi-val.warn{color:var(--amber)}
+.camp-kpi-label{font-size:10px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.04em;margin-top:2px}
+/* TX TABLE */
+.tx-row{display:grid;grid-template-columns:1fr 90px 70px;gap:8px;padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px}
+.tx-row:hover{background:var(--bg-surface)}
+.tx-product{color:var(--text-primary);font-weight:500}
+.tx-meta{font-size:11px;color:var(--text-tertiary)}
+/* VERDICT */
+.verdict{padding:16px 20px;border-radius:var(--radius);margin-top:16px;font-size:14px;line-height:1.7}
+.verdict.scale{background:var(--green-bg);border:1px solid rgba(26,122,69,0.2)}
+.verdict.optimize{background:var(--blue-light);border:1px solid rgba(0,31,120,0.15)}
+.verdict.warning{background:var(--amber-bg);border:1px solid rgba(133,100,4,0.2)}
+.verdict.danger{background:var(--salmon-bg);border:1px solid rgba(255,127,122,0.3)}
+.verdict strong{color:var(--text-primary)}
+.verdict-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px}
+.verdict.scale .verdict-label{color:var(--green)}
+.verdict.optimize .verdict-label{color:var(--blue-mid)}
+.verdict.warning .verdict-label{color:var(--amber)}
+.verdict.danger .verdict-label{color:var(--red)}
+/* ANALYSIS */
+.analysis-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.analysis-block{background:#fff;border-radius:var(--radius);padding:24px;border:1px solid var(--border)}
+.analysis-block.full-width{grid-column:1/-1}
+.analysis-block h3{font-size:15px;font-weight:600;color:var(--text-primary);margin-bottom:12px}
+.analysis-block p,.analysis-block li{font-size:14px;color:var(--text-secondary);line-height:1.7}
+.findings-list{list-style:none;padding:0}
+.findings-list li{padding:8px 0;border-bottom:1px solid rgba(0,31,120,0.08)}
+.findings-list li:last-child{border-bottom:none}
+.action-list{padding-left:20px}
+.action-list li{padding:6px 0}
+/* FOOTER */
+footer{background:var(--blue-primary);padding:40px 0;text-align:center}
+footer p{font-size:13px;color:rgba(255,255,255,0.40)}
+footer strong{color:rgba(255,255,255,0.75)}
+.scroll-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--salmon);color:#fff;border:none;cursor:pointer;font-size:20px;box-shadow:0 2px 8px rgba(255,127,122,0.4);opacity:0;transition:opacity .3s;z-index:50}
+.scroll-top.visible{opacity:1}
+.two-cols{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.divider{height:1px;background:var(--border);margin:40px 0}
+@media(max-width:768px){
+.hero-kpis{grid-template-columns:repeat(2,1fr)}
+.camp-kpis{grid-template-columns:repeat(3,1fr)}
+.two-cols,.analysis-grid{grid-template-columns:1fr}
+.card-grid{grid-template-columns:1fr 1fr}
+.camp-block-header{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<nav>
+<div class="nav-inner">
+<span class="nav-brand">quadest.net · PPC</span>
+<a href="#overview" class="nav-link active">Resumen</a>
+<a href="#ranking" class="nav-link">Ranking</a>
+<a href="#branding" class="nav-link">Branding</a>
+<a href="#recambios" class="nav-link">Recambios SH</a>
+<a href="#accesorios" class="nav-link">Accesorios</a>
+<a href="#roas" class="nav-link">PMax ROAS</a>
+<a href="#aperos" class="nav-link">Aperos</a>
+<a href="#menores" class="nav-link">Menores</a>
+<a href="#productos" class="nav-link">Productos</a>
+<a href="#envio" class="nav-link">Envío</a>
+<a href="#plan" class="nav-link">Plan</a>
+</div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="overview">
+<div class="container">
+<p class="hero-eyebrow">ANÁLISIS DE CAMPAÑAS PPC · GOOGLE ADS</p>
+<h1 class="hero-title">quadest.net — Google Ads</h1>
+<p class="hero-subtitle">8 – 13 abril 2026 · Solo campañas CPC con nombre identificado</p>
+<div class="hero-kpis">
+<div class="hero-kpi"><div class="hero-kpi-value">2.561</div><div class="hero-kpi-label">Sesiones CPC</div></div>
+<div class="hero-kpi accent"><div class="hero-kpi-value">12</div><div class="hero-kpi-label">Compras</div></div>
+<div class="hero-kpi"><div class="hero-kpi-value">1.077€</div><div class="hero-kpi-label">Revenue</div></div>
+<div class="hero-kpi"><div class="hero-kpi-value">89,75€</div><div class="hero-kpi-label">AOV</div></div>
+<div class="hero-kpi"><div class="hero-kpi-value">0,47%</div><div class="hero-kpi-label">Tasa compra</div></div>
+</div>
+</div>
+</header>
+
+<!-- RANKING TABLE -->
+<section id="ranking">
+<div class="container">
+<p class="section-eyebrow">COMPARATIVA</p>
+<h2 class="section-title">Ranking de campañas por revenue</h2>
+
+<table>
+<thead>
+<tr><th>#</th><th>Campaña</th><th>Sesiones</th><th>Tx</th><th>Revenue</th><th>AOV</th><th>Tasa</th><th>Bounce</th><th>Veredicto</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>AS_SN: Branding</strong></td>
+<td>134</td>
+<td class="td-value">4</td>
+<td class="td-value">172,97€</td>
+<td>43,24€</td>
+<td><span class="badge badge-green">2,99%</span></td>
+<td><span class="badge badge-green">33%</span></td>
+<td><span class="badge badge-green">⭐ Escalar</span></td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>AS_PMAX SH: Recambios Quad</strong></td>
+<td>539</td>
+<td class="td-value">2</td>
+<td class="td-value">73,24€</td>
+<td>36,62€</td>
+<td><span class="badge badge-amber">0,37%</span></td>
+<td><span class="badge badge-red">64%</span></td>
+<td><span class="badge badge-amber">Optimizar</span></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>AS_PMAX: Accesorios Quad</strong></td>
+<td>528</td>
+<td class="td-value">1</td>
+<td class="td-value">332,00€</td>
+<td>332,00€</td>
+<td><span class="badge badge-red">0,19%</span></td>
+<td><span class="badge badge-red">65%</span></td>
+<td><span class="badge badge-amber">Optimizar</span></td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>AS_PMAX: Accesorios Dv&Ds</strong></td>
+<td>170</td>
+<td>1</td>
+<td>80,54€</td>
+<td>80,54€</td>
+<td><span class="badge badge-red">0,59%</span></td>
+<td><span class="badge badge-red">70%</span></td>
+<td><span class="badge badge-red">Revisar</span></td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>PMax ROAS (>350€) by CRO</strong></td>
+<td>376</td>
+<td>1</td>
+<td>16,28€</td>
+<td>16,28€</td>
+<td><span class="badge badge-red">0,27%</span></td>
+<td><span class="badge badge-red">66%</span></td>
+<td><span class="badge badge-red">Reestructurar</span></td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>AS_PMAX SH: Recambios Dv&Ds</strong></td>
+<td>245</td>
+<td style="color:var(--red);font-weight:700">0</td>
+<td style="color:var(--red)">0€</td>
+<td>—</td>
+<td><span class="badge badge-red">0%</span></td>
+<td><span class="badge badge-red">65%</span></td>
+<td><span class="badge badge-red">Consolidar</span></td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Aperos Agrícolas by CRO</strong></td>
+<td>323</td>
+<td style="color:var(--red);font-weight:700">0</td>
+<td style="color:var(--red)">0€</td>
+<td>—</td>
+<td><span class="badge badge-red">0%</span></td>
+<td><span class="badge badge-red">74%</span></td>
+<td><span class="badge badge-red">Pausar / Pivotar</span></td>
+</tr>
+<tr>
+<td>8</td>
+<td>AS_SH: Catch All</td>
+<td>17</td>
+<td style="color:var(--red)">0</td>
+<td style="color:var(--red)">0€</td>
+<td>—</td>
+<td><span class="badge badge-red">0%</span></td>
+<td>65%</td>
+<td><span class="badge badge-grey">Pausar</span></td>
+</tr>
+<tr>
+<td>9</td>
+<td>Mantenimiento by CRO</td>
+<td>15</td>
+<td style="color:var(--red)">0</td>
+<td style="color:var(--red)">0€</td>
+<td>—</td>
+<td><span class="badge badge-red">0%</span></td>
+<td>62%</td>
+<td><span class="badge badge-grey">Pausar</span></td>
+</tr>
+</tbody>
+</table>
+
+<div class="insight-box alert">
+<p class="insight-box-title">⚠️ Solo 2 de 9 campañas CPC generan revenue relevante</p>
+<p>Branding (172,97€) y Accesorios Quad (332€ en 1 sola transacción). El resto genera migajas o nada. Las 4 campañas con 0 transacciones suman 600 sesiones — presupuesto que no convierte. Hay un problema estructural en cómo se distribuye la inversión.</p>
+</div>
+
+<div class="insight-box">
+<p class="insight-box-title">📊 El canal «directo» también atribuye ventas a campañas de Ads</p>
+<p>Branding genera 4 ventas vía CPC y 2 más via directo (usuarios que vieron el anuncio y luego entraron directamente). Recambios SH también: 2 via CPC + 1 via orgánico + 1 via directo. El impacto real de las campañas es mayor que solo CPC — pero el grueso del revenue directo no es atribuible con certeza.</p>
+</div>
+</div>
+</section>
+
+<!-- ========== CAMPAIGN DETAILS ========== -->
+
+<!-- BRANDING -->
+<section class="alt" id="branding">
+<div class="container">
+<div class="camp-block">
+<div class="camp-block-header">
+<div>
+<div class="camp-block-title">AS_SN: Branding</div>
+<div class="camp-block-type">Search Network · Marca · Todas las fuentes</div>
+</div>
+<span class="badge badge-green" style="font-size:14px;padding:6px 16px">⭐ MEJOR CAMPAÑA</span>
+</div>
+
+<div class="camp-kpis">
+<div class="camp-kpi"><div class="camp-kpi-val">181</div><div class="camp-kpi-label">Sesiones</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val good">6</div><div class="camp-kpi-label">Transacciones</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val good">389,02€</div><div class="camp-kpi-label">Revenue total</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val">64,84€</div><div class="camp-kpi-label">AOV</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val good">3,31%</div><div class="camp-kpi-label">Tasa conversión</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val good">34%</div><div class="camp-kpi-label">Bounce</div></div>
+</div>
+
+<div class="two-cols">
+<div>
+<h3 class="section-subtitle" style="margin-top:0">Desglose por fuente</h3>
+<table>
+<thead><tr><th>Fuente</th><th>Ses.</th><th>Tx</th><th>Revenue</th><th>AOV</th></tr></thead>
+<tbody>
+<tr><td>google / cpc</td><td>134</td><td class="td-value">4</td><td>172,97€</td><td>43,24€</td></tr>
+<tr><td>(direct) / (none)</td><td>27</td><td class="td-value">2</td><td>216,05€</td><td>108,02€</td></tr>
+<tr><td>google / organic</td><td>17</td><td>0</td><td>—</td><td>—</td></tr>
+</tbody>
+</table>
+</div>
+<div>
+<h3 class="section-subtitle" style="margin-top:0">Transacciones</h3>
+<div class="tx-row" style="border-bottom:2px solid var(--border-emphasis)"><span style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase">Producto</span><span style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;text-align:right">Revenue</span><span style="font-size:11px;color:var(--text-tertiary);text-align:right">Fuente</span></div>
+<div class="tx-row"><span class="tx-product">Kit Rep. Trapecios Yamaha Raptor 660 (×2)</span><span class="td-right td-value">93,20€</span><span class="td-right td-small">cpc</span></div>
+<div class="tx-row"><span class="tx-product">Kit Rep. Rueda KTM + Neumático MAXXIS + ...</span><span class="td-right td-value">197,07€</span><span class="td-right td-small">direct</span></div>
+<div class="tx-row"><span class="tx-product">Termocontacto Radiador Suzuki LTZ 400</span><span class="td-right">46,42€</span><span class="td-right td-small">cpc</span></div>
+<div class="tx-row"><span class="tx-product">Batería POWER CB3L-A</span><span class="td-right">25,09€</span><span class="td-right td-small">cpc</span></div>
+<div class="tx-row"><span class="tx-product">Tirador Starter MIKUNI</span><span class="td-right">18,98€</span><span class="td-right td-small">direct</span></div>
+<div class="tx-row"><span class="tx-product">Tulipa Piloto Trasero Can Am Renegade</span><span class="td-right">8,26€</span><span class="td-right td-small">cpc</span></div>
+</div>
+</div>
+
+<div class="insight-box success">
+<p class="insight-box-title">✅ Branding captura a usuarios que ya buscan «Quadest»</p>
+<p>Mejor tasa de conversión (3,31%), menor bounce (34%), y el 45% de las sesiones se enganchan más de 60 segundos. Los usuarios que buscan la marca ya tienen intención de compra. La landing principal es Home (71%) donde la conversión es alta. Las 2 ventas por directo probablemente son efecto halo del anuncio de marca.</p>
+</div>
+
+<div class="verdict scale">
+<div class="verdict-label">→ ACCIÓN: ESCALAR</div>
+<p><strong>Aumentar presupuesto de esta campaña.</strong> Con 134 clics CPC y 4 transacciones, cada clic tiene 7× más probabilidad de convertir que las PMax. Si el CPC de marca es bajo (0,10-0,30€ típico), el CPA estará alrededor de 3-10€ por compra. Cualquier presupuesto adicional aquí tiene el ROAS más alto de toda la cuenta. Además, protege la marca de competidores que pujen por «quadest».</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- RECAMBIOS SH -->
+<section id="recambios">
+<div class="container">
+<div class="camp-block">
+<div class="camp-block-header">
+<div>
+<div class="camp-block-title">AS_PMAX SH: Recambios Quad</div>
+<div class="camp-block-type">Performance Max · Shopping · Recambios</div>
+</div>
+<span class="badge badge-blue">Mayor volumen PMax</span>
+</div>
+
+<div class="camp-kpis">
+<div class="camp-kpi"><div class="camp-kpi-val">666</div><div class="camp-kpi-label">Ses. (todas fuentes)</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val">4</div><div class="camp-kpi-label">Transacciones</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val">327,96€</div><div class="camp-kpi-label">Revenue total</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val">81,99€</div><div class="camp-kpi-label">AOV</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val warn">0,60%</div><div class="camp-kpi-label">Tasa conv.</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val bad">64%</div><div class="camp-kpi-label">Bounce (CPC)</div></div>
+</div>
+
+<div class="two-cols">
+<div>
+<h3 class="section-subtitle" style="margin-top:0">Fuentes</h3>
+<table>
+<thead><tr><th>Fuente</th><th>Ses.</th><th>Tx</th><th>Revenue</th></tr></thead>
+<tbody>
+<tr><td>google / cpc</td><td>539</td><td>2</td><td>73,24€</td></tr>
+<tr><td>(direct) / (none)</td><td>71</td><td>1</td><td>186,40€</td></tr>
+<tr><td>google / organic</td><td>49</td><td>1</td><td>68,32€</td></tr>
+</tbody>
+</table>
+<p style="font-size:13px;color:var(--text-tertiary)">88% del tráfico CPC aterriza en fichas de producto. 78% mobile.</p>
+</div>
+<div>
+<h3 class="section-subtitle" style="margin-top:0">Transacciones</h3>
+<div class="tx-row"><span class="tx-product">CDI Kymco MXU 300</span><span class="td-right">61,48€</span><span class="td-right td-small">cpc</span></div>
+<div class="tx-row"><span class="tx-product">Pastillas freno DP Sinterizadas Polaris (×2)</span><span class="td-right">44,36€</span><span class="td-right td-small">cpc</span></div>
+<div class="tx-row"><span class="tx-product">Batería MLSAAZSLM</span><span class="td-right">28,88€</span><span class="td-right td-small">cpc</span></div>
+<div class="tx-row"><span class="tx-product">Kit montaje 18 uds. (directo)</span><span class="td-right td-value">186,40€</span><span class="td-right td-small">direct</span></div>
+<div class="tx-row"><span class="tx-product">Interruptor Temp. Suzuki LTZ (orgánico)</span><span class="td-right">68,32€</span><span class="td-right td-small">organic</span></div>
+</div>
+</div>
+
+<div class="insight-box">
+<p class="insight-box-title">📊 539 clics CPC generan solo 73,24€ de revenue directo</p>
+<p>El CPC de PMax Shopping suele estar entre 0,15-0,40€. Si el CPC medio es 0,25€, el coste de la campaña sería ~135€ — más que el revenue CPC. Pero hay 186€ via directo y 68€ via orgánico que probablemente están influenciados por el primer clic en Shopping. El ROAS real puede ser positivo si se cuenta la asistencia, pero es ajustado.</p>
+</div>
+
+<div class="insight-box alert">
+<p class="insight-box-title">⚠️ La versión Dv&Ds tiene 245 sesiones y 0€ revenue</p>
+<p>La campaña gemela «Recambios Quad Dv&Ds» no generó ninguna transacción con 245 sesiones. Misma categoría, mismo tipo de producto, pero con segmentación adicional por dispositivo/demográfico. Si el presupuesto conjunto se redistribuye a la principal, se concentra el aprendizaje del algoritmo en una sola campaña.</p>
+</div>
+
+<div class="verdict optimize">
+<div class="verdict-label">→ ACCIÓN: OPTIMIZAR + CONSOLIDAR</div>
+<p><strong>Absorber la campaña Dv&Ds en esta principal</strong> (sumar los 245 ses + presupuesto). Auditar los productos con más impresiones y 0 conversiones — excluir los que no venden. Mejorar títulos e imágenes de Shopping para los recambios que sí convierten (CDIs, pastillas de freno, baterías). <strong>Priorizar desktop</strong> donde el bounce es 10 puntos menor que mobile.</p>
+</div>
+</div>
+
+<!-- Dv&Ds note -->
+<div class="camp-block" style="padding-top:24px">
+<div class="camp-block-header">
+<div>
+<div class="camp-block-title" style="font-size:18px">AS_PMAX SH: Recambios Quad Dv&Ds</div>
+<div class="camp-block-type">Performance Max · Shopping · Variante Dv&Ds</div>
+</div>
+<span class="badge badge-red">0€ revenue · 245 sesiones</span>
+</div>
+<div class="camp-kpis" style="grid-template-columns:repeat(4,1fr)">
+<div class="camp-kpi"><div class="camp-kpi-val">245</div><div class="camp-kpi-label">Sesiones CPC</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val bad">0</div><div class="camp-kpi-label">Transacciones</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val bad">0€</div><div class="camp-kpi-label">Revenue</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val bad">65%</div><div class="camp-kpi-label">Bounce</div></div>
+</div>
+<div class="verdict danger">
+<div class="verdict-label">→ ACCIÓN: CONSOLIDAR CON LA PRINCIPAL</div>
+<p>245 sesiones sin ningún resultado. El presupuesto aquí es gasto sin retorno. Fusionar con la campaña principal de Recambios para concentrar datos de conversión y mejorar el aprendizaje de PMax.</p>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- ACCESORIOS -->
+<section class="alt" id="accesorios">
+<div class="container">
+<div class="camp-block">
+<div class="camp-block-header">
+<div>
+<div class="camp-block-title">AS_PMAX: Accesorios Quad</div>
+<div class="camp-block-type">Performance Max · Shopping · Accesorios</div>
+</div>
+<span class="badge badge-amber">Alto AOV, baja tasa</span>
+</div>
+
+<div class="camp-kpis">
+<div class="camp-kpi"><div class="camp-kpi-val">610</div><div class="camp-kpi-label">Ses. (todas fuentes)</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val">1</div><div class="camp-kpi-label">Transacciones</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val">332,00€</div><div class="camp-kpi-label">Revenue</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val good">332,00€</div><div class="camp-kpi-label">AOV</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val bad">0,16%</div><div class="camp-kpi-label">Tasa conv.</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val bad">65%</div><div class="camp-kpi-label">Bounce (CPC)</div></div>
+</div>
+
+<h3 class="section-subtitle">La transacción</h3>
+<div class="card" style="margin-bottom:20px">
+<p style="font-size:13px;color:var(--text-tertiary)">Pedido OXDIDLWPG · 332,00€ · 4 productos · 6 unidades · Envío: 8,03€</p>
+<table style="margin-top:12px">
+<thead><tr><th>Producto</th><th>Qty</th><th>Revenue</th></tr></thead>
+<tbody>
+<tr><td>Neumático SUN-F A021 22x7-10 (×2)</td><td>2</td><td>120,62€</td></tr>
+<tr><td>Neumático SUN-F A021 20x10-9 (×2)</td><td>2</td><td>118,92€</td></tr>
+<tr><td>Neumático SUN-F A021 16x8-7 (×2) <span class="td-small">— via Dv&Ds</span></td><td>2</td><td>73,18€</td></tr>
+<tr><td>Otros neumáticos</td><td>—</td><td>19,28€</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="insight-box">
+<p class="insight-box-title">📊 Una sola venta de neumáticos salva la campaña</p>
+<p>528 clics CPC → 1 transacción de 332€. Si el CPC es 0,25€, el coste es ~132€ y el ROAS sería 2,5×. Justo. Pero es una sola transacción — no es escalable ni predecible. La campaña necesita más conversiones para que el algoritmo de PMax aprenda qué funciona.</p>
+</div>
+
+<div class="insight-box alert">
+<p class="insight-box-title">⚠️ Accesorios Dv&Ds: 170 ses, 1 tx de 80,54€</p>
+<p>La variante Dv&Ds genera otra venta de neumáticos (73,18€). Misma dinámica — neumáticos son el único producto que convierte. El 70% del tráfico rebota y el 89% es mobile con engagement muy bajo (23%).</p>
+</div>
+
+<div class="verdict warning">
+<div class="verdict-label">→ ACCIÓN: REESTRUCTURAR</div>
+<p><strong>El patrón es claro: solo los neumáticos convierten.</strong> Opción A: Crear una campaña Shopping dedicada solo a neumáticos con feed optimizado (fotos de calidad, títulos con medidas exactas, precio competitivo). Opción B: Consolidar ambas versiones (Accesorios + Dv&Ds) y excluir del feed los accesorios que solo generan clics sin conversión. Los 780 sesiones actuales repartidas en 2 campañas con 65-70% bounce necesitan una limpieza profunda del feed.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- PMAX ROAS -->
+<section id="roas">
+<div class="container">
+<div class="camp-block">
+<div class="camp-block-header">
+<div>
+<div class="camp-block-title">PMax ROAS (>350 €) by CRO</div>
+<div class="camp-block-type">Performance Max · Target ROAS</div>
+</div>
+<span class="badge badge-red">ROAS target contraproducente</span>
+</div>
+
+<div class="camp-kpis">
+<div class="camp-kpi"><div class="camp-kpi-val">437</div><div class="camp-kpi-label">Ses. (todas fuentes)</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val">2</div><div class="camp-kpi-label">Transacciones</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val bad">47,86€</div><div class="camp-kpi-label">Revenue</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val bad">23,93€</div><div class="camp-kpi-label">AOV</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val bad">0,46%</div><div class="camp-kpi-label">Tasa conv.</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val bad">66%</div><div class="camp-kpi-label">Bounce</div></div>
+</div>
+
+<h3 class="section-subtitle">Transacciones</h3>
+<table>
+<thead><tr><th>Pedido</th><th>Revenue</th><th>Envío</th><th>Producto</th><th>Fuente</th></tr></thead>
+<tbody>
+<tr><td>HISSTHSKN</td><td>31,58€</td><td>7,36€</td><td>1 producto</td><td>Data Not Available</td></tr>
+<tr><td>QRQVQWEXY</td><td class="td-value">16,28€</td><td>4,36€</td><td>1 producto</td><td>google / cpc</td></tr>
+</tbody>
+</table>
+
+<div class="insight-box alert">
+<p class="insight-box-title">⚠️ Target ROAS >350% con tickets de 16-31€ es inviable</p>
+<p>Para alcanzar un ROAS del 350% con un ticket medio de 23,93€, Google necesitaría conseguir cada clic a menos de 0,07€. Imposible en Shopping. Resultado: Google busca tráfico barato de baja calidad para cumplir el target, generando un 66% de bounce y un AOV irrisorio. La campaña se ha optimizado para «conversiones baratas» en vez de «conversiones rentables».</p>
+</div>
+
+<div class="verdict danger">
+<div class="verdict-label">→ ACCIÓN: CAMBIAR ESTRATEGIA DE PUJA</div>
+<p><strong>El target ROAS >350% está saboteando la campaña.</strong> Con 437 sesiones y 47,86€ de revenue, es la peor relación sesiones/revenue de toda la cuenta. Dos opciones: (1) <strong>Cambiar a Maximize Conversion Value</strong> sin target ROAS durante 2-4 semanas para que Google recopile datos reales de qué convierte. (2) <strong>Si hay que mantener un target</strong>, bajarlo a 150-200% y subir gradualmente según los datos. El target actual solo consigue tráfico basura.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- APEROS -->
+<section class="alt" id="aperos">
+<div class="container">
+<div class="camp-block">
+<div class="camp-block-header">
+<div>
+<div class="camp-block-title">Aperos Agrícolas by CRO</div>
+<div class="camp-block-type">Campaña CRO · Vertical agrícola</div>
+</div>
+<span class="badge badge-red">🔴 0€ revenue · 344 sesiones</span>
+</div>
+
+<div class="camp-kpis">
+<div class="camp-kpi"><div class="camp-kpi-val">344</div><div class="camp-kpi-label">Ses. (todas fuentes)</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val bad">0</div><div class="camp-kpi-label">Transacciones</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val bad">0€</div><div class="camp-kpi-label">Revenue</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val bad">74%</div><div class="camp-kpi-label">Bounce</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val bad">20%</div><div class="camp-kpi-label">Engaged (>60s)</div></div>
+<div class="camp-kpi"><div class="camp-kpi-val bad">91%</div><div class="camp-kpi-label">Mobile</div></div>
+</div>
+
+<div class="insight-box alert">
+<p class="insight-box-title">⚠️ 323 clics de Google Ads sin generar ni un céntimo</p>
+<p>Si el CPC medio es 0,20€, se han gastado ~65€ en 6 días (o ~325€/mes) con 0 retorno. El 74% rebota, solo el 20% pasa más de 1 minuto, y el 91% del tráfico es mobile. Las landing pages mezclan fichas de producto (53%) y páginas de categoría (42%) pero ninguna retiene al usuario.</p>
+</div>
+
+<div class="insight-box">
+<p class="insight-box-title">📊 ¿El problema es el tráfico o el producto?</p>
+<p>Los aperos agrícolas son productos caros y voluminosos (pulverizadores, abonadoras, remolques). El usuario que busca esto necesita: specs técnicas detalladas, compatibilidad con su ATV, fotos en uso, y sobre todo — precio de envío competitivo para bultos grandes. Si el envío de un pulverizador de 95L cuesta más que el propio producto, la venta no se cierra online.</p>
+</div>
+
+<div class="verdict danger">
+<div class="verdict-label">→ ACCIÓN: PAUSAR 2 SEMANAS + DIAGNÓSTICO</div>
+<p><strong>Pausar la campaña inmediatamente.</strong> Antes de reactivar, verificar: (1) ¿Hay stock real de los productos anunciados? (2) ¿Los precios son competitivos? Comparar con Amazon, AgroDirecto, etc. (3) ¿El coste de envío es prohibitivo para estos productos? (4) ¿Las fichas tienen info suficiente (dimensiones, peso, compatibilidad)? Si la respuesta a cualquiera es «no», no reactivar hasta que se resuelva. Si todo está bien, crear una <strong>landing específica de aperos</strong> con guía de selección, vídeo, y un formulario de consulta como alternativa a la compra directa.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- MENORES -->
+<section id="menores">
+<div class="container">
+<p class="section-eyebrow">CAMPAÑAS MENORES</p>
+<h2 class="section-title">Campañas de bajo volumen</h2>
+
+<table>
+<thead><tr><th>Campaña</th><th>Tipo</th><th>Ses. CPC</th><th>Tx</th><th>Revenue</th><th>Bounce</th><th>Acción</th></tr></thead>
+<tbody>
+<tr><td><strong>AS_SH: Catch All</strong></td><td>Shopping genérico</td><td>17</td><td>0</td><td>0€</td><td>65%</td><td><span class="badge badge-red">Pausar</span></td></tr>
+<tr><td><strong>Mantenimiento by CRO</strong></td><td>CRO</td><td>15</td><td>0</td><td>0€</td><td>62%</td><td><span class="badge badge-red">Pausar</span></td></tr>
+<tr><td><strong>AS_Pmax SH: Equipación</strong></td><td>PMax Shopping</td><td>7</td><td>0</td><td>0€</td><td>50%</td><td><span class="badge badge-amber">Escalar si Equipación convierte</span></td></tr>
+<tr><td><strong>Alpinestars by CRO</strong></td><td>CRO · Marca</td><td>4</td><td>0</td><td>0€</td><td>50%</td><td><span class="badge badge-grey">Insuficiente</span></td></tr>
+</tbody>
+</table>
+
+<div class="insight-box">
+<p class="insight-box-title">📊 Equipación es la excepción</p>
+<p>Con solo 8 sesiones, es imposible sacar conclusiones. Pero la categoría Equipación convierte al 2,86% en el análisis general (mejores fichas, producto aspiracional, ticket medio). Si se le da presupuesto real, podría funcionar. Catch All y Mantenimiento son gasto desperdiciado — redirigir ese presupuesto a Branding o Equipación.</p>
+</div>
+</div>
+</section>
+
+<!-- PRODUCTOS -->
+<section class="alt" id="productos">
+<div class="container">
+<p class="section-eyebrow">PRODUCTO</p>
+<h2 class="section-title">Qué se vende y desde dónde</h2>
+
+<h3 class="section-subtitle">Top productos por revenue</h3>
+<table>
+<thead><tr><th>Producto</th><th>Qty</th><th>Revenue</th><th>Campaña</th></tr></thead>
+<tbody>
+<tr><td>Neumático SUN-F A010 25x10-12 (×4)</td><td>4</td><td class="td-value">225,80€</td><td><span class="badge badge-grey">(not set) · Directo</span></td></tr>
+<tr><td>Neumático SUN-F A010 25x8-12 (×4)</td><td>4</td><td class="td-value">188,16€</td><td><span class="badge badge-grey">(not set) · Directo</span></td></tr>
+<tr><td>Neumático SUN-F A022 20X10-9 (×2)</td><td>2</td><td class="td-value">126,04€</td><td><span class="badge badge-grey">(not set) · Directo</span></td></tr>
+<tr><td>Kit Rebaje Suspensión DURABLUE Suzuki LTZ</td><td>1</td><td class="td-value">122,78€</td><td><span class="badge badge-blue">(organic)</span></td></tr>
+<tr><td>Neumático SUN-F A021 22x7-10 (×2)</td><td>2</td><td>120,62€</td><td><span class="badge badge-blue">Accesorios Quad</span></td></tr>
+<tr><td>Manillar ODI MCGRATH</td><td>1</td><td>119,89€</td><td><span class="badge badge-grey">(not set) · Directo</span></td></tr>
+<tr><td>Neumático SUN-F A021 20x10-9 (×2)</td><td>2</td><td>118,92€</td><td><span class="badge badge-blue">Accesorios Quad</span></td></tr>
+<tr><td>Kit Rótulas Dirección KTM (×2)</td><td>2</td><td>115,38€</td><td><span class="badge badge-blue">(organic)</span></td></tr>
+<tr><td>Neumático SUN-F A017 22x7-10 (×2)</td><td>2</td><td>101,64€</td><td><span class="badge badge-grey">(not set) · Directo</span></td></tr>
+<tr><td>Neumático MAXXIS RAZR MX M932 (×1)</td><td>1</td><td>95,99€</td><td><span class="badge badge-green">Branding</span></td></tr>
+</tbody>
+</table>
+
+<div class="insight-box success">
+<p class="insight-box-title">✅ Los neumáticos dominan el revenue</p>
+<p>7 de los 10 productos top son neumáticos, sumando más de 970€ de revenue. Se compran en pares o juegos de 4. Ticket alto, producto con medidas exactas (el usuario sabe lo que busca). Los neumáticos son el producto estrella de Quadest — pero la mayoría se compra por tráfico directo, no por PPC. Hay oportunidad de crear una campaña Shopping exclusiva de neumáticos con feed muy optimizado.</p>
+</div>
+
+<div class="insight-box">
+<p class="insight-box-title">📊 Categorías de producto en esta muestra</p>
+<p>Todas las categorías aparecen como «(not set)» en los datos de BQ — esto significa que el <strong>ecommerce tracking no tiene las categorías configuradas</strong> en los items del dataLayer. Corregir esto es importante para futuros análisis por categoría de producto vendido.</p>
+</div>
+</div>
+</section>
+
+<!-- ENVÍO -->
+<section id="envio">
+<div class="container">
+<p class="section-eyebrow">LOGÍSTICA</p>
+<h2 class="section-title">Análisis de costes de envío</h2>
+
+<div class="card-grid" style="grid-template-columns:repeat(4,1fr)">
+<div class="card"><div class="card-value">5,28€</div><div class="card-label">Envío medio</div></div>
+<div class="card"><div class="card-value">4,36€</div><div class="card-label">Envío mediana</div></div>
+<div class="card"><div class="card-value">21%</div><div class="card-label">Pedidos con envío gratis</div></div>
+<div class="card" style="background:var(--salmon-bg);border-color:var(--salmon)"><div class="card-value" style="color:var(--red)">13,8%</div><div class="card-label">Envío como % del pedido</div></div>
+</div>
+
+<h3 class="section-subtitle">Impacto del envío según ticket</h3>
+<table>
+<thead><tr><th>Rango de pedido</th><th>Envío medio</th><th>% sobre pedido</th><th>Pedidos</th><th>Impacto</th></tr></thead>
+<tbody>
+<tr><td><strong>Más de 100€</strong></td><td>3,88€</td><td class="td-value">2-3%</td><td>10</td><td><span class="badge badge-green">Irrelevante</span></td></tr>
+<tr><td><strong>50 – 100€</strong></td><td>6,40€</td><td>8-10%</td><td>6</td><td><span class="badge badge-amber">Aceptable</span></td></tr>
+<tr><td><strong>25 – 50€</strong></td><td>5,90€</td><td>14-20%</td><td>6</td><td><span class="badge badge-amber">Fricción</span></td></tr>
+<tr><td><strong>Menos de 25€</strong></td><td>5,69€</td><td class="td-value" style="color:var(--red)">27-53%</td><td>6</td><td><span class="badge badge-red">Freno directo</span></td></tr>
+</tbody>
+</table>
+
+<div class="insight-box alert">
+<p class="insight-box-title">⚠️ En pedidos pequeños, el envío puede costar más que el producto</p>
+<p>El pedido más extremo: 8,26€ de producto + 4,36€ de envío = <strong>el envío es el 53% del total</strong>. En 6 de 28 pedidos, el envío supera el 20% del valor. Esto afecta directamente al abandono de checkout: un usuario que ve un recambio de 12€ y descubre 4-7€ de envío en el checkout tiene todos los motivos para abandonar. Es una causa probable del 80,6% de abandono en /pedido.</p>
+</div>
+
+<div class="insight-box success">
+<p class="insight-box-title">✅ El envío gratuito funciona para tickets altos</p>
+<p>6 de los 28 pedidos (21%) tuvieron envío gratis — y son los pedidos con mayor ticket (100-197€). El envío gratuito a partir de un umbral (ej: >75€) podría incentivar a los usuarios con carrito medio a añadir un producto más para alcanzarlo.</p>
+</div>
+
+<div class="verdict optimize">
+<div class="verdict-label">→ ACCIÓN: REESTRUCTURAR POLÍTICA DE ENVÍO</div>
+<p><strong>Tres acciones concretas:</strong> (1) Mostrar el coste de envío estimado en la ficha de producto, no solo en el checkout — esto reduce el shock en /pedido. (2) Implementar envío gratis a partir de 60-75€ con un banner visible que diga «Te faltan X€ para envío gratis». (3) Para productos de <20€, ofrecer la opción de agrupar con otros productos antes de completar la compra.</p>
+</div>
+</div>
+</section>
+
+<!-- PLAN DE ACCIÓN -->
+<section class="alt" id="plan">
+<div class="container">
+<p class="section-eyebrow">PLAN ESTRATÉGICO</p>
+<h2 class="section-title">¿Qué significan estos datos?</h2>
+
+<div class="analysis-grid">
+<div class="analysis-block">
+<h3>📊 Resumen ejecutivo</h3>
+<p>Google Ads genera 2.561 sesiones CPC y 1.076,97€ de revenue con 12 transacciones. Solo Branding tiene una tasa de conversión saludable (2,99%). Las campañas PMax generan mucho volumen pero con 64-74% de bounce y revenue por debajo de lo esperable. Los neumáticos son el producto estrella. El envío es un freno real para pedidos pequeños. 4 campañas activas con 0€ de revenue están quemando presupuesto.</p>
+</div>
+<div class="analysis-block">
+<h3>🔍 Hallazgos clave</h3>
+<ul class="findings-list">
+<li><strong>Branding → 389,02€ con 181 ses:</strong> Revenue/sesión de 2,15€. Mejor ratio de toda la cuenta.</li>
+<li><strong>PMax Recambios → 327,96€ con 666 ses:</strong> Revenue/sesión de 0,49€. Está diluido por la versión Dv&Ds que genera 0€.</li>
+<li><strong>Neumáticos = producto estrella:</strong> 7 de los 10 top productos. Ticket alto, intención clara. No tienen campaña dedicada.</li>
+<li><strong>Envío = killer de conversión:</strong> En pedidos <25€, el envío es 27-53% del total. 162 abandonos de checkout pueden explicarse en parte por esto.</li>
+<li><strong>4 campañas con 0€:</strong> Aperos (344 ses), Recambios Dv&Ds (245 ses), Catch All (17 ses), Mantenimiento (15 ses) = 621 sesiones sin retorno.</li>
+</ul>
+</div>
+<div class="analysis-block">
+<h3>⚠️ Problemas principales</h3>
+<p><strong>1. Dispersión de presupuesto.</strong> 11 campañas activas cuando solo 2-3 generan revenue. PMax necesita volumen de conversiones para optimizarse — repartir en muchas campañas impide que ninguna aprenda bien.</p>
+<p style="margin-top:8px"><strong>2. Target ROAS contraproducente.</strong> PMax ROAS >350€ genera el peor AOV (23,93€) porque el algoritmo busca conversiones baratas para cumplir el target.</p>
+<p style="margin-top:8px"><strong>3. Sin categorías en ecommerce tracking.</strong> Todos los items tienen categoría «(not set)». Esto impide analizar qué categorías generan más margen y optimizar las campañas en consecuencia.</p>
+</div>
+<div class="analysis-block">
+<h3>✅ Oportunidades</h3>
+<p><strong>1. Campaña de neumáticos.</strong> El producto que más vende no tiene campaña dedicada. Una campaña Shopping solo de neumáticos con títulos que incluyan medidas exactas puede capturar tráfico muy cualificado.</p>
+<p style="margin-top:8px"><strong>2. Branding infravalorado.</strong> Con 181 sesiones genera 389€. Si se dobla el presupuesto, puede doblar el revenue — el tráfico de marca suele escalar bien.</p>
+<p style="margin-top:8px"><strong>3. Envío gratis a partir de umbral.</strong> Puede aumentar el AOV y reducir el abandono de checkout simultáneamente.</p>
+</div>
+
+<div class="analysis-block full-width">
+<h3>🎯 Plan de acción por semana</h3>
+<ol class="action-list">
+<li><strong>Inmediato:</strong> Pausar Aperos, Catch All, Mantenimiento, Alpinestars. Redirigir 100% del presupuesto a Branding.</li>
+<li><strong>Semana 1:</strong> Consolidar Recambios Dv&Ds → Recambios principal. Consolidar Accesorios Dv&Ds → Accesorios principal. Reducir de 11 a 5-6 campañas.</li>
+<li><strong>Semana 1:</strong> Cambiar PMax ROAS de target 350% a Maximize Conversion Value (sin target). Dejar 2-4 semanas para recopilar datos.</li>
+<li><strong>Semana 2:</strong> Crear campaña Shopping de neumáticos con feed optimizado (medidas en título, fotos de calidad, precios competitivos).</li>
+<li><strong>Semana 2:</strong> Configurar item_category en el dataLayer para que los futuros datos de BQ incluyan categoría de producto.</li>
+<li><strong>Semana 3:</strong> Mostrar envío estimado en fichas de producto. Evaluar umbral de envío gratuito (60-75€).</li>
+<li><strong>Semana 4:</strong> Evaluar Equipación — dar presupuesto real (50-100 clics mínimo) y medir durante 2 semanas.</li>
+<li><strong>Mes 2:</strong> Evaluar resultados. Si Aperos puede funcionar, crear landing específica con guía de selección y reactivar con presupuesto limitado.</li>
+</ol>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<h3 class="section-subtitle">Estructura de campañas propuesta</h3>
+<table>
+<thead><tr><th>Campaña</th><th>Tipo</th><th>Prioridad presupuesto</th><th>Estado</th></tr></thead>
+<tbody>
+<tr><td><strong>AS_SN: Branding</strong></td><td>Search</td><td><span class="badge badge-green">ALTA — Escalar</span></td><td>Activa ↑</td></tr>
+<tr><td><strong>Shopping: Neumáticos</strong></td><td>PMax / Shopping</td><td><span class="badge badge-green">ALTA — Nueva</span></td><td>Crear</td></tr>
+<tr><td><strong>PMax: Recambios (consolidada)</strong></td><td>PMax</td><td><span class="badge badge-blue">MEDIA</span></td><td>Absorbe Dv&Ds</td></tr>
+<tr><td><strong>PMax: Accesorios (consolidada)</strong></td><td>PMax</td><td><span class="badge badge-blue">MEDIA</span></td><td>Absorbe Dv&Ds</td></tr>
+<tr><td><strong>PMax ROAS (sin target)</strong></td><td>PMax</td><td><span class="badge badge-amber">MEDIA-BAJA</span></td><td>Cambiar puja</td></tr>
+<tr><td><strong>Shopping: Equipación</strong></td><td>PMax / Shopping</td><td><span class="badge badge-amber">TEST</span></td><td>Dar volumen</td></tr>
+<tr><td><em>Aperos Agrícolas</em></td><td>CRO</td><td><span class="badge badge-red">PAUSADA</span></td><td>Diagnóstico</td></tr>
+<tr><td><em>Catch All / Mant. / Alpin.</em></td><td>Varios</td><td><span class="badge badge-red">PAUSADA</span></td><td>Cerrar</td></tr>
+</tbody>
+</table>
+
+</div>
+</section>
+
+<footer>
+<div class="container">
+<p><strong>agenciaSEO.eu</strong> · Análisis PPC generado el 14/04/2026</p>
+<p>Fuente: GA4 + BigQuery · Dataset analytics_297520053 · 8–13 abril 2026</p>
+</div>
+</footer>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+const sections=document.querySelectorAll('section[id],header[id]');
+const navLinks=document.querySelectorAll('.nav-link');
+const scrollBtn=document.getElementById('scrollTop');
+function updateNav(){let c='';sections.forEach(s=>{if(window.scrollY>=s.offsetTop-80)c=s.id});navLinks.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+c));scrollBtn.classList.toggle('visible',window.scrollY>400)}
+window.addEventListener('scroll',updateNav);updateNav();
+navLinks.forEach(l=>l.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(l.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));
+</script>
+
+</body>
+</html>
