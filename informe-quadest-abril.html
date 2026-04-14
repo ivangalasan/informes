@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informe Analytics — quadest.net</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#FFFFFF;--bg-surface:#F3F8FF;--bg-accent:#DDEFFF;
+--text-primary:#001F78;--text-secondary:#3a4a7a;--text-tertiary:#7685AF;
+--blue-primary:#001F78;--blue-mid:#2B88D8;--blue-light:#DDEFFF;--blue-pale:#F3F8FF;
+--salmon:#FF7F7A;--salmon-bg:#FFF0EF;
+--grey-mid:#7685AF;--grey-dark:#616268;--grey-light:#B4B4B4;
+--border:rgba(0,31,120,0.10);--border-emphasis:rgba(0,31,120,0.18);
+--radius:12px;--max-w:1080px;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-secondary);font-size:15px;line-height:1.7}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border-emphasis);padding:0 24px}
+.nav-inner{max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;gap:6px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;padding:12px 0}
+.nav-inner::-webkit-scrollbar{display:none}
+.nav-brand{font-weight:700;color:var(--blue-primary);font-size:14px;white-space:nowrap;margin-right:12px}
+.nav-link{font-size:12px;color:var(--grey-mid);text-decoration:none;padding:6px 10px;border-radius:8px;white-space:nowrap;transition:all .2s}
+.nav-link:hover{color:var(--blue-primary);background:var(--bg-surface)}
+.nav-link.active{color:#fff;background:var(--blue-primary)}
+.hero{background:var(--blue-primary);padding:60px 0 50px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(43,136,216,0.15) 0%,transparent 70%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-30%;left:10%;width:400px;height:400px;background:radial-gradient(circle,rgba(255,127,122,0.08) 0%,transparent 70%);pointer-events:none}
+.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--salmon);margin-bottom:8px}
+.hero-title{font-size:clamp(28px,5vw,42px);font-weight:700;color:#fff;letter-spacing:-0.02em;margin-bottom:6px}
+.hero-subtitle{font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:32px}
+.hero-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.hero-kpi{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);border-radius:var(--radius);padding:20px;text-align:center}
+.hero-kpi-value{font-size:34px;font-weight:700;color:var(--salmon);letter-spacing:-0.02em}
+.hero-kpi-label{font-size:12px;color:rgba(255,255,255,0.55);margin-top:4px}
+.hero-kpi.accent{background:rgba(255,127,122,0.10);border-color:rgba(255,127,122,0.20)}
+section{padding:52px 0}
+section.alt{background:var(--bg-surface)}
+.section-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue-mid);margin-bottom:6px}
+.section-title{font-size:clamp(22px,3.5vw,32px);font-weight:700;color:var(--text-primary);letter-spacing:-0.02em;margin-bottom:28px}
+.section-subtitle{font-size:16px;font-weight:600;color:var(--text-primary);margin:28px 0 16px}
+.card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+.card-value{font-size:28px;font-weight:700;color:var(--text-primary);letter-spacing:-0.02em}
+.card-label{font-size:12px;color:var(--text-tertiary);margin-top:2px}
+.card-sub{font-size:12px;color:var(--text-tertiary);margin-top:6px}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600}
+.badge-green{background:#e8f5ee;color:#1a7a45}
+.badge-amber{background:#fff8e1;color:#856404}
+.badge-red{background:var(--salmon-bg);color:#c0392b}
+.badge-blue{background:var(--blue-light);color:var(--blue-primary)}
+.badge-grey{background:#f0f0f0;color:var(--grey-dark)}
+table{width:100%;border-collapse:collapse;margin-bottom:16px}
+th{font-size:11px;text-transform:uppercase;letter-spacing:0.07em;font-weight:600;color:var(--text-tertiary);text-align:left;padding:10px 12px;border-bottom:2px solid var(--border-emphasis)}
+td{font-size:13px;color:var(--text-secondary);padding:12px;border-bottom:1px solid var(--border)}
+tr:hover td{background:var(--bg-surface)}
+.td-value{font-weight:700;color:var(--text-primary);font-size:15px}
+.td-small{font-size:12px;color:var(--text-tertiary)}
+.bar-track{background:var(--blue-light);border-radius:3px;height:8px;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px;background:var(--blue-mid);transition:width .6s ease}
+.bar-fill.salmon{background:var(--salmon)}
+.bar-fill.green{background:#1a7a45}
+.insight-box{background:var(--bg-surface);border-left:3px solid var(--blue-mid);border-radius:0 10px 10px 0;padding:16px 20px;margin:20px 0}
+.insight-box.alert{background:var(--salmon-bg);border-left-color:var(--salmon)}
+.insight-box.success{background:#e8f5ee;border-left-color:#1a7a45}
+.insight-box-title{font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:4px}
+.insight-box p{font-size:14px;color:var(--text-secondary);line-height:1.6}
+.funnel{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;margin:24px 0}
+.funnel-step{text-align:center;padding:20px 16px;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);min-width:120px;flex:1}
+.funnel-value{font-size:24px;font-weight:700;color:var(--text-primary)}
+.funnel-label{font-size:11px;color:var(--text-tertiary);margin-top:2px;text-transform:uppercase;letter-spacing:0.05em}
+.funnel-arrow{display:flex;flex-direction:column;align-items:center;padding:0 6px;color:var(--blue-mid)}
+.funnel-arrow svg{width:24px;height:24px}
+.funnel-rate{font-size:11px;font-weight:700;color:var(--salmon);margin-top:2px}
+.channel-row{display:grid;grid-template-columns:200px 1fr 180px;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--border)}
+.channel-name{font-size:13px;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.channel-stats{display:flex;gap:16px}
+.channel-stat{text-align:right}
+.channel-stat-value{font-size:14px;font-weight:700;color:var(--text-primary)}
+.channel-stat-label{font-size:11px;color:var(--text-tertiary)}
+.rec{display:flex;gap:16px;padding:20px;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px}
+.rec-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0}
+.rec-icon.alert{background:var(--salmon)}
+.rec-icon.info{background:var(--blue-mid)}
+.rec-icon.success{background:#1a7a45}
+.rec h3{font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:4px}
+.rec p{font-size:13px;color:var(--text-secondary);line-height:1.6}
+.analysis-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.analysis-block{background:#fff;border-radius:var(--radius);padding:24px;border:1px solid var(--border)}
+.analysis-block.full-width{grid-column:1/-1}
+.analysis-block h3{font-size:15px;font-weight:600;color:var(--text-primary);margin-bottom:12px}
+.analysis-block p,.analysis-block li{font-size:14px;color:var(--text-secondary);line-height:1.7}
+.findings-list{list-style:none;padding:0}
+.findings-list li{padding:8px 0;border-bottom:1px solid rgba(0,31,120,0.08)}
+.findings-list li:last-child{border-bottom:none}
+.action-list{padding-left:20px}
+.action-list li{padding:6px 0}
+footer{background:var(--blue-primary);padding:40px 0;text-align:center}
+footer p{font-size:13px;color:rgba(255,255,255,0.40)}
+footer strong{color:rgba(255,255,255,0.75)}
+.scroll-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--salmon);color:#fff;border:none;cursor:pointer;font-size:20px;box-shadow:0 2px 8px rgba(255,127,122,0.4);opacity:0;transition:opacity .3s;z-index:50}
+.scroll-top.visible{opacity:1}
+.two-cols{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.three-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+/* Campaign card */
+.camp-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px}
+.camp-card.top{border-left:3px solid #1a7a45}
+.camp-card.mid{border-left:3px solid var(--blue-mid)}
+.camp-card.low{border-left:3px solid var(--salmon)}
+.camp-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.camp-name{font-size:14px;font-weight:700;color:var(--text-primary)}
+.camp-type{font-size:11px;color:var(--text-tertiary);margin-top:2px}
+.camp-metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px}
+.camp-metric{text-align:center;padding:8px 4px;background:#fff;border-radius:8px;border:1px solid var(--border)}
+.camp-metric-val{font-size:16px;font-weight:700;color:var(--text-primary)}
+.camp-metric-label{font-size:10px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.04em}
+.camp-rec{font-size:13px;color:var(--text-secondary);padding:10px 12px;background:#fff;border-radius:8px;border:1px solid var(--border)}
+.camp-rec strong{color:var(--text-primary)}
+/* Doofinder */
+.doof-compare{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.doof-col{padding:24px;border-radius:var(--radius);border:1px solid var(--border)}
+.doof-col.active{background:#e8f5ee;border-color:#1a7a45}
+.doof-col.inactive{background:var(--salmon-bg);border-color:var(--salmon)}
+.doof-col h3{font-size:15px;font-weight:700;margin-bottom:12px}
+.doof-stat{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(0,0,0,0.06)}
+.doof-stat:last-child{border-bottom:none}
+.doof-stat-label{font-size:13px;color:var(--text-secondary)}
+.doof-stat-value{font-size:14px;font-weight:700;color:var(--text-primary)}
+/* WF */
+.wf-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px}
+.wf-card h4{font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:6px}
+.wf-card .wf-trigger{font-size:12px;color:var(--blue-mid);font-weight:600;margin-bottom:8px}
+.wf-flow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.wf-step{background:var(--blue-light);color:var(--text-primary);font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px}
+.wf-arrow{color:var(--blue-mid);font-size:12px}
+.wf-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.wf-metric{text-align:center;padding:8px;background:#fff;border-radius:8px;border:1px solid var(--border)}
+.wf-metric-val{font-size:18px;font-weight:700;color:var(--text-primary)}
+.wf-metric-label{font-size:10px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.05em}
+@media(max-width:768px){
+.hero-kpis{grid-template-columns:repeat(2,1fr)}
+.card-grid,.three-cols{grid-template-columns:1fr}
+.two-cols,.doof-compare,.analysis-grid{grid-template-columns:1fr}
+.channel-row{grid-template-columns:1fr;gap:8px}
+.camp-metrics{grid-template-columns:repeat(3,1fr)}
+.funnel{flex-direction:column}
+.funnel-arrow{transform:rotate(90deg)}
+}
+</style>
+</head>
+<body>
+
+<nav>
+<div class="nav-inner">
+<span class="nav-brand">quadest.net</span>
+<a href="#resumen" class="nav-link active">Resumen</a>
+<a href="#funnel" class="nav-link">Funnel</a>
+<a href="#canales" class="nav-link">Canales</a>
+<a href="#campanas" class="nav-link">Campañas PPC</a>
+<a href="#categorias" class="nav-link">Categorías</a>
+<a href="#doofinder" class="nav-link">Doofinder</a>
+<a href="#dispositivos" class="nav-link">Dispositivos</a>
+<a href="#journeys" class="nav-link">Journeys</a>
+<a href="#tiempo" class="nav-link">Tiempo</a>
+<a href="#connectif" class="nav-link">Connectif</a>
+<a href="#recomendaciones" class="nav-link">Acción</a>
+</div>
+</nav>
+
+<!-- ======= HERO ======= -->
+<header class="hero" id="resumen">
+<div class="container">
+<p class="hero-eyebrow">INFORME ECOMMERCE · GA4 + BIGQUERY</p>
+<h1 class="hero-title">quadest.net</h1>
+<p class="hero-subtitle">8 – 13 abril 2026 · Eventos: purchase, add_to_cart, doofinder_search</p>
+<div class="hero-kpis">
+<div class="hero-kpi">
+<div class="hero-kpi-value">4.870</div>
+<div class="hero-kpi-label">Sesiones totales</div>
+</div>
+<div class="hero-kpi accent">
+<div class="hero-kpi-value">40</div>
+<div class="hero-kpi-label">Compras (purchase)</div>
+</div>
+<div class="hero-kpi">
+<div class="hero-kpi-value">33</div>
+<div class="hero-kpi-label">Add to cart</div>
+</div>
+<div class="hero-kpi">
+<div class="hero-kpi-value">302</div>
+<div class="hero-kpi-label">Búsquedas Doofinder</div>
+</div>
+</div>
+</div>
+</header>
+
+<!-- ======= FUNNEL ======= -->
+<section id="funnel">
+<div class="container">
+<p class="section-eyebrow">EMBUDO DE CONVERSIÓN</p>
+<h2 class="section-title">Funnel de compra</h2>
+<div class="funnel">
+<div class="funnel-step"><div class="funnel-value">4.870</div><div class="funnel-label">Sesiones</div></div>
+<div class="funnel-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg><span class="funnel-rate">4,1%</span></div>
+<div class="funnel-step"><div class="funnel-value">201</div><div class="funnel-label">Checkout</div></div>
+<div class="funnel-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg><span class="funnel-rate">19,4%</span></div>
+<div class="funnel-step"><div class="funnel-value">39</div><div class="funnel-label">Compra confirmada</div></div>
+</div>
+<div class="insight-box alert">
+<p class="insight-box-title">⚠️ 162 sesiones abandonan en /pedido — 80,6% de abandono</p>
+<p>Solo 1 de cada 5 sesiones que llegan al checkout completan la compra. Es el mayor cuello de botella. Revisar costes de envío, opciones de pago y proceso de formulario.</p>
+</div>
+</div>
+</section>
+
+<!-- ======= CANALES ======= -->
+<section class="alt" id="canales">
+<div class="container">
+<p class="section-eyebrow">ADQUISICIÓN</p>
+<h2 class="section-title">Rendimiento por canal</h2>
+
+<table>
+<thead><tr><th>Canal</th><th>Sesiones</th><th>Compras</th><th>Add to cart</th><th>Doofinder</th><th>Tasa compra</th></tr></thead>
+<tbody>
+<tr><td><strong>Google Ads (CPC)</strong></td><td class="td-value">2.711</td><td>19</td><td>17</td><td>144</td><td><span class="badge badge-red">0,70%</span></td></tr>
+<tr><td><strong>Google Organic</strong></td><td class="td-value">1.167</td><td>9</td><td>4</td><td>55</td><td><span class="badge badge-red">0,77%</span></td></tr>
+<tr><td><strong>Directo</strong></td><td class="td-value">828</td><td>10</td><td>4</td><td>93</td><td><span class="badge badge-green">1,21%</span></td></tr>
+<tr><td><strong>ChatGPT</strong></td><td>36</td><td>1</td><td>0</td><td>3</td><td><span class="badge badge-green">2,78%</span></td></tr>
+<tr><td><strong>Bing Organic</strong></td><td>41</td><td>1</td><td>0</td><td>1</td><td><span class="badge badge-green">2,44%</span></td></tr>
+<tr><td><strong>Connectif / Email</strong></td><td>3</td><td>0</td><td>0</td><td>0</td><td><span class="badge badge-red">0%</span></td></tr>
+</tbody>
+</table>
+
+<div class="insight-box success">
+<p class="insight-box-title">✅ Directo convierte mejor que Paid</p>
+<p>Los usuarios que llegan directos (conocen la marca) compran al 1,21% — casi el doble que Google Ads (0,70%). Google Ads trae volumen pero necesita optimizar fichas de producto para retener el tráfico que compra.</p>
+</div>
+
+<div class="insight-box">
+<p class="insight-box-title">📊 Doofinder es señal de intención alta</p>
+<p>302 sesiones usaron el buscador Doofinder. El tráfico directo genera proporcionalmente más búsquedas internas (11,2%) que CPC (5,3%), lo que indica que los usuarios directos navegan con más intención de compra.</p>
+</div>
+</div>
+</section>
+
+<!-- ======= CAMPAÑAS PPC ======= -->
+<section id="campanas">
+<div class="container">
+<p class="section-eyebrow">GOOGLE ADS</p>
+<h2 class="section-title">Análisis de campañas PPC</h2>
+
+<div class="card-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:32px">
+<div class="card"><div class="card-value">2.711</div><div class="card-label">Sesiones Google Ads</div><div class="card-sub">55,7% del total</div></div>
+<div class="card"><div class="card-value">19</div><div class="card-label">Compras desde Ads</div><div class="card-sub">Tasa: 0,70%</div></div>
+<div class="card"><div class="card-value">64%</div><div class="card-label">Bounce medio campañas</div><div class="card-sub">Shopping/PMax peor</div></div>
+<div class="card"><div class="card-value">11</div><div class="card-label">Campañas activas</div><div class="card-sub">7 con tráfico relevante</div></div>
+</div>
+
+<!-- TOP CAMPAIGN: Branding -->
+<div class="camp-card top">
+<div class="camp-header">
+<div><div class="camp-name">AS_SN: Branding</div><div class="camp-type">Search · Marca</div></div>
+<span class="badge badge-green">⭐ Mejor campaña</span>
+</div>
+<div class="camp-metrics">
+<div class="camp-metric"><div class="camp-metric-val">182</div><div class="camp-metric-label">Sesiones</div></div>
+<div class="camp-metric"><div class="camp-metric-val" style="color:#1a7a45">7</div><div class="camp-metric-label">Compras</div></div>
+<div class="camp-metric"><div class="camp-metric-val" style="color:#1a7a45">3,85%</div><div class="camp-metric-label">Tasa compra</div></div>
+<div class="camp-metric"><div class="camp-metric-val" style="color:#1a7a45">34%</div><div class="camp-metric-label">Bounce</div></div>
+<div class="camp-metric"><div class="camp-metric-val">45%</div><div class="camp-metric-label">Engaged</div></div>
+</div>
+<div class="camp-rec"><strong>✅ Escalar:</strong> La mejor tasa de compra (3,85%), el bounce más bajo (34%) y el mayor engagement (45%). El 71% del tráfico aterriza en Home, donde la tasa de conversión es 3,65%. Es la campaña más rentable — aumentar presupuesto aquí tiene el mayor ROAS esperado.</div>
+</div>
+
+<!-- PMAX SH Recambios -->
+<div class="camp-card mid">
+<div class="camp-header">
+<div><div class="camp-name">AS_PMAX SH: Recambios Quad</div><div class="camp-type">Performance Max · Shopping · Recambios</div></div>
+<span class="badge badge-blue">Mayor volumen</span>
+</div>
+<div class="camp-metrics">
+<div class="camp-metric"><div class="camp-metric-val">666</div><div class="camp-metric-label">Sesiones</div></div>
+<div class="camp-metric"><div class="camp-metric-val">7</div><div class="camp-metric-label">Compras</div></div>
+<div class="camp-metric"><div class="camp-metric-val">1,05%</div><div class="camp-metric-label">Tasa compra</div></div>
+<div class="camp-metric"><div class="camp-metric-val" style="color:#c0392b">59%</div><div class="camp-metric-label">Bounce</div></div>
+<div class="camp-metric"><div class="camp-metric-val">32%</div><div class="camp-metric-label">Engaged</div></div>
+</div>
+<div class="camp-rec"><strong>🔧 Optimizar:</strong> Mayor volumen de la cuenta (666 ses) con 7 compras. El 88% del tráfico aterriza en fichas de producto con un 59% de rebote. Optimizar los títulos de Shopping para alinear mejor expectativa con landing page. Revisar productos que generan mucho clic y 0 conversión — excluirlos o mejorar su ficha.</div>
+</div>
+
+<!-- PMAX SH Recambios Dv&Ds -->
+<div class="camp-card mid">
+<div class="camp-header">
+<div><div class="camp-name">AS_PMAX SH: Recambios Quad Dv&Ds</div><div class="camp-type">Performance Max · Shopping · Recambios (Dv&Ds)</div></div>
+</div>
+<div class="camp-metrics">
+<div class="camp-metric"><div class="camp-metric-val">284</div><div class="camp-metric-label">Sesiones</div></div>
+<div class="camp-metric"><div class="camp-metric-val">2</div><div class="camp-metric-label">Compras</div></div>
+<div class="camp-metric"><div class="camp-metric-val">0,70%</div><div class="camp-metric-label">Tasa compra</div></div>
+<div class="camp-metric"><div class="camp-metric-val" style="color:#c0392b">64%</div><div class="camp-metric-label">Bounce</div></div>
+<div class="camp-metric"><div class="camp-metric-val">28%</div><div class="camp-metric-label">Engaged</div></div>
+</div>
+<div class="camp-rec"><strong>🔧 Optimizar:</strong> Peor tasa que la versión principal (0,70% vs 1,05%). Bounce 5 puntos más alto. Con 81% mobile, la UX móvil es clave. Revisar si la segmentación Dv&Ds (dispositivos y demográficos) está bien afinada o si es redundante con la campaña principal.</div>
+</div>
+
+<!-- PMAX Accesorios -->
+<div class="camp-card low">
+<div class="camp-header">
+<div><div class="camp-name">AS_PMAX: Accesorios Quad</div><div class="camp-type">Performance Max · Accesorios</div></div>
+<span class="badge badge-amber">Segundo mayor volumen</span>
+</div>
+<div class="camp-metrics">
+<div class="camp-metric"><div class="camp-metric-val">612</div><div class="camp-metric-label">Sesiones</div></div>
+<div class="camp-metric"><div class="camp-metric-val">4</div><div class="camp-metric-label">Compras</div></div>
+<div class="camp-metric"><div class="camp-metric-val" style="color:#c0392b">0,65%</div><div class="camp-metric-label">Tasa compra</div></div>
+<div class="camp-metric"><div class="camp-metric-val" style="color:#c0392b">62%</div><div class="camp-metric-label">Bounce</div></div>
+<div class="camp-metric"><div class="camp-metric-val">26%</div><div class="camp-metric-label">Engaged</div></div>
+</div>
+<div class="camp-rec"><strong>⚠️ Revisar:</strong> 612 sesiones con solo 4 compras (0,65%). 86% mobile y 75% del tráfico llega a fichas de producto. Con un 62% de rebote y solo 26% engaged, la calidad del tráfico es baja. Evaluar si los productos anunciados en Shopping tienen suficiente intención de compra o si la landing no cumple la expectativa creada por el anuncio.</div>
+</div>
+
+<!-- PMAX Accesorios Dv&Ds -->
+<div class="camp-card low">
+<div class="camp-header">
+<div><div class="camp-name">AS_PMAX: Accesorios Quad Dv&Ds</div><div class="camp-type">Performance Max · Accesorios (Dv&Ds)</div></div>
+</div>
+<div class="camp-metrics">
+<div class="camp-metric"><div class="camp-metric-val">187</div><div class="camp-metric-label">Sesiones</div></div>
+<div class="camp-metric"><div class="camp-metric-val">2</div><div class="camp-metric-label">Compras</div></div>
+<div class="camp-metric"><div class="camp-metric-val">1,07%</div><div class="camp-metric-label">Tasa compra</div></div>
+<div class="camp-metric"><div class="camp-metric-val" style="color:#c0392b">70%</div><div class="camp-metric-label">Bounce</div></div>
+<div class="camp-metric"><div class="camp-metric-val">23%</div><div class="camp-metric-label">Engaged</div></div>
+</div>
+<div class="camp-rec"><strong>⚠️ Revisar:</strong> Bounce del 70% con un 89% de tráfico mobile. El peor engagement de todas las campañas PMax (23%). Paradójicamente, la tasa de compra (1,07%) es mejor que la campaña principal de accesorios (0,65%). Puede que esté llegando a un público más específico pero que rebotan porque la landing móvil no retiene.</div>
+</div>
+
+<!-- PMax ROAS -->
+<div class="camp-card low">
+<div class="camp-header">
+<div><div class="camp-name">PMax ROAS (>350 €) by CRO</div><div class="camp-type">Performance Max · ROAS Target</div></div>
+<span class="badge badge-amber">Volumen alto, tasa baja</span>
+</div>
+<div class="camp-metrics">
+<div class="camp-metric"><div class="camp-metric-val">437</div><div class="camp-metric-label">Sesiones</div></div>
+<div class="camp-metric"><div class="camp-metric-val">3</div><div class="camp-metric-label">Compras</div></div>
+<div class="camp-metric"><div class="camp-metric-val" style="color:#c0392b">0,69%</div><div class="camp-metric-label">Tasa compra</div></div>
+<div class="camp-metric"><div class="camp-metric-val" style="color:#c0392b">66%</div><div class="camp-metric-label">Bounce</div></div>
+<div class="camp-metric"><div class="camp-metric-val">28%</div><div class="camp-metric-label">Engaged</div></div>
+</div>
+<div class="camp-rec"><strong>⚠️ Revisar ROAS target:</strong> Con 437 sesiones y solo 3 compras, el ROAS target >350€ puede estar forzando a Google a buscar tráfico barato que no convierte. El 28% aterriza en Home (mejor) y el 60% en fichas. Si el ROAS target es demasiado agresivo, Google sacrifica calidad de tráfico. Probar bajar el target ROAS o cambiar a Maximize Conversions temporalmente para recopilar datos.</div>
+</div>
+
+<!-- Aperos -->
+<div class="camp-card low">
+<div class="camp-header">
+<div><div class="camp-name">Aperos Agrícolas by CRO</div><div class="camp-type">Campaña CRO · Vertical agrícola</div></div>
+<span class="badge badge-red">0 compras · peor bounce</span>
+</div>
+<div class="camp-metrics">
+<div class="camp-metric"><div class="camp-metric-val">344</div><div class="camp-metric-label">Sesiones</div></div>
+<div class="camp-metric"><div class="camp-metric-val" style="color:#c0392b">0</div><div class="camp-metric-label">Compras</div></div>
+<div class="camp-metric"><div class="camp-metric-val">4</div><div class="camp-metric-label">Add to cart</div></div>
+<div class="camp-metric"><div class="camp-metric-val" style="color:#c0392b">74%</div><div class="camp-metric-label">Bounce</div></div>
+<div class="camp-metric"><div class="camp-metric-val">20%</div><div class="camp-metric-label">Engaged</div></div>
+</div>
+<div class="camp-rec"><strong>🔴 Problema serio:</strong> 344 sesiones, 0 compras, 74% de bounce y solo 20% engaged. 91% del tráfico es mobile. Hay 4 add-to-cart que indican interés pero no se completa la compra. El usuario agrícola probablemente necesita más info antes de comprar (specs técnicas, compatibilidad con tractor, video). Revisar si los precios de envío son competitivos para aperos voluminosos. Considerar pause/restructure si no mejora en 2 semanas.</div>
+</div>
+
+<!-- Campañas menores -->
+<h3 class="section-subtitle">Campañas de bajo volumen</h3>
+<table>
+<thead><tr><th>Campaña</th><th>Sesiones</th><th>Compras</th><th>Bounce</th><th>Estado</th></tr></thead>
+<tbody>
+<tr><td>AS_SH: Catch All</td><td>20</td><td>0</td><td>65%</td><td><span class="badge badge-red">Sin conversión</span></td></tr>
+<tr><td>Mantenimiento by CRO</td><td>16</td><td>0</td><td>62%</td><td><span class="badge badge-amber">Bajo volumen</span></td></tr>
+<tr><td>AS_Pmax SH: Equipación</td><td>8</td><td>0</td><td>50%</td><td><span class="badge badge-amber">Muy bajo</span></td></tr>
+<tr><td>Alpinestars by CRO</td><td>4</td><td>0</td><td>50%</td><td><span class="badge badge-grey">Test</span></td></tr>
+</tbody>
+</table>
+
+<div class="insight-box alert">
+<p class="insight-box-title">⚠️ Catch All y Mantenimiento: 36 sesiones, 0 conversiones</p>
+<p>Catch All es una campaña Shopping genérica que captura tráfico que no encaja en las otras campañas. Mantenimiento también a 0. Evaluar si el gasto en estas campañas se redirige mejor a Branding o a las PMax de Recambios que sí convierten.</p>
+</div>
+
+<!-- PPC ANALYSIS -->
+<div style="margin-top:40px;padding-top:40px;border-top:1px solid var(--border)">
+<p class="section-eyebrow">ANÁLISIS PPC</p>
+<h2 class="section-title">¿Qué significan estos datos de campañas?</h2>
+<div class="analysis-grid">
+<div class="analysis-block">
+<h3>📊 Resumen ejecutivo</h3>
+<p>De 11 campañas activas, solo 1 (Branding) convierte bien (3,85%). Las campañas PMax Shopping generan mucho volumen (>2.000 sesiones) pero con un rebote del 60-74% y tasas de compra del 0-1%. El problema común: el 80-90% del tráfico PMax aterriza en fichas de producto desde mobile con un bounce del 65%.</p>
+</div>
+<div class="analysis-block">
+<h3>🔍 Patrón clave</h3>
+<p>Branding → Home → Navega → Compra. PMax → Producto → Rebota. La diferencia no es solo la intención del usuario — es la landing page. Cuando el usuario aterriza en Home tiene contexto, navegación, y opciones. Cuando aterriza en una ficha de producto fría, solo tiene ese producto. Si no le convence en 5 segundos, se va.</p>
+</div>
+<div class="analysis-block full-width">
+<h3>🎯 Próximos pasos PPC</h3>
+<ol class="action-list">
+<li><strong>Aumentar presupuesto de Branding:</strong> Tasa de compra 5× mayor que PMax. Cada euro aquí convierte más.</li>
+<li><strong>Mejorar fichas de producto para PMax:</strong> Cross-selling, galería mejorada, specs visibles, CTA claro. Esto beneficia a TODAS las campañas PMax.</li>
+<li><strong>Auditar PMax ROAS:</strong> El target ROAS >350€ puede estar perjudicando la calidad del tráfico. Test con target menor o Maximize Conversions.</li>
+<li><strong>Pausar/reestructurar Aperos:</strong> 344 sesiones, 0 compras. Si el producto tiene margen, hacer landing específica con info detallada. Si no, pausar y redirigir presupuesto.</li>
+<li><strong>Consolidar Dv&Ds con campañas principales:</strong> Las versiones Dv&Ds no mejoran significativamente los resultados y dispersan el presupuesto.</li>
+<li><strong>Negativizar tráfico no-España:</strong> El 97% de las compras son de España. Excluir países que generan clics sin conversión.</li>
+</ol>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- ======= CATEGORÍAS ======= -->
+<section class="alt" id="categorias">
+<div class="container">
+<p class="section-eyebrow">PRODUCTO</p>
+<h2 class="section-title">Rendimiento por categoría</h2>
+
+<table>
+<thead><tr><th>Categoría (landing page)</th><th>Sesiones</th><th>Compras</th><th>Tasa compra</th><th>Bounce</th><th>Estado</th></tr></thead>
+<tbody>
+<tr><td><strong>Home</strong></td><td class="td-value">493</td><td>12</td><td class="td-value">2,43%</td><td>39%</td><td><span class="badge badge-green">Mejor tasa</span></td></tr>
+<tr><td><strong>Recambios (general)</strong></td><td class="td-value">238</td><td>3</td><td class="td-value">1,26%</td><td>49%</td><td><span class="badge badge-green">OK</span></td></tr>
+<tr><td><strong>Neumáticos</strong></td><td class="td-value">110</td><td>2</td><td class="td-value">1,82%</td><td>52%</td><td><span class="badge badge-green">Buena</span></td></tr>
+<tr><td><strong>Equipación</strong></td><td>35</td><td>1</td><td>2,86%</td><td>42%</td><td><span class="badge badge-green">Buena tasa</span></td></tr>
+<tr><td><strong>Accesorios quad</strong></td><td class="td-value">333</td><td>1</td><td class="td-value" style="color:#c0392b">0,30%</td><td>49%</td><td><span class="badge badge-red">Problema</span></td></tr>
+<tr><td><strong>Aperos agrícolas</strong></td><td class="td-value">157</td><td>0</td><td class="td-value" style="color:#c0392b">0,00%</td><td>78%</td><td><span class="badge badge-red">Crítico</span></td></tr>
+<tr><td><strong>Suzuki LTZ</strong></td><td class="td-value">181</td><td>0</td><td class="td-value" style="color:#c0392b">0,00%</td><td>52%</td><td><span class="badge badge-red">0 compras</span></td></tr>
+<tr><td><strong>Blog</strong></td><td class="td-value">226</td><td>0</td><td>0,00%</td><td>88%</td><td><span class="badge badge-grey">Informativo</span></td></tr>
+<tr><td><strong>Fichas producto (sin cat.)</strong></td><td class="td-value">2.455</td><td>16</td><td>0,65%</td><td>69%</td><td><span class="badge badge-amber">Volumen alto, tasa baja</span></td></tr>
+</tbody>
+</table>
+
+<div class="insight-box success">
+<p class="insight-box-title">✅ Home, Neumáticos y Equipación convierten bien</p>
+<p>La Home convierte al 2,43% con solo 39% de rebote. Neumáticos al 1,82% y Equipación al 2,86%. Son categorías con intención de compra clara y páginas que retienen al usuario. Modelo a replicar en el resto.</p>
+</div>
+
+<div class="insight-box alert">
+<p class="insight-box-title">⚠️ Accesorios, Aperos y Suzuki LTZ: 671 sesiones con 1 sola compra</p>
+<p>Estas tres categorías combinan 671 sesiones pero solo 1 compra. Aperos tiene un 78% de rebote y 0 compras — es la peor categoría. Suzuki LTZ con 181 sesiones y 0 compras es preocupante dado que hay campañas PPC específicas para esta marca. El problema puede ser: precios no competitivos, falta de stock, fichas incompletas, o tráfico no cualificado.</p>
+</div>
+
+<div class="insight-box">
+<p class="insight-box-title">📊 2.455 sesiones aterrizan en fichas de producto sin categoría asignada</p>
+<p>La mayoría del tráfico PPC llega directamente a fichas de producto específicas (por Shopping). De estas, solo el 0,65% compra y el 69% rebota. Mejorar estas fichas es la acción de mayor impacto potencial — son el 50% del tráfico total del sitio.</p>
+</div>
+
+<!-- Category recommendations -->
+<h3 class="section-subtitle">Recomendaciones por categoría</h3>
+
+<div class="rec"><div class="rec-icon alert">1</div><div>
+<h3>Aperos agrícolas: landing page específica</h3>
+<p>78% rebote, 0 compras. El usuario de aperos busca info técnica: compatibilidad con ATV/tractor, dimensiones, capacidad. Crear una landing con guía de selección, tabla de compatibilidad, video en uso. Los aperos son productos caros — el ciclo de decisión es largo y necesita más confianza.</p>
+</div></div>
+
+<div class="rec"><div class="rec-icon alert">2</div><div>
+<h3>Suzuki LTZ: auditar catálogo y precios</h3>
+<p>181 sesiones, 0 compras. Hay interés claro (los usuarios llegan y navegan por la marca). Revisar: ¿los productos tienen stock? ¿Los precios son competitivos vs. otros proveedores? ¿Las fichas tienen todas las specs y fotos necesarias?</p>
+</div></div>
+
+<div class="rec"><div class="rec-icon info">3</div><div>
+<h3>Accesorios quad: mejorar navegación interna</h3>
+<p>333 sesiones, 49% rebote pero solo 0,30% de compra. Los usuarios llegan a categorías de accesorios pero no encuentran lo que buscan. Mejorar filtros, buscador (Doofinder), y la arquitectura de subcategorías.</p>
+</div></div>
+
+<div class="rec"><div class="rec-icon success">4</div><div>
+<h3>Escalar Equipación y Neumáticos</h3>
+<p>Equipación convierte al 2,86% y Neumáticos al 1,82%. La campaña PMax de Equipación solo tiene 8 sesiones — hay margen enorme para aumentar inversión. Crear campañas Shopping específicas con más presupuesto para estas categorías.</p>
+</div></div>
+
+</div>
+</section>
+
+<!-- ======= DOOFINDER ======= -->
+<section id="doofinder">
+<div class="container">
+<p class="section-eyebrow">BÚSQUEDA INTERNA</p>
+<h2 class="section-title">Impacto de Doofinder en la conversión</h2>
+
+<div class="card-grid" style="grid-template-columns:repeat(4,1fr)">
+<div class="card"><div class="card-value">302</div><div class="card-label">Sesiones con Doofinder</div><div class="card-sub">6,2% del total</div></div>
+<div class="card" style="background:#e8f5ee;border-color:#1a7a45"><div class="card-value" style="color:#1a7a45">15</div><div class="card-label">También compraron</div><div class="card-sub">39,5% de los compradores</div></div>
+<div class="card"><div class="card-value">100%</div><div class="card-label">Usuarios recurrentes</div><div class="card-sub">Todos son returning visitors</div></div>
+<div class="card"><div class="card-value">284</div><div class="card-label">Usuarios únicos</div><div class="card-sub">260 también en sesiones sin conv.</div></div>
+</div>
+
+<h3 class="section-subtitle">Doofinder users vs. resto: comportamiento en sesiones sin conversión</h3>
+
+<div class="doof-compare">
+<div class="doof-col active">
+<h3 style="color:#1a7a45">👤 Usuarios que usan Doofinder</h3>
+<p style="font-size:12px;color:var(--text-tertiary);margin-bottom:12px">601 sesiones sin conversión de estos mismos usuarios</p>
+<div class="doof-stat"><span class="doof-stat-label">Páginas por sesión</span><span class="doof-stat-value" style="color:#1a7a45">4,67</span></div>
+<div class="doof-stat"><span class="doof-stat-label">Duración media</span><span class="doof-stat-value" style="color:#1a7a45">8 min</span></div>
+<div class="doof-stat"><span class="doof-stat-label">Tasa de rebote</span><span class="doof-stat-value" style="color:#1a7a45">31,6%</span></div>
+<div class="doof-stat"><span class="doof-stat-label">Compras (de sus sesiones conv.)</span><span class="doof-stat-value" style="color:#1a7a45">15</span></div>
+</div>
+<div class="doof-col inactive">
+<h3 style="color:#c0392b">👥 Usuarios que NO usan Doofinder</h3>
+<p style="font-size:12px;color:var(--text-tertiary);margin-bottom:12px">3.894 sesiones sin conversión</p>
+<div class="doof-stat"><span class="doof-stat-label">Páginas por sesión</span><span class="doof-stat-value" style="color:#c0392b">2,13</span></div>
+<div class="doof-stat"><span class="doof-stat-label">Duración media</span><span class="doof-stat-value" style="color:#c0392b">2 min</span></div>
+<div class="doof-stat"><span class="doof-stat-label">Tasa de rebote</span><span class="doof-stat-value" style="color:#c0392b">68,4%</span></div>
+<div class="doof-stat"><span class="doof-stat-label">Compras (de sus sesiones conv.)</span><span class="doof-stat-value" style="color:#c0392b">25</span></div>
+</div>
+</div>
+
+<div class="insight-box success">
+<p class="insight-box-title">✅ Los usuarios que buscan con Doofinder son 2× más valiosos</p>
+<p>Navegan 4,67 páginas (vs 2,13), pasan 8 minutos en el sitio (vs 2 min), y su tasa de rebote es la mitad (31,6% vs 68,4%). El 39,5% de los compradores son usuarios que también usaron Doofinder. Usar el buscador interno es una señal fortísima de intención de compra.</p>
+</div>
+
+<div class="insight-box alert">
+<p class="insight-box-title">⚠️ Solo el 6,2% del tráfico usa Doofinder</p>
+<p>Con 302 sesiones de Doofinder sobre 4.870 totales, la mayoría de usuarios no llega a descubrir el buscador interno. Si los que buscan convierten mucho más, hay que hacer que más usuarios lo usen. Hacer el buscador más prominente, especialmente en mobile donde el 80% del tráfico aterriza.</p>
+</div>
+
+<h3 class="section-subtitle">Recomendaciones Doofinder</h3>
+<div class="rec"><div class="rec-icon alert">1</div><div>
+<h3>Hacer Doofinder más visible en mobile</h3>
+<p>El 80% del tráfico es mobile. Si el buscador está escondido en un icono de lupa en el header, muchos usuarios no lo ven. Probar: barra de búsqueda prominente en la parte superior de fichas de producto y categorías. Cada usuario que use Doofinder tiene 2× más probabilidad de quedarse y comprar.</p>
+</div></div>
+
+<div class="rec"><div class="rec-icon info">2</div><div>
+<h3>Activar Doofinder con sugerencias proactivas</h3>
+<p>En fichas de producto, si el usuario está más de 10 segundos sin hacer scroll, mostrar un mensaje tipo «¿No es lo que buscas? Prueba nuestro buscador». También: autosugerencias populares al hacer clic en la barra de búsqueda (top productos, categorías más vendidas).</p>
+</div></div>
+
+<div class="rec"><div class="rec-icon info">3</div><div>
+<h3>Analizar qué buscan y no encuentran</h3>
+<p>Revisar en el panel de Doofinder las búsquedas con 0 resultados o con resultados poco relevantes. Cada búsqueda sin resultado es una venta perdida. Configurar sinónimos, redirecciones, y resultados personalizados para las búsquedas más frecuentes.</p>
+</div></div>
+
+</div>
+</section>
+
+<!-- ======= DISPOSITIVOS ======= -->
+<section class="alt" id="dispositivos">
+<div class="container">
+<p class="section-eyebrow">TECNOLOGÍA</p>
+<h2 class="section-title">Dispositivos y tipo de usuario</h2>
+<div class="two-cols">
+<div>
+<h3 class="section-subtitle" style="margin-top:0">Por dispositivo</h3>
+<table>
+<thead><tr><th>Dispositivo</th><th>Sesiones</th><th>Compras</th><th>Tasa</th></tr></thead>
+<tbody>
+<tr><td><strong>Mobile</strong></td><td class="td-value">3.869</td><td>23</td><td><span class="badge badge-amber">0,59%</span></td></tr>
+<tr><td><strong>Desktop</strong></td><td class="td-value">931</td><td>15</td><td><span class="badge badge-green">1,61%</span></td></tr>
+<tr><td><strong>Tablet</strong></td><td>52</td><td>2</td><td><span class="badge badge-green">3,85%</span></td></tr>
+</tbody>
+</table>
+</div>
+<div>
+<h3 class="section-subtitle" style="margin-top:0">Nuevo vs recurrente</h3>
+<table>
+<thead><tr><th>Tipo</th><th>Sesiones</th><th>Compras</th><th>Tasa</th></tr></thead>
+<tbody>
+<tr><td><strong>Nuevo</strong></td><td class="td-value">2.449</td><td>18</td><td><span class="badge badge-amber">0,73%</span></td></tr>
+<tr><td><strong>Recurrente</strong></td><td class="td-value">2.421</td><td>22</td><td><span class="badge badge-green">0,91%</span></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="insight-box">
+<p class="insight-box-title">📊 Desktop convierte 2,7× más que mobile</p>
+<p>Desktop al 1,61% vs mobile al 0,59%. El 79% del tráfico es mobile pero solo genera el 57% de las compras. La experiencia mobile es el principal freno. Tablet sorprende con 3,85% pero con solo 52 sesiones.</p>
+</div>
+</div>
+</section>
+
+<!-- ======= JOURNEYS ======= -->
+<section id="journeys">
+<div class="container">
+<p class="section-eyebrow">COMPORTAMIENTO</p>
+<h2 class="section-title">Rutas de conversión</h2>
+<div class="two-cols" style="margin-bottom:24px">
+<div class="card"><div class="card-value">14,3</div><div class="card-label">Páginas/sesión (conversores)</div><div class="card-sub">vs 2,5 en sesiones sin conversión</div></div>
+<div class="card"><div class="card-value">15 min</div><div class="card-label">Duración (conversores)</div><div class="card-sub">vs 2,8 min sin conversión</div></div>
+</div>
+<table>
+<thead><tr><th>Patrón</th><th>% sesiones sin conv.</th><th>Problema</th></tr></thead>
+<tbody>
+<tr><td>Producto → rebote (1 página)</td><td class="td-value">46%</td><td><span class="badge badge-red">Mayor fuga del sitio</span></td></tr>
+<tr><td>Categoría → rebote</td><td>15,6%</td><td><span class="badge badge-red">No encuentran producto</span></td></tr>
+<tr><td>Home → rebote</td><td>4,5%</td><td><span class="badge badge-amber">No les interesa</span></td></tr>
+<tr><td>Producto → Checkout (sin completar)</td><td>0,9%</td><td><span class="badge badge-red">Abandono checkout</span></td></tr>
+</tbody>
+</table>
+<div class="insight-box alert">
+<p class="insight-box-title">⚠️ El 46% de las sesiones sin conversión son «ficha de producto → adiós»</p>
+<p>2.069 sesiones entran a una ficha de producto (la mayoría desde PPC) y se van sin ver nada más. No exploran, no buscan, no añaden al carrito. Es el mayor punto de fuga. Todo lo que mejore la retención en fichas de producto tiene impacto directo en todas las métricas.</p>
+</div>
+</div>
+</section>
+
+<!-- ======= TIEMPO ======= -->
+<section class="alt" id="tiempo">
+<div class="container">
+<p class="section-eyebrow">CICLO DE COMPRA</p>
+<h2 class="section-title">Tiempo hasta conversión</h2>
+<table>
+<thead><tr><th>Días</th><th>Compras</th><th>%</th><th></th></tr></thead>
+<tbody>
+<tr><td><strong>Mismo día</strong></td><td class="td-value">33</td><td>49%</td><td><div class="bar-track" style="width:200px"><div class="bar-fill" style="width:100%"></div></div></td></tr>
+<tr><td>1 – 3 días</td><td class="td-value">10</td><td>15%</td><td><div class="bar-track" style="width:200px"><div class="bar-fill" style="width:30%"></div></div></td></tr>
+<tr><td>4 – 30 días</td><td>6</td><td>9%</td><td><div class="bar-track" style="width:200px"><div class="bar-fill" style="width:18%"></div></div></td></tr>
+<tr><td>31 – 90 días</td><td>9</td><td>13%</td><td><div class="bar-track" style="width:200px"><div class="bar-fill" style="width:27%"></div></div></td></tr>
+<tr><td>90+ días</td><td>9</td><td>13%</td><td><div class="bar-track" style="width:200px"><div class="bar-fill salmon" style="width:27%"></div></div></td></tr>
+</tbody>
+</table>
+<div class="insight-box">
+<p class="insight-box-title">📊 El 49% compra el mismo día — pero el 26% tarda más de 1 mes</p>
+<p>Dos perfiles: compra urgente (recambio roto) y compra planificada (accesorio, equipación). Para los urgentes, la ficha de producto tiene que facilitar la compra instantánea. Para los planificados, email marketing y remarketing son clave.</p>
+</div>
+</div>
+</section>
+
+<!-- ======= CONNECTIF ======= -->
+<section id="connectif">
+<div class="container">
+<p class="section-eyebrow">AUTOMATIZACIÓN</p>
+<h2 class="section-title">Connectif — Workflows</h2>
+
+<div class="card-grid" style="grid-template-columns:repeat(3,1fr)">
+<div class="card" style="background:var(--salmon-bg);border-color:var(--salmon)"><div class="card-value" style="color:#c0392b">3</div><div class="card-label">Sesiones desde Connectif</div><div class="card-sub">0 conversiones</div></div>
+<div class="card"><div class="card-value">8</div><div class="card-label">Workflows activos</div></div>
+<div class="card"><div class="card-value">3</div><div class="card-label">Sesiones «carrito abandonado»</div><div class="card-sub">Sin conversión</div></div>
+</div>
+
+<div class="insight-box alert" style="margin-top:24px">
+<p class="insight-box-title">⚠️ Connectif no genera resultados medibles</p>
+<p>En 6 días, 3 sesiones atribuidas y 0 conversiones. Con 162 abandonos de checkout, los WF de carrito abandonado deberían generar mucho más retorno. Los triggers están desalineados: apuntan a /carrito (6 sesiones) en vez de a /pedido (162 abandonos).</p>
+</div>
+
+<h3 class="section-subtitle">Problemas detectados por workflow</h3>
+
+<div class="wf-card">
+<h4>🛒 Carrito abandonado (anónimos + precios)</h4>
+<div class="wf-trigger">Trigger: visitar /carrito o abandonar carrito</div>
+<div class="camp-rec" style="margin-top:8px"><strong>Problema:</strong> Solo 6 sesiones visitaron /carrito sin convertir. Los usuarios van directo de ficha a /pedido. <strong>Solución:</strong> Cambiar trigger a abandono de /pedido. Enviar 1er email en 1-2h (no 2 días) — el 49% compra el mismo día.</div>
+</div>
+
+<div class="wf-card">
+<h4>😴 Reactivación dormidos + 🔄 Cross-selling LTZ/Raptor</h4>
+<div class="wf-trigger">Trigger: segmento dormidos / compra previa</div>
+<div class="camp-rec" style="margin-top:8px"><strong>Problema:</strong> 0 sesiones atribuidas. No hay UTMs visibles. <strong>Solución:</strong> Auditar UTMs de cada workflow. Reducir tiempo de cross-selling de 10 a 3-5 días. El 15 usuarios de Doofinder que compraron demuestran que los recurrentes convierten — hay que activarlos antes.</div>
+</div>
+
+<div class="wf-card">
+<h4>👓 Inline recomendados + 📩 Newsletter</h4>
+<div class="camp-rec" style="margin-top:8px"><strong>Problema:</strong> El inline de recomendados en /carrito alcanza a 6 sesiones. <strong>Solución:</strong> Mover a fichas de producto o checkout. El newsletter necesita incentivo visible para suscripción (descuento primera compra).</div>
+</div>
+
+</div>
+</section>
+
+<!-- ======= RECOMENDACIONES ======= -->
+<section class="alt" id="recomendaciones">
+<div class="container">
+<p class="section-eyebrow">PLAN DE ACCIÓN</p>
+<h2 class="section-title">Recomendaciones priorizadas</h2>
+
+<div class="rec"><div class="rec-icon alert">1</div><div>
+<h3>Rediseñar fichas de producto para mobile</h3>
+<p>2.069 sesiones rebotan desde fichas. 80% es mobile con 0,59% de compra. CTA visible, fotos de calidad, precio y stock claros, cross-selling, trust signals. Impacto: si se reduce el rebote un 10%, son ~200 sesiones adicionales navegando el sitio.</p>
+</div></div>
+
+<div class="rec"><div class="rec-icon alert">2</div><div>
+<h3>Hacer Doofinder prominente en mobile</h3>
+<p>Los usuarios que buscan internamente navegan 2× más, pasan 4× más tiempo, y el 39,5% de los compradores usaron Doofinder. Barra de búsqueda visible en fichas y categorías. Cada punto de uso de Doofinder que se gane mejora la conversión global.</p>
+</div></div>
+
+<div class="rec"><div class="rec-icon alert">3</div><div>
+<h3>Reducir abandono de checkout (80,6%)</h3>
+<p>162 sesiones abandonan /pedido. Revisar costes de envío, opciones de pago, formulario. Activar WF de Connectif sobre abandono de /pedido con email en 1-2h.</p>
+</div></div>
+
+<div class="rec"><div class="rec-icon info">4</div><div>
+<h3>Escalar campaña Branding + Equipación</h3>
+<p>Branding convierte al 3,85% (5× más que PMax). Equipación al 2,86% con solo 8 sesiones. Hay margen enorme para aumentar inversión en ambas.</p>
+</div></div>
+
+<div class="rec"><div class="rec-icon info">5</div><div>
+<h3>Reestructurar campañas PMax Shopping</h3>
+<p>Las 4 campañas PMax generan ~1.750 sesiones con 60-70% de rebote. Auditar productos sin conversión para excluirlos, mejorar títulos/imágenes de Shopping, y evaluar si las Dv&Ds aportan valor o dispersan presupuesto.</p>
+</div></div>
+
+<div class="rec"><div class="rec-icon info">6</div><div>
+<h3>Reconfigurar Connectif completo</h3>
+<p>Triggers de carrito → checkout, tiempos de envío de 2 días → 1-2h, auditar UTMs, nuevo WF de browse abandonment para fichas de producto, inline de recomendados en ficha o checkout.</p>
+</div></div>
+
+<div class="rec"><div class="rec-icon alert">7</div><div>
+<h3>Auditar Aperos y Suzuki LTZ</h3>
+<p>671 sesiones, 1 compra entre las dos. Aperos: 74% bounce, 0 compras — ¿landing page específica o pausar? Suzuki LTZ: 181 sesiones, 0 compras — ¿precios, stock, fichas? Tomar decisión en 2 semanas con datos nuevos.</p>
+</div></div>
+
+<div class="rec"><div class="rec-icon info">8</div><div>
+<h3>Captura de email en primera visita</h3>
+<p>53% del tráfico es nuevo. Implementar captura con incentivo (descuento 5-10%) en fichas. Esto alimenta los WF de Connectif y el remarketing con leads reales.</p>
+</div></div>
+
+</div>
+</section>
+
+<!-- ======= ANALYSIS ======= -->
+<section>
+<div class="container">
+<p class="section-eyebrow">ANÁLISIS FINAL</p>
+<h2 class="section-title">¿Qué significan estos datos?</h2>
+<div class="analysis-grid">
+<div class="analysis-block">
+<h3>📊 Resumen</h3>
+<p>Quadest.net genera 4.870 sesiones en 6 días con 40 compras (0,82% tasa). Google Ads trae el 56% del tráfico pero convierte solo al 0,70%. Branding es la campaña estrella (3,85%). El 46% de las sesiones rebotan en fichas de producto. Los usuarios que usan Doofinder son 2× más valiosos. Connectif no genera impacto medible.</p>
+</div>
+<div class="analysis-block">
+<h3>🔍 Palancas de crecimiento</h3>
+<ul class="findings-list">
+<li><strong>Fichas de producto mobile:</strong> Mayor potencial. 2.069 rebotes = oportunidad de conversión si se retiene un 10%.</li>
+<li><strong>Doofinder:</strong> Solo el 6% lo usa, pero son 2× mejores. Hacerlo visible multiplica el engagement.</li>
+<li><strong>Branding + Equipación:</strong> Campañas con ROAS demostrado y margen para escalar.</li>
+<li><strong>Connectif:</strong> 0 impacto actual, pero el potencial está ahí con triggers correctos.</li>
+</ul>
+</div>
+<div class="analysis-block full-width">
+<h3>🎯 Cronograma sugerido</h3>
+<ol class="action-list">
+<li><strong>Semana 1:</strong> Reconfigurar Connectif (triggers checkout, UTMs) + aumentar presupuesto Branding</li>
+<li><strong>Semana 2:</strong> Doofinder prominente en mobile + captura email en fichas de producto</li>
+<li><strong>Semana 3:</strong> Auditoría UX fichas de producto mobile + decisión Aperos/Suzuki LTZ</li>
+<li><strong>Semana 4:</strong> Consolidar campañas PMax (eliminar Dv&Ds si no mejoran) + crear WF browse abandonment</li>
+<li><strong>Mes 2:</strong> Test A/B fichas de producto con cross-selling + landing específica Aperos</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+
+<footer>
+<div class="container">
+<p><strong>agenciaSEO.eu</strong> · Informe generado el 14/04/2026</p>
+<p>Fuente: GA4 + BigQuery · Dataset analytics_297520053 · 8–13 abril 2026</p>
+</div>
+</footer>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+const sections=document.querySelectorAll('section[id],header[id]');
+const navLinks=document.querySelectorAll('.nav-link');
+const scrollBtn=document.getElementById('scrollTop');
+function updateNav(){let c='';sections.forEach(s=>{if(window.scrollY>=s.offsetTop-80)c=s.id});navLinks.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+c));scrollBtn.classList.toggle('visible',window.scrollY>400)}
+window.addEventListener('scroll',updateNav);updateNav();
+navLinks.forEach(l=>l.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(l.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));
+</script>
+</body>
+</html>
