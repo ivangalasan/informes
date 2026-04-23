@@ -371,16 +371,69 @@ footer{background:var(--blue-primary);padding:40px 0;text-align:center}footer p{
 <section class="alt" id="connectif">
 <div class="container">
 <p class="section-eyebrow">AUTOMATIZACIÓN</p>
-<h2 class="section-title">Connectif — Email Marketing</h2>
+<h2 class="section-title">Connectif — Automatización de Marketing</h2>
 <div class="card-grid" style="grid-template-columns:repeat(4,1fr)">
-<div class="card accent"><div class="card-value">88</div><div class="card-label">Compras atribuidas</div><div class="card-sub">1–22 abril 2026</div></div>
-<div class="card accent"><div class="card-value" style="color:var(--salmon)">11.000€</div><div class="card-label">Revenue total</div><div class="card-sub">Importe total de compras</div></div>
-<div class="card"><div class="card-value">119€</div><div class="card-label">Ticket medio</div><div class="card-sub">Importe medio por compra</div></div>
-<div class="card"><div class="card-value">1,1</div><div class="card-label">Compras por contacto</div><div class="card-sub">Recurrencia baja — margen de mejora</div></div>
+  <div class="card"><div class="card-value">10</div><div class="card-label">Compras atribuidas</div><div class="card-sub">6,9% del total de compras</div></div>
+  <div class="card"><div class="card-value">1.100€</div><div class="card-label">Revenue Connectif</div><div class="card-sub">7,1% del revenue total (15.516€)</div></div>
+  <div class="card"><div class="card-value">110€</div><div class="card-label">Ticket medio</div><div class="card-sub">Similar al canal sin Connectif (108€)</div></div>
+  <div class="card" style="background:var(--salmon-bg);border-color:var(--salmon)"><div class="card-value" style="color:var(--red)">4</div><div class="card-label">Workflows activos</div><div class="card-sub">Solo email y push generan ventas</div></div>
 </div>
-<div class="insight-box alert">
-<p class="insight-box-title">⚠️ Alta variabilidad diaria — el canal no es estable</p>
-<p>El volumen oscila entre 2 y 10 compras/día sin un patrón claro. El pico del 21 de abril podría responder a un envío puntual o una campaña, pero los días previos bajan a mínimos de 2–3. Con 1,1 compras por contacto, la recurrencia está casi plana. Hay margen para activar flujos de recompra y up-sell que estabilicen el canal.</p>
+
+<table style="width:100%;margin-top:24px">
+  <thead>
+    <tr>
+      <th>Workflow</th>
+      <th>Canal</th>
+      <th>Compras</th>
+      <th>Revenue</th>
+      <th>Compradores</th>
+      <th>Perfil</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Recuperación carrito + newsletter anónimos</td>
+      <td><span class="badge badge-blue">Email / Web</span></td>
+      <td><strong>2</strong></td>
+      <td><strong>439€</strong></td>
+      <td>2</td>
+      <td>100% nuevos</td>
+    </tr>
+    <tr>
+      <td>Suscripción push (notificación navegador)</td>
+      <td><span class="badge badge-blue">Push</span></td>
+      <td><strong>5</strong></td>
+      <td><strong>517€</strong></td>
+      <td>5</td>
+      <td>100% recurrentes</td>
+    </tr>
+    <tr>
+      <td>Funnel carrito abandonado por precio — Test A/B</td>
+      <td><span class="badge badge-blue">Email</span></td>
+      <td><strong>2</strong></td>
+      <td><strong>108€</strong></td>
+      <td>2</td>
+      <td>Mix new/rec</td>
+    </tr>
+    <tr>
+      <td>Envío promo neumáticos OCT25</td>
+      <td><span class="badge badge-blue">Email</span></td>
+      <td><strong>1</strong></td>
+      <td><strong>36€</strong></td>
+      <td>1</td>
+      <td>100% nuevo</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="insight-box" style="margin-top:20px">
+  <p class="insight-box-title">📊 Push retiene recurrentes, email capta nuevos</p>
+  <p>Los 5 compradores vía push son todos recurrentes — el canal funciona como retención. Email y web captan compradores nuevos (carrito abandonado). Son roles complementarios, pero el volumen total es bajo: 10 compras en dos meses sobre un total de 144 es el 7%. Hay margen para escalar ambos canales.</p>
+</div>
+
+<div class="insight-box alert" style="margin-top:12px">
+  <p class="insight-box-title">⚠️ SMS y web content no generan ninguna venta</p>
+  <p>Los canales SMS y web content de Connectif tienen 0 compras y 0€ de revenue en el período. O no están configurados con triggers activos, o no llegan a impactar en el momento de decisión. Revisar si los workflows están publicados y los segmentos correctamente definidos.</p>
 </div>
 </div>
 </section>
