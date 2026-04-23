@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informe Analytics — quadest.net — Abril 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#FFFFFF;--bg-surface:#F3F8FF;--text-primary:#001F78;--text-secondary:#3a4a7a;--text-tertiary:#7685AF;--blue-primary:#001F78;--blue-mid:#2B88D8;--blue-light:#DDEFFF;--salmon:#FF7F7A;--salmon-bg:#FFF0EF;--grey-mid:#7685AF;--grey-dark:#616268;--border:rgba(0,31,120,0.10);--border-emphasis:rgba(0,31,120,0.18);--radius:12px;--max-w:1080px;--green:#1a7a45;--green-bg:#e8f5ee;--red:#c0392b;--amber:#856404;--amber-bg:#fff8e1}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-secondary);font-size:15px;line-height:1.7}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border-emphasis);padding:0 24px}
+.nav-inner{max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;gap:6px;overflow-x:auto;scrollbar-width:none;padding:12px 0}.nav-inner::-webkit-scrollbar{display:none}
+.nav-brand{font-weight:700;color:var(--blue-primary);font-size:14px;white-space:nowrap;margin-right:12px}
+.nav-link{font-size:12px;color:var(--grey-mid);text-decoration:none;padding:6px 10px;border-radius:8px;white-space:nowrap;transition:all .2s}
+.nav-link:hover{color:var(--blue-primary);background:var(--bg-surface)}.nav-link.active{color:#fff;background:var(--blue-primary)}
+.hero{background:var(--blue-primary);padding:60px 0 50px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(43,136,216,0.15) 0%,transparent 70%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-30%;left:10%;width:400px;height:400px;background:radial-gradient(circle,rgba(255,127,122,0.08) 0%,transparent 70%);pointer-events:none}
+.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--salmon);margin-bottom:8px}
+.hero-title{font-size:clamp(28px,5vw,42px);font-weight:700;color:#fff;letter-spacing:-0.02em;margin-bottom:6px}
+.hero-subtitle{font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:32px}
+.hero-kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.hero-kpi{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);border-radius:var(--radius);padding:18px 14px;text-align:center}
+.hero-kpi-value{font-size:28px;font-weight:700;color:var(--salmon);letter-spacing:-0.02em}
+.hero-kpi-label{font-size:11px;color:rgba(255,255,255,0.50);margin-top:3px}
+.hero-kpi.accent{background:rgba(255,127,122,0.12);border-color:rgba(255,127,122,0.25)}
+section{padding:52px 0}section.alt{background:var(--bg-surface)}
+.section-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue-mid);margin-bottom:6px}
+.section-title{font-size:clamp(22px,3.5vw,32px);font-weight:700;color:var(--text-primary);letter-spacing:-0.02em;margin-bottom:28px}
+.section-subtitle{font-size:16px;font-weight:600;color:var(--text-primary);margin:28px 0 16px}
+.card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:24px}
+.card-value{font-size:26px;font-weight:700;color:var(--text-primary);letter-spacing:-0.02em}
+.card-label{font-size:12px;color:var(--text-tertiary);margin-top:2px}
+.card-sub{font-size:12px;color:var(--text-tertiary);margin-top:6px}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600}
+.badge-green{background:var(--green-bg);color:var(--green)}.badge-amber{background:var(--amber-bg);color:var(--amber)}.badge-red{background:var(--salmon-bg);color:var(--red)}.badge-blue{background:var(--blue-light);color:var(--blue-primary)}.badge-grey{background:#f0f0f0;color:var(--grey-dark)}
+table{width:100%;border-collapse:collapse;margin-bottom:16px}
+th{font-size:11px;text-transform:uppercase;letter-spacing:0.07em;font-weight:600;color:var(--text-tertiary);text-align:left;padding:10px 12px;border-bottom:2px solid var(--border-emphasis)}
+td{font-size:13px;color:var(--text-secondary);padding:12px;border-bottom:1px solid var(--border)}
+tr:hover td{background:var(--bg-surface)}.td-value{font-weight:700;color:var(--text-primary);font-size:15px}
+.bar-track{background:var(--blue-light);border-radius:3px;height:8px;overflow:hidden}.bar-fill{height:100%;border-radius:3px;background:var(--blue-mid)}.bar-fill.salmon{background:var(--salmon)}.bar-fill.green{background:var(--green)}
+.insight-box{background:var(--bg-surface);border-left:3px solid var(--blue-mid);border-radius:0 10px 10px 0;padding:16px 20px;margin:20px 0}
+.insight-box.alert{background:var(--salmon-bg);border-left-color:var(--salmon)}.insight-box.success{background:var(--green-bg);border-left-color:var(--green)}
+.insight-box-title{font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:4px}.insight-box p{font-size:14px;color:var(--text-secondary);line-height:1.6}
+.funnel{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;margin:24px 0}
+.funnel-step{text-align:center;padding:20px 16px;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);min-width:120px;flex:1}
+.funnel-value{font-size:24px;font-weight:700;color:var(--text-primary)}.funnel-label{font-size:11px;color:var(--text-tertiary);margin-top:2px;text-transform:uppercase;letter-spacing:0.05em}
+.funnel-arrow{display:flex;flex-direction:column;align-items:center;padding:0 6px;color:var(--blue-mid)}.funnel-arrow svg{width:24px;height:24px}.funnel-rate{font-size:11px;font-weight:700;color:var(--salmon);margin-top:2px}
+.rec{display:flex;gap:16px;padding:20px;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px}
+.rec-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0}
+.rec-icon.alert{background:var(--salmon)}.rec-icon.info{background:var(--blue-mid)}.rec-icon.success{background:var(--green)}
+.rec h3{font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:4px}.rec p{font-size:13px;color:var(--text-secondary);line-height:1.6}
+.two-cols{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.doof-compare{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.doof-col{padding:24px;border-radius:var(--radius);border:1px solid var(--border)}.doof-col.active{background:var(--green-bg);border-color:var(--green)}.doof-col.inactive{background:var(--salmon-bg);border-color:var(--salmon)}
+.doof-col h3{font-size:15px;font-weight:700;margin-bottom:12px}
+.doof-stat{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(0,0,0,0.06)}.doof-stat:last-child{border-bottom:none}
+.doof-stat-label{font-size:13px;color:var(--text-secondary)}.doof-stat-value{font-size:14px;font-weight:700;color:var(--text-primary)}
+.analysis-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}.analysis-block{background:#fff;border-radius:var(--radius);padding:24px;border:1px solid var(--border)}.analysis-block.full-width{grid-column:1/-1}
+.analysis-block h3{font-size:15px;font-weight:600;color:var(--text-primary);margin-bottom:12px}.analysis-block p,.analysis-block li{font-size:14px;color:var(--text-secondary);line-height:1.7}
+.findings-list{list-style:none;padding:0}.findings-list li{padding:8px 0;border-bottom:1px solid rgba(0,31,120,0.08)}.findings-list li:last-child{border-bottom:none}
+.action-list{padding-left:20px}.action-list li{padding:6px 0}
+footer{background:var(--blue-primary);padding:40px 0;text-align:center}footer p{font-size:13px;color:rgba(255,255,255,0.40)}footer strong{color:rgba(255,255,255,0.75)}
+.scroll-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--salmon);color:#fff;border:none;cursor:pointer;font-size:20px;box-shadow:0 2px 8px rgba(255,127,122,0.4);opacity:0;transition:opacity .3s;z-index:50}.scroll-top.visible{opacity:1}
+@media(max-width:768px){.hero-kpis{grid-template-columns:repeat(2,1fr)}.two-cols,.doof-compare,.analysis-grid{grid-template-columns:1fr}.funnel{flex-direction:column}.funnel-arrow{transform:rotate(90deg)}}
+</style>
+</head>
+<body>
+<nav><div class="nav-inner">
+<span class="nav-brand">quadest.net</span>
+<a href="#resumen" class="nav-link active">Resumen</a>
+<a href="#canales" class="nav-link">Canales</a>
+<a href="#atribucion" class="nav-link">Atribución</a>
+<a href="#categorias" class="nav-link">Categorías</a>
+<a href="#seo" class="nav-link">SEO</a>
+<a href="#doofinder" class="nav-link">Doofinder</a>
+<a href="#productos" class="nav-link">Productos</a>
+<a href="#journeys" class="nav-link">Journeys</a>
+<a href="#connectif" class="nav-link">Connectif</a>
+<a href="#recomendaciones" class="nav-link">Acción</a>
+</div></nav>
+
+<!-- HERO -->
+<header class="hero" id="resumen">
+<div class="container">
+<p class="hero-eyebrow">INFORME ECOMMERCE · GA4 + BIGQUERY</p>
+<h1 class="hero-title">quadest.net</h1>
+<p class="hero-subtitle">4 – 22 abril 2026 · 18 días · Sessions + Ecommerce + Journeys + Doofinder</p>
+<div class="hero-kpis">
+<div class="hero-kpi"><div class="hero-kpi-value">11.269</div><div class="hero-kpi-label">Sesiones</div></div>
+<div class="hero-kpi accent"><div class="hero-kpi-value">99</div><div class="hero-kpi-label">Compras (purchase)</div></div>
+<div class="hero-kpi"><div class="hero-kpi-value">7.146€</div><div class="hero-kpi-label">Revenue</div></div>
+<div class="hero-kpi"><div class="hero-kpi-value">127,6€</div><div class="hero-kpi-label">Ticket medio</div></div>
+<div class="hero-kpi"><div class="hero-kpi-value">62,2%</div><div class="hero-kpi-label">Tasa de rebote</div></div>
+</div>
+</div>
+</header>
+
+<!-- CANALES -->
+<section id="canales">
+<div class="container">
+<p class="section-eyebrow">ADQUISICIÓN</p>
+<h2 class="section-title">Rendimiento por canal</h2>
+<table>
+<thead><tr><th>Canal</th><th>Sesiones</th><th>Revenue</th><th>Compras</th><th>Bounce</th><th>Rev/ses</th></tr></thead>
+<tbody>
+<tr><td><strong>Google Ads (CPC)</strong></td><td class="td-value">5.943</td><td class="td-value">3.869€</td><td>31</td><td><span class="badge badge-red">63%</span></td><td>0,65€</td></tr>
+<tr><td><strong>Google Organic</strong></td><td class="td-value">2.734</td><td>745€</td><td>7</td><td><span class="badge badge-red">68%</span></td><td>0,27€</td></tr>
+<tr><td><strong>Directo</strong></td><td class="td-value">1.623</td><td class="td-value">2.275€</td><td>14</td><td><span class="badge badge-amber">51%</span></td><td style="color:var(--green);font-weight:700">1,40€</td></tr>
+<tr><td><strong>ChatGPT + IA</strong></td><td>79</td><td>103€</td><td>1</td><td><span class="badge badge-red">66%</span></td><td>1,30€</td></tr>
+<tr><td><strong>Bing + otros</strong></td><td>110</td><td>124€</td><td>2</td><td><span class="badge badge-amber">58%</span></td><td>1,12€</td></tr>
+<tr><td><strong>Connectif / Email</strong></td><td style="color:var(--red)">12</td><td style="color:var(--red)">0€</td><td style="color:var(--red)">0</td><td>—</td><td>0€</td></tr>
+</tbody>
+</table>
+<div class="insight-box success">
+<p class="insight-box-title">✅ Directo es el canal más rentable</p>
+<p>1,40€ revenue/sesión y solo 51% de bounce — el mejor canal en eficiencia. Son usuarios que ya conocen Quadest. La campaña de Branding alimenta este canal.</p>
+</div>
+<div class="insight-box alert">
+<p class="insight-box-title">⚠️ Google Organic: 2.734 sesiones y 68% de bounce</p>
+<p>El SEO genera mucho tráfico pero convierte poco (0,27€/sesión) y tiene el peor bounce. 44% del tráfico SEO aterriza en fichas de producto y 15% en blog — páginas con alta tasa de abandono.</p>
+</div>
+</div>
+</section>
+
+<!-- ATRIBUCIÓN MULTI-TOQUE -->
+<section class="alt" id="atribucion">
+<div class="container">
+<p class="section-eyebrow">ATRIBUCIÓN</p>
+<h2 class="section-title">Multi-toque — El journey hasta la compra</h2>
+<div class="card-grid" style="grid-template-columns:repeat(4,1fr)">
+<div class="card"><div class="card-value">50</div><div class="card-label">Compradores analizados</div></div>
+<div class="card"><div class="card-value">6,5</div><div class="card-label">Sesiones por comprador</div><div class="card-sub">Mediana: 4</div></div>
+<div class="card"><div class="card-value">50%</div><div class="card-label">Descubiertos por Ads</div></div>
+<div class="card"><div class="card-value">56%</div><div class="card-label">Cerrados por CPC</div></div>
+</div>
+
+<table>
+<thead><tr><th>Canal</th><th>First Touch<br><span style="font-size:10px;font-weight:400">(descubrimiento)</span></th><th>Last Touch<br><span style="font-size:10px;font-weight:400">(cierre)</span></th><th>Rol</th></tr></thead>
+<tbody>
+<tr><td><strong>Google Ads</strong></td><td class="td-value">25 compradores</td><td class="td-value">31 compras</td><td><span class="badge badge-green">Descubre y cierra</span></td></tr>
+<tr><td><strong>Directo</strong></td><td>13</td><td>13</td><td><span class="badge badge-blue">Equilibrado</span></td></tr>
+<tr><td><strong>Google Organic</strong></td><td>5</td><td>7</td><td><span class="badge badge-amber">Cierra algo más</span></td></tr>
+<tr><td><strong>Otros (ChatGPT, Bing...)</strong></td><td>3</td><td>4</td><td><span class="badge badge-grey">Marginal</span></td></tr>
+</tbody>
+</table>
+
+<div class="insight-box">
+<p class="insight-box-title">📊 Branding cierra 43% más compras de las que inicia</p>
+<p>En el desglose por campaña: Branding hace 7 first-touch pero 10 last-touch. PMax Recambios toca a 26 de los 50 compradores — la mayor influencia del funnel. Aperos no aparece en ningún journey de compra. El análisis detallado por campaña está en el <strong>informe PPC</strong>.</p>
+</div>
+
+<div class="insight-box">
+<p class="insight-box-title">📊 Solo el 10% compra en 1 sesión</p>
+<p>El 46% de los compradores necesita 4-10 sesiones para decidirse. Sin remarketing activo (Connectif no funciona), cada sesión intermedia depende de que el usuario vuelva por su cuenta o vuelva a hacer clic en un anuncio.</p>
+</div>
+</div>
+</section>
+
+<!-- CATEGORÍAS -->
+<section id="categorias">
+<div class="container">
+<p class="section-eyebrow">CATEGORÍAS</p>
+<h2 class="section-title">Rendimiento por tipo de landing page</h2>
+<table>
+<thead><tr><th>Categoría</th><th>Sesiones</th><th>Compras</th><th>Tasa compra</th><th>Estado</th></tr></thead>
+<tbody>
+<tr><td><strong>Neumáticos</strong></td><td>241</td><td>7</td><td class="td-value">2,90%</td><td><span class="badge badge-green">⭐ Mejor categoría</span></td></tr>
+<tr><td><strong>Home</strong></td><td>1.157</td><td>26</td><td class="td-value">2,25%</td><td><span class="badge badge-green">Buena</span></td></tr>
+<tr><td><strong>Recambios</strong></td><td>613</td><td>8</td><td class="td-value">1,31%</td><td><span class="badge badge-green">OK</span></td></tr>
+<tr><td><strong>Cat. marca</strong> (ej: Suzuki LTZ)</td><td>510</td><td>6</td><td>1,18%</td><td><span class="badge badge-amber">Aceptable</span></td></tr>
+<tr><td><strong>Ficha producto</strong> (directa)</td><td class="td-value">5.489</td><td>40</td><td style="color:var(--amber)">0,73%</td><td><span class="badge badge-amber">Volumen alto, tasa baja</span></td></tr>
+<tr><td><strong>Equipación</strong></td><td>141</td><td>1</td><td>0,71%</td><td><span class="badge badge-amber">Poco volumen</span></td></tr>
+<tr><td><strong>Accesorios</strong></td><td>854</td><td>3</td><td style="color:var(--red)">0,35%</td><td><span class="badge badge-red">Problema</span></td></tr>
+<tr><td><strong>Blog</strong></td><td style="color:var(--red)">485</td><td style="color:var(--red)">0</td><td style="color:var(--red)">0%</td><td><span class="badge badge-red">No convierte</span></td></tr>
+<tr><td><strong>Aperos agrícolas</strong></td><td style="color:var(--red)">327</td><td style="color:var(--red)">0</td><td style="color:var(--red)">0%</td><td><span class="badge badge-red">0 compras</span></td></tr>
+</tbody>
+</table>
+
+<div class="insight-box success">
+<p class="insight-box-title">✅ Neumáticos convierte casi 3× más que la media</p>
+<p>2,90% de tasa de compra — el usuario que busca neumáticos sabe exactamente qué necesita (medidas, tipo). Es un producto con intención de compra muy alta. No tiene campaña Shopping dedicada — crear una es la mayor oportunidad de crecimiento.</p>
+</div>
+
+<div class="insight-box alert">
+<p class="insight-box-title">⚠️ 5.489 sesiones entran por fichas de producto y solo convierten al 0,73%</p>
+<p>El 49% del tráfico total aterriza directamente en fichas de producto (la mayoría desde PPC Shopping). Es el mayor volumen pero una de las peores tasas. Comparar con Home (2,25%): la diferencia es que quien entra por Home tiene contexto, navegación, y puede explorar. Quien entra directo a una ficha fría solo tiene ese producto.</p>
+</div>
+
+<div class="insight-box alert">
+<p class="insight-box-title">⚠️ Blog y Aperos: 812 sesiones con 0 compras</p>
+<p>El blog genera tráfico SEO pero no tiene mecanismo de conversión (sin CTAs, sin productos relacionados, sin captura de email). Aperos tiene el mismo problema que siempre — alto tráfico, 0 conversiones.</p>
+</div>
+</div>
+</section>
+
+<!-- SEO -->
+<section class="alt" id="seo">
+<div class="container">
+<p class="section-eyebrow">ORGÁNICO</p>
+<h2 class="section-title">SEO — Google Organic</h2>
+<div class="card-grid" style="grid-template-columns:repeat(4,1fr)">
+<div class="card"><div class="card-value">2.734</div><div class="card-label">Sesiones SEO</div><div class="card-sub">24% del total</div></div>
+<div class="card"><div class="card-value">745€</div><div class="card-label">Revenue</div><div class="card-sub">7 compras</div></div>
+<div class="card" style="background:var(--salmon-bg);border-color:var(--salmon)"><div class="card-value" style="color:var(--red)">68%</div><div class="card-label">Bounce rate</div></div>
+<div class="card"><div class="card-value">2,14</div><div class="card-label">Páginas/sesión (no conv)</div></div>
+</div>
+
+<h3 class="section-subtitle">¿Dónde aterriza el tráfico SEO?</h3>
+<table>
+<thead><tr><th>Tipo de página</th><th>Sesiones SEO</th><th>% del SEO</th><th>Problema</th></tr></thead>
+<tbody>
+<tr><td><strong>Fichas de producto</strong></td><td class="td-value">1.145</td><td>44%</td><td><span class="badge badge-amber">Alto bounce, baja conversión</span></td></tr>
+<tr><td><strong>Blog</strong></td><td>396</td><td>15%</td><td><span class="badge badge-red">0 conversiones</span></td></tr>
+<tr><td><strong>Accesorios</strong></td><td>274</td><td>11%</td><td><span class="badge badge-red">0,35% tasa</span></td></tr>
+<tr><td><strong>Cat. marca</strong></td><td>174</td><td>7%</td><td><span class="badge badge-amber">1,18%</span></td></tr>
+<tr><td><strong>Home</strong></td><td>144</td><td>6%</td><td><span class="badge badge-green">2,25%</span></td></tr>
+<tr><td><strong>Recambios</strong></td><td>137</td><td>5%</td><td><span class="badge badge-green">1,31%</span></td></tr>
+<tr><td><strong>Equipación</strong></td><td>77</td><td>3%</td><td><span class="badge badge-amber">Poco volumen</span></td></tr>
+</tbody>
+</table>
+
+<div class="insight-box alert">
+<p class="insight-box-title">⚠️ El 59% del tráfico SEO aterriza en páginas que no convierten bien</p>
+<p>Fichas de producto (44%) + Blog (15%) = 1.541 sesiones orgánicas que rebotan o no compran. El blog no tiene ningún mecanismo de captura — ni CTAs a producto, ni captura de email, ni related products. Las fichas orgánicas necesitan mejorar para retener al usuario que llega por búsqueda genérica.</p>
+</div>
+
+<div class="insight-box">
+<p class="insight-box-title">📊 Recambios y Home: las landing pages SEO que sí funcionan</p>
+<p>Si el SEO dirigiera más tráfico a páginas de categoría de Recambios (1,31%) o Home (2,25%) en vez de fichas individuales, la conversión orgánica subiría. Revisar internal linking y estructura de categorías para que las páginas con mejor tasa reciban más autoridad.</p>
+</div>
+</div>
+</section>
+
+<!-- DOOFINDER -->
+<section id="doofinder">
+<div class="container">
+<p class="section-eyebrow">BÚSQUEDA INTERNA</p>
+<h2 class="section-title">Impacto de Doofinder en la conversión</h2>
+<div class="card-grid" style="grid-template-columns:repeat(4,1fr)">
+<div class="card"><div class="card-value">703</div><div class="card-label">Sesiones con Doofinder</div><div class="card-sub">6,2% del total</div></div>
+<div class="card" style="background:var(--green-bg);border-color:var(--green)"><div class="card-value" style="color:var(--green)">32</div><div class="card-label">También compraron</div><div class="card-sub">35,6% de los compradores</div></div>
+<div class="card"><div class="card-value">633</div><div class="card-label">Usuarios únicos</div></div>
+<div class="card"><div class="card-value">100%</div><div class="card-label">Recurrentes</div><div class="card-sub">Todos returning visitors</div></div>
+</div>
+
+<h3 class="section-subtitle">Doofinder users vs. resto: comportamiento en sesiones sin conversión</h3>
+<div class="doof-compare">
+<div class="doof-col active">
+<h3 style="color:var(--green)">👤 Usuarios que usan Doofinder</h3>
+<p style="font-size:12px;color:var(--text-tertiary);margin-bottom:12px">1.694 sesiones sin conversión de estos mismos usuarios</p>
+<div class="doof-stat"><span class="doof-stat-label">Páginas por sesión</span><span class="doof-stat-value" style="color:var(--green)">4,31</span></div>
+<div class="doof-stat"><span class="doof-stat-label">Duración media</span><span class="doof-stat-value" style="color:var(--green)">7,4 min</span></div>
+<div class="doof-stat"><span class="doof-stat-label">Tasa de rebote</span><span class="doof-stat-value" style="color:var(--green)">36,7%</span></div>
+<div class="doof-stat"><span class="doof-stat-label">Compradores</span><span class="doof-stat-value" style="color:var(--green)">32</span></div>
+</div>
+<div class="doof-col inactive">
+<h3 style="color:var(--red)">👥 Usuarios que NO usan Doofinder</h3>
+<p style="font-size:12px;color:var(--text-tertiary);margin-bottom:12px">8.678 sesiones sin conversión</p>
+<div class="doof-stat"><span class="doof-stat-label">Páginas por sesión</span><span class="doof-stat-value" style="color:var(--red)">2,12</span></div>
+<div class="doof-stat"><span class="doof-stat-label">Duración media</span><span class="doof-stat-value" style="color:var(--red)">2,0 min</span></div>
+<div class="doof-stat"><span class="doof-stat-label">Tasa de rebote</span><span class="doof-stat-value" style="color:var(--red)">67,2%</span></div>
+<div class="doof-stat"><span class="doof-stat-label">Compradores</span><span class="doof-stat-value" style="color:var(--red)">58</span></div>
+</div>
+</div>
+<div class="insight-box success">
+<p class="insight-box-title">✅ Los usuarios que buscan internamente son 2× más valiosos</p>
+<p>4,31 páginas (vs 2,12), 7,4 min (vs 2 min), 36,7% bounce (vs 67,2%). El 35,6% de los compradores usaron Doofinder en algún momento. Solo el 6,2% del tráfico lo usa — hacerlo más visible en mobile (donde va el 80% del tráfico) es una palanca de conversión directa.</p>
+</div>
+</div>
+</section>
+
+<!-- PRODUCTOS -->
+<section class="alt" id="productos">
+<div class="container">
+<p class="section-eyebrow">PRODUCTO</p>
+<h2 class="section-title">Productos más vistos vs. más comprados</h2>
+
+<div class="two-cols">
+<div>
+<h3 class="section-subtitle" style="margin-top:0;color:var(--red)">🔴 Más vistos y NUNCA comprados</h3>
+<table>
+<thead><tr><th>Producto</th><th>Views</th></tr></thead>
+<tbody>
+<tr><td>Depósito Pulverizador 55L ATV</td><td class="td-value" style="color:var(--red)">111</td></tr>
+<tr><td>Abonadora Agrícola ATV</td><td class="td-value" style="color:var(--red)">68</td></tr>
+<tr><td>Barra Tratamiento 152cm</td><td style="color:var(--red)">66</td></tr>
+<tr><td>Depósito Pulverizador 151L</td><td style="color:var(--red)">58</td></tr>
+<tr><td>Cabrestante WARN VRX 45</td><td style="color:var(--red)">47</td></tr>
+<tr><td>Depósito Pulverizador 95L (8L)</td><td style="color:var(--red)">45</td></tr>
+<tr><td>Depósito Pulverizador 95L (14L)</td><td style="color:var(--red)">44</td></tr>
+<tr><td>Bolsa Suzuki Porta-documentos</td><td>41</td></tr>
+<tr><td>Bomba Depósito Pulverizador</td><td>36</td></tr>
+<tr><td>Barra Tratamiento 3 surtidores</td><td>35</td></tr>
+</tbody>
+</table>
+</div>
+<div>
+<h3 class="section-subtitle" style="margin-top:0;color:var(--green)">🟢 Más vendidos por revenue</h3>
+<table>
+<thead><tr><th>Producto</th><th>Revenue</th></tr></thead>
+<tbody>
+<tr><td>Filtro K&N Yamaha Raptor 700</td><td class="td-value">259,98€</td></tr>
+<tr><td>Neumáticos SUN-F A027 (set 4)</td><td class="td-value">253,68€</td></tr>
+<tr><td>Kit Transmisión Raptor 700</td><td class="td-value">231,98€</td></tr>
+<tr><td>Biela HOT RODS Suzuki LTZ</td><td class="td-value">229,84€</td></tr>
+<tr><td>Neumáticos SUN-F A010 (set 4)</td><td>225,80€</td></tr>
+<tr><td>Carburadores Yamaha Banshee</td><td>217,74€</td></tr>
+<tr><td>Neumáticos SUN-F A017 (set 4)</td><td>203,28€</td></tr>
+<tr><td>Carburador Honda Rincon 650</td><td>203,22€</td></tr>
+<tr><td>Neumáticos SUN-F A027 (set 4)</td><td>200,04€</td></tr>
+<tr><td>Carburador Suzuki LTZ 400</td><td>181,44€</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="insight-box alert">
+<p class="insight-box-title">⚠️ Los 7 productos más vistos son TODOS aperos agrícolas — y ninguno se compra</p>
+<p>Pulverizadores, abonadoras, barras de tratamiento: combinan 428 visitas y 0 compras. Son los productos que Google Ads más muestra (la campaña de Aperos atrae 718 sesiones) pero que nadie compra online. Probable causa: productos voluminosos con envío caro, fichas sin info técnica suficiente, o precios no competitivos para este canal.</p>
+</div>
+
+<div class="insight-box success">
+<p class="insight-box-title">✅ Lo que sí se vende: neumáticos, carburadores, kits de reparación</p>
+<p>Los 10 productos top vendidos son recambios y neumáticos con tickets de 180-260€. Se compran con intención clara — el usuario sabe el modelo exacto de su quad y qué pieza necesita. Son productos ideales para Shopping con títulos técnicos (medidas, modelo, compatibilidad).</p>
+</div>
+</div>
+</section>
+
+<!-- JOURNEYS -->
+<section id="journeys">
+<div class="container">
+<p class="section-eyebrow">COMPORTAMIENTO</p>
+<h2 class="section-title">Caminos hasta la compra</h2>
+<div class="two-cols" style="margin-bottom:24px">
+<div class="card"><div class="card-value">11,8</div><div class="card-label">Páginas/sesión (compradores)</div><div class="card-sub">vs 2,1 en sesiones sin conversión</div></div>
+<div class="card"><div class="card-value">16 min</div><div class="card-label">Duración (compradores)</div><div class="card-sub">vs 1,9 min sin conversión</div></div>
+</div>
+
+<h3 class="section-subtitle">¿Qué visitan los compradores ANTES de comprar?</h3>
+<table>
+<thead><tr><th>Categoría visitada</th><th>Sesiones previas</th><th>Rol en el journey</th></tr></thead>
+<tbody>
+<tr><td><strong>Fichas de producto</strong></td><td class="td-value">91</td><td>Compara y evalúa opciones</td></tr>
+<tr><td><strong>Home</strong></td><td class="td-value">57</td><td>Punto de entrada recurrente</td></tr>
+<tr><td><strong>Accesorios / Recambios</strong></td><td>18</td><td>Navega categorías</td></tr>
+<tr><td><strong>Historial de compra</strong></td><td>13</td><td>Revisa pedidos anteriores</td></tr>
+</tbody>
+</table>
+
+<h3 class="section-subtitle">No-compradores: distribución de engagement</h3>
+<table>
+<thead><tr><th>Comportamiento</th><th>Sesiones</th><th>%</th><th></th></tr></thead>
+<tbody>
+<tr><td><strong>1 página (rebote)</strong></td><td class="td-value">6.527</td><td>63%</td><td><div class="bar-track" style="width:200px"><div class="bar-fill salmon" style="width:63%"></div></div></td></tr>
+<tr><td>2-3 páginas</td><td>2.115</td><td>20%</td><td><div class="bar-track" style="width:200px"><div class="bar-fill" style="width:20%"></div></div></td></tr>
+<tr><td>4+ páginas (engaged)</td><td>1.730</td><td>17%</td><td><div class="bar-track" style="width:200px"><div class="bar-fill green" style="width:17%"></div></div></td></tr>
+</tbody>
+</table>
+<div class="insight-box">
+<p class="insight-box-title">📊 El 63% de las sesiones sin conversión son rebotes puros</p>
+<p>6.527 sesiones de 1 página y 0 segundos. La mayoría llega desde PPC Shopping a una ficha de producto fría y se va inmediatamente. Los compradores, en cambio, ven 11,8 páginas y pasan 16 minutos. La retención post-primera-ficha es la clave: si el usuario no ve una segunda página, no comprará.</p>
+</div>
+</div>
+</section>
+
+<!-- CONNECTIF -->
+<section class="alt" id="connectif">
+<div class="container">
+<p class="section-eyebrow">AUTOMATIZACIÓN</p>
+<h2 class="section-title">Connectif — Email Marketing</h2>
+<div class="card-grid" style="grid-template-columns:repeat(3,1fr)">
+<div class="card" style="background:var(--salmon-bg);border-color:var(--salmon)"><div class="card-value" style="color:var(--red)">12</div><div class="card-label">Sesiones Connectif</div><div class="card-sub">0 conversiones · 18 días</div></div>
+<div class="card"><div class="card-value">9</div><div class="card-label">Sesiones «carrito abandonado»</div><div class="card-sub">4 variantes de WF distintas</div></div>
+<div class="card"><div class="card-value">90%</div><div class="card-label">Compradores multi-sesión</div><div class="card-sub">El email debería retener a estos</div></div>
+</div>
+<div class="insight-box alert">
+<p class="insight-box-title">⚠️ 18 días, 12 sesiones, 0€ de revenue — Connectif no funciona</p>
+<p>El 90% de los compradores necesita 4+ sesiones. Sin email activo, cada sesión intermedia depende de que el usuario vuelva solo o haga otro clic de pago. Hay 4 workflows de carrito abandonado duplicados (1er envío, 2º envío, WF_carrito, envio_carrito). Consolidar, reconfigurar triggers (de /carrito a /pedido), y reducir tiempos de envío.</p>
+</div>
+</div>
+</section>
+
+<!-- RECOMENDACIONES -->
+<section id="recomendaciones">
+<div class="container">
+<p class="section-eyebrow">PLAN DE ACCIÓN</p>
+<h2 class="section-title">Recomendaciones priorizadas</h2>
+
+<div class="rec"><div class="rec-icon alert">1</div><div>
+<h3>Escalar Branding — 2,93€/sesión, cierra 43% más compras de las que inicia</h3>
+<p>La campaña más rentable de toda la cuenta. En atribución multi-toque, es el closer del funnel. Duplicar o triplicar presupuesto.</p>
+</div></div>
+
+<div class="rec"><div class="rec-icon alert">2</div><div>
+<h3>Pausar Aperos — 718 sesiones, 0€, 0 journeys tocados, los 7 productos más vistos sin 1 compra</h3>
+<p>Los datos son contundentes: 0 ventas, 0 atribución, 73% bounce. Los pulverizadores y abonadoras reciben cientos de visitas y no convierten. Redirigir presupuesto a Branding y Neumáticos.</p>
+</div></div>
+
+<div class="rec"><div class="rec-icon alert">3</div><div>
+<h3>Hacer Doofinder prominente en mobile</h3>
+<p>Solo el 6,2% lo usa, pero quienes lo usan navegan 2× más (4,31 vs 2,12 pp/ses), rebotan la mitad (36,7% vs 67,2%), y el 35,6% de los compradores son usuarios Doofinder. Barra de búsqueda visible en fichas de producto y categorías.</p>
+</div></div>
+
+<div class="rec"><div class="rec-icon alert">4</div><div>
+<h3>Mejorar fichas de producto — 5.489 sesiones con solo 0,73% de compra</h3>
+<p>El 49% del tráfico entra por fichas de producto (la mayoría desde PPC Shopping). Los compradores ven 11,8 páginas — la ficha tiene que retener y facilitar la exploración: cross-selling, productos relacionados, galería mejorada, CTA claro, confianza. Home convierte 3× más (2,25%).</p>
+</div></div>
+
+<div class="rec"><div class="rec-icon info">5</div><div>
+<h3>Crear campaña Shopping de neumáticos</h3>
+<p>Neumáticos tiene la mejor tasa por categoría (2,90%), los mayores tickets (200-260€ en sets de 4), y no tiene campaña dedicada. Un feed con medidas exactas en títulos captura tráfico de alta intención.</p>
+</div></div>
+
+<div class="rec"><div class="rec-icon info">6</div><div>
+<h3>Reconstruir Connectif — 0€ en 18 días</h3>
+<p>Consolidar los 4 WFs de carrito duplicados. Cambiar triggers de /carrito a /pedido. Enviar en 1-2h (no en 2 días). Crear WF de browse abandonment para las 6.527 sesiones que rebotan en fichas. Capturar emails con incentivo.</p>
+</div></div>
+
+<div class="rec"><div class="rec-icon info">7</div><div>
+<h3>SEO: añadir CTAs al blog y mejorar internal linking</h3>
+<p>El blog recibe 485 sesiones con 0 conversiones y 0 mecanismo de captura. Añadir productos relacionados, CTAs a categorías, y captura de email. Reforzar internal linking hacia Recambios y Neumáticos (las categorías que mejor convierten en orgánico).</p>
+</div></div>
+
+<div class="rec"><div class="rec-icon info">8</div><div>
+<h3>Consolidar campañas PMax Dv&Ds + cambiar puja de ROAS</h3>
+<p>Las Dv&Ds no aportan valor diferencial. PMax ROAS >350% genera tráfico basura. Consolidar, cambiar a Maximize Conversion Value sin target. Detalle en el informe PPC.</p>
+</div></div>
+</div>
+</section>
+
+<!-- ANÁLISIS -->
+<section class="alt">
+<div class="container">
+<p class="section-eyebrow">ANÁLISIS</p>
+<h2 class="section-title">Resumen ejecutivo</h2>
+<div class="analysis-grid">
+<div class="analysis-block">
+<h3>📊 En cifras</h3>
+<p>11.269 sesiones, 99 conversiones, 7.146€ revenue, AOV 127,6€, 62,2% bounce. Google Ads genera el 54% del revenue. Branding es la mejor campaña (2,93€/ses). Los compradores necesitan 6,5 sesiones de media. Doofinder triplica el engagement. Aperos quema presupuesto. Connectif no funciona.</p>
+</div>
+<div class="analysis-block">
+<h3>🔍 Las 5 palancas de crecimiento</h3>
+<ul class="findings-list">
+<li><strong>Doofinder visible en mobile:</strong> Solo el 6% lo usa pero son 2× más valiosos. Cada punto de uso que se gane mejora toda la conversión.</li>
+<li><strong>Fichas de producto:</strong> 5.489 sesiones al 0,73%. Si sube a 1%, son 14 compras más (1.784€/mes).</li>
+<li><strong>Branding:</strong> 2,93€/sesión. Cada euro adicional aquí rinde 4× más que en PMax.</li>
+<li><strong>Campaña Neumáticos:</strong> 2,90% tasa en categoría, tickets altos, sin campaña dedicada.</li>
+<li><strong>Connectif activo:</strong> 90% de los compradores son multi-sesión. Email marketing funcional puede convertir sesiones intermedias en gratis.</li>
+</ul>
+</div>
+<div class="analysis-block full-width">
+<h3>🎯 Cronograma</h3>
+<ol class="action-list">
+<li><strong>Esta semana:</strong> Pausar Aperos. Escalar Branding. Unificar WFs de Connectif.</li>
+<li><strong>Semana 2:</strong> Doofinder prominente en mobile. Consolidar Dv&Ds. Cambiar puja ROAS.</li>
+<li><strong>Semana 3:</strong> Crear campaña Shopping Neumáticos. CTAs en blog. Captura email en fichas.</li>
+<li><strong>Semana 4:</strong> Envío estimado en fichas. Umbral envío gratis 60-75€. Cross-selling en fichas.</li>
+<li><strong>Mes 2:</strong> Evaluar Connectif. Test A/B fichas. Decidir sobre Aperos con landing específica.</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+
+<footer><div class="container">
+<p><strong>agenciaSEO.eu</strong> · Informe generado el 22/04/2026</p>
+<p>GA4 + BigQuery · analytics_297520053 · 4–22 abril 2026 · 11.269 sesiones · 50 compradores · 325 sesiones journey</p>
+</div></footer>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+const sections=document.querySelectorAll('section[id],header[id]');const navLinks=document.querySelectorAll('.nav-link');const scrollBtn=document.getElementById('scrollTop');
+function updateNav(){let c='';sections.forEach(s=>{if(window.scrollY>=s.offsetTop-80)c=s.id});navLinks.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+c));scrollBtn.classList.toggle('visible',window.scrollY>400)}
+window.addEventListener('scroll',updateNav);updateNav();
+navLinks.forEach(l=>l.addEventListener('click',e=>{e.preventDefault();document.querySelector(l.getAttribute('href')).scrollIntoView({behavior:'smooth',block:'start'})}));
+</script>
+</body>
+</html>
