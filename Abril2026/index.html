@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informe de Rendimiento · grupoaspasia.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+    font-family: 'Inter', sans-serif;
+    background: #FFFFFF;
+    color: #3a4a7a;
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ============ NAV ============ */
+nav {
+    position: sticky;
+    top: 0;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0,31,120,0.18);
+    z-index: 100;
+}
+.nav-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+.nav-brand {
+    font-weight: 700;
+    color: #001F78;
+    font-size: 14px;
+    letter-spacing: -0.01em;
+}
+.nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
+.nav-links a {
+    color: #7685AF;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: all .15s;
+}
+.nav-links a:hover { color: #001F78; background: #F3F8FF; }
+.nav-links a.active { background: #001F78; color: #fff; }
+.nav-cta {
+    background: #001F78;
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: all .15s;
+}
+.nav-cta:hover { background: #FF7F7A; }
+@media (max-width: 768px) {
+    .nav-links { display: none; }
+}
+
+/* ============ HERO ============ */
+.hero {
+    background: #001F78;
+    background-image:
+        radial-gradient(circle at 20% 20%, rgba(43,136,216,0.35) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(255,127,122,0.18) 0%, transparent 45%);
+    color: #fff;
+    padding: 80px 24px 90px;
+    position: relative;
+}
+.hero-inner { max-width: 1080px; margin: 0 auto; }
+.hero-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #FF7F7A;
+    margin-bottom: 18px;
+}
+.hero-title {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 12px;
+}
+.hero-subtitle {
+    color: rgba(255,255,255,0.65);
+    font-size: 15px;
+    margin-bottom: 48px;
+}
+.hero-kpis {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+.hero-kpi {
+    border-top: 1px solid rgba(255,255,255,0.15);
+    padding-top: 20px;
+}
+.hero-kpi-value {
+    font-size: clamp(28px, 3.5vw, 38px);
+    font-weight: 700;
+    color: #FF7F7A;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+}
+.hero-kpi-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.65);
+    margin-top: 6px;
+    letter-spacing: 0.02em;
+}
+.hero-kpi-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    margin-top: 2px;
+}
+@media (max-width: 768px) {
+    .hero-kpis { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .hero { padding: 60px 24px 70px; }
+}
+
+/* ============ SECCIONES ============ */
+section {
+    padding: 70px 24px;
+    border-bottom: 1px solid rgba(0,31,120,0.08);
+}
+section.surface { background: #F3F8FF; }
+.container { max-width: 1080px; margin: 0 auto; }
+.section-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #2B88D8;
+    margin-bottom: 10px;
+}
+.section-title {
+    font-size: clamp(22px, 3.5vw, 32px);
+    font-weight: 700;
+    color: #001F78;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 16px;
+}
+.section-intro {
+    color: #3a4a7a;
+    font-size: 15px;
+    max-width: 720px;
+    margin-bottom: 40px;
+}
+
+/* ============ INSIGHT BOX ============ */
+.insight-box {
+    background: #F3F8FF;
+    border-left: 3px solid #2B88D8;
+    border-radius: 0 10px 10px 0;
+    padding: 16px 20px;
+    margin: 20px 0;
+}
+.insight-box.alert {
+    background: #FFF0EF;
+    border-left-color: #FF7F7A;
+}
+.insight-box.success {
+    background: #e8f5ee;
+    border-left-color: #1a7a45;
+}
+.insight-box-title {
+    font-weight: 600;
+    color: #001F78;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+.insight-box p { font-size: 14px; color: #3a4a7a; }
+
+/* ============ CHANNEL BAR ============ */
+.channel-list { display: flex; flex-direction: column; gap: 14px; margin-top: 10px; }
+.channel-row {
+    display: grid;
+    grid-template-columns: 180px 1fr auto auto;
+    gap: 20px;
+    align-items: center;
+    padding: 14px 18px;
+    background: #fff;
+    border: 1px solid rgba(0,31,120,0.10);
+    border-radius: 12px;
+}
+section.surface .channel-row { background: #fff; }
+.channel-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #001F78;
+}
+.progress-bar {
+    background: #DDEFFF;
+    border-radius: 3px;
+    height: 8px;
+    overflow: hidden;
+}
+.progress-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: #2B88D8;
+    transition: width .4s;
+}
+.progress-fill.salmon { background: #FF7F7A; }
+.channel-stats {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+.channel-stat {
+    text-align: right;
+    min-width: 70px;
+}
+.channel-stat-value {
+    font-size: 15px;
+    font-weight: 700;
+    color: #001F78;
+}
+.channel-stat-label {
+    font-size: 11px;
+    color: #7685AF;
+    margin-top: 2px;
+    letter-spacing: 0.02em;
+}
+@media (max-width: 768px) {
+    .channel-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    .channel-stats { justify-content: space-between; }
+}
+
+/* ============ BADGES ============ */
+.badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+.badge-green { background: #e8f5ee; color: #1a7a45; }
+.badge-amber { background: #fff8e1; color: #856404; }
+.badge-red   { background: #FFF0EF; color: #c0392b; }
+.badge-blue  { background: #DDEFFF; color: #001F78; }
+.badge-gray  { background: #f0f0f0; color: #616268; }
+
+/* ============ CARDS GRID ============ */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+}
+.card {
+    background: #fff;
+    border: 1px solid rgba(0,31,120,0.10);
+    border-radius: 12px;
+    padding: 22px;
+}
+section.surface .card { background: #fff; }
+.card-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    color: #2B88D8;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+.card-value {
+    font-size: 30px;
+    font-weight: 700;
+    color: #001F78;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+}
+.card-value.accent { color: #FF7F7A; }
+.card-label {
+    font-size: 13px;
+    color: #7685AF;
+    margin-top: 6px;
+}
+.card-bar {
+    background: #DDEFFF;
+    height: 6px;
+    border-radius: 3px;
+    margin-top: 14px;
+    overflow: hidden;
+}
+.card-bar-fill {
+    height: 100%;
+    background: #2B88D8;
+    border-radius: 3px;
+}
+
+/* ============ TABLES ============ */
+.table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid rgba(0,31,120,0.10); background: #fff; }
+section.surface .table-wrap { background: #fff; }
+table { width: 100%; border-collapse: collapse; }
+thead th {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: #7685AF;
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 2px solid rgba(0,31,120,0.18);
+    background: #fff;
+}
+thead th.num { text-align: right; }
+tbody td {
+    font-size: 13px;
+    color: #3a4a7a;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(0,31,120,0.08);
+}
+tbody tr:hover { background: #F3F8FF; }
+tbody tr:last-child td { border-bottom: none; }
+td.num { text-align: right; }
+td.highlight {
+    font-weight: 700;
+    color: #001F78;
+    font-size: 14px;
+}
+
+/* ============ FUNNEL / COMPARATIVA ============ */
+.compare-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+.compare-box {
+    background: #fff;
+    border: 1px solid rgba(0,31,120,0.10);
+    border-radius: 12px;
+    padding: 24px;
+}
+section.surface .compare-box { background: #fff; }
+.compare-box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(0,31,120,0.10);
+}
+.compare-box-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #001F78;
+}
+.compare-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0,31,120,0.06);
+    font-size: 13px;
+}
+.compare-row:last-child { border-bottom: none; }
+.compare-row-label { color: #7685AF; }
+.compare-row-value { font-weight: 600; color: #001F78; }
+@media (max-width: 768px) { .compare-grid { grid-template-columns: 1fr; } }
+
+/* ============ TIMELINE CONVERSIÓN ============ */
+.timeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+}
+.timeline-step {
+    background: #fff;
+    border: 1px solid rgba(0,31,120,0.10);
+    border-radius: 12px;
+    padding: 22px 20px;
+    text-align: center;
+    position: relative;
+}
+section.surface .timeline-step { background: #fff; }
+.timeline-step.highlight {
+    background: #001F78;
+    color: #fff;
+    border-color: #001F78;
+}
+.timeline-step.highlight .timeline-value { color: #FF7F7A; }
+.timeline-step.highlight .timeline-label,
+.timeline-step.highlight .timeline-share { color: rgba(255,255,255,0.65); }
+.timeline-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #001F78;
+    letter-spacing: -0.02em;
+}
+.timeline-label {
+    font-size: 13px;
+    color: #3a4a7a;
+    margin-top: 6px;
+    font-weight: 500;
+}
+.timeline-share {
+    font-size: 11px;
+    color: #7685AF;
+    margin-top: 4px;
+}
+@media (max-width: 768px) { .timeline { grid-template-columns: repeat(2, 1fr); } }
+
+/* ============ RECOMENDACIONES ============ */
+.reco-list { display: flex; flex-direction: column; gap: 16px; margin-top: 30px; }
+.reco {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 20px;
+    background: #fff;
+    border: 1px solid rgba(0,31,120,0.10);
+    border-radius: 12px;
+    padding: 24px;
+}
+section.surface .reco { background: #fff; }
+.reco-num {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+}
+.reco-num.priority { background: #FF7F7A; color: #fff; }
+.reco-num.important { background: #001F78; color: #fff; }
+.reco-num.nice { background: #DDEFFF; color: #001F78; }
+.reco-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #001F78;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+}
+.reco-body {
+    font-size: 14px;
+    color: #3a4a7a;
+    line-height: 1.65;
+}
+.reco-tag {
+    display: inline-block;
+    margin-top: 10px;
+    margin-right: 6px;
+}
+
+/* ============ ANÁLISIS FINAL ============ */
+.detailed-analysis { background: #F3F8FF; padding: 70px 24px; }
+.analysis-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+}
+.analysis-block {
+    background: #fff;
+    border-radius: 12px;
+    padding: 26px;
+    border: 1px solid rgba(0,31,120,0.10);
+}
+.analysis-block.full-width { grid-column: 1 / -1; }
+.analysis-block h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #001F78;
+    margin-bottom: 14px;
+    letter-spacing: -0.01em;
+}
+.analysis-block p, .analysis-block li { font-size: 14px; color: #3a4a7a; line-height: 1.7; }
+.findings-list { list-style: none; padding: 0; }
+.findings-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0,31,120,0.08);
+}
+.findings-list li:last-child { border-bottom: none; }
+.findings-list li strong { color: #001F78; }
+.action-list { padding-left: 20px; }
+.action-list li { padding: 6px 0; }
+@media (max-width: 768px) { .analysis-grid { grid-template-columns: 1fr; } }
+
+/* ============ FOOTER ============ */
+footer {
+    background: #001F78;
+    color: rgba(255,255,255,0.4);
+    padding: 36px 24px;
+    font-size: 12px;
+    text-align: center;
+}
+footer strong { color: rgba(255,255,255,0.75); font-weight: 500; }
+footer a { color: #FF7F7A; text-decoration: none; font-weight: 500; }
+footer a:hover { text-decoration: underline; }
+
+/* ============ SUBPAGE LINK ============ */
+.link-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #001F78;
+    background-image: radial-gradient(circle at 90% 50%, rgba(255,127,122,0.25) 0%, transparent 40%);
+    color: #fff;
+    padding: 28px 32px;
+    border-radius: 12px;
+    text-decoration: none;
+    margin-top: 24px;
+    transition: all .2s;
+}
+.link-card:hover { transform: translateY(-2px); }
+.link-card-text { max-width: 70%; }
+.link-card-title { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+.link-card-subtitle { font-size: 13px; color: rgba(255,255,255,0.65); }
+.link-card-arrow { font-size: 24px; color: #FF7F7A; }
+
+/* ============ SCROLL TOP ============ */
+.scroll-top {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    width: 42px; height: 42px;
+    background: #FF7F7A;
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(255,127,122,0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: all .2s;
+}
+.scroll-top.visible { opacity: 1; visibility: visible; }
+
+/* Muted note */
+.sample-note {
+    font-size: 11px;
+    color: #7685AF;
+    margin-top: 6px;
+    font-style: italic;
+}
+</style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <div class="nav-brand">grupoaspasia.com</div>
+        <div class="nav-links">
+            <a href="#canales">Canales</a>
+            <a href="#dispositivo">Dispositivo</a>
+            <a href="#tiempo">Tiempo a lead</a>
+            <a href="#cursos">Cursos</a>
+            <a href="#geografia">Geografía</a>
+            <a href="#campanas">Campañas</a>
+            <a href="#fricciones">Fricciones</a>
+            <a href="#recomendaciones">Recomendaciones</a>
+        </div>
+        <div style="display:flex;gap:8px;"><a class="nav-cta" href="rutas.html" style="background:transparent;color:#001F78;border:1px solid rgba(0,31,120,0.2);">Rutas →</a><a class="nav-cta" href="multitoque.html">Multi-toque →</a></div>
+    </div>
+</nav>
+
+<header class="hero">
+    <div class="hero-inner">
+        <p class="hero-eyebrow">Informe de rendimiento · Lead generation</p>
+        <h1 class="hero-title">grupoaspasia.com</h1>
+        <p class="hero-subtitle">1 – 22 abril 2026 · BigQuery · GA4</p>
+        <div class="hero-kpis">
+            <div class="hero-kpi">
+                <div class="hero-kpi-value">39.331</div>
+                <div class="hero-kpi-label">SESIONES</div>
+                <div class="hero-kpi-sub">En 22 días</div>
+            </div>
+            <div class="hero-kpi">
+                <div class="hero-kpi-value">4.584</div>
+                <div class="hero-kpi-label">LEADS</div>
+                <div class="hero-kpi-sub">generate_lead · chat · phone</div>
+            </div>
+            <div class="hero-kpi">
+                <div class="hero-kpi-value">72%</div>
+                <div class="hero-kpi-label">CONVIERTEN EN 1 DÍA</div>
+                <div class="hero-kpi-sub">Mismo día de la primera visita</div>
+            </div>
+            <div class="hero-kpi">
+                <div class="hero-kpi-value">63%</div>
+                <div class="hero-kpi-label">SESIONES EN MÓVIL</div>
+                <div class="hero-kpi-sub">Y convierten un 52% más</div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ================== CANALES ================== -->
+<section id="canales">
+    <div class="container">
+        <p class="section-eyebrow">Adquisición</p>
+        <h2 class="section-title">Rendimiento por canal</h2>
+        <p class="section-intro">Google Organic trae el 60% del tráfico pero con tasa media. Email, ChatGPT y Meta superan al resto con diferencia.</p>
+
+        <div class="channel-list" id="channelList"></div>
+
+        <div class="insight-box success">
+            <p class="insight-box-title">✅ Email convierte al 45%</p>
+            <p>238 sesiones → 107 leads. Es el canal con mejor rendimiento del mes. La automatización con EOI (ia-eoi_traf_email y in-eoi_traf_email) funciona — hay que replicarla con otras bases de datos.</p>
+        </div>
+
+        <div class="insight-box success">
+            <p class="insight-box-title">✅ ChatGPT trae leads muy cualificados</p>
+            <p>575 sesiones con un 29,6% de conversión. El tráfico orgánico desde IA es real y convierte. Merece la pena cuidar la presencia en respuestas de LLMs.</p>
+        </div>
+
+        <div class="insight-box alert">
+            <p class="insight-box-title">⚠️ Google Ads se queda corto</p>
+            <p>4.875 sesiones pero solo 10,2% de conversión — por debajo incluso del tráfico directo (12,3%). Si el coste de CPC es medio-alto, el ROI puede estar comprometido frente a Meta (20%) que tiene el doble de tasa.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ================== DISPOSITIVO / USUARIO ================== -->
+<section id="dispositivo" class="surface">
+    <div class="container">
+        <p class="section-eyebrow">Audiencia</p>
+        <h2 class="section-title">Dispositivo y tipo de usuario</h2>
+        <p class="section-intro">Mobile no solo domina en volumen, también convierte mejor. El usuario nuevo convierte más que el recurrente — señal típica de decisión en caliente.</p>
+
+        <div class="compare-grid">
+            <div class="compare-box">
+                <div class="compare-box-header">
+                    <div class="compare-box-title">📱 Mobile</div>
+                    <span class="badge badge-green">13,4%</span>
+                </div>
+                <div class="compare-row"><span class="compare-row-label">Sesiones</span><span class="compare-row-value">24.597</span></div>
+                <div class="compare-row"><span class="compare-row-label">Leads</span><span class="compare-row-value">3.284</span></div>
+                <div class="compare-row"><span class="compare-row-label">Share sesiones</span><span class="compare-row-value">62,5%</span></div>
+                <div class="compare-row"><span class="compare-row-label">Share leads</span><span class="compare-row-value">71,6%</span></div>
+            </div>
+            <div class="compare-box">
+                <div class="compare-box-header">
+                    <div class="compare-box-title">🖥️ Desktop</div>
+                    <span class="badge badge-amber">8,8%</span>
+                </div>
+                <div class="compare-row"><span class="compare-row-label">Sesiones</span><span class="compare-row-value">14.370</span></div>
+                <div class="compare-row"><span class="compare-row-label">Leads</span><span class="compare-row-value">1.264</span></div>
+                <div class="compare-row"><span class="compare-row-label">Share sesiones</span><span class="compare-row-value">36,5%</span></div>
+                <div class="compare-row"><span class="compare-row-label">Share leads</span><span class="compare-row-value">27,6%</span></div>
+            </div>
+        </div>
+
+        <div class="insight-box">
+            <p class="insight-box-title">📊 Mobile convierte 1,52× más que desktop</p>
+            <p>Mobile tiene el 62% del tráfico pero genera el 72% de los leads. Sugiere que el formulario mobile funciona bien y que el journey en desktop pierde algo por el camino (posiblemente porque el usuario desktop investiga más antes de decidir).</p>
+        </div>
+
+        <h3 style="font-size:18px;font-weight:700;color:#001F78;margin:40px 0 10px;">Nuevos vs recurrentes</h3>
+        <div class="compare-grid">
+            <div class="compare-box">
+                <div class="compare-box-header">
+                    <div class="compare-box-title">🆕 Usuarios nuevos</div>
+                    <span class="badge badge-green">12,5%</span>
+                </div>
+                <div class="compare-row"><span class="compare-row-label">Sesiones</span><span class="compare-row-value">26.635</span></div>
+                <div class="compare-row"><span class="compare-row-label">Leads</span><span class="compare-row-value">3.317</span></div>
+                <div class="compare-row"><span class="compare-row-label">Share leads</span><span class="compare-row-value">72,4%</span></div>
+            </div>
+            <div class="compare-box">
+                <div class="compare-box-header">
+                    <div class="compare-box-title">🔁 Recurrentes</div>
+                    <span class="badge badge-amber">10,0%</span>
+                </div>
+                <div class="compare-row"><span class="compare-row-label">Sesiones</span><span class="compare-row-value">12.696</span></div>
+                <div class="compare-row"><span class="compare-row-label">Leads</span><span class="compare-row-value">1.267</span></div>
+                <div class="compare-row"><span class="compare-row-label">Share leads</span><span class="compare-row-value">27,6%</span></div>
+            </div>
+        </div>
+
+        <div class="insight-box">
+            <p class="insight-box-title">📊 El usuario convierte en caliente</p>
+            <p>Los nuevos convierten más que los recurrentes. 72,4% de los leads vienen de primera visita. La decisión no requiere maduración — se toma cuando el usuario encuentra el curso que busca.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ================== TIEMPO A LEAD ================== -->
+<section id="tiempo">
+    <div class="container">
+        <p class="section-eyebrow">Tiempo hasta conversión</p>
+        <h2 class="section-title">¿Cuánto tardan en convertir?</h2>
+        <p class="section-intro">De las 4.541 conversiones con dato de fecha, la gran mayoría se producen en la primera visita o a 1 día vista.</p>
+
+        <div class="timeline">
+            <div class="timeline-step highlight">
+                <div class="timeline-value">3.267</div>
+                <div class="timeline-label">El mismo día</div>
+                <div class="timeline-share">71,9% de las conversiones</div>
+            </div>
+            <div class="timeline-step">
+                <div class="timeline-value">531</div>
+                <div class="timeline-label">En 2-7 días</div>
+                <div class="timeline-share">11,7%</div>
+            </div>
+            <div class="timeline-step">
+                <div class="timeline-value">304</div>
+                <div class="timeline-label">En 8-30 días</div>
+                <div class="timeline-share">6,7%</div>
+            </div>
+            <div class="timeline-step">
+                <div class="timeline-value">439</div>
+                <div class="timeline-label">Más de 30 días</div>
+                <div class="timeline-share">9,7%</div>
+            </div>
+        </div>
+
+        <div class="insight-box success">
+            <p class="insight-box-title">✅ Ventana de decisión muy corta</p>
+            <p>Casi 3 de cada 4 leads se cierran el mismo día. Esto favorece inversión en canales que captan usuarios con intención clara (Ads con intención, email promocional) frente a campañas de awareness que requieren varios touchpoints.</p>
+        </div>
+
+        <div class="insight-box">
+            <p class="insight-box-title">📊 Pero hay un 10% que tarda más de 30 días</p>
+            <p>439 leads convirtieron 30+ días después de la primera visita (algunos hasta 500 días). Confirma la utilidad del remarketing y de mantener comunicación vía email con usuarios interesados.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ================== CURSOS ================== -->
+<section id="cursos" class="surface">
+    <div class="container">
+        <p class="section-eyebrow">Páginas y cursos</p>
+        <h2 class="section-title">Los cursos que más convierten</h2>
+        <p class="section-intro">Cursos donde la página finaliza la sesión con un lead. Ordenados por volumen de conversiones.</p>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Curso (última página)</th>
+                        <th class="num">Leads</th>
+                        <th class="num">Sesiones totales</th>
+                        <th class="num">Tasa</th>
+                    </tr>
+                </thead>
+                <tbody id="cursosTable"></tbody>
+            </table>
+        </div>
+
+        <div class="insight-box success">
+            <p class="insight-box-title">✅ "IA en el puesto de trabajo" es el curso top</p>
+            <p>196 leads y una tasa del 17,7%. Es también la página de entrada más potente (1.183 sesiones directas). Buena señal de que tiene posicionamiento SEO sólido y que la oferta es clara desde el primer scroll.</p>
+        </div>
+
+        <div class="insight-box success">
+            <p class="insight-box-title">✅ Cursos "certificables" convierten muchísimo más</p>
+            <p>Amadeus (42%), Monitor Tiempo Libre (40,9%), Inglés A1 (33,5%), Transporte Sanitario (32,3%). Todos cursos con certificación oficial o salida laboral concreta. El patrón claro: <strong>cursos con resultado tangible = alta conversión</strong>.</p>
+        </div>
+
+        <a href="rutas.html" class="link-card">
+            <div class="link-card-text">
+                <div class="link-card-title">Ver análisis detallado de rutas de conversión</div>
+                <div class="link-card-subtitle">Journeys completos, comportamiento comparador vs directo, fricciones por patrón</div>
+            </div>
+            <span class="link-card-arrow">→</span>
+        </a>
+    </div>
+</section>
+
+<!-- ================== GEOGRAFÍA ================== -->
+<section id="geografia">
+    <div class="container">
+        <p class="section-eyebrow">Geografía</p>
+        <h2 class="section-title">Por regiones</h2>
+        <p class="section-intro">Madrid concentra casi 1 de cada 3 leads. Canarias tiene la mejor tasa del ranking.</p>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Región</th>
+                        <th class="num">Sesiones</th>
+                        <th class="num">Leads</th>
+                        <th class="num">Tasa</th>
+                    </tr>
+                </thead>
+                <tbody id="regionesTable"></tbody>
+            </table>
+        </div>
+
+        <div class="insight-box">
+            <p class="insight-box-title">📊 Patrón geográfico</p>
+            <p>Las 4 regiones de cabecera (Madrid, Catalunya, Andalucía y C. Valenciana) suman el 67% del tráfico. Canarias destaca con 13,1% de tasa — probablemente por la presencia de campañas específicas de materias primas, transporte sanitario y centros (Aula Activa, Tedisa).</p>
+        </div>
+    </div>
+</section>
+
+<!-- ================== CAMPAÑAS ================== -->
+<section id="campanas" class="surface">
+    <div class="container">
+        <p class="section-eyebrow">Campañas de pago</p>
+        <h2 class="section-title">Top campañas UTM</h2>
+        <p class="section-intro">Excluyendo organic y directo. Ordenadas por volumen de sesiones.</p>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Campaña</th>
+                        <th class="num">Sesiones</th>
+                        <th class="num">Leads</th>
+                        <th class="num">Tasa</th>
+                    </tr>
+                </thead>
+                <tbody id="campanasTable"></tbody>
+            </table>
+        </div>
+
+        <div class="insight-box success">
+            <p class="insight-box-title">✅ La campaña de PMax de Transformación Digital funciona</p>
+            <p>534 sesiones y 78 leads con una tasa del 14,6% — por encima de la media de Google Ads. Es una PMax BOFU bien segmentada a Madrid+Sevilla. Escalable a otras regiones si existe oferta equivalente.</p>
+        </div>
+
+        <div class="insight-box success">
+            <p class="insight-box-title">✅ Los Meta Lead Forms son máquina</p>
+            <p>La mayoría de las campañas Meta leadform-lead-bofu superan el 20% de conversión. <strong>Amadeus: 48%</strong>. SAP Logística Madrid: 38%. Inglés Valladolid: mucho rendimiento. La estrategia Meta + Lead Ads BOFU por curso + región funciona.</p>
+        </div>
+
+        <div class="insight-box">
+            <p class="insight-box-title">📊 RRSS orgánico trae muy buen tráfico</p>
+            <p>330 sesiones y 83 leads — 25% de conversión. Merece la pena documentar qué posts orgánicos funcionan y replicar el enfoque.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ================== FRICCIONES ================== -->
+<section id="fricciones">
+    <div class="container">
+        <p class="section-eyebrow">Fricciones detectadas</p>
+        <h2 class="section-title">Páginas con tráfico que no convierten</h2>
+        <p class="section-intro">URLs con más de 100 sesiones de entrada y tasa de conversión menor al 3%. Son páginas que capturan atención pero no llevan al lead.</p>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Página de entrada</th>
+                        <th class="num">Sesiones</th>
+                        <th class="num">Leads</th>
+                        <th class="num">Tasa</th>
+                    </tr>
+                </thead>
+                <tbody id="friccionesTable"></tbody>
+            </table>
+        </div>
+
+        <div class="insight-box alert">
+            <p class="insight-box-title">⚠️ El blog y el glosario no conducen al curso</p>
+            <p>"Glosario materiales didácticos", "Diferencias educación formal", "Funciones ayudante cocina", "Técnicas de estudio"... posts que atraen muy bien por SEO pero <strong>no tienen enganche claro a una ficha de curso relacionada</strong>. Perdemos tráfico que podría convertir.</p>
+        </div>
+
+        <div class="insight-box alert">
+            <p class="insight-box-title">⚠️ Páginas de empresa (Ibecon, Aula Activa) no convierten</p>
+            <p>185 sesiones a /empresa/ibecon/ con solo 2,2% de tasa. 152 sesiones a /empresa/aula-activa/ con 0% de tasa. Son páginas corporativas que reciben tráfico pero no llevan a ninguna acción.</p>
+        </div>
+
+        <h3 style="font-size:18px;font-weight:700;color:#001F78;margin:40px 0 10px;">Páginas ganadoras</h3>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Página de entrada</th>
+                        <th class="num">Sesiones</th>
+                        <th class="num">Leads</th>
+                        <th class="num">Tasa</th>
+                    </tr>
+                </thead>
+                <tbody id="ganadorasTable"></tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- ================== RECOMENDACIONES ================== -->
+<section id="recomendaciones" class="surface">
+    <div class="container">
+        <p class="section-eyebrow">Plan de acción</p>
+        <h2 class="section-title">Recomendaciones priorizadas</h2>
+        <p class="section-intro">Acciones ordenadas por impacto potencial y urgencia.</p>
+
+        <div class="reco-list">
+            <div class="reco">
+                <div class="reco-num priority">1</div>
+                <div>
+                    <div class="reco-title">Escalar Meta Lead Ads por curso + región</div>
+                    <p class="reco-body">Meta es el canal de pago con mejor conversión (20%) — el doble que Google Ads. Las campañas "asp-[región]-[curso]-meta-leadform-lead-bofu" funcionan con tasas del 30-48%. Replicar el mismo formato con los cursos ganadores de la tabla (Amadeus, Monitor Tiempo Libre, Transporte Sanitario, Inglés A1) en todas las regiones donde haya oferta.</p>
+                    <span class="badge badge-red reco-tag">Prioridad alta</span>
+                    <span class="badge badge-green reco-tag">+impacto directo en leads</span>
+                </div>
+            </div>
+
+            <div class="reco">
+                <div class="reco-num priority">2</div>
+                <div>
+                    <div class="reco-title">Añadir CTA a curso en los posts del blog que traen tráfico</div>
+                    <p class="reco-body">Posts como "Funciones ayudante cocina" (168 ses, 0%), "Técnicas de estudio" (126, 0%) o "Diferencias educación formal" (132, 0%) tienen SEO pero no monetizan. Añadir box lateral o cierre con CTA al curso más afín + sidebar con 2-3 cursos relacionados. Si convierten un 5% extra, son ~40 leads/mes.</p>
+                    <span class="badge badge-red reco-tag">Prioridad alta</span>
+                    <span class="badge badge-blue reco-tag">Quick win</span>
+                </div>
+            </div>
+
+            <div class="reco">
+                <div class="reco-num priority">3</div>
+                <div>
+                    <div class="reco-title">Replicar la automatización email de EOI con otras bases</div>
+                    <p class="reco-body">Las campañas ia-eoi_traf_email (43%) e in-eoi_traf_email (37%) convierten espectacularmente. Identificar qué flujo es (bienvenida, promocional, reactivación) y aplicarlo a otras bases: antiguos alumnos, formularios abandonados, leads no contactados hace >30 días.</p>
+                    <span class="badge badge-red reco-tag">Prioridad alta</span>
+                    <span class="badge badge-green reco-tag">+impacto directo en leads</span>
+                </div>
+            </div>
+
+            <div class="reco">
+                <div class="reco-num important">4</div>
+                <div>
+                    <div class="reco-title">Revisar Google Ads: más presupuesto a los grupos BOFU, menos awareness</div>
+                    <p class="reco-body">Google Ads convierte al 10,2% — por debajo del tráfico directo. La PMax "transformación_digital" funciona (14,6%) pero hay que auditar qué grupos/keywords diluyen la media. Dado que el 72% convierte el mismo día, conviene concentrar presupuesto en keywords con intención alta ("curso de X", "certificación en Y") y reducir branding/awareness.</p>
+                    <span class="badge badge-amber reco-tag">Media</span>
+                </div>
+            </div>
+
+            <div class="reco">
+                <div class="reco-num important">5</div>
+                <div>
+                    <div class="reco-title">Aprovechar el tráfico de ChatGPT</div>
+                    <p class="reco-body">575 sesiones desde ChatGPT con 29,6% de conversión. No es un canal anecdótico. Trabajar el SEO semántico pensando en cómo formularía un usuario sus preguntas a un LLM ("¿qué curso necesito para trabajar en teleasistencia?"), publicar contenido que los LLMs puedan citar, y asegurarse de que los cursos top tienen schema.org completo.</p>
+                    <span class="badge badge-amber reco-tag">Media</span>
+                </div>
+            </div>
+
+            <div class="reco">
+                <div class="reco-num important">6</div>
+                <div>
+                    <div class="reco-title">Fortalecer la experiencia mobile — es donde está el lead</div>
+                    <p class="reco-body">El 72% de los leads vienen de mobile. Revisar el formulario mobile de los cursos top (carga rápida, botón sticky, autofill, número de campos mínimo). Pequeñas mejoras aquí impactan en la métrica principal del negocio.</p>
+                    <span class="badge badge-amber reco-tag">Media</span>
+                </div>
+            </div>
+
+            <div class="reco">
+                <div class="reco-num nice">7</div>
+                <div>
+                    <div class="reco-title">Repensar páginas /empresa/ corporativas</div>
+                    <p class="reco-body">/empresa/ibecon/ (185 ses, 2,2%) y /empresa/aula-activa/ (152 ses, 0%) reciben tráfico pero no convierten. O bien añadir cursos de esos centros embebidos en la página, o redirigir a un listado filtrado por centro.</p>
+                    <span class="badge badge-blue reco-tag">Nice to have</span>
+                </div>
+            </div>
+
+            <div class="reco">
+                <div class="reco-num nice">8</div>
+                <div>
+                    <div class="reco-title">Campaña de remarketing para el 10% que convierte +30 días</div>
+                    <p class="reco-body">439 leads tardaron más de 30 días en convertir. Es suficiente para justificar una campaña de remarketing segmentada por curso visitado + secuencia de email a 7/14/30 días con recordatorio de plazos y disponibilidad.</p>
+                    <span class="badge badge-blue reco-tag">Nice to have</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================== ANÁLISIS DETALLADO ================== -->
+<section class="detailed-analysis">
+    <div class="container">
+        <p class="section-eyebrow">Análisis</p>
+        <h2 class="section-title">¿Qué significan estos datos?</h2>
+
+        <div class="analysis-grid">
+            <div class="analysis-block">
+                <h3>📊 Resumen ejecutivo</h3>
+                <p>grupoaspasia.com tiene un modelo de conversión rápida: 72% de los leads cierran en el mismo día. Meta (20%) supera a Google Ads (10,2%) y Email + ChatGPT son las dos joyas ocultas (45% y 30%). Los cursos con certificación o salida laboral específica convierten hasta al 48%. El blog trae tráfico por SEO pero no lo canaliza.</p>
+            </div>
+
+            <div class="analysis-block">
+                <h3>🔍 Hallazgos clave</h3>
+                <ul class="findings-list">
+                    <li><strong>Email lidera:</strong> 45% conversión. Es el canal más eficiente del mes.</li>
+                    <li><strong>Meta &gt; Google Ads:</strong> 20% vs 10,2%. Los lead forms BOFU por curso+región son la fórmula.</li>
+                    <li><strong>ChatGPT es un canal real:</strong> 575 sesiones, 30% conversión. Sin optimización específica.</li>
+                    <li><strong>Mobile convierte 1,52× más que desktop:</strong> experiencia mobile bien resuelta.</li>
+                    <li><strong>72% decisión el mismo día:</strong> journey muy corto, favorece intención BOFU.</li>
+                    <li><strong>Ficha de curso es la reina:</strong> llegar directo a una ficha convierte al 17%, vs 0,5% si solo ves listados.</li>
+                </ul>
+            </div>
+
+            <div class="analysis-block">
+                <h3>⚠️ Problemas detectados</h3>
+                <p><strong>Google Ads por debajo del tráfico directo.</strong> Algo no cuadra: o el presupuesto está diluido en keywords poco intencionales o el mix campaña/landing no está afinado.<br><br><strong>El blog no monetiza.</strong> Posts con miles de sesiones que convierten al 0%. El contenido SEO trae tráfico pero el usuario no encuentra su camino al curso.<br><br><strong>Páginas /empresa/ corporativas</strong> reciben tráfico pero no llevan a acción.</p>
+            </div>
+
+            <div class="analysis-block">
+                <h3>✅ Qué escalar</h3>
+                <p><strong>Formato Meta Lead Ads</strong> replicado a todos los cursos ganadores en todas las regiones con oferta.<br><br><strong>Email marketing</strong>: el flujo EOI convierte al 40%+. Replicar con otras bases.<br><br><strong>Cursos con certificación o salida laboral concreta</strong> (Amadeus, Monitor Tiempo Libre, Transporte Sanitario): reforzar en SEO y Ads porque convierten mucho más.<br><br><strong>Contenido optimizado para LLMs</strong> para consolidar el canal ChatGPT.</p>
+            </div>
+
+            <div class="analysis-block full-width">
+                <h3>🎯 Próximos pasos (orden recomendado)</h3>
+                <ol class="action-list">
+                    <li><strong>Semana 1-2:</strong> Añadir CTAs a curso en el top 10 de posts del blog con tráfico. Impacto estimado: +30-50 leads/mes.</li>
+                    <li><strong>Semana 2-3:</strong> Escalar Meta Lead Ads con el top 5 de cursos ganadores a todas las regiones con centros. Impacto: +300-500 leads en 30 días.</li>
+                    <li><strong>Semana 3-4:</strong> Auditoría de Google Ads por grupo de anuncio y keyword. Reasignar presupuesto a BOFU de los cursos que mejor convierten orgánicamente.</li>
+                    <li><strong>Semana 4:</strong> Replicar flujo email EOI a nuevas bases (alumnos antiguos, formularios sin contacto).</li>
+                    <li><strong>Mes 2:</strong> Optimizar formulario mobile en cursos top y medir uplift. Revisar páginas /empresa/ corporativas.</li>
+                    <li><strong>Mes 2-3:</strong> Plan de contenidos optimizado para LLMs (respuesta a preguntas, schema.org, enlaces internos a cursos).</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p><strong>Informe de rendimiento · grupoaspasia.com</strong></p>
+    <p>Periodo: 1 – 22 abril 2026 · Fuente: BigQuery (dataset analytics_327000588) · Evento: generate_lead, chat_lead, phone_lead</p>
+    <p style="margin-top:10px;">Generado por agenciaSEO.eu · <a href="rutas.html">Análisis de rutas →</a></p>
+</footer>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+const DATA = {
+    canales: [
+        {nombre:'Google Organic', ses:23689, leads:2324, tasa:9.81, color:'#2B88D8'},
+        {nombre:'Google Ads',     ses:4875,  leads:496,  tasa:10.17, color:'#2B88D8'},
+        {nombre:'Directo',        ses:4640,  leads:571,  tasa:12.31, color:'#2B88D8'},
+        {nombre:'Meta / Facebook',ses:2906,  leads:582,  tasa:20.03, color:'#2B88D8'},
+        {nombre:'Bing Organic',   ses:789,   leads:66,   tasa:8.37,  color:'#2B88D8'},
+        {nombre:'ChatGPT',        ses:575,   leads:170,  tasa:29.57, color:'#2B88D8'},
+        {nombre:'Campañas Leads', ses:472,   leads:106,  tasa:22.46, color:'#2B88D8'},
+        {nombre:'Email',          ses:238,   leads:107,  tasa:44.96, color:'#2B88D8'},
+        {nombre:'Yahoo',          ses:212,   leads:21,   tasa:9.91,  color:'#2B88D8'},
+        {nombre:'Tutorsya',       ses:157,   leads:59,   tasa:37.58, color:'#2B88D8'},
+    ],
+    cursos: [
+        {nombre:'IA puesto de trabajo', leads:196, total:1108, tasa:17.7},
+        {nombre:'Docencia FP para el empleo', leads:108, total:474, tasa:22.8},
+        {nombre:'Inteligencia de negocio', leads:93, total:969, tasa:9.6},
+        {nombre:'Transporte sanitario', leads:81, total:251, tasa:32.3},
+        {nombre:'Gestión llamadas teleasistencia', leads:80, total:245, tasa:32.7},
+        {nombre:'Amadeus', leads:79, total:188, tasa:42.0},
+        {nombre:'Inglés A1', leads:78, total:233, tasa:33.5},
+        {nombre:'Monitor de tiempo libre', leads:72, total:176, tasa:40.9},
+        {nombre:'Actividades gestión administrativa', leads:66, total:198, tasa:33.3},
+        {nombre:'Atención sociosanitaria a domicilio', leads:58, total:241, tasa:24.1},
+        {nombre:'Agentes del cambio', leads:55, total:630, tasa:8.7},
+        {nombre:'Gestión ágil procesos administrativos/RRHH', leads:51, total:186, tasa:27.4},
+        {nombre:'Emisión de llamadas teleasistencia', leads:50, total:176, tasa:28.4},
+        {nombre:'Dermofarmacia y cosmetología', leads:49, total:176, tasa:27.8},
+        {nombre:'Atención sociosanitaria dependientes', leads:48, total:187, tasa:25.7},
+    ],
+    regiones: [
+        {nombre:'Madrid',                sesiones:13083, leads:1407, tasa:10.75},
+        {nombre:'Catalunya',             sesiones:5716,  leads:667,  tasa:11.67},
+        {nombre:'Andalucía',             sesiones:5437,  leads:611,  tasa:11.24},
+        {nombre:'C. Valenciana',         sesiones:3260,  leads:371,  tasa:11.38},
+        {nombre:'Castilla y León',       sesiones:1845,  leads:215,  tasa:11.65},
+        {nombre:'Canarias',              sesiones:1339,  leads:175,  tasa:13.07},
+        {nombre:'País Vasco',            sesiones:1452,  leads:169,  tasa:11.64},
+        {nombre:'Galicia',               sesiones:1078,  leads:126,  tasa:11.69},
+        {nombre:'Castilla-La Mancha',    sesiones:920,   leads:104,  tasa:11.30},
+        {nombre:'Asturias',              sesiones:625,   leads:74,   tasa:11.84},
+        {nombre:'Región de Murcia',      sesiones:615,   leads:66,   tasa:10.73},
+        {nombre:'Aragón',                sesiones:579,   leads:63,   tasa:10.88},
+    ],
+    campanas: [
+        {nombre:'asp-adc-madrid_sevilla-transformación_digital-google-pmax', ses:534, leads:78, tasa:14.6},
+        {nombre:'RRSS', ses:330, leads:83, tasa:25.2},
+        {nombre:'ia-eoi_traf_email', ses:148, leads:64, tasa:43.2},
+        {nombre:'asp-cyl-valladolid-servicios_auxiliares_estética-meta-leadform', ses:134, leads:11, tasa:8.2},
+        {nombre:'in-eoi_traf_email', ses:126, leads:47, tasa:37.3},
+        {nombre:'asp-mad-madrid-sap_logística-meta-leadform', ses:39, leads:15, tasa:38.5},
+        {nombre:'asp-can-canarias-materias_primas_alimentación-meta-leadform', ses:37, leads:13, tasa:35.1},
+        {nombre:'asp-adc-madrid-transformación_digital-meta-leadform', ses:32, leads:7, tasa:21.9},
+        {nombre:'asp-can-est-los_realejos-cocina_sana-meta-leadform', ses:32, leads:6, tasa:18.8},
+        {nombre:'asp-cat-catalunya-cursos_catalunya-meta-leadform', ses:32, leads:5, tasa:15.6},
+        {nombre:'asp-adc-andalucía-transformación_digital-meta-leadform', ses:31, leads:8, tasa:25.8},
+        {nombre:'asp-pva-bilbao-lengua_de_signos-meta-leadform', ses:29, leads:9, tasa:31.0},
+        {nombre:'asp-can-güímar-transporte_sanitario-meta-leadform', ses:29, leads:11, tasa:37.9},
+        {nombre:'asp-mad-madrid-gestión_llamadas_teleasistencia-meta-leadform', ses:25, leads:12, tasa:48.0},
+        {nombre:'asp-ast-asturias-alergias_alimentarias-meta-leadform', ses:22, leads:7, tasa:31.8},
+    ],
+    fricciones: [
+        {url:'/planes-de-mejora-de-empleo-del-sepe-quien-puede-apuntarse/', ses:273, leads:4, tasa:1.47},
+        {url:'/glosario/materiales-didacticos/', ses:257, leads:0, tasa:0.00},
+        {url:'/empresa/ibecon/', ses:185, leads:4, tasa:2.16},
+        {url:'/funciones-ayudante-cocina/', ses:168, leads:0, tasa:0.00},
+        {url:'/empresa/aula-activa/', ses:152, leads:0, tasa:0.00},
+        {url:'/metodos-educativos-populares-educacion-infantil/', ses:148, leads:0, tasa:0.00},
+        {url:'/diferencias-entre-educacion-formal-no-formal-e-informal/', ses:132, leads:0, tasa:0.00},
+        {url:'/tecnicas-estudio-como-pueden-ayudar-a-tu-formacion/', ses:126, leads:0, tasa:0.00},
+    ],
+    ganadoras: [
+        {url:'/cursos/ia-puesto-de-trabajo/', ses:1183, leads:209, tasa:17.67},
+        {url:'/cursos/agentes-del-cambio/', ses:658, leads:115, tasa:17.48},
+        {url:'/cursos/docencia-de-la-formacion-profesional-para-el-empleo/', ses:438, leads:94, tasa:21.46},
+        {url:'/cursos-en/madrid/', ses:284, leads:57, tasa:20.07},
+        {url:'/cursos/gestion-de-llamadas-de-teleasistencia/', ses:199, leads:54, tasa:27.14},
+        {url:'/cursos/transporte-sanitario/', ses:196, leads:49, tasa:25.00},
+        {url:'/cursos/ingles-a1/', ses:186, leads:50, tasa:26.88},
+        {url:'/cursos/amadeus/', ses:188, leads:72, tasa:38.30},
+    ]
+};
+
+// ========== RENDER CANALES ==========
+const maxSes = Math.max(...DATA.canales.map(c => c.ses));
+document.getElementById('channelList').innerHTML = DATA.canales.map(c => {
+    let badgeClass = c.tasa >= 15 ? 'badge-green' : c.tasa >= 10 ? 'badge-amber' : 'badge-red';
+    let fillClass = c.tasa >= 20 ? 'salmon' : '';
+    const w = (c.ses / maxSes * 100).toFixed(1);
+    return `
+    <div class="channel-row">
+        <div class="channel-name">${c.nombre}</div>
+        <div>
+            <div class="progress-bar"><div class="progress-fill ${fillClass}" style="width:${w}%"></div></div>
+        </div>
+        <div class="channel-stats">
+            <div class="channel-stat">
+                <div class="channel-stat-value">${c.ses.toLocaleString('es-ES')}</div>
+                <div class="channel-stat-label">Sesiones</div>
+            </div>
+            <div class="channel-stat">
+                <div class="channel-stat-value">${c.leads.toLocaleString('es-ES')}</div>
+                <div class="channel-stat-label">Leads</div>
+            </div>
+            <div class="channel-stat">
+                <div class="channel-stat-value"><span class="badge ${badgeClass}">${c.tasa.toFixed(1).replace('.',',')}%</span></div>
+                <div class="channel-stat-label">Tasa</div>
+            </div>
+        </div>
+    </div>`;
+}).join('');
+
+// ========== RENDER CURSOS ==========
+document.getElementById('cursosTable').innerHTML = DATA.cursos.map(c => {
+    let badgeClass = c.tasa >= 25 ? 'badge-green' : c.tasa >= 15 ? 'badge-amber' : 'badge-red';
+    return `<tr>
+        <td>${c.nombre}</td>
+        <td class="num highlight">${c.leads}</td>
+        <td class="num">${c.total.toLocaleString('es-ES')}</td>
+        <td class="num"><span class="badge ${badgeClass}">${c.tasa.toFixed(1).replace('.',',')}%</span></td>
+    </tr>`;
+}).join('');
+
+// ========== RENDER REGIONES ==========
+document.getElementById('regionesTable').innerHTML = DATA.regiones.map(r => {
+    let badgeClass = r.tasa >= 12 ? 'badge-green' : r.tasa >= 10 ? 'badge-amber' : 'badge-red';
+    return `<tr>
+        <td>${r.nombre}</td>
+        <td class="num">${r.sesiones.toLocaleString('es-ES')}</td>
+        <td class="num highlight">${r.leads.toLocaleString('es-ES')}</td>
+        <td class="num"><span class="badge ${badgeClass}">${r.tasa.toFixed(1).replace('.',',')}%</span></td>
+    </tr>`;
+}).join('');
+
+// ========== RENDER CAMPAÑAS ==========
+document.getElementById('campanasTable').innerHTML = DATA.campanas.map(c => {
+    let badgeClass = c.tasa >= 25 ? 'badge-green' : c.tasa >= 15 ? 'badge-amber' : 'badge-red';
+    const short = c.nombre.length > 60 ? c.nombre.substring(0, 60) + '…' : c.nombre;
+    return `<tr>
+        <td style="font-size:12px;color:#3a4a7a;font-family:monospace;">${short}</td>
+        <td class="num">${c.ses.toLocaleString('es-ES')}</td>
+        <td class="num highlight">${c.leads}</td>
+        <td class="num"><span class="badge ${badgeClass}">${c.tasa.toFixed(1).replace('.',',')}%</span></td>
+    </tr>`;
+}).join('');
+
+// ========== RENDER FRICCIONES ==========
+document.getElementById('friccionesTable').innerHTML = DATA.fricciones.map(f => {
+    return `<tr>
+        <td style="font-family:monospace;font-size:12px;">${f.url}</td>
+        <td class="num">${f.ses}</td>
+        <td class="num">${f.leads}</td>
+        <td class="num"><span class="badge badge-red">${f.tasa.toFixed(2).replace('.',',')}%</span></td>
+    </tr>`;
+}).join('');
+
+// ========== RENDER GANADORAS ==========
+document.getElementById('ganadorasTable').innerHTML = DATA.ganadoras.map(f => {
+    let badgeClass = f.tasa >= 25 ? 'badge-green' : 'badge-amber';
+    return `<tr>
+        <td style="font-family:monospace;font-size:12px;">${f.url}</td>
+        <td class="num">${f.ses.toLocaleString('es-ES')}</td>
+        <td class="num highlight">${f.leads}</td>
+        <td class="num"><span class="badge ${badgeClass}">${f.tasa.toFixed(1).replace('.',',')}%</span></td>
+    </tr>`;
+}).join('');
+
+// ========== NAV SCROLL SPY ==========
+const navLinks = document.querySelectorAll('.nav-links a');
+const sections = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+        const top = s.offsetTop - 120;
+        if (window.scrollY >= top) current = s.id;
+    });
+    navLinks.forEach(l => {
+        l.classList.remove('active');
+        if (l.getAttribute('href') === '#' + current) l.classList.add('active');
+    });
+    // scroll top
+    document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 400);
+});
+</script>
+
+</body>
+</html>

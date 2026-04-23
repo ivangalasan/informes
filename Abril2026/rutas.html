@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rutas de conversión · grupoaspasia.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+    font-family: 'Inter', sans-serif;
+    background: #FFFFFF;
+    color: #3a4a7a;
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* NAV */
+nav {
+    position: sticky; top: 0;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0,31,120,0.18);
+    z-index: 100;
+}
+.nav-inner {
+    max-width: 1180px; margin: 0 auto;
+    padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+}
+.nav-brand { font-weight:700; color:#001F78; font-size:14px; letter-spacing:-0.01em; }
+.nav-back {
+    color:#7685AF; text-decoration:none; font-size:13px; font-weight:500;
+    padding:6px 12px; border-radius:6px; transition:all .15s;
+}
+.nav-back:hover { color:#001F78; background:#F3F8FF; }
+.nav-cta {
+    background:#001F78; color:#fff; text-decoration:none;
+    padding:8px 14px; border-radius:20px; font-size:12px; font-weight:600;
+    transition:all .15s;
+}
+.nav-cta:hover { background:#FF7F7A; }
+
+/* HERO */
+.hero {
+    background: #001F78;
+    background-image:
+        radial-gradient(circle at 20% 20%, rgba(43,136,216,0.35) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(255,127,122,0.18) 0%, transparent 45%);
+    color: #fff;
+    padding: 70px 24px 80px;
+}
+.hero-inner { max-width: 1180px; margin: 0 auto; }
+.hero-eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: #FF7F7A; margin-bottom: 14px;
+}
+.hero-title {
+    font-size: clamp(28px, 4.5vw, 44px);
+    font-weight: 700; line-height: 1.1;
+    letter-spacing: -0.03em; margin-bottom: 10px;
+}
+.hero-subtitle {
+    color: rgba(255,255,255,0.65);
+    font-size: 15px; margin-bottom: 40px;
+    max-width: 700px;
+}
+.hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+.hero-stat {
+    border-top: 1px solid rgba(255,255,255,0.15);
+    padding-top: 16px;
+}
+.hero-stat-value {
+    font-size: 28px; font-weight: 700; color: #FF7F7A;
+    letter-spacing: -0.02em; line-height: 1.1;
+}
+.hero-stat-label {
+    font-size: 11px; color: rgba(255,255,255,0.65);
+    margin-top: 4px; letter-spacing: 0.02em;
+}
+@media (max-width: 768px) {
+    .hero-stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+section {
+    padding: 60px 24px;
+    border-bottom: 1px solid rgba(0,31,120,0.08);
+}
+section.surface { background: #F3F8FF; }
+.container { max-width: 1180px; margin: 0 auto; }
+.section-eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: #2B88D8; margin-bottom: 10px;
+}
+.section-title {
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 700; color: #001F78;
+    letter-spacing: -0.02em; line-height: 1.2;
+    margin-bottom: 14px;
+}
+.section-intro {
+    color: #3a4a7a; font-size: 15px;
+    max-width: 780px; margin-bottom: 32px;
+}
+.section-hint {
+    display:inline-block;
+    background:#FFF0EF; color:#c0392b;
+    font-size:11px; font-weight:600;
+    padding:4px 10px; border-radius:20px;
+    letter-spacing:0.02em;
+    margin-bottom:20px;
+}
+
+/* ENGAGEMENT */
+.eng-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; margin-top:20px; }
+.eng-box { background:#fff; border:1px solid rgba(0,31,120,0.10); border-radius:12px; padding:26px; }
+.eng-header {
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:22px; padding-bottom:14px;
+    border-bottom:1px solid rgba(0,31,120,0.10);
+}
+.eng-title { font-size:14px; font-weight:600; color:#001F78; }
+.eng-row { display:grid; grid-template-columns:1fr auto; padding:10px 0; border-bottom:1px solid rgba(0,31,120,0.06); }
+.eng-row:last-child { border-bottom:none; }
+.eng-row-label { color:#7685AF; font-size:13px; }
+.eng-row-value { font-weight:700; color:#001F78; font-size:16px; letter-spacing:-0.01em; }
+@media (max-width: 768px) { .eng-grid { grid-template-columns: 1fr; } }
+
+/* TOUCH POINTS */
+.touch-grid { display:grid; gap:10px; margin-top:24px; }
+.touch-row {
+    display:grid; grid-template-columns:140px 1fr 1fr 60px;
+    gap:16px; align-items:center;
+    padding:14px 20px;
+    background:#fff; border:1px solid rgba(0,31,120,0.10);
+    border-radius:12px;
+    cursor: pointer;
+    transition: all .15s;
+}
+.touch-row:hover { border-color: rgba(0,31,120,0.25); background:#F3F8FF; }
+.touch-label { font-size:13px; font-weight:600; color:#001F78; }
+.touch-bars { display:grid; gap:6px; }
+.touch-bar-wrap { display:grid; grid-template-columns:45px 1fr 50px; gap:10px; align-items:center; }
+.touch-bar-label { font-size:10px; color:#7685AF; letter-spacing:0.02em; text-transform:uppercase; font-weight:600; }
+.touch-bar-track { background:#DDEFFF; border-radius:3px; height:6px; overflow:hidden; }
+.touch-bar-fill { height:100%; border-radius:3px; transition:width .5s; }
+.touch-bar-fill.conv { background:#FF7F7A; }
+.touch-bar-fill.noconv { background:#7685AF; }
+.touch-bar-value { font-size:11px; color:#3a4a7a; text-align:right; font-weight:600; }
+.touch-delta { text-align:center; font-weight:700; font-size:12px; padding:6px 10px; border-radius:20px; }
+.touch-delta.pos { background:#e8f5ee; color:#1a7a45; }
+.touch-delta.neg { background:#FFF0EF; color:#c0392b; }
+.touch-delta.neutral { background:#f0f0f0; color:#616268; }
+@media (max-width: 768px) {
+    .touch-row { grid-template-columns: 1fr; }
+}
+
+/* BEHAVIOR CARDS */
+.behavior-grid {
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    gap:14px; margin-top:24px;
+}
+.behavior-card {
+    background:#fff; border:1px solid rgba(0,31,120,0.10);
+    border-radius:12px; padding:20px;
+    cursor:pointer; transition:all .2s;
+    position:relative;
+}
+.behavior-card:hover { border-color:rgba(0,31,120,0.25); transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,31,120,0.06); }
+.behavior-card.winner::before {
+    content:'★ GANADOR';
+    position:absolute; top:12px; right:12px;
+    font-size:10px; font-weight:700;
+    color:#FF7F7A; letter-spacing:0.05em;
+}
+.behavior-card.loser::before {
+    content:'⚠ PÉRDIDA';
+    position:absolute; top:12px; right:12px;
+    font-size:10px; font-weight:700;
+    color:#c0392b; letter-spacing:0.05em;
+}
+.behavior-name { font-size:13px; font-weight:600; color:#001F78; margin-bottom:16px; }
+.behavior-tasa { font-size:32px; font-weight:700; color:#001F78; letter-spacing:-0.02em; line-height:1; }
+.behavior-tasa.high { color:#FF7F7A; }
+.behavior-meta { font-size:12px; color:#7685AF; margin-top:8px; }
+.behavior-bar { margin-top:14px; background:#DDEFFF; height:4px; border-radius:2px; overflow:hidden; }
+.behavior-bar-fill { height:100%; background:#2B88D8; border-radius:2px; }
+.behavior-bar-fill.high { background:#FF7F7A; }
+.behavior-click-hint {
+    margin-top:12px; font-size:10px; color:#2B88D8;
+    letter-spacing:0.05em; font-weight:600; text-transform:uppercase;
+}
+
+/* CONTROLS */
+.controls { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:18px; }
+.filter-btn {
+    background:transparent; border:1px solid rgba(0,31,120,0.18);
+    color:#7685AF; padding:8px 16px; border-radius:20px;
+    font-family:inherit; font-size:12px; font-weight:600;
+    cursor:pointer; letter-spacing:0.02em; transition:all .15s;
+}
+.filter-btn:hover { background:#F3F8FF; color:#001F78; }
+.filter-btn.active { background:#001F78; color:#fff; border-color:#001F78; }
+
+/* TABLE */
+.table-wrap { overflow-x:auto; border-radius:12px; border:1px solid rgba(0,31,120,0.10); background:#fff; }
+table { width:100%; border-collapse:collapse; }
+thead th {
+    font-size:11px; font-weight:600;
+    letter-spacing:0.07em; text-transform:uppercase;
+    color:#7685AF; padding:14px 16px; text-align:left;
+    border-bottom:2px solid rgba(0,31,120,0.18);
+    cursor:pointer; user-select:none; white-space:nowrap;
+}
+thead th:hover { color:#001F78; }
+thead th.num { text-align:right; }
+thead th.sort-asc::after { content:' ↑'; color:#2B88D8; }
+thead th.sort-desc::after { content:' ↓'; color:#2B88D8; }
+tbody td { font-size:13px; color:#3a4a7a; padding:14px 16px; border-bottom:1px solid rgba(0,31,120,0.08); }
+tbody tr { cursor:pointer; transition:background .15s; }
+tbody tr:hover { background:#F3F8FF; }
+tbody tr:last-child td { border-bottom:none; }
+td.num { text-align:right; }
+td.highlight { font-weight:700; color:#001F78; font-size:14px; }
+
+/* BADGES */
+.badge { display:inline-block; padding:3px 10px; border-radius:20px; font-size:12px; font-weight:600; }
+.badge-green { background:#e8f5ee; color:#1a7a45; }
+.badge-amber { background:#fff8e1; color:#856404; }
+.badge-red   { background:#FFF0EF; color:#c0392b; }
+.badge-blue  { background:#DDEFFF; color:#001F78; }
+
+/* JOURNEY PATTERN */
+.journey-pattern { display:inline-flex; align-items:center; gap:6px; flex-wrap:wrap; }
+.journey-step {
+    background:#F3F8FF; color:#001F78;
+    padding:3px 10px; border-radius:6px;
+    font-size:11px; font-weight:500; white-space:nowrap;
+}
+.journey-step.ficha { background:#FFF0EF; color:#c0392b; }
+.journey-step.home { background:#e8f5ee; color:#1a7a45; }
+.journey-arrow { color:#7685AF; font-size:10px; }
+
+/* INSIGHT BOX */
+.insight-box {
+    background:#F3F8FF; border-left:3px solid #2B88D8;
+    border-radius:0 10px 10px 0; padding:16px 20px; margin:20px 0;
+}
+.insight-box.alert { background:#FFF0EF; border-left-color:#FF7F7A; }
+.insight-box.success { background:#e8f5ee; border-left-color:#1a7a45; }
+.insight-box-title { font-weight:600; color:#001F78; font-size:14px; margin-bottom:4px; }
+.insight-box p { font-size:14px; color:#3a4a7a; }
+
+/* SIDE PANEL */
+.overlay {
+    position:fixed; top:0; left:0;
+    width:100%; height:100%;
+    background:rgba(0,31,120,0.1);
+    opacity:0; visibility:hidden;
+    transition:all .25s; z-index:999;
+}
+.overlay.visible { opacity:1; visibility:visible; }
+.side-panel {
+    position:fixed; top:0; right:-640px;
+    width:600px; max-width:94vw;
+    height:100vh; background:#fff;
+    border-left:1px solid rgba(0,31,120,0.18);
+    box-shadow:-4px 0 24px rgba(0,31,120,0.08);
+    transition:right .3s ease;
+    z-index:1000;
+    display:flex; flex-direction:column;
+}
+.side-panel.open { right:0; }
+.panel-header {
+    padding:20px 24px;
+    border-bottom:1px solid rgba(0,31,120,0.10);
+    background:#fff;
+    flex-shrink:0;
+}
+.panel-header-top {
+    display:flex; justify-content:space-between; align-items:flex-start;
+    margin-bottom:6px;
+}
+.panel-badge {
+    font-size:10px; font-weight:700; letter-spacing:0.1em;
+    color:#2B88D8; text-transform:uppercase;
+    margin-bottom:8px;
+}
+.panel-title { font-size:20px; font-weight:700; color:#001F78; letter-spacing:-0.01em; line-height:1.3; }
+.panel-subtitle { font-size:13px; color:#7685AF; margin-top:4px; }
+.panel-close {
+    background:none; border:none; cursor:pointer;
+    color:#7685AF; font-size:26px; padding:0; line-height:1;
+    flex-shrink:0; margin-left:16px;
+}
+.panel-close:hover { color:#001F78; }
+
+.panel-content {
+    flex:1; overflow-y:auto; padding:0;
+    background:#F3F8FF;
+}
+
+.panel-kpis {
+    display:grid; grid-template-columns:repeat(3,1fr); gap:14px;
+    padding:22px 24px;
+    background:#fff;
+    border-bottom:1px solid rgba(0,31,120,0.08);
+}
+.panel-kpi {
+    border-left:3px solid #2B88D8;
+    padding-left:12px;
+}
+.panel-kpi.salmon { border-left-color:#FF7F7A; }
+.panel-kpi-label {
+    font-size:10px; color:#7685AF;
+    text-transform:uppercase; letter-spacing:0.08em;
+    font-weight:600; margin-bottom:4px;
+}
+.panel-kpi-value { font-size:22px; font-weight:700; color:#001F78; letter-spacing:-0.02em; line-height:1; }
+.panel-kpi.salmon .panel-kpi-value { color:#FF7F7A; }
+
+.panel-block {
+    background:#fff;
+    margin:10px 14px;
+    border-radius:12px;
+    padding:18px 20px;
+    border:1px solid rgba(0,31,120,0.08);
+}
+.panel-block-title {
+    font-size:12px; font-weight:700;
+    color:#001F78; letter-spacing:0.02em;
+    margin-bottom:12px;
+    display:flex; justify-content:space-between; align-items:center;
+}
+.panel-block-hint {
+    font-size:10px; color:#7685AF;
+    font-weight:400; text-transform:uppercase;
+    letter-spacing:0.06em;
+}
+
+.panel-url-list { display:flex; flex-direction:column; gap:2px; }
+.panel-url-item {
+    padding:10px 12px; background:#F3F8FF;
+    border-radius:8px;
+    display:grid; grid-template-columns:1fr auto auto;
+    gap:12px; align-items:center;
+    cursor:pointer; transition:background .15s;
+}
+.panel-url-item:hover { background:#DDEFFF; }
+.panel-url-path {
+    font-family: ui-monospace, monospace;
+    font-size:11px; color:#001F78;
+    word-break:break-all;
+    font-weight:500;
+    line-height:1.4;
+}
+.panel-url-stats {
+    display:flex; gap:8px; align-items:center;
+    font-size:11px;
+    white-space:nowrap;
+}
+.panel-url-stat { color:#7685AF; }
+.panel-url-stat strong { color:#001F78; font-weight:700; }
+.panel-url-ratio {
+    font-size:11px; font-weight:700;
+    padding:3px 8px; border-radius:10px;
+    min-width:42px; text-align:center;
+}
+
+.panel-channel-row {
+    display:grid; grid-template-columns:1fr auto;
+    gap:14px; align-items:center;
+    padding:8px 0;
+    border-bottom:1px solid rgba(0,31,120,0.06);
+}
+.panel-channel-row:last-child { border-bottom:none; }
+.panel-channel-name {
+    font-size:12px; color:#001F78; font-weight:500;
+    font-family:ui-monospace, monospace;
+}
+.panel-channel-stats {
+    display:flex; gap:10px; align-items:center;
+    font-size:11px; color:#7685AF;
+}
+.panel-channel-stats strong { color:#001F78; font-weight:700; }
+
+.panel-mini-bar {
+    background:#DDEFFF; height:4px; border-radius:2px;
+    overflow:hidden; margin-top:4px;
+}
+.panel-mini-bar-fill { height:100%; background:#2B88D8; border-radius:2px; }
+.panel-mini-bar-fill.salmon { background:#FF7F7A; }
+
+.panel-interpretation {
+    background:#fff; margin:14px; padding:16px 20px;
+    border-radius:12px;
+    border-left:3px solid #2B88D8;
+}
+.panel-interpretation.success { border-left-color:#1a7a45; background:#e8f5ee; }
+.panel-interpretation.warn { border-left-color:#FF7F7A; background:#FFF0EF; }
+.panel-interpretation-title { font-size:12px; font-weight:700; color:#001F78; margin-bottom:4px; }
+.panel-interpretation p { font-size:13px; color:#3a4a7a; line-height:1.6; }
+
+.panel-empty {
+    text-align:center; padding:40px 24px;
+    color:#7685AF; font-size:13px;
+}
+
+/* FOOTER */
+footer {
+    background:#001F78;
+    color:rgba(255,255,255,0.4);
+    padding:36px 24px;
+    font-size:12px; text-align:center;
+}
+footer strong { color:rgba(255,255,255,0.75); font-weight:500; }
+footer a { color:#FF7F7A; text-decoration:none; font-weight:500; }
+footer a:hover { text-decoration:underline; }
+
+/* SCROLLBAR in panel */
+.panel-content::-webkit-scrollbar { width:8px; }
+.panel-content::-webkit-scrollbar-track { background:transparent; }
+.panel-content::-webkit-scrollbar-thumb { background:rgba(0,31,120,0.15); border-radius:4px; }
+.panel-content::-webkit-scrollbar-thumb:hover { background:rgba(0,31,120,0.3); }
+
+</style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <div class="nav-brand">grupoaspasia.com</div>
+        <div style="display:flex; gap:12px; align-items:center;">
+            <a class="nav-back" href="index.html">← Principal</a>
+            <a class="nav-cta" href="multitoque.html">Multi-toque →</a>
+        </div>
+    </div>
+</nav>
+
+<header class="hero">
+    <div class="hero-inner">
+        <p class="hero-eyebrow">Análisis de rutas</p>
+        <h1 class="hero-title">Rutas de conversión</h1>
+        <p class="hero-subtitle">Cómo se comporta el usuario antes de generar un lead. Haz clic en cualquier elemento para ver sus URLs, canales y estadísticas en detalle.</p>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="hero-stat-value">96,9%</div>
+                <div class="hero-stat-label">DE CONVERTIDOS PASA POR UNA FICHA</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-value">37,7%</div>
+                <div class="hero-stat-label">CONVIERTE EL "COMPARADOR INTENSIVO"</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-value">3 vs 1</div>
+                <div class="hero-stat-label">PÁGINAS MEDIANAS: CONV vs NO CONV</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-value">203s</div>
+                <div class="hero-stat-label">MEDIANA DE DURACIÓN (CONV)</div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ENGAGEMENT -->
+<section>
+    <div class="container">
+        <p class="section-eyebrow">Engagement</p>
+        <h2 class="section-title">Convertidos vs no convertidos</h2>
+        <p class="section-intro">La diferencia es brutal. Quien no convierte, en mediana, se va en 0 segundos con 1 sola página. Quien convierte pasa 3,4 minutos leyendo 3 páginas.</p>
+        <div class="eng-grid">
+            <div class="eng-box">
+                <div class="eng-header">
+                    <div class="eng-title">🎯 Sesiones que convierten</div>
+                    <span class="badge badge-green">4.584 sesiones</span>
+                </div>
+                <div class="eng-row"><span class="eng-row-label">Duración mediana</span><span class="eng-row-value">203 s (3m 23s)</span></div>
+                <div class="eng-row"><span class="eng-row-label">Duración media</span><span class="eng-row-value">418 s</span></div>
+                <div class="eng-row"><span class="eng-row-label">Páginas mediana</span><span class="eng-row-value">3</span></div>
+                <div class="eng-row"><span class="eng-row-label">Páginas media</span><span class="eng-row-value">4,9</span></div>
+            </div>
+            <div class="eng-box">
+                <div class="eng-header">
+                    <div class="eng-title">❌ Sesiones que NO convierten</div>
+                    <span class="badge badge-red">34.747 sesiones</span>
+                </div>
+                <div class="eng-row"><span class="eng-row-label">Duración mediana</span><span class="eng-row-value">0 s</span></div>
+                <div class="eng-row"><span class="eng-row-label">Duración media</span><span class="eng-row-value">121 s</span></div>
+                <div class="eng-row"><span class="eng-row-label">Páginas mediana</span><span class="eng-row-value">1</span></div>
+                <div class="eng-row"><span class="eng-row-label">Páginas media</span><span class="eng-row-value">2,3</span></div>
+            </div>
+        </div>
+        <div class="insight-box alert">
+            <p class="insight-box-title">⚠️ Mediana de duración = 0s en no convertidos</p>
+            <p>La mitad de las sesiones que no convierten terminan sin tiempo medible. Son rebotes instantáneos: el usuario abre la página, mira 2 segundos y cierra.</p>
+        </div>
+    </div>
+</section>
+
+<!-- TOUCH POINTS -->
+<section class="surface">
+    <div class="container">
+        <p class="section-eyebrow">Touch points</p>
+        <h2 class="section-title">Qué tipo de página toca cada sesión</h2>
+        <p class="section-intro">% de sesiones que pasan al menos una vez por cada tipo de página. Comparamos quien convierte vs quien no.</p>
+        <span class="section-hint">👆 Haz clic en un tipo para ver URLs concretas</span>
+        <div class="touch-grid" id="touchGrid"></div>
+        <div class="insight-box success">
+            <p class="insight-box-title">✅ La ficha de curso es la puerta de entrada al lead</p>
+            <p><strong>96,9% de los que convierten pasan por al menos una ficha de curso</strong>. En los que no convierten, solo el 48,5%. El delta de +48 puntos es la señal más clara de todo el informe.</p>
+        </div>
+    </div>
+</section>
+
+<!-- BEHAVIORS -->
+<section>
+    <div class="container">
+        <p class="section-eyebrow">Tipos de comportamiento</p>
+        <h2 class="section-title">Perfiles de usuario en el sitio</h2>
+        <p class="section-intro">Clasificamos cada sesión según su patrón de navegación.</p>
+        <span class="section-hint">👆 Haz clic en cualquier perfil para ver sus URLs, canales y estadísticas</span>
+        <div class="behavior-grid" id="behaviorGrid"></div>
+    </div>
+</section>
+
+<!-- JOURNEYS -->
+<section id="journeys" class="surface">
+    <div class="container">
+        <p class="section-eyebrow">Journeys</p>
+        <h2 class="section-title">Patrones de navegación</h2>
+        <p class="section-intro">Top 40 journeys (rutas simplificadas por categoría de página). Filtra, ordena y haz clic en una fila para ver los detalles completos.</p>
+        <span class="section-hint">👆 Haz clic en una fila para ver URLs concretas que siguieron ese patrón</span>
+        <div class="controls">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <button class="filter-btn" data-filter="high">Mejor conversión (&gt;20%)</button>
+            <button class="filter-btn" data-filter="low">Baja conversión (&lt;5%)</button>
+            <button class="filter-btn" data-filter="volume">Más volumen</button>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th data-sort="patron">Patrón</th>
+                        <th class="num" data-sort="total">Sesiones</th>
+                        <th class="num" data-sort="con_conv">Leads</th>
+                        <th class="num sort-desc" data-sort="tasa">Tasa</th>
+                    </tr>
+                </thead>
+                <tbody id="journeysTable"></tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- URLs -->
+<section>
+    <div class="container">
+        <p class="section-eyebrow">Drill-down</p>
+        <h2 class="section-title">URLs más visitadas por categoría</h2>
+        <p class="section-intro">Top URLs dentro de cada categoría de página, con presencia en sesiones convertidas y no convertidas.</p>
+        <span class="section-hint">👆 Haz clic en una URL para ver su detalle completo</span>
+        <div class="controls">
+            <button class="filter-btn active" data-cat="Ficha curso">Ficha curso</button>
+            <button class="filter-btn" data-cat="Listado cursos">Listado cursos</button>
+            <button class="filter-btn" data-cat="Otro">Páginas "Otro"</button>
+            <button class="filter-btn" data-cat="Centros">Centros</button>
+            <button class="filter-btn" data-cat="Home">Home</button>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>URL</th>
+                        <th class="num">Apariciones</th>
+                        <th class="num">En convertidas</th>
+                        <th class="num">Como landing</th>
+                        <th class="num">Ratio conv.</th>
+                    </tr>
+                </thead>
+                <tbody id="urlsTable"></tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- CONCLUSIONES -->
+<section class="surface">
+    <div class="container">
+        <p class="section-eyebrow">Conclusiones</p>
+        <h2 class="section-title">Qué aprendemos de las rutas</h2>
+        <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:20px; margin-top:30px;" class="concl-grid">
+            <div style="background:#fff; border:1px solid rgba(0,31,120,0.1); border-radius:12px; padding:26px;">
+                <h3 style="font-size:15px; font-weight:700; color:#001F78; margin-bottom:12px;">🎯 La receta del lead</h3>
+                <p style="font-size:14px; color:#3a4a7a;">
+                    <strong>Paso 1:</strong> llegar al sitio con intención (SEO ficha, Ads, Meta Lead Ads).<br>
+                    <strong>Paso 2:</strong> aterrizar en una ficha de curso o llegar a una vía listado.<br>
+                    <strong>Paso 3:</strong> comparar 2-3 cursos similares (es donde se decide).<br>
+                    <strong>Paso 4:</strong> formulario en la ficha elegida. Cierre.
+                </p>
+            </div>
+            <div style="background:#fff; border:1px solid rgba(0,31,120,0.1); border-radius:12px; padding:26px;">
+                <h3 style="font-size:15px; font-weight:700; color:#001F78; margin-bottom:12px;">🚪 Dónde perdemos al usuario</h3>
+                <p style="font-size:14px; color:#3a4a7a;">
+                    <strong>No entra a ninguna ficha:</strong> 51% de los que no convierten nunca pisan una ficha.<br>
+                    <strong>Rebota al primer scroll:</strong> mediana 0s en los no convertidos.<br>
+                    <strong>Se queda en "Otro":</strong> blog, glosario, páginas corporativas sin CTA a curso.<br>
+                    <strong>Solo navega listados:</strong> 1.716 sesiones sin entrar a ninguna ficha.
+                </p>
+            </div>
+            <div style="background:#fff; border:1px solid rgba(0,31,120,0.1); border-radius:12px; padding:26px; grid-column:1/-1;">
+                <h3 style="font-size:15px; font-weight:700; color:#001F78; margin-bottom:12px;">🎯 Acciones recomendadas desde el análisis de rutas</h3>
+                <ol style="padding-left:20px; font-size:14px; color:#3a4a7a;">
+                    <li style="padding:6px 0;"><strong>Widget "Cursos similares" en toda ficha:</strong> el patrón comparador convierte al 19-38%. Facilitar el salto entre fichas es el mayor levier.</li>
+                    <li style="padding:6px 0;"><strong>CTAs destacados en listados:</strong> tras cada bloque de 6-8 cursos, incluir un CTA "Hablar con un asesor" o "Descargar catálogo".</li>
+                    <li style="padding:6px 0;"><strong>Posts de blog con enlace a curso afín en el primer scroll:</strong> no solo al final.</li>
+                    <li style="padding:6px 0;"><strong>Páginas /destinatario/ y /tema-cursos/ bien enlazadas:</strong> aparecen en sesiones convertidas. Verificar que los enlaces a cursos concretos son visibles arriba del todo.</li>
+                    <li style="padding:6px 0;"><strong>Revisar /empresa/ibecon/ y /empresa/aula-activa/:</strong> 470+ sesiones combinadas y casi 0 conversión.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p><strong>Informe de rendimiento · grupoaspasia.com</strong></p>
+    <p>Periodo: 1 – 22 abril 2026 · Fuente: BigQuery · Subpágina: análisis de rutas de conversión</p>
+    <p style="margin-top:10px;"><a href="index.html">← Volver al informe principal</a></p>
+</footer>
+
+<div class="overlay" id="overlay"></div>
+<div class="side-panel" id="sidePanel">
+    <div class="panel-header">
+        <div class="panel-header-top">
+            <div>
+                <div class="panel-badge" id="panelBadge">DETALLE</div>
+                <div class="panel-title" id="panelTitle">&nbsp;</div>
+                <div class="panel-subtitle" id="panelSubtitle"></div>
+            </div>
+            <button class="panel-close" id="panelClose" title="Cerrar (Esc)">×</button>
+        </div>
+    </div>
+    <div class="panel-content" id="panelContent"></div>
+</div>
+
+<script>
+const PANEL_DATA = {"behaviors":{"Directo a ficha":{"total_conv":1915,"total_noconv":9133,"tasa":17.3,"duracion_mediana_conv":86.0,"paginas_mediana_conv":1.0,"duracion_mediana_noconv":0.0,"paginas_mediana_noconv":1.0,"top_primeras":[{"url":"/cursos/ia-puesto-de-trabajo/","conv":156,"noconv":846,"total":1002,"ratio":15.6},{"url":"/cursos/inteligencia-de-negocio/","conv":80,"noconv":848,"total":928,"ratio":8.6},{"url":"/cursos/docencia-de-la-formacion-profesional-para-el-empleo/","conv":78,"noconv":311,"total":389,"ratio":20.1},{"url":"/cursos/agentes-del-cambio/","conv":54,"noconv":313,"total":367,"ratio":14.7},{"url":"/cursos/atencion-sociosanitaria-a-personas-en-el-domicilio/","conv":38,"noconv":153,"total":191,"ratio":19.9},{"url":"/cursos/nominas-y-seguridad-social-i/","conv":32,"noconv":149,"total":181,"ratio":17.7},{"url":"/cursos/transporte-sanitario/","conv":38,"noconv":137,"total":175,"ratio":21.7},{"url":"/cursos/gestion-de-llamadas-de-teleasistencia/","conv":40,"noconv":130,"total":170,"ratio":23.5},{"url":"/cursos/ingles-a1/","conv":43,"noconv":126,"total":169,"ratio":25.4},{"url":"/cursos/amadeus/","conv":60,"noconv":101,"total":161,"ratio":37.3}],"top_ultimas":[{"url":"/cursos/ia-puesto-de-trabajo/","leads":151},{"url":"/cursos/inteligencia-de-negocio/","leads":80},{"url":"/cursos/docencia-de-la-formacion-profesional-para-el-empleo/","leads":79},{"url":"/cursos/amadeus/","leads":61},{"url":"/cursos/ingles-a1/","leads":45},{"url":"/cursos/agentes-del-cambio/","leads":44},{"url":"/cursos/gestion-de-llamadas-de-teleasistencia/","leads":43},{"url":"/cursos/emision-y-gestion-de-llamadas-salientes-en-un-servicio-de-teleasistencia/","leads":39},{"url":"/cursos/transporte-sanitario/","leads":38},{"url":"/cursos/atencion-sociosanitaria-a-personas-en-el-domicilio/","leads":37}],"top_canales":[{"canal":"google / organic","conv":768,"noconv":4400,"total":5168,"ratio":14.9},{"canal":"google / cpc","conv":220,"noconv":2185,"total":2405,"ratio":9.1},{"canal":"(direct) / (none)","conv":234,"noconv":882,"total":1116,"ratio":21.0},{"canal":"meta / paid","conv":138,"noconv":402,"total":540,"ratio":25.6},{"canal":"campañas / leads","conv":74,"noconv":227,"total":301,"ratio":24.6},{"canal":"l.facebook.com / referral","conv":83,"noconv":207,"total":290,"ratio":28.6}],"mobile_conv":1504,"desktop_conv":397,"mobile_noconv":6764,"desktop_noconv":2303},"Comparador intensivo":{"total_conv":855,"total_noconv":1415,"tasa":37.7,"duracion_mediana_conv":527.0,"paginas_mediana_conv":8.0,"duracion_mediana_noconv":337.0,"paginas_mediana_noconv":7.0,"top_primeras":[{"url":"/nuestros-cursos/","conv":97,"noconv":165,"total":262,"ratio":37.0},{"url":"/","conv":86,"noconv":145,"total":231,"ratio":37.2},{"url":"/tipo-de-curso/on-line/","conv":36,"noconv":71,"total":107,"ratio":33.6},{"url":"/cursos/agentes-del-cambio/","conv":31,"noconv":62,"total":93,"ratio":33.3},{"url":"/cursos-en/madrid/","conv":32,"noconv":40,"total":72,"ratio":44.4},{"url":"/organismo/cursos-sepe-madrid/","conv":25,"noconv":46,"total":71,"ratio":35.2},{"url":"/cursos/ia-puesto-de-trabajo/","conv":26,"noconv":33,"total":59,"ratio":44.1},{"url":"/cursos-de/administracion-y-gestion/","conv":20,"noconv":37,"total":57,"ratio":35.1},{"url":"/cursos-de/sanidad/","conv":31,"noconv":23,"total":54,"ratio":57.4},{"url":"/tema-cursos/estetica/","conv":18,"noconv":28,"total":46,"ratio":39.1}],"top_ultimas":[{"url":"/cursos/gestion-agil-de-procesos-administrativos-y-de-recursos-humanos/","leads":17},{"url":"/cursos/transporte-sanitario/","leads":17},{"url":"/cursos/ia-puesto-de-trabajo/","leads":16},{"url":"/cursos/contabilidad-general-contaplus-y-fiscalidad/","leads":16},{"url":"/cursos/actividades-de-gestion-administrativa/","leads":15},{"url":"/cursos/dermofarmacia-y-cosmetologia/","leads":14},{"url":"/cursos/basico-de-prevencion-de-riesgos-laborales/","leads":14},{"url":"/cursos/servicios-asistenciales-a-personas-con-dependencia/","leads":11},{"url":"/cursos/adgd0031-gestion-de-recursos-humanos/","leads":11},{"url":"/cursos/atencion-al-cliente-consumidor-o-usuario/","leads":10}],"top_canales":[{"canal":"google / organic","conv":521,"noconv":878,"total":1399,"ratio":37.2},{"canal":"google / cpc","conv":105,"noconv":175,"total":280,"ratio":37.5},{"canal":"(direct) / (none)","conv":83,"noconv":140,"total":223,"ratio":37.2},{"canal":"meta / paid","conv":43,"noconv":79,"total":122,"ratio":35.2},{"canal":"bing / organic","conv":24,"noconv":28,"total":52,"ratio":46.2},{"canal":"m.facebook.com / referral","conv":18,"noconv":20,"total":38,"ratio":47.4}],"mobile_conv":582,"desktop_conv":267,"mobile_noconv":1006,"desktop_noconv":392},"Explorador desde home":{"total_conv":358,"total_noconv":1203,"tasa":22.9,"duracion_mediana_conv":410.5,"paginas_mediana_conv":6.0,"duracion_mediana_noconv":174.0,"paginas_mediana_noconv":4.0,"top_primeras":[{"url":"/","conv":290,"noconv":1006,"total":1296,"ratio":22.4},{"url":"/cursos/agentes-del-cambio/","conv":1,"noconv":21,"total":22,"ratio":4.5},{"url":"/cursos/ia-puesto-de-trabajo/","conv":0,"noconv":14,"total":14,"ratio":0.0},{"url":"/destinatario/desempleados-as/","conv":1,"noconv":12,"total":13,"ratio":7.7},{"url":"/cursos/inteligencia-de-negocio/","conv":2,"noconv":8,"total":10,"ratio":20.0},{"url":"/planes-de-mejora-de-empleo-del-sepe-quien-puede-apuntarse/","conv":2,"noconv":6,"total":8,"ratio":25.0},{"url":"/cursos/actividades-de-gestion-administrativa/","conv":4,"noconv":2,"total":6,"ratio":66.7},{"url":"/cursos/docencia-de-la-formacion-profesional-para-el-empleo/","conv":1,"noconv":4,"total":5,"ratio":20.0},{"url":"/cursos/monitor-de-tiempo-libre/","conv":3,"noconv":2,"total":5,"ratio":60.0},{"url":"/cursos/atencion-sociosanitaria-a-personas-en-el-domicilio/","conv":1,"noconv":4,"total":5,"ratio":20.0}],"top_ultimas":[{"url":"/cursos/gestion-de-llamadas-de-teleasistencia/","leads":10},{"url":"/cursos/ingles-a1/","leads":9},{"url":"/cursos/gestion-agil-de-procesos-administrativos-y-de-recursos-humanos/","leads":9},{"url":"/cursos/atencion-sociosanitaria-a-personas-en-situacion-de-dependencia-y-o-con-discapacidad-en-el-domicilio-y-en-instituciones-sociales/","leads":8},{"url":"/cursos/monitor-de-tiempo-libre/","leads":8},{"url":"/cursos/gestion-logistica/","leads":7},{"url":"/cursos/transporte-sanitario/","leads":7},{"url":"/cursos/contabilidad-general-contaplus-y-fiscalidad/","leads":7},{"url":"/cursos/docencia-de-la-formacion-profesional-para-el-empleo/","leads":6},{"url":"/cursos/ingles-b1/","leads":5}],"top_canales":[{"canal":"google / organic","conv":159,"noconv":525,"total":684,"ratio":23.2},{"canal":"(direct) / (none)","conv":68,"noconv":299,"total":367,"ratio":18.5},{"canal":"google / cpc","conv":42,"noconv":164,"total":206,"ratio":20.4},{"canal":"ig / social","conv":11,"noconv":46,"total":57,"ratio":19.3},{"canal":"bing / organic","conv":12,"noconv":41,"total":53,"ratio":22.6},{"canal":"m.facebook.com / referral","conv":15,"noconv":38,"total":53,"ratio":28.3}],"mobile_conv":231,"desktop_conv":121,"mobile_noconv":623,"desktop_noconv":573},"Comparador":{"total_conv":703,"total_noconv":2930,"tasa":19.4,"duracion_mediana_conv":346.0,"paginas_mediana_conv":5.0,"duracion_mediana_noconv":141.0,"paginas_mediana_noconv":4.0,"top_primeras":[{"url":"/","conv":176,"noconv":550,"total":726,"ratio":24.2},{"url":"/nuestros-cursos/","conv":54,"noconv":209,"total":263,"ratio":20.5},{"url":"/tipo-de-curso/on-line/","conv":22,"noconv":90,"total":112,"ratio":19.6},{"url":"/cursos-de/administracion-y-gestion/","conv":13,"noconv":91,"total":104,"ratio":12.5},{"url":"/cursos/agentes-del-cambio/","conv":20,"noconv":68,"total":88,"ratio":22.7},{"url":"/organismo/cursos-sepe-madrid/","conv":15,"noconv":57,"total":72,"ratio":20.8},{"url":"/cursos-en/madrid/","conv":12,"noconv":44,"total":56,"ratio":21.4},{"url":"/tema-cursos/estetica/","conv":5,"noconv":49,"total":54,"ratio":9.3},{"url":"/tema-cursos/prevencion-riesgos-laborales/","conv":5,"noconv":48,"total":53,"ratio":9.4},{"url":"/cursos/ia-puesto-de-trabajo/","conv":16,"noconv":37,"total":53,"ratio":30.2}],"top_ultimas":[{"url":"/cursos/gestion-agil-de-procesos-administrativos-y-de-recursos-humanos/","leads":16},{"url":"/cursos/monitor-de-tiempo-libre/","leads":15},{"url":"/cursos/ia-puesto-de-trabajo/","leads":14},{"url":"/cursos/actividades-de-gestion-administrativa/","leads":14},{"url":"/cursos/atencion-sociosanitaria-a-personas-en-situacion-de-dependencia-y-o-con-discapacidad-en-el-domicilio-y-en-instituciones-sociales/","leads":11},{"url":"/cursos/atencion-al-alumnado-con-necesidades-educativas-especiales-en-centros-educativos/","leads":10},{"url":"/cursos/transporte-sanitario/","leads":10},{"url":"/cursos/programa-integral-de-la-gestion-laboral-contratos-nominas-y-seguros-sociales/","leads":10},{"url":"/cursos/atencion-sociosanitaria-a-personas-dependientes-en-instituciones-sociales/","leads":9},{"url":"/tipo-de-curso/on-line/","leads":9}],"top_canales":[{"canal":"google / organic","conv":430,"noconv":1947,"total":2377,"ratio":18.1},{"canal":"google / cpc","conv":78,"noconv":306,"total":384,"ratio":20.3},{"canal":"(direct) / (none)","conv":67,"noconv":283,"total":350,"ratio":19.1},{"canal":"meta / paid","conv":25,"noconv":102,"total":127,"ratio":19.7},{"canal":"bing / organic","conv":15,"noconv":57,"total":72,"ratio":20.8},{"canal":"l.facebook.com / referral","conv":16,"noconv":39,"total":55,"ratio":29.1}],"mobile_conv":466,"desktop_conv":232,"mobile_noconv":1943,"desktop_noconv":962},"Enfocado en fichas":{"total_conv":314,"total_noconv":1085,"tasa":22.4,"duracion_mediana_conv":308.0,"paginas_mediana_conv":4.0,"duracion_mediana_noconv":110.0,"paginas_mediana_noconv":3.0,"top_primeras":[{"url":"/destinatario/desempleados-as/","conv":29,"noconv":81,"total":110,"ratio":26.4},{"url":"/cursos/agentes-del-cambio/","conv":8,"noconv":57,"total":65,"ratio":12.3},{"url":"/centro/barcelona/","conv":12,"noconv":37,"total":49,"ratio":24.5},{"url":"/centro/vitoria/","conv":10,"noconv":34,"total":44,"ratio":22.7},{"url":"/certificados/certificados-profesionalidad/","conv":6,"noconv":38,"total":44,"ratio":13.6},{"url":"/cursos/ia-puesto-de-trabajo/","conv":9,"noconv":29,"total":38,"ratio":23.7},{"url":"/destinatario/desempleados-as/cursos-desempleados-madrid/","conv":8,"noconv":28,"total":36,"ratio":22.2},{"url":"/destinatario/empleados-as/","conv":5,"noconv":29,"total":34,"ratio":14.7},{"url":"/centro/oviedo-calle-jovellanos/","conv":5,"noconv":29,"total":34,"ratio":14.7},{"url":"/centro/salamanca/","conv":6,"noconv":24,"total":30,"ratio":20.0}],"top_ultimas":[{"url":"/cursos/docencia-de-la-formacion-profesional-para-el-empleo/","leads":11},{"url":"/cursos/transporte-sanitario/","leads":8},{"url":"/cursos/gestion-integrada-de-recursos-humanos/","leads":8},{"url":"/cursos/emision-y-gestion-de-llamadas-salientes-en-un-servicio-de-teleasistencia/","leads":7},{"url":"/cursos/gestion-de-llamadas-de-teleasistencia/","leads":7},{"url":"/cursos/actividades-de-gestion-administrativa/","leads":7},{"url":"/cursos/vigilancia-seguridad-privada-y-proteccion-de-personas/","leads":6},{"url":"/cursos/habilitacion-para-la-docencia-en-grados-a-b-c-del-sistema-de-formacion-profesional/","leads":6},{"url":"/cursos/ia-puesto-de-trabajo/","leads":6},{"url":"/cursos/ingles-a2/","leads":6}],"top_canales":[{"canal":"google / organic","conv":199,"noconv":785,"total":984,"ratio":20.2},{"canal":"(direct) / (none)","conv":52,"noconv":127,"total":179,"ratio":29.1},{"canal":"google / cpc","conv":23,"noconv":92,"total":115,"ratio":20.0},{"canal":"meta / paid","conv":2,"noconv":16,"total":18,"ratio":11.1},{"canal":"bing / organic","conv":4,"noconv":9,"total":13,"ratio":30.8},{"canal":"chatgpt.com / (none)","conv":4,"noconv":9,"total":13,"ratio":30.8}],"mobile_conv":221,"desktop_conv":91,"mobile_noconv":759,"desktop_noconv":309},"desconocido":{"total_conv":43,"total_noconv":1641,"tasa":2.6,"duracion_mediana_conv":0.0,"paginas_mediana_conv":0.0,"duracion_mediana_noconv":0.0,"paginas_mediana_noconv":0.0,"top_primeras":[{"url":"","conv":43,"noconv":1641,"total":1684,"ratio":2.6}],"top_ultimas":[{"url":"","leads":43}],"top_canales":[{"canal":"google / organic","conv":11,"noconv":1003,"total":1014,"ratio":1.1},{"canal":"(direct) / (none)","conv":15,"noconv":293,"total":308,"ratio":4.9},{"canal":"google / cpc","conv":4,"noconv":156,"total":160,"ratio":2.5},{"canal":"bing / organic","conv":2,"noconv":79,"total":81,"ratio":2.5},{"canal":"chatgpt.com / referral","conv":2,"noconv":23,"total":25,"ratio":8.0},{"canal":"es.search.yahoo.com / referral","conv":0,"noconv":17,"total":17,"ratio":0.0}],"mobile_conv":26,"desktop_conv":17,"mobile_noconv":200,"desktop_noconv":1437},"Mixto":{"total_conv":288,"total_noconv":2482,"tasa":10.4,"duracion_mediana_conv":168.0,"paginas_mediana_conv":2.0,"duracion_mediana_noconv":49.0,"paginas_mediana_noconv":2.0,"top_primeras":[{"url":"/","conv":10,"noconv":931,"total":941,"ratio":1.1},{"url":"/nuestros-cursos/","conv":52,"noconv":134,"total":186,"ratio":28.0},{"url":"/tipo-de-curso/on-line/","conv":20,"noconv":59,"total":79,"ratio":25.3},{"url":"/cursos-de/administracion-y-gestion/","conv":11,"noconv":64,"total":75,"ratio":14.7},{"url":"/tema-cursos/prevencion-riesgos-laborales/","conv":15,"noconv":26,"total":41,"ratio":36.6},{"url":"/preguntas-frecuentes/sobre-los-cursos-en-aula-virtual/","conv":0,"noconv":34,"total":34,"ratio":0.0},{"url":"/organismo/cursos-sepe-madrid/","conv":10,"noconv":22,"total":32,"ratio":31.2},{"url":"/cursos-de/sanidad/","conv":5,"noconv":20,"total":25,"ratio":20.0},{"url":"/cursos-en/madrid/","conv":9,"noconv":15,"total":24,"ratio":37.5},{"url":"/empresa/aspasia-madrid/","conv":0,"noconv":24,"total":24,"ratio":0.0}],"top_ultimas":[{"url":"/cursos/basico-de-prevencion-de-riesgos-laborales/","leads":9},{"url":"/cursos/atencion-sociosanitaria-a-personas-en-situacion-de-dependencia-y-o-con-discapacidad-en-el-domicilio-y-en-instituciones-sociales/","leads":8},{"url":"/cursos/programa-integral-de-la-gestion-laboral-contratos-nominas-y-seguros-sociales/","leads":8},{"url":"/cursos/dermofarmacia-y-cosmetologia/","leads":7},{"url":"/cursos/nutricion-y-dietetica-deportiva/","leads":6},{"url":"/cursos/gestion-logistica/","leads":6},{"url":"/cursos/gestion-agil-de-procesos-administrativos-y-de-recursos-humanos/","leads":6},{"url":"/cursos/ia-puesto-de-trabajo/","leads":5},{"url":"/cursos/gestion-de-llamadas-de-teleasistencia/","leads":5},{"url":"/cursos/atencion-sociosanitaria-a-personas-en-el-domicilio/","leads":5}],"top_canales":[{"canal":"google / organic","conv":182,"noconv":1537,"total":1719,"ratio":10.6},{"canal":"(direct) / (none)","conv":22,"noconv":323,"total":345,"ratio":6.4},{"canal":"google / cpc","conv":17,"noconv":233,"total":250,"ratio":6.8},{"canal":"meta / paid","conv":26,"noconv":56,"total":82,"ratio":31.7},{"canal":"bing / organic","conv":3,"noconv":77,"total":80,"ratio":3.8},{"canal":"m.facebook.com / referral","conv":6,"noconv":41,"total":47,"ratio":12.8}],"mobile_conv":193,"desktop_conv":93,"mobile_noconv":1322,"desktop_noconv":1137},"Solo navega listados":{"total_conv":39,"total_noconv":1678,"tasa":2.3,"duracion_mediana_conv":610.0,"paginas_mediana_conv":8.0,"duracion_mediana_noconv":82.0,"paginas_mediana_noconv":3.0,"top_primeras":[{"url":"/","conv":15,"noconv":669,"total":684,"ratio":2.2},{"url":"/nuestros-cursos/","conv":4,"noconv":69,"total":73,"ratio":5.5},{"url":"/empresa/aula-activa/","conv":0,"noconv":42,"total":42,"ratio":0.0},{"url":"/cursos-en/madrid/","conv":3,"noconv":32,"total":35,"ratio":8.6},{"url":"/tipo-de-curso/aula-virtual-on-line/","conv":0,"noconv":32,"total":32,"ratio":0.0},{"url":"/tipo-de-curso/on-line/","conv":1,"noconv":30,"total":31,"ratio":3.2},{"url":"/empresa/ibecon/","conv":0,"noconv":26,"total":26,"ratio":0.0},{"url":"/empresa/aspasia-madrid/","conv":0,"noconv":22,"total":22,"ratio":0.0},{"url":"/preguntas-frecuentes/sobre-los-cursos-en-aula-virtual/","conv":0,"noconv":19,"total":19,"ratio":0.0},{"url":"/empresa/adalid-servicios-corporativos-s-l/","conv":0,"noconv":18,"total":18,"ratio":0.0}],"top_ultimas":[{"url":"/tipo-de-curso/on-line/","leads":3},{"url":"/formacion-compromiso-contratacion/","leads":2},{"url":"/cursos/nutricion-y-dietetica-deportiva/","leads":2},{"url":"/cursos/fisioterapia-y-rehabilitacion-en-personas-mayores/","leads":2},{"url":"/destinatario/desempleados-as/","leads":1},{"url":"/cursos/crea-tu-tienda-online-con-prestashop/","leads":1},{"url":"/cursos/ofimatica-en-la-nube-google-drive/","leads":1},{"url":"/preguntas-frecuentes/sobre-cursos-subvencionados/","leads":1},{"url":"/cursos/aleman-a1/","leads":1},{"url":"/cursos-de/seguridad-privada/","leads":1}],"top_canales":[{"canal":"google / organic","conv":24,"noconv":1071,"total":1095,"ratio":2.2},{"canal":"(direct) / (none)","conv":7,"noconv":242,"total":249,"ratio":2.8},{"canal":"google / cpc","conv":3,"noconv":149,"total":152,"ratio":2.0},{"canal":"bing / organic","conv":1,"noconv":71,"total":72,"ratio":1.4},{"canal":"m.facebook.com / referral","conv":0,"noconv":24,"total":24,"ratio":0.0},{"canal":"es.search.yahoo.com / referral","conv":1,"noconv":18,"total":19,"ratio":5.3}],"mobile_conv":26,"desktop_conv":13,"mobile_noconv":817,"desktop_noconv":842},"Solo listado":{"total_conv":30,"total_noconv":5033,"tasa":0.6,"duracion_mediana_conv":177.5,"paginas_mediana_conv":1.0,"duracion_mediana_noconv":0.0,"paginas_mediana_noconv":1.0,"top_primeras":[{"url":"/nuestros-cursos/","conv":7,"noconv":906,"total":913,"ratio":0.8},{"url":"/tipo-de-curso/on-line/","conv":3,"noconv":286,"total":289,"ratio":1.0},{"url":"/cursos-de/administracion-y-gestion/","conv":0,"noconv":171,"total":171,"ratio":0.0},{"url":"/organismo/cursos-sepe-madrid/","conv":0,"noconv":162,"total":162,"ratio":0.0},{"url":"/tema-cursos/estetica/","conv":0,"noconv":141,"total":141,"ratio":0.0},{"url":"/tema-cursos/electricidad/","conv":1,"noconv":138,"total":139,"ratio":0.7},{"url":"/tema-cursos/prevencion-riesgos-laborales/","conv":3,"noconv":126,"total":129,"ratio":2.3},{"url":"/tema-cursos/vigilante/","conv":2,"noconv":124,"total":126,"ratio":1.6},{"url":"/tema-cursos/mecanica/","conv":0,"noconv":114,"total":114,"ratio":0.0},{"url":"/cursos-de/servicios-de-limpieza/","conv":1,"noconv":99,"total":100,"ratio":1.0}],"top_ultimas":[{"url":"/nuestros-cursos/","leads":6},{"url":"/tipo-de-curso/on-line/","leads":3},{"url":"/tema-cursos/prevencion-riesgos-laborales/","leads":3},{"url":"","leads":2},{"url":"/organismo/cursos-sepe-valencia/","leads":1},{"url":"/cursos-en/madrid/","leads":1},{"url":"/cursos-de/sanidad/","leads":1},{"url":"/tema-cursos/andaluces-digitales/","leads":1},{"url":"/cursos-de/energia-y-agua/","leads":1},{"url":"/cursos-de/servicios-de-limpieza/","leads":1}],"top_canales":[{"canal":"google / organic","conv":19,"noconv":3424,"total":3443,"ratio":0.6},{"canal":"google / cpc","conv":3,"noconv":400,"total":403,"ratio":0.7},{"canal":"meta / paid","conv":5,"noconv":387,"total":392,"ratio":1.3},{"canal":"(direct) / (none)","conv":1,"noconv":326,"total":327,"ratio":0.3},{"canal":"m.facebook.com / referral","conv":0,"noconv":112,"total":112,"ratio":0.0},{"canal":"l.facebook.com / referral","conv":1,"noconv":101,"total":102,"ratio":1.0}],"mobile_conv":21,"desktop_conv":9,"mobile_noconv":3609,"desktop_noconv":1367},"Una sola página":{"total_conv":34,"total_noconv":6669,"tasa":0.5,"duracion_mediana_conv":123.0,"paginas_mediana_conv":1.0,"duracion_mediana_noconv":0.0,"paginas_mediana_noconv":1.0,"top_primeras":[{"url":"/planes-de-mejora-de-empleo-del-sepe-quien-puede-apuntarse/","conv":1,"noconv":252,"total":253,"ratio":0.4},{"url":"/glosario/materiales-didacticos/","conv":0,"noconv":252,"total":252,"ratio":0.0},{"url":"/funciones-ayudante-cocina/","conv":0,"noconv":164,"total":164,"ratio":0.0},{"url":"/metodos-educativos-populares-educacion-infantil/","conv":0,"noconv":148,"total":148,"ratio":0.0},{"url":"/destinatario/desempleados-as/","conv":0,"noconv":140,"total":140,"ratio":0.0},{"url":"/diferencias-entre-educacion-formal-no-formal-e-informal/","conv":0,"noconv":131,"total":131,"ratio":0.0},{"url":"/tecnicas-estudio-como-pueden-ayudar-a-tu-formacion/","conv":0,"noconv":124,"total":124,"ratio":0.0},{"url":"/educacion-inclusiva-y-atencion-a-la-diversidad/","conv":0,"noconv":110,"total":110,"ratio":0.0},{"url":"/contacto/","conv":1,"noconv":99,"total":100,"ratio":1.0},{"url":"/empresa/ibecon/","conv":0,"noconv":99,"total":99,"ratio":0.0}],"top_ultimas":[{"url":"https://formacion.aspasia.es/newsletter-cat/","leads":6},{"url":"","leads":3},{"url":"https://formacion.aspasia.es/webinar-inteligencia-artificial/","leads":3},{"url":"/certificado-profesionalidad-floristeria/","leads":2},{"url":"/certificado-profesionalidad-ofimatica/","leads":2},{"url":"http://localhost/catalogo-formaciones/","leads":1},{"url":"/empresa/aspasia-madrid/","leads":1},{"url":"/empresa/formatec/","leads":1},{"url":"/centro/barcelona/","leads":1},{"url":"/planes-de-mejora-de-empleo-del-sepe-quien-puede-apuntarse/","leads":1}],"top_canales":[{"canal":"google / organic","conv":10,"noconv":5029,"total":5039,"ratio":0.2},{"canal":"(direct) / (none)","conv":19,"noconv":815,"total":834,"ratio":2.3},{"canal":"google / cpc","conv":1,"noconv":373,"total":374,"ratio":0.3},{"canal":"bing / organic","conv":0,"noconv":137,"total":137,"ratio":0.0},{"canal":"cursos.fpaspasia.com / referral","conv":0,"noconv":36,"total":36,"ratio":0.0},{"canal":"es.search.yahoo.com / referral","conv":0,"noconv":32,"total":32,"ratio":0.0}],"mobile_conv":11,"desktop_conv":23,"mobile_noconv":3621,"desktop_noconv":2964},"Solo home":{"total_conv":5,"total_noconv":1478,"tasa":0.3,"duracion_mediana_conv":65.0,"paginas_mediana_conv":1.0,"duracion_mediana_noconv":0.0,"paginas_mediana_noconv":1.0,"top_primeras":[{"url":"/","conv":5,"noconv":1475,"total":1480,"ratio":0.3}],"top_ultimas":[{"url":"/","leads":4},{"url":"","leads":1}],"top_canales":[{"canal":"google / organic","conv":1,"noconv":766,"total":767,"ratio":0.1},{"canal":"(direct) / (none)","conv":3,"noconv":339,"total":342,"ratio":0.9},{"canal":"google / cpc","conv":0,"noconv":146,"total":146,"ratio":0.0},{"canal":"bing / organic","conv":0,"noconv":81,"total":81,"ratio":0.0},{"canal":"m.facebook.com / referral","conv":1,"noconv":20,"total":21,"ratio":4.8},{"canal":"l.facebook.com / referral","conv":0,"noconv":20,"total":20,"ratio":0.0}],"mobile_conv":3,"desktop_conv":1,"mobile_noconv":649,"desktop_noconv":820}},"journeys":{"Ficha curso":{"total":11048,"conv":1915,"noconv":9133,"tasa":17.3,"duracion_mediana":86.0,"paginas_mediana":1.0,"top_primeras":[{"url":"/cursos/ia-puesto-de-trabajo/","conv":156,"noconv":846,"total":1002,"ratio":15.6},{"url":"/cursos/inteligencia-de-negocio/","conv":80,"noconv":848,"total":928,"ratio":8.6},{"url":"/cursos/docencia-de-la-formacion-profesional-para-el-empleo/","conv":78,"noconv":311,"total":389,"ratio":20.1},{"url":"/cursos/agentes-del-cambio/","conv":54,"noconv":313,"total":367,"ratio":14.7},{"url":"/cursos/atencion-sociosanitaria-a-personas-en-el-domicilio/","conv":38,"noconv":153,"total":191,"ratio":19.9},{"url":"/cursos/nominas-y-seguridad-social-i/","conv":32,"noconv":149,"total":181,"ratio":17.7},{"url":"/cursos/transporte-sanitario/","conv":38,"noconv":137,"total":175,"ratio":21.7},{"url":"/cursos/gestion-de-llamadas-de-teleasistencia/","conv":40,"noconv":130,"total":170,"ratio":23.5}],"top_ultimas":[{"url":"/cursos/ia-puesto-de-trabajo/","leads":151},{"url":"/cursos/inteligencia-de-negocio/","leads":80},{"url":"/cursos/docencia-de-la-formacion-profesional-para-el-empleo/","leads":79},{"url":"/cursos/amadeus/","leads":61},{"url":"/cursos/ingles-a1/","leads":45},{"url":"/cursos/agentes-del-cambio/","leads":44},{"url":"/cursos/gestion-de-llamadas-de-teleasistencia/","leads":43},{"url":"/cursos/emision-y-gestion-de-llamadas-salientes-en-un-servicio-de-teleasistencia/","leads":39}],"top_canales":[{"canal":"google / organic","count":768},{"canal":"(direct) / (none)","count":234},{"canal":"google / cpc","count":220},{"canal":"meta / paid","count":138},{"canal":"outbound / email","count":96}]},"Otro":{"total":5867,"conv":30,"noconv":5837,"tasa":0.5,"duracion_mediana":126.5,"paginas_mediana":1.0,"top_primeras":[{"url":"/planes-de-mejora-de-empleo-del-sepe-quien-puede-apuntarse/","conv":1,"noconv":252,"total":253,"ratio":0.4},{"url":"/glosario/materiales-didacticos/","conv":0,"noconv":252,"total":252,"ratio":0.0},{"url":"/funciones-ayudante-cocina/","conv":0,"noconv":164,"total":164,"ratio":0.0},{"url":"/metodos-educativos-populares-educacion-infantil/","conv":0,"noconv":148,"total":148,"ratio":0.0},{"url":"/destinatario/desempleados-as/","conv":0,"noconv":140,"total":140,"ratio":0.0},{"url":"/diferencias-entre-educacion-formal-no-formal-e-informal/","conv":0,"noconv":131,"total":131,"ratio":0.0},{"url":"/tecnicas-estudio-como-pueden-ayudar-a-tu-formacion/","conv":0,"noconv":124,"total":124,"ratio":0.0},{"url":"/educacion-inclusiva-y-atencion-a-la-diversidad/","conv":0,"noconv":110,"total":110,"ratio":0.0}],"top_ultimas":[{"url":"https://formacion.aspasia.es/newsletter-cat/","leads":6},{"url":"https://formacion.aspasia.es/webinar-inteligencia-artificial/","leads":3},{"url":"/certificado-profesionalidad-floristeria/","leads":2},{"url":"","leads":2},{"url":"/certificado-profesionalidad-ofimatica/","leads":2},{"url":"http://localhost/catalogo-formaciones/","leads":1},{"url":"/empresa/aspasia-madrid/","leads":1},{"url":"/empresa/formatec/","leads":1}],"top_canales":[{"canal":"(direct) / (none)","count":17},{"canal":"google / organic","count":8},{"canal":"tagassistant.google.com / referral","count":2},{"canal":"outbound / email","count":1},{"canal":"google / cpc","count":1}]},"Listado cursos":{"total":4297,"conv":28,"noconv":4269,"tasa":0.7,"duracion_mediana":150.0,"paginas_mediana":1.0,"top_primeras":[{"url":"/nuestros-cursos/","conv":7,"noconv":906,"total":913,"ratio":0.8},{"url":"/tipo-de-curso/on-line/","conv":3,"noconv":286,"total":289,"ratio":1.0},{"url":"/cursos-de/administracion-y-gestion/","conv":0,"noconv":171,"total":171,"ratio":0.0},{"url":"/tema-cursos/estetica/","conv":0,"noconv":141,"total":141,"ratio":0.0},{"url":"/tema-cursos/electricidad/","conv":1,"noconv":138,"total":139,"ratio":0.7},{"url":"/tema-cursos/prevencion-riesgos-laborales/","conv":3,"noconv":126,"total":129,"ratio":2.3},{"url":"/tema-cursos/vigilante/","conv":2,"noconv":124,"total":126,"ratio":1.6},{"url":"/tema-cursos/mecanica/","conv":0,"noconv":114,"total":114,"ratio":0.0}],"top_ultimas":[{"url":"/nuestros-cursos/","leads":6},{"url":"/tipo-de-curso/on-line/","leads":3},{"url":"/tema-cursos/prevencion-riesgos-laborales/","leads":3},{"url":"","leads":2},{"url":"/cursos-en/madrid/","leads":1},{"url":"/cursos-de/sanidad/","leads":1},{"url":"/tema-cursos/andaluces-digitales/","leads":1},{"url":"/cursos-de/energia-y-agua/","leads":1}],"top_canales":[{"canal":"google / organic","count":18},{"canal":"meta / paid","count":5},{"canal":"google / cpc","count":2},{"canal":"(direct) / (none)","count":1},{"canal":"lm.facebook.com / referral","count":1}]},"Home":{"total":1483,"conv":5,"noconv":1478,"tasa":0.3,"duracion_mediana":65.0,"paginas_mediana":1.0,"top_primeras":[{"url":"/","conv":5,"noconv":1475,"total":1480,"ratio":0.3},{"url":"https://us7.campaign-archive.com/","conv":0,"noconv":3,"total":3,"ratio":0.0}],"top_ultimas":[{"url":"/","leads":4},{"url":"","leads":1}],"top_canales":[{"canal":"(direct) / (none)","count":3},{"canal":"m.facebook.com / referral","count":1},{"canal":"google / organic","count":1}]},"Listado cursos → Ficha curso → Listado cursos":{"total":1284,"conv":185,"noconv":1099,"tasa":14.4,"duracion_mediana":175.0,"paginas_mediana":3.0,"top_primeras":[{"url":"/nuestros-cursos/","conv":43,"noconv":157,"total":200,"ratio":21.5},{"url":"/cursos-de/administracion-y-gestion/","conv":12,"noconv":78,"total":90,"ratio":13.3},{"url":"/tipo-de-curso/on-line/","conv":14,"noconv":72,"total":86,"ratio":16.3},{"url":"/tema-cursos/prevencion-riesgos-laborales/","conv":4,"noconv":44,"total":48,"ratio":8.3},{"url":"/cursos-de/sanidad/","conv":8,"noconv":39,"total":47,"ratio":17.0},{"url":"/tema-cursos/estetica/","conv":3,"noconv":44,"total":47,"ratio":6.4},{"url":"/tema-cursos/electricidad/","conv":5,"noconv":40,"total":45,"ratio":11.1},{"url":"/tema-cursos/vigilante/","conv":4,"noconv":39,"total":43,"ratio":9.3}],"top_ultimas":[{"url":"/cursos/atencion-sociosanitaria-a-personas-en-situacion-de-dependencia-y-o-con-discapacidad-en-el-domicilio-y-en-instituciones-sociales/","leads":6},{"url":"/cursos/monitor-de-tiempo-libre/","leads":5},{"url":"/cursos/gestion-agil-de-procesos-administrativos-y-de-recursos-humanos/","leads":5},{"url":"/cursos/diseno-de-moda-3d-inicial/","leads":4},{"url":"/cursos/contabilidad-general-contaplus-y-fiscalidad/","leads":4},{"url":"/cursos/basico-de-prevencion-de-riesgos-laborales/","leads":4},{"url":"/cursos/fisioterapia-y-rehabilitacion-en-personas-mayores/","leads":4},{"url":"/cursos/programa-integral-de-la-gestion-laboral-contratos-nominas-y-seguros-sociales/","leads":4}],"top_canales":[{"canal":"google / organic","count":126},{"canal":"meta / paid","count":17},{"canal":"(direct) / (none)","count":9},{"canal":"l.facebook.com / referral","count":8},{"canal":"google / cpc","count":6}]},"Listado cursos → Ficha curso":{"total":896,"conv":212,"noconv":684,"tasa":23.7,"duracion_mediana":143.5,"paginas_mediana":2.0,"top_primeras":[{"url":"/nuestros-cursos/","conv":52,"noconv":134,"total":186,"ratio":28.0},{"url":"/tipo-de-curso/on-line/","conv":20,"noconv":59,"total":79,"ratio":25.3},{"url":"/cursos-de/administracion-y-gestion/","conv":11,"noconv":64,"total":75,"ratio":14.7},{"url":"/tema-cursos/prevencion-riesgos-laborales/","conv":15,"noconv":26,"total":41,"ratio":36.6},{"url":"/cursos-de/sanidad/","conv":5,"noconv":20,"total":25,"ratio":20.0},{"url":"/cursos-en/madrid/","conv":9,"noconv":15,"total":24,"ratio":37.5},{"url":"/tema-cursos/estetica/","conv":7,"noconv":15,"total":22,"ratio":31.8},{"url":"/tema-cursos/vigilante/","conv":0,"noconv":19,"total":19,"ratio":0.0}],"top_ultimas":[{"url":"/cursos/basico-de-prevencion-de-riesgos-laborales/","leads":9},{"url":"/cursos/atencion-sociosanitaria-a-personas-en-situacion-de-dependencia-y-o-con-discapacidad-en-el-domicilio-y-en-instituciones-sociales/","leads":8},{"url":"/cursos/programa-integral-de-la-gestion-laboral-contratos-nominas-y-seguros-sociales/","leads":8},{"url":"/cursos/gestion-logistica/","leads":6},{"url":"/cursos/dermofarmacia-y-cosmetologia/","leads":5},{"url":"/cursos/gestion-de-llamadas-de-teleasistencia/","leads":4},{"url":"/cursos/nutricion-y-dietetica-deportiva/","leads":4},{"url":"/cursos/gestion-agil-de-procesos-administrativos-y-de-recursos-humanos/","leads":4}],"top_canales":[{"canal":"google / organic","count":132},{"canal":"meta / paid","count":25},{"canal":"(direct) / (none)","count":18},{"canal":"google / cpc","count":9},{"canal":"l.facebook.com / referral","count":7}]},"Listado organismo":{"total":766,"conv":2,"noconv":764,"tasa":0.3,"duracion_mediana":920.0,"paginas_mediana":3.5,"top_primeras":[{"url":"/organismo/cursos-sepe-madrid/","conv":0,"noconv":162,"total":162,"ratio":0.0},{"url":"/organismo/cursos-sepe/","conv":0,"noconv":63,"total":63,"ratio":0.0},{"url":"/organismo/cursos-soc/","conv":0,"noconv":54,"total":54,"ratio":0.0},{"url":"/organismo/cursos-soc-barcelona/","conv":0,"noconv":47,"total":47,"ratio":0.0},{"url":"/organismo/cursos-sae/","conv":0,"noconv":26,"total":26,"ratio":0.0},{"url":"/organismo/cursos-sepe-valladolid/","conv":0,"noconv":24,"total":24,"ratio":0.0},{"url":"/organismo/cursos-sepe-canarias/","conv":0,"noconv":23,"total":23,"ratio":0.0},{"url":"/organismo/cursos-sepe-tenerife/","conv":0,"noconv":22,"total":22,"ratio":0.0}],"top_ultimas":[{"url":"/organismo/cursos-sepe-valencia/","leads":1},{"url":"/organismo/cursos-sae-granada/","leads":1}],"top_canales":[{"canal":"google / cpc","count":1},{"canal":"google / organic","count":1}]},"Centros":{"total":618,"conv":3,"noconv":615,"tasa":0.5,"duracion_mediana":112.0,"paginas_mediana":1.0,"top_primeras":[{"url":"/centro/barcelona/","conv":1,"noconv":41,"total":42,"ratio":2.4},{"url":"/centro/madrid-4/","conv":0,"noconv":38,"total":38,"ratio":0.0},{"url":"/centros/","conv":0,"noconv":30,"total":30,"ratio":0.0},{"url":"/centro/las-palmas-de-gran-canaria/","conv":0,"noconv":27,"total":27,"ratio":0.0},{"url":"/centro/salamanca/","conv":0,"noconv":26,"total":26,"ratio":0.0},{"url":"/centro/valencia-c-impresor-monfort/","conv":1,"noconv":21,"total":22,"ratio":4.5},{"url":"/centro/soria/","conv":0,"noconv":21,"total":21,"ratio":0.0},{"url":"/centro/vitoria/","conv":0,"noconv":21,"total":21,"ratio":0.0}],"top_ultimas":[{"url":"/centro/barcelona/","leads":1},{"url":"/centro/valencia-c-impresor-monfort/","leads":1},{"url":"/centro/granada-2/","leads":1}],"top_canales":[{"canal":"google / organic","count":2},{"canal":"(direct) / (none)","count":1}]},"Listado cursos → Ficha curso → Listado cursos → Ficha curso → Listado cursos → Ficha curso":{"total":488,"conv":234,"noconv":254,"tasa":48.0,"duracion_mediana":604.5,"paginas_mediana":10.0,"top_primeras":[{"url":"/nuestros-cursos/","conv":54,"noconv":58,"total":112,"ratio":48.2},{"url":"/tipo-de-curso/on-line/","conv":19,"noconv":26,"total":45,"ratio":42.2},{"url":"/cursos-en/madrid/","conv":15,"noconv":15,"total":30,"ratio":50.0},{"url":"/cursos-de/sanidad/","conv":15,"noconv":11,"total":26,"ratio":57.7},{"url":"/tema-cursos/estetica/","conv":12,"noconv":11,"total":23,"ratio":52.2},{"url":"/cursos-de/administracion-y-gestion/","conv":8,"noconv":13,"total":21,"ratio":38.1},{"url":"/cursos-de/educacion/","conv":9,"noconv":7,"total":16,"ratio":56.2},{"url":"/cursos-en/valladolid/","conv":7,"noconv":8,"total":15,"ratio":46.7}],"top_ultimas":[{"url":"/cursos/dermofarmacia-y-cosmetologia/","leads":6},{"url":"/cursos/servicios-asistenciales-a-personas-con-dependencia/","leads":6},{"url":"/cursos/gestion-agil-de-procesos-administrativos-y-de-recursos-humanos/","leads":5},{"url":"/cursos/educacion-inclusiva-centrada-en-el-trastorno-de-espectro-autista/","leads":4},{"url":"/cursos/adgd0031-gestion-de-recursos-humanos/","leads":4},{"url":"/cursos/contabilidad-general-contaplus-y-fiscalidad/","leads":4},{"url":"/cursos/terapia-del-dolor/","leads":4},{"url":"/cursos/ingles-a1/","leads":4}],"top_canales":[{"canal":"google / organic","count":159},{"canal":"meta / paid","count":19},{"canal":"(direct) / (none)","count":14},{"canal":"google / cpc","count":13},{"canal":"bing / organic","count":7}]},"Home → Otro":{"total":392,"conv":3,"noconv":389,"tasa":0.8,"duracion_mediana":110.0,"paginas_mediana":2.0,"top_primeras":[{"url":"/","conv":3,"noconv":388,"total":391,"ratio":0.8}],"top_ultimas":[{"url":"/","leads":1},{"url":"/destinatario/desempleados-as/","leads":1},{"url":"/formacion-compromiso-contratacion/","leads":1}],"top_canales":[{"canal":"google / organic","count":3}]},"Listado cursos → Ficha curso → Listado cursos → Ficha curso → Listado cursos":{"total":334,"conv":75,"noconv":259,"tasa":22.5,"duracion_mediana":341.0,"paginas_mediana":5.0,"top_primeras":[{"url":"/nuestros-cursos/","conv":14,"noconv":61,"total":75,"ratio":18.7},{"url":"/tipo-de-curso/on-line/","conv":5,"noconv":25,"total":30,"ratio":16.7},{"url":"/cursos-de/administracion-y-gestion/","conv":5,"noconv":18,"total":23,"ratio":21.7},{"url":"/cursos-de/sanidad/","conv":9,"noconv":7,"total":16,"ratio":56.2},{"url":"/tema-cursos/prevencion-riesgos-laborales/","conv":6,"noconv":7,"total":13,"ratio":46.2},{"url":"/cursos-en/madrid/","conv":1,"noconv":9,"total":10,"ratio":10.0},{"url":"/tema-cursos/estetica/","conv":2,"noconv":7,"total":9,"ratio":22.2},{"url":"/cursos-de/educacion/","conv":3,"noconv":6,"total":9,"ratio":33.3}],"top_ultimas":[{"url":"/cursos/basico-de-prevencion-de-riesgos-laborales/","leads":4},{"url":"/cursos/servicios-asistenciales-a-personas-con-dependencia/","leads":3},{"url":"/cursos/actividades-de-gestion-administrativa/","leads":2},{"url":"/cursos/nutricion-y-dietetica-deportiva/","leads":2},{"url":"/cursos/gestion-del-centro-educativo-infantil/","leads":2},{"url":"/cursos/transporte-sanitario/","leads":2},{"url":"/cursos/lengua-de-signos-espanola-nivel-usuario-basico-a1/","leads":1},{"url":"/cursos/gestion-agil-de-procesos-administrativos-y-de-recursos-humanos/","leads":1}],"top_canales":[{"canal":"google / organic","count":54},{"canal":"meta / paid","count":5},{"canal":"m.facebook.com / referral","count":4},{"canal":"(direct) / (none)","count":3},{"canal":"l.facebook.com / referral","count":2}]},"Ficha curso → Listado cursos":{"total":251,"conv":35,"noconv":216,"tasa":13.9,"duracion_mediana":207.0,"paginas_mediana":2.0,"top_primeras":[{"url":"/cursos/agentes-del-cambio/","conv":0,"noconv":20,"total":20,"ratio":0.0},{"url":"/cursos/ia-puesto-de-trabajo/","conv":2,"noconv":13,"total":15,"ratio":13.3},{"url":"/cursos/docencia-de-la-formacion-profesional-para-el-empleo/","conv":1,"noconv":7,"total":8,"ratio":12.5},{"url":"/cursos/atencion-sociosanitaria-a-personas-en-el-domicilio/","conv":2,"noconv":6,"total":8,"ratio":25.0},{"url":"/cursos/vigilancia-seguridad-privada-y-proteccion-de-personas/","conv":0,"noconv":6,"total":6,"ratio":0.0},{"url":"/cursos/monitor-de-tiempo-libre/","conv":1,"noconv":4,"total":5,"ratio":20.0},{"url":"/cursos/inteligencia-de-negocio/","conv":0,"noconv":5,"total":5,"ratio":0.0},{"url":"/cursos/aleman-a1/","conv":0,"noconv":4,"total":4,"ratio":0.0}],"top_ultimas":[{"url":"/cursos/ia-puesto-de-trabajo/","leads":2},{"url":"/cursos/atencion-sociosanitaria-a-personas-en-el-domicilio/","leads":2},{"url":"/cursos/dermofarmacia-y-cosmetologia/","leads":2},{"url":"/cursos/operacion-y-control-del-sistema-electrico/","leads":2},{"url":"/cursos/ingles-a1/","leads":2},{"url":"/cursos/procesos-y-tecnicas-de-soldadura-tig/","leads":1},{"url":"/cursos/asesoramiento-de-belleza-en-el-punto-de-venta/","leads":1},{"url":"/cursos/monitor-de-tiempo-libre/","leads":1}],"top_canales":[{"canal":"google / organic","count":20},{"canal":"l.facebook.com / referral","count":3},{"canal":"google / cpc","count":2},{"canal":"(direct) / (none)","count":2},{"canal":"m.facebook.com / referral","count":2}]},"Home → Listado cursos":{"total":247,"conv":2,"noconv":245,"tasa":0.8,"duracion_mediana":165.0,"paginas_mediana":2.5,"top_primeras":[{"url":"/","conv":2,"noconv":244,"total":246,"ratio":0.8}],"top_ultimas":[{"url":"/tipo-de-curso/on-line/","leads":2}],"top_canales":[{"canal":"(direct) / (none)","count":1},{"canal":"google / organic","count":1}]},"Ficha curso → Listado cursos → Ficha curso":{"total":245,"conv":68,"noconv":177,"tasa":27.8,"duracion_mediana":271.5,"paginas_mediana":3.0,"top_primeras":[{"url":"/cursos/agentes-del-cambio/","conv":11,"noconv":38,"total":49,"ratio":22.4},{"url":"/cursos/ia-puesto-de-trabajo/","conv":8,"noconv":24,"total":32,"ratio":25.0},{"url":"/cursos/inteligencia-de-negocio/","conv":3,"noconv":10,"total":13,"ratio":23.1},{"url":"/cursos/docencia-de-la-formacion-profesional-para-el-empleo/","conv":2,"noconv":4,"total":6,"ratio":33.3},{"url":"/cursos/aleman-a1/","conv":1,"noconv":4,"total":5,"ratio":20.0},{"url":"/cursos/monitor-de-tiempo-libre/","conv":1,"noconv":3,"total":4,"ratio":25.0},{"url":"/cursos/atencion-sociosanitaria-a-personas-dependientes-en-instituciones-sociales/","conv":2,"noconv":2,"total":4,"ratio":50.0},{"url":"/cursos/actividades-de-gestion-administrativa/","conv":2,"noconv":2,"total":4,"ratio":50.0}],"top_ultimas":[{"url":"/cursos/ia-puesto-de-trabajo/","leads":6},{"url":"/cursos/actividades-de-gestion-administrativa/","leads":3},{"url":"/cursos/agentes-del-cambio/","leads":3},{"url":"/cursos/gestion-de-llamadas-de-teleasistencia/","leads":2},{"url":"/cursos/tratamiento-de-trastornos-afectivos-y-neurodegenerantes/","leads":2},{"url":"/cursos/inteligencia-de-negocio/","leads":2},{"url":"/cursos/ingles-a1/","leads":2},{"url":"/cursos/atencion-sociosanitaria-a-personas-dependientes-en-instituciones-sociales/","leads":2}],"top_canales":[{"canal":"google / organic","count":30},{"canal":"google / cpc","count":16},{"canal":"(direct) / (none)","count":6},{"canal":"meta / paid","count":4},{"canal":"chatgpt.com / (none)","count":3}]},"Home → Otro → Ficha curso":{"total":238,"conv":54,"noconv":184,"tasa":22.7,"duracion_mediana":233.5,"paginas_mediana":3.0,"top_primeras":[{"url":"/","conv":54,"noconv":184,"total":238,"ratio":22.7}],"top_ultimas":[{"url":"/cursos/gestion-agil-de-procesos-administrativos-y-de-recursos-humanos/","leads":3},{"url":"/cursos/mejora-de-la-productividad-en-las-actividades-de-gestion-administrativa/","leads":2},{"url":"/cursos/desarrollo-de-proyectos-de-sistemas-de-automatizacion-industrial/","leads":2},{"url":"/cursos/contabilidad-general-contaplus-y-fiscalidad/","leads":2},{"url":"/cursos/wordpress-en-el-sector-de-publicidad/","leads":2},{"url":"/cursos/desarrollo-de-aplicaciones-para-dispositivos-moviles-2/","leads":1},{"url":"/cursos/ingles-b1/","leads":1},{"url":"/cursos/atencion-sociosanitaria-a-personas-en-situacion-de-dependencia-y-o-con-discapacidad-en-el-domicilio-y-en-instituciones-sociales/","leads":1}],"top_canales":[{"canal":"google / organic","count":25},{"canal":"(direct) / (none)","count":11},{"canal":"bing / organic","count":3},{"canal":"google / cpc","count":2},{"canal":"l.facebook.com / referral","count":2}]},"Listado organismo → Ficha curso → Listado organismo":{"total":230,"conv":26,"noconv":204,"tasa":11.3,"duracion_mediana":238.0,"paginas_mediana":3.0,"top_primeras":[{"url":"/organismo/cursos-sepe-madrid/","conv":11,"noconv":47,"total":58,"ratio":19.0},{"url":"/organismo/cursos-soc-barcelona/","conv":2,"noconv":23,"total":25,"ratio":8.0},{"url":"/organismo/cursos-sepe/","conv":4,"noconv":16,"total":20,"ratio":20.0},{"url":"/organismo/cursos-ecyl-valladolid/","conv":2,"noconv":9,"total":11,"ratio":18.2},{"url":"/organismo/cursos-sepe-valladolid/","conv":0,"noconv":11,"total":11,"ratio":0.0},{"url":"/organismo/cursos-soc/","conv":1,"noconv":8,"total":9,"ratio":11.1},{"url":"/organismo/cursos-sepe-catalunya/","conv":1,"noconv":6,"total":7,"ratio":14.3},{"url":"/organismo/cursos-sepe-barcelona/","conv":2,"noconv":4,"total":6,"ratio":33.3}],"top_ultimas":[{"url":"/cursos/dispositivos-y-circuitos-electricos/","leads":2},{"url":"/cursos/adgd0031-gestion-de-recursos-humanos/","leads":1},{"url":"/cursos/cualificacion-inicial-acelerada-de-conductores-para-el-transporte-de-viajeros-cap-con-sensibilizacion-y-educacion-vial-tacografo-digital-atencion-al-cliente-de-transporte-de-viajeros-y-atencion-e-info/","leads":1},{"url":"/cursos/asesoria-integral-de-la-imagen-personal/","leads":1},{"url":"/cursos/ingles-profesional-para-comercio-internacional/","leads":1},{"url":"/cursos/actividades-de-gestion-administrativa/","leads":1},{"url":"/cursos/servicios-auxiliares-de-estetica/","leads":1},{"url":"/cursos/venta-de-productos-y-servicios-turisticos/","leads":1}],"top_canales":[{"canal":"google / organic","count":20},{"canal":"google / cpc","count":4},{"canal":"(direct) / (none)","count":1},{"canal":"Data Not Available / Data Not Available","count":1}]},"Listado cursos → Ficha curso → Listado cursos → Ficha curso":{"total":223,"conv":90,"noconv":133,"tasa":40.4,"duracion_mediana":256.0,"paginas_mediana":4.0,"top_primeras":[{"url":"/nuestros-cursos/","conv":15,"noconv":28,"total":43,"ratio":34.9},{"url":"/tipo-de-curso/on-line/","conv":6,"noconv":15,"total":21,"ratio":28.6},{"url":"/cursos-en/madrid/","conv":8,"noconv":7,"total":15,"ratio":53.3},{"url":"/cursos-de/administracion-y-gestion/","conv":6,"noconv":3,"total":9,"ratio":66.7},{"url":"/cursos-en/barcelona/","conv":5,"noconv":3,"total":8,"ratio":62.5},{"url":"/cursos-de/sanidad/","conv":3,"noconv":4,"total":7,"ratio":42.9},{"url":"/tema-cursos/docencia/","conv":3,"noconv":4,"total":7,"ratio":42.9},{"url":"/cursos-en/valladolid/","conv":1,"noconv":6,"total":7,"ratio":14.3}],"top_ultimas":[{"url":"/cursos/basico-de-prevencion-de-riesgos-laborales/","leads":4},{"url":"/cursos/actividades-de-gestion-administrativa/","leads":3},{"url":"/cursos/contabilidad-general-contaplus-y-fiscalidad/","leads":3},{"url":"/cursos/ingles-a2/","leads":3},{"url":"/cursos/operacion-y-control-del-sistema-electrico/","leads":2},{"url":"/cursos/marketing-online-diseno-y-promocion-de-sitios-web-2/","leads":2},{"url":"/cursos/aplicaciones-informaticas-de-hojas-de-calculo-nivel-inicial/","leads":2},{"url":"/cursos/nutricion-y-dietetica-deportiva/","leads":2}],"top_canales":[{"canal":"google / organic","count":63},{"canal":"google / cpc","count":8},{"canal":"(direct) / (none)","count":6},{"canal":"meta / paid","count":5},{"canal":"m.facebook.com / referral","count":2}]},"Home → Ficha curso":{"total":215,"conv":30,"noconv":185,"tasa":14.0,"duracion_mediana":151.5,"paginas_mediana":2.0,"top_primeras":[{"url":"/","conv":30,"noconv":185,"total":215,"ratio":14.0}],"top_ultimas":[{"url":"/cursos/monitor-de-tiempo-libre/","leads":3},{"url":"/cursos/ingles-a1/","leads":2},{"url":"/cursos/inteligencia-artificial-aplicada-a-la-empresa/","leads":1},{"url":"/cursos/dermofarmacia-y-cosmetologia/","leads":1},{"url":"/cursos/diseno-seguimiento-y-evaluacion-de-proyectos/","leads":1},{"url":"/cursos/seguridad-en-el-almacen-de-productos-quimicos/","leads":1},{"url":"/cursos/inteligencia-de-negocio/","leads":1},{"url":"/cursos/amadeus/","leads":1}],"top_canales":[{"canal":"google / organic","count":11},{"canal":"(direct) / (none)","count":7},{"canal":"google / cpc","count":5},{"canal":"bing / organic","count":3},{"canal":"ig / social","count":1}]},"Home → Otro → Ficha curso → Otro → Ficha curso → Otro":{"total":214,"conv":75,"noconv":139,"tasa":35.0,"duracion_mediana":693.0,"paginas_mediana":10.0,"top_primeras":[{"url":"/","conv":75,"noconv":139,"total":214,"ratio":35.0}],"top_ultimas":[{"url":"/cursos/gestion-logistica/","leads":3},{"url":"/cursos/gestion-agil-de-procesos-administrativos-y-de-recursos-humanos/","leads":3},{"url":"/cursos/chatgpt-e-inteligencia-artificial-aplicadas-a-la-docencia-y-creacion-de-contenido/","leads":2},{"url":"/cursos/ingles-a1/","leads":2},{"url":"/cursos/atencion-sociosanitaria-a-personas-en-situacion-de-dependencia-y-o-con-discapacidad-en-el-domicilio-y-en-instituciones-sociales/","leads":2},{"url":"/cursos/coordinacion-y-gestion-de-servicios-de-atencion-domiciliaria/","leads":2},{"url":"/cursos/ingles-a2/","leads":2},{"url":"/cursos/atencion-al-alumnado-con-necesidades-educativas-especiales-en-centros-educativos/","leads":2}],"top_canales":[{"canal":"google / organic","count":34},{"canal":"google / cpc","count":11},{"canal":"(direct) / (none)","count":8},{"canal":"ig / social","count":6},{"canal":"bing / organic","count":4}]},"Centros → Ficha curso → Centros":{"total":175,"conv":15,"noconv":160,"tasa":8.6,"duracion_mediana":104.0,"paginas_mediana":3.0,"top_primeras":[{"url":"/centro/salamanca/","conv":3,"noconv":13,"total":16,"ratio":18.8},{"url":"/centro/vitoria/","conv":1,"noconv":10,"total":11,"ratio":9.1},{"url":"/centro/mairena-de-aljarafe/","conv":0,"noconv":9,"total":9,"ratio":0.0},{"url":"/centro/guimar/","conv":0,"noconv":9,"total":9,"ratio":0.0},{"url":"/centro/oviedo-calle-jovellanos/","conv":1,"noconv":8,"total":9,"ratio":11.1},{"url":"/centro/barcelona-c-sant-pere-mes-alt/","conv":1,"noconv":7,"total":8,"ratio":12.5},{"url":"/centro/las-palmas-de-gran-canaria/","conv":1,"noconv":7,"total":8,"ratio":12.5},{"url":"/centro/los-realejos/","conv":1,"noconv":6,"total":7,"ratio":14.3}],"top_ultimas":[{"url":"/cursos/contabilidad/","leads":2},{"url":"/cursos/organizacion-de-almacenes/","leads":1},{"url":"/cursos/peluqueria/","leads":1},{"url":"/cursos/ingles-b1/","leads":1},{"url":"/cursos/alfabetizacion-informatica-informatica-e-internet/","leads":1},{"url":"/cursos/operaciones-basicas-de-pasteleria/","leads":1},{"url":"/cursos/atencion-y-apoyo-en-el-cuidado-en-la-etapa-final-de-la-vida-en-domicilios-e-instituciones/","leads":1},{"url":"/cursos/nutricion-y-dietetica-deportiva/","leads":1}],"top_canales":[{"canal":"google / organic","count":11},{"canal":"(direct) / (none)","count":4}]},"Ficha curso → Listado cursos → Ficha curso → Listado cursos → Ficha curso → Listado cursos":{"total":168,"conv":91,"noconv":77,"tasa":54.2,"duracion_mediana":731.0,"paginas_mediana":10.0,"top_primeras":[{"url":"/cursos/agentes-del-cambio/","conv":19,"noconv":25,"total":44,"ratio":43.2},{"url":"/cursos/ia-puesto-de-trabajo/","conv":12,"noconv":10,"total":22,"ratio":54.5},{"url":"/cursos/inteligencia-de-negocio/","conv":4,"noconv":3,"total":7,"ratio":57.1},{"url":"/cursos/transporte-sanitario/","conv":4,"noconv":0,"total":4,"ratio":100.0},{"url":"/cursos/escolta-privado/","conv":1,"noconv":2,"total":3,"ratio":33.3}],"top_ultimas":[{"url":"/cursos/ia-puesto-de-trabajo/","leads":5},{"url":"/cursos/transporte-sanitario/","leads":5},{"url":"/cursos/agentes-del-cambio/","leads":4},{"url":"/cursos/actividades-de-gestion-administrativa/","leads":4},{"url":"/cursos/contabilidad-general-contaplus-y-fiscalidad/","leads":3},{"url":"/cursos/ingles-b2/","leads":3},{"url":"/cursos/inteligencia-de-negocio/","leads":2},{"url":"/cursos/elaboracion-de-cafes-y-cartas-de-cafe-en-restauracion/","leads":2}],"top_canales":[{"canal":"google / organic","count":40},{"canal":"google / cpc","count":21},{"canal":"(direct) / (none)","count":11},{"canal":"meta / paid","count":7},{"canal":"chatgpt.com / referral","count":2}]},"Otro → Ficha curso":{"total":134,"conv":29,"noconv":105,"tasa":21.6,"duracion_mediana":197.0,"paginas_mediana":3.0,"top_primeras":[{"url":"/destinatario/desempleados-as/","conv":10,"noconv":27,"total":37,"ratio":27.0},{"url":"/destinatario/desempleados-as/cursos-desempleados-madrid/","conv":3,"noconv":11,"total":14,"ratio":21.4},{"url":"/destinatario/empleados-as/","conv":1,"noconv":13,"total":14,"ratio":7.1},{"url":"/certificado-profesionalidad-gestion-integrada-rrhh/","conv":2,"noconv":5,"total":7,"ratio":28.6},{"url":"/certificados/certificados-profesionalidad/","conv":1,"noconv":5,"total":6,"ratio":16.7},{"url":"/empresa/aspasia-madrid/","conv":0,"noconv":5,"total":5,"ratio":0.0},{"url":"/certificado-profesionalidad-confeccion-publicacion-paginas-web/","conv":0,"noconv":3,"total":3,"ratio":0.0},{"url":"/empresa/ibecon/","conv":0,"noconv":3,"total":3,"ratio":0.0}],"top_ultimas":[{"url":"/cursos/ingles-a2/","leads":3},{"url":"/cursos/actividades-de-gestion-administrativa/","leads":2},{"url":"/cursos/gestion-integrada-de-recursos-humanos/","leads":2},{"url":"/cursos/consultor-sap-s-4-hana-gestion-de-materiales-compras/","leads":2},{"url":"/cursos/confeccion-y-publicacion-de-paginas-web/","leads":1},{"url":"/cursos/lengua-de-signos-espanola-nivel-usuario-basico-a1/","leads":1},{"url":"/cursos/ingles-b2/","leads":1},{"url":"/cursos/docencia-de-la-formacion-profesional-para-el-empleo/","leads":1}],"top_canales":[{"canal":"google / organic","count":19},{"canal":"(direct) / (none)","count":5},{"canal":"google / cpc","count":3},{"canal":"bing / organic","count":1},{"canal":"ig / social","count":1}]},"Home → Otro → Home":{"total":134,"conv":2,"noconv":132,"tasa":1.5,"duracion_mediana":395.0,"paginas_mediana":3.0,"top_primeras":[{"url":"/","conv":2,"noconv":131,"total":133,"ratio":1.5}],"top_ultimas":[{"url":"/destinatario/empleados-as/","leads":2}],"top_canales":[{"canal":"(direct) / (none)","count":1},{"canal":"m.facebook.com / referral","count":1}]},"Listado organismo → Ficha curso":{"total":128,"conv":23,"noconv":105,"tasa":18.0,"duracion_mediana":253.0,"paginas_mediana":2.0,"top_primeras":[{"url":"/organismo/cursos-sepe-madrid/","conv":10,"noconv":22,"total":32,"ratio":31.2},{"url":"/organismo/cursos-sepe/","conv":2,"noconv":14,"total":16,"ratio":12.5},{"url":"/organismo/cursos-soc-barcelona/","conv":2,"noconv":9,"total":11,"ratio":18.2},{"url":"/organismo/cursos-soc/","conv":1,"noconv":7,"total":8,"ratio":12.5},{"url":"/organismo/cursos-sepe-barcelona/","conv":0,"noconv":7,"total":7,"ratio":0.0},{"url":"/organismo/cursos-sepe-asturias/","conv":0,"noconv":5,"total":5,"ratio":0.0},{"url":"/organismo/cursos-ecyl-salamanca/","conv":0,"noconv":3,"total":3,"ratio":0.0},{"url":"/organismo/cursos-ecyl-valladolid/","conv":0,"noconv":3,"total":3,"ratio":0.0}],"top_ultimas":[{"url":"/cursos/cuidados-de-la-persona-anciana-con-trastornos-degenerativos-enfermedades-de-parkinson-y-alzheimer-en-el-ambito-sanitario/","leads":2},{"url":"/cursos/gestion-agil-de-procesos-administrativos-y-de-recursos-humanos/","leads":2},{"url":"/cursos/gestion-de-las-operaciones-de-almacenaje/","leads":1},{"url":"/cursos/lengua-extranjera-profesional-distinta-del-ingles-para-la-asistencia-a-la-direccion/","leads":1},{"url":"/cursos/atencion-sociosanitaria-a-personas-dependientes-en-instituciones-sociales/","leads":1},{"url":"/cursos/actuaciones-en-primeros-auxilios/","leads":1},{"url":"/cursos/entornos-profesionales-con-microsoft-365/","leads":1},{"url":"/cursos/actividades-de-gestion-administrativa/","leads":1}],"top_canales":[{"canal":"google / organic","count":19},{"canal":"google / cpc","count":4}]},"Centros → Ficha curso":{"total":123,"conv":23,"noconv":100,"tasa":18.7,"duracion_mediana":134.0,"paginas_mediana":2.0,"top_primeras":[{"url":"/centro/barcelona/","conv":5,"noconv":14,"total":19,"ratio":26.3},{"url":"/centro/vitoria/","conv":1,"noconv":8,"total":9,"ratio":11.1},{"url":"/centro/valladolid-6/","conv":2,"noconv":5,"total":7,"ratio":28.6},{"url":"/centro/madrid-4/","conv":1,"noconv":5,"total":6,"ratio":16.7},{"url":"/centro/guimar/","conv":0,"noconv":6,"total":6,"ratio":0.0},{"url":"/centro/valencia-c-impresor-monfort/","conv":0,"noconv":6,"total":6,"ratio":0.0},{"url":"/centro/barcelona-c-sant-pere-mes-alt/","conv":1,"noconv":4,"total":5,"ratio":20.0},{"url":"/centro/mairena-de-aljarafe/","conv":0,"noconv":5,"total":5,"ratio":0.0}],"top_ultimas":[{"url":"/cursos/office-word-excel-access-y-power-point-2/","leads":2},{"url":"/cursos/montaje-y-mantenimiento-de-instalaciones-calorificas/","leads":2},{"url":"/cursos/emision-y-gestion-de-llamadas-salientes-en-un-servicio-de-teleasistencia/","leads":1},{"url":"/cursos/nominas-y-seguridad-social-i/","leads":1},{"url":"/cursos/actividades-de-gestion-administrativa/","leads":1},{"url":"/cursos/vigilancia-seguridad-privada-y-proteccion-de-personas/","leads":1},{"url":"/cursos/ingles-a1/","leads":1},{"url":"/cursos/operaciones-auxiliares-de-servicios-administrativos-y-generales/","leads":1}],"top_canales":[{"canal":"google / organic","count":15},{"canal":"(direct) / (none)","count":7},{"canal":"google / cpc","count":1}]},"Ficha curso → Otro → Ficha curso":{"total":122,"conv":44,"noconv":78,"tasa":36.1,"duracion_mediana":252.0,"paginas_mediana":3.0,"top_primeras":[{"url":"/cursos/agentes-del-cambio/","conv":0,"noconv":13,"total":13,"ratio":0.0},{"url":"/cursos/ia-puesto-de-trabajo/","conv":3,"noconv":8,"total":11,"ratio":27.3},{"url":"/cursos/docencia-de-la-formacion-profesional-para-el-empleo/","conv":4,"noconv":3,"total":7,"ratio":57.1},{"url":"/cursos/emision-y-gestion-de-llamadas-salientes-en-un-servicio-de-teleasistencia/","conv":4,"noconv":0,"total":4,"ratio":100.0},{"url":"/cursos/habilitacion-para-la-docencia-en-grados-a-b-c-del-sistema-de-formacion-profesional/","conv":3,"noconv":0,"total":3,"ratio":100.0},{"url":"/cursos/atencion-sociosanitaria-a-personas-en-el-domicilio/","conv":0,"noconv":3,"total":3,"ratio":0.0},{"url":"/cursos/monitor-de-tiempo-libre/","conv":1,"noconv":2,"total":3,"ratio":33.3},{"url":"/cursos/inteligencia-de-negocio/","conv":0,"noconv":3,"total":3,"ratio":0.0}],"top_ultimas":[{"url":"/cursos/docencia-de-la-formacion-profesional-para-el-empleo/","leads":4},{"url":"/cursos/emision-y-gestion-de-llamadas-salientes-en-un-servicio-de-teleasistencia/","leads":4},{"url":"/cursos/habilitacion-para-la-docencia-en-grados-a-b-c-del-sistema-de-formacion-profesional/","leads":3},{"url":"/cursos/gestion-logistica/","leads":2},{"url":"/cursos/vigilancia-seguridad-privada-y-proteccion-de-personas/","leads":1},{"url":"/cursos/mercado-energetico-y-contratacion-de-la-energia/","leads":1},{"url":"/cursos/autocad-2d/","leads":1},{"url":"/cursos/instalacion-de-climatizacion/","leads":1}],"top_canales":[{"canal":"google / organic","count":26},{"canal":"(direct) / (none)","count":5},{"canal":"tutorsya.com / referral","count":4},{"canal":"campañas / leads","count":2},{"canal":"Data Not Available / Data Not Available","count":1}]},"Home → Listado cursos → Ficha curso":{"total":119,"conv":33,"noconv":86,"tasa":27.7,"duracion_mediana":197.0,"paginas_mediana":3.0,"top_primeras":[{"url":"/","conv":33,"noconv":86,"total":119,"ratio":27.7}],"top_ultimas":[{"url":"/cursos/planificacion-financiera-europea-efpa/","leads":2},{"url":"/cursos/atencion-al-alumnado-con-necesidades-educativas-especiales-en-centros-educativos/","leads":2},{"url":"/cursos/monitor-de-tiempo-libre/","leads":2},{"url":"/cursos/manipulacion-de-cargas-con-carretillas-elevadoras/","leads":1},{"url":"/cursos/creacion-de-contenidos-digitales-nivel-basico/","leads":1},{"url":"/cursos/acreditacion-docente-para-teleformacion-formador-a-online/","leads":1},{"url":"/cursos/principios-basicos-de-la-funcion-sindical/","leads":1},{"url":"/cursos/emision-y-gestion-de-llamadas-salientes-en-un-servicio-de-teleasistencia/","leads":1}],"top_canales":[{"canal":"google / organic","count":16},{"canal":"google / cpc","count":5},{"canal":"(direct) / (none)","count":4},{"canal":"chatgpt.com / referral","count":3},{"canal":"ig / social","count":3}]},"Home → Otro → Ficha curso → Otro":{"total":114,"conv":15,"noconv":99,"tasa":13.2,"duracion_mediana":200.0,"paginas_mediana":4.0,"top_primeras":[{"url":"/","conv":15,"noconv":99,"total":114,"ratio":13.2}],"top_ultimas":[{"url":"/cursos/atencion-sociosanitaria-a-personas-en-situacion-de-dependencia-y-o-con-discapacidad-en-el-domicilio-y-en-instituciones-sociales/","leads":3},{"url":"/cursos/fisioterapia-y-rehabilitacion-en-personas-mayores/","leads":1},{"url":"/cursos/gestion-logistica/","leads":1},{"url":"/cursos/chatgpt-e-inteligencia-artificial-aplicadas-a-la-docencia-y-creacion-de-contenido/","leads":1},{"url":"/cursos/programa-integral-de-la-gestion-laboral-contratos-nominas-y-seguros-sociales/","leads":1},{"url":"/cursos/planificacion-y-gestion-del-departamento-de-limpieza-en-establecimientos-hoteleros/","leads":1},{"url":"/cursos/contabilidad-general-contaplus-y-fiscalidad/","leads":1},{"url":"/cursos/creacion-de-contenidos-digitales-nivel-basico/","leads":1}],"top_canales":[{"canal":"google / organic","count":7},{"canal":"m.facebook.com / referral","count":3},{"canal":"(direct) / (none)","count":3},{"canal":"campañas / leads","count":1},{"canal":"ig / social","count":1}]},"Home → Listado cursos → Ficha curso → Listado cursos → Ficha curso → Listado cursos":{"total":111,"conv":45,"noconv":66,"tasa":40.5,"duracion_mediana":641.0,"paginas_mediana":10.0,"top_primeras":[{"url":"/","conv":45,"noconv":66,"total":111,"ratio":40.5}],"top_ultimas":[{"url":"/cursos/primeros-auxilios-y-soporte-vital-basico-y-desfibrilador/","leads":3},{"url":"/contacto/","leads":2},{"url":"/cursos/normativa-juridica-en-materia-laboral-actualizacion/","leads":1},{"url":"/cursos/microsoft-excel-2016-avanzado/","leads":1},{"url":"/cursos/estrategias-de-planificacion-y-marketing-corporativo-presencial/","leads":1},{"url":"/cursos/administracion-y-gestion-de-recursos-humanos/","leads":1},{"url":"/cursos/operaciones-basicas-de-cocina/","leads":1},{"url":"/cursos/manipulacion-de-aguas-de-consumo-publico/","leads":1}],"top_canales":[{"canal":"google / organic","count":24},{"canal":"(direct) / (none)","count":7},{"canal":"google / cpc","count":6},{"canal":"bing / organic","count":5},{"canal":"es.search.yahoo.com / referral","count":2}]},"Otro → Listado cursos":{"total":108,"conv":2,"noconv":106,"tasa":1.9,"duracion_mediana":816.5,"paginas_mediana":3.0,"top_primeras":[{"url":"/empresa/ibecon/","conv":0,"noconv":13,"total":13,"ratio":0.0},{"url":"/empresa/aula-activa/","conv":0,"noconv":12,"total":12,"ratio":0.0},{"url":"/empresa/aspasia-madrid/","conv":0,"noconv":11,"total":11,"ratio":0.0},{"url":"/destinatario/desempleados-as/","conv":0,"noconv":9,"total":9,"ratio":0.0},{"url":"/empresa/adalid-servicios-corporativos-s-l/","conv":0,"noconv":7,"total":7,"ratio":0.0},{"url":"/empresas/","conv":0,"noconv":7,"total":7,"ratio":0.0},{"url":"/empresa/instituto-europa/","conv":1,"noconv":4,"total":5,"ratio":20.0},{"url":"/empresa/aspasia-catalunya/","conv":0,"noconv":5,"total":5,"ratio":0.0}],"top_ultimas":[{"url":"/tipo-de-curso/on-line/","leads":1},{"url":"/certificado-profesionalidad-operaciones-grabacion-tratamiento-datos/","leads":1}],"top_canales":[{"canal":"google / organic","count":2}]},"Ficha curso → Otro":{"total":101,"conv":19,"noconv":82,"tasa":18.8,"duracion_mediana":123.0,"paginas_mediana":2.0,"top_primeras":[{"url":"/cursos/agentes-del-cambio/","conv":1,"noconv":14,"total":15,"ratio":6.7},{"url":"/cursos/ia-puesto-de-trabajo/","conv":0,"noconv":8,"total":8,"ratio":0.0},{"url":"/cursos/docencia-de-la-formacion-profesional-para-el-empleo/","conv":1,"noconv":4,"total":5,"ratio":20.0},{"url":"/cursos/atencion-sociosanitaria-a-personas-dependientes-en-instituciones-sociales/","conv":0,"noconv":3,"total":3,"ratio":0.0},{"url":"/cursos/monitor-de-tiempo-libre/","conv":2,"noconv":1,"total":3,"ratio":66.7}],"top_ultimas":[{"url":"/cursos/monitor-de-tiempo-libre/","leads":2},{"url":"/cursos/atencion-al-alumnado-con-necesidades-educativas-especiales-en-centros-educativos/","leads":1},{"url":"/cursos/soldadura-tig-para-automocion/","leads":1},{"url":"/cursos/gestion-de-eventos-de-marketing-y-comunicacion/","leads":1},{"url":"/politica-de-privacidad/","leads":1},{"url":"/cursos/docencia-de-la-formacion-profesional-para-el-empleo/","leads":1},{"url":"/cursos/personal-shopper/","leads":1},{"url":"/certificado-profesionalidad-actividades-gestion-administrativa/","leads":1}],"top_canales":[{"canal":"google / organic","count":9},{"canal":"l.facebook.com / referral","count":3},{"canal":"(direct) / (none)","count":2},{"canal":"tutorsya.com / referral","count":1},{"canal":"campañas / leads","count":1}]},"Contacto":{"total":100,"conv":1,"noconv":99,"tasa":1.0,"duracion_mediana":27.0,"paginas_mediana":1.0,"top_primeras":[{"url":"/contacto/","conv":1,"noconv":99,"total":100,"ratio":1.0}],"top_ultimas":[{"url":"","leads":1}],"top_canales":[{"canal":"(direct) / (none)","count":1}]},"Listado organismo → Ficha curso → Listado organismo → Ficha curso → Listado organismo → Ficha curso":{"total":96,"conv":33,"noconv":63,"tasa":34.4,"duracion_mediana":570.0,"paginas_mediana":9.0,"top_primeras":[{"url":"/organismo/cursos-sepe-madrid/","conv":14,"noconv":22,"total":36,"ratio":38.9},{"url":"/organismo/cursos-soc-barcelona/","conv":4,"noconv":6,"total":10,"ratio":40.0},{"url":"/organismo/cursos-soc/","conv":4,"noconv":5,"total":9,"ratio":44.4},{"url":"/organismo/cursos-sepe-valladolid/","conv":0,"noconv":6,"total":6,"ratio":0.0},{"url":"/organismo/cursos-sepe/","conv":0,"noconv":5,"total":5,"ratio":0.0},{"url":"/organismo/cursos-sepe-asturias/","conv":3,"noconv":2,"total":5,"ratio":60.0},{"url":"/organismo/cursos-sepe-alicante/","conv":2,"noconv":2,"total":4,"ratio":50.0},{"url":"/organismo/cursos-lanbide-vitoria/","conv":1,"noconv":3,"total":4,"ratio":25.0}],"top_ultimas":[{"url":"/cursos/ingles-b1-medio/","leads":1},{"url":"/cursos/lengua-de-signos-espanola-nivel-usuario-basico-a1/","leads":1},{"url":"/cursos/estrategias-para-la-mejora-de-la-empleabilidad/","leads":1},{"url":"/cursos/asistencia-documental-y-de-gestion-en-despachos-y-oficinas/","leads":1},{"url":"/cursos/supervisor-a-de-limpieza/","leads":1},{"url":"/cursos/primeros-auxilios-basicos/","leads":1},{"url":"/cursos/maquillaje-social/","leads":1},{"url":"/cursos/sap-logistica-de-produccion/","leads":1}],"top_canales":[{"canal":"google / organic","count":22},{"canal":"google / cpc","count":7},{"canal":"(direct) / (none)","count":1},{"canal":"Data Not Available / Data Not Available","count":1},{"canal":"chatgpt.com / (none)","count":1}]},"Otro → Ficha curso → Otro":{"total":94,"conv":11,"noconv":83,"tasa":11.7,"duracion_mediana":215.0,"paginas_mediana":4.0,"top_primeras":[{"url":"/destinatario/desempleados-as/","conv":7,"noconv":27,"total":34,"ratio":20.6},{"url":"/certificados/certificados-profesionalidad/","conv":0,"noconv":16,"total":16,"ratio":0.0},{"url":"/destinatario/desempleados-as/cursos-desempleados-madrid/","conv":1,"noconv":14,"total":15,"ratio":6.7},{"url":"/destinatario/empleados-as/","conv":0,"noconv":7,"total":7,"ratio":0.0},{"url":"/destinatario/empleados-as/cursos-empleados-madrid/","conv":0,"noconv":5,"total":5,"ratio":0.0},{"url":"/destinatario/autonomos/","conv":0,"noconv":3,"total":3,"ratio":0.0}],"top_ultimas":[{"url":"/cursos/ingles-b1-medio/","leads":1},{"url":"/empresa/aspasia-madrid/","leads":1},{"url":"/cursos/transporte-sanitario/","leads":1},{"url":"/cursos/actividades-basicas-de-atencion-al-cliente/","leads":1},{"url":"/cursos/office-word-excel-access-y-power-point-2/","leads":1},{"url":"/cursos/basico-de-prevencion-de-riesgos-laborales/","leads":1},{"url":"/cursos/microbiologia-de-los-lacteos/","leads":1},{"url":"/cursos/ingles-a2/","leads":1}],"top_canales":[{"canal":"google / organic","count":5},{"canal":"google / cpc","count":3},{"canal":"(direct) / (none)","count":2},{"canal":"ig / social","count":1}]},"Centros → Listado cursos":{"total":91,"conv":0,"noconv":91,"tasa":0.0,"duracion_mediana":0,"paginas_mediana":0,"top_primeras":[{"url":"/centro/burgos-3/","conv":0,"noconv":7,"total":7,"ratio":0.0},{"url":"/centro/madrid-4/","conv":0,"noconv":6,"total":6,"ratio":0.0},{"url":"/centro/marin/","conv":0,"noconv":6,"total":6,"ratio":0.0},{"url":"/centro/barcelona-c-sant-pere-mes-alt/","conv":0,"noconv":5,"total":5,"ratio":0.0},{"url":"/centro/barcelona/","conv":0,"noconv":5,"total":5,"ratio":0.0},{"url":"/centro/soria/","conv":0,"noconv":4,"total":4,"ratio":0.0},{"url":"/centro/madrid-3/","conv":0,"noconv":4,"total":4,"ratio":0.0},{"url":"/centro/palencia/","conv":0,"noconv":3,"total":3,"ratio":0.0}],"top_ultimas":[],"top_canales":[]},"Ficha curso → Listado cursos → Ficha curso → Listado cursos → Ficha curso":{"total":89,"conv":38,"noconv":51,"tasa":42.7,"duracion_mediana":347.0,"paginas_mediana":5.5,"top_primeras":[{"url":"/cursos/ia-puesto-de-trabajo/","conv":9,"noconv":9,"total":18,"ratio":50.0},{"url":"/cursos/agentes-del-cambio/","conv":4,"noconv":9,"total":13,"ratio":30.8},{"url":"/cursos/inteligencia-de-negocio/","conv":2,"noconv":2,"total":4,"ratio":50.0},{"url":"/cursos/atencion-sociosanitaria-a-personas-dependientes-en-instituciones-sociales/","conv":0,"noconv":3,"total":3,"ratio":0.0}],"top_ultimas":[{"url":"/cursos/transporte-sanitario/","leads":2},{"url":"/cursos/contabilidad-general-contaplus-y-fiscalidad/","leads":2},{"url":"/cursos/monitor-de-tiempo-libre/","leads":2},{"url":"/cursos/ia-puesto-de-trabajo/","leads":2},{"url":"/cursos/ingles-b2/","leads":1},{"url":"/cursos/gestion-sostenible-de-los-residuos/","leads":1},{"url":"/cursos/operaciones-basicas-de-cocina/","leads":1},{"url":"/cursos/atencion-al-alumnado-con-necesidades-educativas-especiales-en-centros-educativos/","leads":1}],"top_canales":[{"canal":"google / organic","count":14},{"canal":"google / cpc","count":11},{"canal":"(direct) / (none)","count":6},{"canal":"chatgpt.com / referral","count":2},{"canal":"meta / paid","count":2}]},"Ficha curso → Listado cursos → Ficha curso → Listado cursos":{"total":86,"conv":20,"noconv":66,"tasa":23.3,"duracion_mediana":282.5,"paginas_mediana":4.0,"top_primeras":[{"url":"/cursos/agentes-del-cambio/","conv":4,"noconv":15,"total":19,"ratio":21.1},{"url":"/cursos/ia-puesto-de-trabajo/","conv":2,"noconv":6,"total":8,"ratio":25.0},{"url":"/cursos/vigilancia-seguridad-privada-y-proteccion-de-personas/","conv":0,"noconv":4,"total":4,"ratio":0.0},{"url":"/cursos/actividades-auxiliares-de-almacen/","conv":0,"noconv":3,"total":3,"ratio":0.0}],"top_ultimas":[{"url":"/cursos/agentes-del-cambio/","leads":2},{"url":"/cursos/planificacion-financiera-europea-efpa/","leads":1},{"url":"/cursos/transporte-sanitario/","leads":1},{"url":"/cursos/tecnicas-de-prevencion-y-extincion-de-incendios/","leads":1},{"url":"/cursos/atencion-sociosanitaria-a-personas-en-situacion-de-dependencia-y-o-con-discapacidad-en-el-domicilio-y-en-instituciones-sociales/","leads":1},{"url":"/cursos/contabilidad-avanzada/","leads":1},{"url":"/cursos/modelos-de-escrituras/","leads":1},{"url":"/cursos/gestion-agil-de-procesos-administrativos-y-de-recursos-humanos/","leads":1}],"top_canales":[{"canal":"google / organic","count":12},{"canal":"google / cpc","count":5},{"canal":"(direct) / (none)","count":1},{"canal":"bing / organic","count":1},{"canal":"l.facebook.com / referral","count":1}]},"Sobre nosotros":{"total":83,"conv":0,"noconv":83,"tasa":0.0,"duracion_mediana":0,"paginas_mediana":0,"top_primeras":[{"url":"/preguntas-frecuentes/sobre-los-cursos-en-aula-virtual/","conv":0,"noconv":35,"total":35,"ratio":0.0},{"url":"/quienes-somos/","conv":0,"noconv":32,"total":32,"ratio":0.0},{"url":"/preguntas-frecuentes/sobre-formularios-en-la-web/","conv":0,"noconv":6,"total":6,"ratio":0.0},{"url":"/preguntas-frecuentes/sobre-requisitos-de-acceso-a-la-formacion-subvencionada/","conv":0,"noconv":4,"total":4,"ratio":0.0},{"url":"/preguntas-frecuentes/sobre-procedimientos-de-evaluacion-y-acreditaciones/","conv":0,"noconv":3,"total":3,"ratio":0.0}],"top_ultimas":[],"top_canales":[]},"Centros → Ficha curso → Centros → Ficha curso → Centros → Ficha curso":{"total":71,"conv":22,"noconv":49,"tasa":31.0,"duracion_mediana":611.0,"paginas_mediana":10.5,"top_primeras":[{"url":"/centro/vitoria/","conv":4,"noconv":6,"total":10,"ratio":40.0},{"url":"/centro/oviedo-calle-jovellanos/","conv":1,"noconv":5,"total":6,"ratio":16.7},{"url":"/centro/gijon-c-belgica/","conv":0,"noconv":6,"total":6,"ratio":0.0},{"url":"/centro/valladolid-6/","conv":1,"noconv":5,"total":6,"ratio":16.7},{"url":"/centro/mairena-de-aljarafe/","conv":2,"noconv":3,"total":5,"ratio":40.0},{"url":"/centro/barcelona-c-sant-pere-mes-alt/","conv":3,"noconv":1,"total":4,"ratio":75.0},{"url":"/centro/barcelona/","conv":2,"noconv":2,"total":4,"ratio":50.0},{"url":"/centro/guimar/","conv":1,"noconv":2,"total":3,"ratio":33.3}],"top_ultimas":[{"url":"/cursos/emision-y-gestion-de-llamadas-salientes-en-un-servicio-de-teleasistencia/","leads":2},{"url":"/cursos/vigilancia-seguridad-privada-y-proteccion-de-personas/","leads":2},{"url":"/cursos/transporte-sanitario/","leads":2},{"url":"/cursos/limpieza-del-mobiliario-interior/","leads":1},{"url":"/cursos/desarrollo-web-para-comercio-electronico/","leads":1},{"url":"/cursos/masaje-estetico-manual-y-mecanico/","leads":1},{"url":"/cursos/habilitacion-para-la-docencia-en-grados-a-b-c-del-sistema-de-formacion-profesional/","leads":1},{"url":"/centro/barcelona-c-sant-pere-mes-alt/","leads":1}],"top_canales":[{"canal":"google / organic","count":15},{"canal":"(direct) / (none)","count":5},{"canal":"google / cpc","count":2}]},"Home → Listado cursos → Home":{"total":68,"conv":0,"noconv":68,"tasa":0.0,"duracion_mediana":0,"paginas_mediana":0,"top_primeras":[{"url":"/","conv":0,"noconv":67,"total":67,"ratio":0.0}],"top_ultimas":[],"top_canales":[]}},"urls":{"/empresa/ibecon/":{"primera_conv":4,"primera_noconv":181,"primera_total":185,"primera_ratio":2.2,"ultima_conv":0,"ultima_noconv":114,"aparicion_conv":6,"aparicion_noconv":210,"aparicion_total":216,"aparicion_ratio":2.8,"categoria":"Otro"},"/centro/barcelona-c-sant-pere-mes-alt/":{"primera_conv":7,"primera_noconv":43,"primera_total":50,"primera_ratio":14.0,"ultima_conv":1,"ultima_noconv":39,"aparicion_conv":16,"aparicion_noconv":78,"aparicion_total":94,"aparicion_ratio":17.0,"categoria":"Centros"},"/cursos-de/administracion-y-gestion/":{"primera_conv":44,"primera_noconv":369,"primera_total":413,"primera_ratio":10.7,"ultima_conv":2,"ultima_noconv":313,"aparicion_conv":83,"aparicion_noconv":478,"aparicion_total":561,"aparicion_ratio":14.8,"categoria":"Listado cursos"},"/cursos/primeros-auxilios-y-soporte-vital-basico-y-desfibrilador/":{"primera_conv":4,"primera_noconv":13,"primera_total":17,"primera_ratio":23.5,"ultima_conv":11,"ultima_noconv":18,"aparicion_conv":20,"aparicion_noconv":34,"aparicion_total":54,"aparicion_ratio":37.0,"categoria":"Ficha curso"},"/cursos/transporte-sanitario/":{"primera_conv":49,"primera_noconv":147,"primera_total":196,"primera_ratio":25.0,"ultima_conv":81,"ultima_noconv":170,"aparicion_conv":113,"aparicion_noconv":245,"aparicion_total":358,"aparicion_ratio":31.6,"categoria":"Ficha curso"},"/cursos/organizacion-de-almacenes/":{"primera_conv":0,"primera_noconv":3,"primera_total":3,"primera_ratio":0.0,"ultima_conv":1,"ultima_noconv":8,"aparicion_conv":8,"aparicion_noconv":18,"aparicion_total":26,"aparicion_ratio":30.8,"categoria":"Ficha curso"},"/cursos/gestion-de-las-operaciones-de-almacenaje/":{"primera_conv":0,"primera_noconv":6,"primera_total":6,"primera_ratio":0.0,"ultima_conv":8,"ultima_noconv":13,"aparicion_conv":22,"aparicion_noconv":31,"aparicion_total":53,"aparicion_ratio":41.5,"categoria":"Ficha curso"},"/organismo/cursos-sepe/":{"primera_conv":10,"primera_noconv":121,"primera_total":131,"primera_ratio":7.6,"ultima_conv":3,"ultima_noconv":171,"aparicion_conv":115,"aparicion_noconv":486,"aparicion_total":601,"aparicion_ratio":19.1,"categoria":"Listado organismo"},"/centro/soria/":{"primera_conv":4,"primera_noconv":35,"primera_total":39,"primera_ratio":10.3,"ultima_conv":0,"ultima_noconv":31,"aparicion_conv":4,"aparicion_noconv":39,"aparicion_total":43,"aparicion_ratio":9.3,"categoria":"Centros"},"/educacion-inclusiva-y-atencion-a-la-diversidad/":{"primera_conv":0,"primera_noconv":112,"primera_total":112,"primera_ratio":0.0,"ultima_conv":0,"ultima_noconv":111,"aparicion_conv":0,"aparicion_noconv":112,"aparicion_total":112,"aparicion_ratio":0.0,"categoria":"Otro"},"/tema-cursos/estetica/":{"primera_conv":31,"primera_noconv":239,"primera_total":270,"primera_ratio":11.5,"ultima_conv":2,"ultima_noconv":213,"aparicion_conv":37,"aparicion_noconv":260,"aparicion_total":297,"aparicion_ratio":12.5,"categoria":"Listado cursos"},"/cursos/actividades-auxiliares-de-almacen/":{"primera_conv":3,"primera_noconv":46,"primera_total":49,"primera_ratio":6.1,"ultima_conv":4,"ultima_noconv":50,"aparicion_conv":10,"aparicion_noconv":86,"aparicion_total":96,"aparicion_ratio":10.4,"categoria":"Ficha curso"},"/cursos-de/sanidad/":{"primera_conv":47,"primera_noconv":174,"primera_total":221,"primera_ratio":21.3,"ultima_conv":1,"ultima_noconv":163,"aparicion_conv":85,"aparicion_noconv":274,"aparicion_total":359,"aparicion_ratio":23.7,"categoria":"Listado cursos"},"/cursos/contabilidad/":{"primera_conv":7,"primera_noconv":30,"primera_total":37,"primera_ratio":18.9,"ultima_conv":15,"ultima_noconv":32,"aparicion_conv":23,"aparicion_noconv":48,"aparicion_total":71,"aparicion_ratio":32.4,"categoria":"Ficha curso"},"/cursos/acreditacion-docente-para-teleformacion-formador-a-online/":{"primera_conv":18,"primera_noconv":63,"primera_total":81,"primera_ratio":22.2,"ultima_conv":26,"ultima_noconv":73,"aparicion_conv":29,"aparicion_noconv":88,"aparicion_total":117,"aparicion_ratio":24.8,"categoria":"Ficha curso"},"/cursos/gestion-del-centro-educativo-infantil/":{"primera_conv":4,"primera_noconv":4,"primera_total":8,"primera_ratio":50.0,"ultima_conv":15,"ultima_noconv":4,"aparicion_conv":32,"aparicion_noconv":32,"aparicion_total":64,"aparicion_ratio":50.0,"categoria":"Ficha curso"},"/cursos/lengua-de-signos/":{"primera_conv":14,"primera_noconv":98,"primera_total":112,"primera_ratio":12.5,"ultima_conv":19,"ultima_noconv":102,"aparicion_conv":20,"aparicion_noconv":121,"aparicion_total":141,"aparicion_ratio":14.2,"categoria":"Ficha curso"},"/cursos/atencion-al-cliente-consumidor-o-usuario/":{"primera_conv":4,"primera_noconv":16,"primera_total":20,"primera_ratio":20.0,"ultima_conv":23,"ultima_noconv":50,"aparicion_conv":60,"aparicion_noconv":121,"aparicion_total":181,"aparicion_ratio":33.1,"categoria":"Ficha curso"},"/aviso-legal/":{"primera_conv":2,"primera_noconv":48,"primera_total":50,"primera_ratio":4.0,"ultima_conv":4,"ultima_noconv":66,"aparicion_conv":19,"aparicion_noconv":96,"aparicion_total":115,"aparicion_ratio":16.5,"categoria":"Legal"},"/cursos-de/energia-y-agua/":{"primera_conv":0,"primera_noconv":3,"primera_total":3,"primera_ratio":0.0,"ultima_conv":1,"ultima_noconv":9,"aparicion_conv":11,"aparicion_noconv":24,"aparicion_total":35,"aparicion_ratio":31.4,"categoria":"Listado cursos"},"/cursos/planificacion-financiera-europea-efpa/":{"primera_conv":18,"primera_noconv":40,"primera_total":58,"primera_ratio":31.0,"ultima_conv":21,"ultima_noconv":48,"aparicion_conv":22,"aparicion_noconv":56,"aparicion_total":78,"aparicion_ratio":28.2,"categoria":"Ficha curso"},"/cursos/ingles-a1/":{"primera_conv":50,"primera_noconv":136,"primera_total":186,"primera_ratio":26.9,"ultima_conv":78,"ultima_noconv":155,"aparicion_conv":119,"aparicion_noconv":196,"aparicion_total":315,"aparicion_ratio":37.8,"categoria":"Ficha curso"},"/centro/las-palmas-de-gran-canaria/":{"primera_conv":5,"primera_noconv":56,"primera_total":61,"primera_ratio":8.2,"ultima_conv":0,"ultima_noconv":45,"aparicion_conv":7,"aparicion_noconv":60,"aparicion_total":67,"aparicion_ratio":10.4,"categoria":"Centros"},"/destinatario/autonomos/":{"primera_conv":2,"primera_noconv":23,"primera_total":25,"primera_ratio":8.0,"ultima_conv":3,"ultima_noconv":87,"aparicion_conv":50,"aparicion_noconv":221,"aparicion_total":271,"aparicion_ratio":18.5,"categoria":"Otro"},"/cursos/atencion-al-alumnado-con-necesidades-educativas-especiales-en-centros-educativos/":{"primera_conv":16,"primera_noconv":86,"primera_total":102,"primera_ratio":15.7,"ultima_conv":38,"ultima_noconv":105,"aparicion_conv":66,"aparicion_noconv":155,"aparicion_total":221,"aparicion_ratio":29.9,"categoria":"Ficha curso"},"/cursos/asistencia-documental-y-de-gestion-en-despachos-y-oficinas/":{"primera_conv":0,"primera_noconv":4,"primera_total":4,"primera_ratio":0.0,"ultima_conv":8,"ultima_noconv":21,"aparicion_conv":22,"aparicion_noconv":71,"aparicion_total":93,"aparicion_ratio":23.7,"categoria":"Ficha curso"},"/cursos/escolta-privado/":{"primera_conv":7,"primera_noconv":30,"primera_total":37,"primera_ratio":18.9,"ultima_conv":6,"ultima_noconv":37,"aparicion_conv":14,"aparicion_noconv":50,"aparicion_total":64,"aparicion_ratio":21.9,"categoria":"Ficha curso"},"/cursos-de/metal/":{"primera_conv":5,"primera_noconv":78,"primera_total":83,"primera_ratio":6.0,"ultima_conv":1,"ultima_noconv":82,"aparicion_conv":20,"aparicion_noconv":115,"aparicion_total":135,"aparicion_ratio":14.8,"categoria":"Listado cursos"},"/empresas/":{"primera_conv":3,"primera_noconv":119,"primera_total":122,"primera_ratio":2.5,"ultima_conv":0,"ultima_noconv":97,"aparicion_conv":8,"aparicion_noconv":181,"aparicion_total":189,"aparicion_ratio":4.2,"categoria":"Otro"},"/tema-cursos/ingles/":{"primera_conv":15,"primera_noconv":77,"primera_total":92,"primera_ratio":16.3,"ultima_conv":1,"ultima_noconv":67,"aparicion_conv":20,"aparicion_noconv":94,"aparicion_total":114,"aparicion_ratio":17.5,"categoria":"Listado cursos"},"/cursos/contabilidad-avanzada/":{"primera_conv":1,"primera_noconv":7,"primera_total":8,"primera_ratio":12.5,"ultima_conv":10,"ultima_noconv":19,"aparicion_conv":33,"aparicion_noconv":57,"aparicion_total":90,"aparicion_ratio":36.7,"categoria":"Ficha curso"},"/tema-cursos/docencia/":{"primera_conv":11,"primera_noconv":111,"primera_total":122,"primera_ratio":9.0,"ultima_conv":1,"ultima_noconv":94,"aparicion_conv":17,"aparicion_noconv":124,"aparicion_total":141,"aparicion_ratio":12.1,"categoria":"Listado cursos"},"/cursos/creacion-de-contenidos-digitales-nivel-basico/":{"primera_conv":9,"primera_noconv":15,"primera_total":24,"primera_ratio":37.5,"ultima_conv":10,"ultima_noconv":16,"aparicion_conv":13,"aparicion_noconv":23,"aparicion_total":36,"aparicion_ratio":36.1,"categoria":"Ficha curso"},"/empresa/aspasia-madrid/":{"primera_conv":20,"primera_noconv":144,"primera_total":164,"primera_ratio":12.2,"ultima_conv":3,"ultima_noconv":87,"aparicion_conv":28,"aparicion_noconv":181,"aparicion_total":209,"aparicion_ratio":13.4,"categoria":"Otro"},"/cursos/elaboracion-de-cafes-y-cartas-de-cafe-en-restauracion/":{"primera_conv":6,"primera_noconv":21,"primera_total":27,"primera_ratio":22.2,"ultima_conv":10,"ultima_noconv":24,"aparicion_conv":16,"aparicion_noconv":34,"aparicion_total":50,"aparicion_ratio":32.0,"categoria":"Ficha curso"},"/cursos/montaje-y-mantenimiento-de-instalaciones-calorificas/":{"primera_conv":0,"primera_noconv":15,"primera_total":15,"primera_ratio":0.0,"ultima_conv":4,"ultima_noconv":23,"aparicion_conv":6,"aparicion_noconv":47,"aparicion_total":53,"aparicion_ratio":11.3,"categoria":"Ficha curso"},"/empresa/adalid-servicios-corporativos-s-l/":{"primera_conv":1,"primera_noconv":108,"primera_total":109,"primera_ratio":0.9,"ultima_conv":1,"ultima_noconv":67,"aparicion_conv":4,"aparicion_noconv":120,"aparicion_total":124,"aparicion_ratio":3.2,"categoria":"Otro"},"/cursos/chatgpt-e-inteligencia-artificial-aplicadas-a-la-docencia-y-creacion-de-contenido/":{"primera_conv":2,"primera_noconv":6,"primera_total":8,"primera_ratio":25.0,"ultima_conv":17,"ultima_noconv":17,"aparicion_conv":45,"aparicion_noconv":80,"aparicion_total":125,"aparicion_ratio":36.0,"categoria":"Ficha curso"},"/cursos/vigilancia-seguridad-privada-y-proteccion-de-personas/":{"primera_conv":9,"primera_noconv":141,"primera_total":150,"primera_ratio":6.0,"ultima_conv":16,"ultima_noconv":157,"aparicion_conv":27,"aparicion_noconv":243,"aparicion_total":270,"aparicion_ratio":10.0,"categoria":"Ficha curso"},"/cursos-de/servicios-de-limpieza/":{"primera_conv":4,"primera_noconv":127,"primera_total":131,"primera_ratio":3.1,"ultima_conv":1,"ultima_noconv":109,"aparicion_conv":4,"aparicion_noconv":131,"aparicion_total":135,"aparicion_ratio":3.0,"categoria":"Listado cursos"},"/organismo/cursos-sepe-valladolid/":{"primera_conv":1,"primera_noconv":53,"primera_total":54,"primera_ratio":1.9,"ultima_conv":0,"ultima_noconv":45,"aparicion_conv":2,"aparicion_noconv":56,"aparicion_total":58,"aparicion_ratio":3.4,"categoria":"Listado organismo"},"/cursos/deteccion-y-actuacion-ante-los-malos-tratos-en-la-infancia/":{"primera_conv":0,"primera_noconv":2,"primera_total":2,"primera_ratio":0.0,"ultima_conv":12,"ultima_noconv":12,"aparicion_conv":38,"aparicion_noconv":66,"aparicion_total":104,"aparicion_ratio":36.5,"categoria":"Ficha curso"},"/tema-cursos/informatica/":{"primera_conv":10,"primera_noconv":96,"primera_total":106,"primera_ratio":9.4,"ultima_conv":2,"ultima_noconv":87,"aparicion_conv":14,"aparicion_noconv":114,"aparicion_total":128,"aparicion_ratio":10.9,"categoria":"Listado cursos"},"/cursos/principios-basicos-de-la-funcion-sindical/":{"primera_conv":7,"primera_noconv":19,"primera_total":26,"primera_ratio":26.9,"ultima_conv":8,"ultima_noconv":21,"aparicion_conv":11,"aparicion_noconv":30,"aparicion_total":41,"aparicion_ratio":26.8,"categoria":"Ficha curso"},"/cursos/adgd0308-ofimatica/":{"primera_conv":1,"primera_noconv":21,"primera_total":22,"primera_ratio":4.5,"ultima_conv":9,"ultima_noconv":33,"aparicion_conv":29,"aparicion_noconv":75,"aparicion_total":104,"aparicion_ratio":27.9,"categoria":"Ficha curso"},"/formacion-compromiso-contratacion/":{"primera_conv":1,"primera_noconv":11,"primera_total":12,"primera_ratio":8.3,"ultima_conv":7,"ultima_noconv":51,"aparicion_conv":50,"aparicion_noconv":211,"aparicion_total":261,"aparicion_ratio":19.2,"categoria":"Otro"},"/organismo/cursos-ecyl-valladolid/":{"primera_conv":3,"primera_noconv":29,"primera_total":32,"primera_ratio":9.4,"ultima_conv":0,"ultima_noconv":28,"aparicion_conv":3,"aparicion_noconv":37,"aparicion_total":40,"aparicion_ratio":7.5,"categoria":"Listado organismo"},"/certificado-profesionalidad-floristeria/":{"primera_conv":2,"primera_noconv":20,"primera_total":22,"primera_ratio":9.1,"ultima_conv":2,"ultima_noconv":16,"aparicion_conv":2,"aparicion_noconv":24,"aparicion_total":26,"aparicion_ratio":7.7,"categoria":"Otro"},"/cursos/asesoramiento-de-belleza-en-el-punto-de-venta/":{"primera_conv":9,"primera_noconv":13,"primera_total":22,"primera_ratio":40.9,"ultima_conv":9,"ultima_noconv":14,"aparicion_conv":12,"aparicion_noconv":24,"aparicion_total":36,"aparicion_ratio":33.3,"categoria":"Ficha curso"},"/cursos/programa-integral-de-la-gestion-laboral-contratos-nominas-y-seguros-sociales/":{"primera_conv":2,"primera_noconv":9,"primera_total":11,"primera_ratio":18.2,"ultima_conv":36,"ultima_noconv":27,"aparicion_conv":85,"aparicion_noconv":116,"aparicion_total":201,"aparicion_ratio":42.3,"categoria":"Ficha curso"},"/cursos/monitor-de-tiempo-libre/":{"primera_conv":41,"primera_noconv":92,"primera_total":133,"primera_ratio":30.8,"ultima_conv":72,"ultima_noconv":104,"aparicion_conv":81,"aparicion_noconv":145,"aparicion_total":226,"aparicion_ratio":35.8,"categoria":"Ficha curso"},"/tipo-de-curso/presencial/":{"primera_conv":6,"primera_noconv":34,"primera_total":40,"primera_ratio":15.0,"ultima_conv":2,"ultima_noconv":135,"aparicion_conv":127,"aparicion_noconv":565,"aparicion_total":692,"aparicion_ratio":18.4,"categoria":"Listado cursos"},"/cursos/agentes-del-cambio/":{"primera_conv":115,"primera_noconv":543,"primera_total":658,"primera_ratio":17.5,"ultima_conv":55,"ultima_noconv":362,"aparicion_conv":126,"aparicion_noconv":585,"aparicion_total":711,"aparicion_ratio":17.7,"categoria":"Ficha curso"},"/centro/oviedo-calle-jovellanos/":{"primera_conv":8,"primera_noconv":72,"primera_total":80,"primera_ratio":10.0,"ultima_conv":0,"ultima_noconv":50,"aparicion_conv":12,"aparicion_noconv":88,"aparicion_total":100,"aparicion_ratio":12.0,"categoria":"Centros"},"/cursos/tecnicas-de-limpieza-y-desinfeccion-hospitalaria/":{"primera_conv":1,"primera_noconv":12,"primera_total":13,"primera_ratio":7.7,"ultima_conv":8,"ultima_noconv":28,"aparicion_conv":25,"aparicion_noconv":77,"aparicion_total":102,"aparicion_ratio":24.5,"categoria":"Ficha curso"},"/organismo/cursos-sepe-madrid/":{"primera_conv":51,"primera_noconv":300,"primera_total":351,"primera_ratio":14.5,"ultima_conv":2,"ultima_noconv":271,"aparicion_conv":70,"aparicion_noconv":368,"aparicion_total":438,"aparicion_ratio":16.0,"categoria":"Listado organismo"},"/organismo/cursos-sepe-canarias/":{"primera_conv":1,"primera_noconv":32,"primera_total":33,"primera_ratio":3.0,"ultima_conv":0,"ultima_noconv":33,"aparicion_conv":5,"aparicion_noconv":44,"aparicion_total":49,"aparicion_ratio":10.2,"categoria":"Listado organismo"},"/cursos/gestion-integrada-de-recursos-humanos/":{"primera_conv":25,"primera_noconv":83,"primera_total":108,"primera_ratio":23.1,"ultima_conv":39,"ultima_noconv":94,"aparicion_conv":61,"aparicion_noconv":161,"aparicion_total":222,"aparicion_ratio":27.5,"categoria":"Ficha curso"},"/cursos/operaciones-auxiliares-de-servicios-administrativos-y-generales/":{"primera_conv":2,"primera_noconv":21,"primera_total":23,"primera_ratio":8.7,"ultima_conv":10,"ultima_noconv":40,"aparicion_conv":24,"aparicion_noconv":91,"aparicion_total":115,"aparicion_ratio":20.9,"categoria":"Ficha curso"},"/centro/vitoria/":{"primera_conv":15,"primera_noconv":76,"primera_total":91,"primera_ratio":16.5,"ultima_conv":0,"ultima_noconv":52,"aparicion_conv":16,"aparicion_noconv":81,"aparicion_total":97,"aparicion_ratio":16.5,"categoria":"Centros"},"/cursos/gestion-de-llamadas-de-teleasistencia/":{"primera_conv":54,"primera_noconv":145,"primera_total":199,"primera_ratio":27.1,"ultima_conv":80,"ultima_noconv":165,"aparicion_conv":113,"aparicion_noconv":257,"aparicion_total":370,"aparicion_ratio":30.5,"categoria":"Ficha curso"},"/cursos/gestion-agil-de-procesos-administrativos-y-de-recursos-humanos/":{"primera_conv":0,"primera_noconv":13,"primera_total":13,"primera_ratio":0.0,"ultima_conv":51,"ultima_noconv":57,"aparicion_conv":112,"aparicion_noconv":235,"aparicion_total":347,"aparicion_ratio":32.3,"categoria":"Ficha curso"},"/centro/palencia/":{"primera_conv":2,"primera_noconv":21,"primera_total":23,"primera_ratio":8.7,"ultima_conv":0,"ultima_noconv":12,"aparicion_conv":2,"aparicion_noconv":23,"aparicion_total":25,"aparicion_ratio":8.0,"categoria":"Centros"},"/organismo/cursos-sepe-catalunya/":{"primera_conv":5,"primera_noconv":27,"primera_total":32,"primera_ratio":15.6,"ultima_conv":0,"ultima_noconv":29,"aparicion_conv":8,"aparicion_noconv":45,"aparicion_total":53,"aparicion_ratio":15.1,"categoria":"Listado organismo"},"/cursos/alfabetizacion-informatica-informatica-e-internet/":{"primera_conv":0,"primera_noconv":2,"primera_total":2,"primera_ratio":0.0,"ultima_conv":4,"ultima_noconv":4,"aparicion_conv":7,"aparicion_noconv":24,"aparicion_total":31,"aparicion_ratio":22.6,"categoria":"Ficha curso"},"/centro/valladolid-6/":{"primera_conv":6,"primera_noconv":54,"primera_total":60,"primera_ratio":10.0,"ultima_conv":0,"ultima_noconv":35,"aparicion_conv":9,"aparicion_noconv":65,"aparicion_total":74,"aparicion_ratio":12.2,"categoria":"Centros"},"/centro/mairena-de-aljarafe/":{"primera_conv":5,"primera_noconv":59,"primera_total":64,"primera_ratio":7.8,"ultima_conv":0,"ultima_noconv":46,"aparicion_conv":10,"aparicion_noconv":85,"aparicion_total":95,"aparicion_ratio":10.5,"categoria":"Centros"},"/cursos/primeros-auxilios-basicos/":{"primera_conv":2,"primera_noconv":10,"primera_total":12,"primera_ratio":16.7,"ultima_conv":6,"ultima_noconv":15,"aparicion_conv":13,"aparicion_noconv":26,"aparicion_total":39,"aparicion_ratio":33.3,"categoria":"Ficha curso"},"/cursos/consultor-sap-s-4-hana-gestion-de-materiales-compras/":{"primera_conv":1,"primera_noconv":14,"primera_total":15,"primera_ratio":6.7,"ultima_conv":5,"ultima_noconv":18,"aparicion_conv":8,"aparicion_noconv":27,"aparicion_total":35,"aparicion_ratio":22.9,"categoria":"Ficha curso"},"/centro/madrid-3/":{"primera_conv":3,"primera_noconv":43,"primera_total":46,"primera_ratio":6.5,"ultima_conv":0,"ultima_noconv":32,"aparicion_conv":7,"aparicion_noconv":56,"aparicion_total":63,"aparicion_ratio":11.1,"categoria":"Centros"},"/centros/":{"primera_conv":1,"primera_noconv":44,"primera_total":45,"primera_ratio":2.2,"ultima_conv":2,"ultima_noconv":100,"aparicion_conv":39,"aparicion_noconv":355,"aparicion_total":394,"aparicion_ratio":9.9,"categoria":"Centros"},"/cursos/coordinacion-y-gestion-de-servicios-de-atencion-domiciliaria/":{"primera_conv":1,"primera_noconv":8,"primera_total":9,"primera_ratio":11.1,"ultima_conv":4,"ultima_noconv":9,"aparicion_conv":9,"aparicion_noconv":25,"aparicion_total":34,"aparicion_ratio":26.5,"categoria":"Ficha curso"},"/centro/barcelona/":{"primera_conv":22,"primera_noconv":117,"primera_total":139,"primera_ratio":15.8,"ultima_conv":1,"ultima_noconv":74,"aparicion_conv":32,"aparicion_noconv":171,"aparicion_total":203,"aparicion_ratio":15.8,"categoria":"Centros"},"/empresa/instituto-europa/":{"primera_conv":6,"primera_noconv":52,"primera_total":58,"primera_ratio":10.3,"ultima_conv":0,"ultima_noconv":31,"aparicion_conv":6,"aparicion_noconv":61,"aparicion_total":67,"aparicion_ratio":9.0,"categoria":"Otro"},"/centro/madrid-4/":{"primera_conv":19,"primera_noconv":111,"primera_total":130,"primera_ratio":14.6,"ultima_conv":2,"ultima_noconv":62,"aparicion_conv":26,"aparicion_noconv":129,"aparicion_total":155,"aparicion_ratio":16.8,"categoria":"Centros"},"/centro/marin/":{"primera_conv":3,"primera_noconv":29,"primera_total":32,"primera_ratio":9.4,"ultima_conv":0,"ultima_noconv":14,"aparicion_conv":4,"aparicion_noconv":33,"aparicion_total":37,"aparicion_ratio":10.8,"categoria":"Centros"},"/destinatario/desempleados-as/cursos-desempleados-madrid/":{"primera_conv":11,"primera_noconv":75,"primera_total":86,"primera_ratio":12.8,"ultima_conv":0,"ultima_noconv":52,"aparicion_conv":12,"aparicion_noconv":83,"aparicion_total":95,"aparicion_ratio":12.6,"categoria":"Otro"},"/empresa/formatec/":{"primera_conv":3,"primera_noconv":33,"primera_total":36,"primera_ratio":8.3,"ultima_conv":1,"ultima_noconv":22,"aparicion_conv":4,"aparicion_noconv":41,"aparicion_total":45,"aparicion_ratio":8.9,"categoria":"Otro"},"/cursos-de/educacion/":{"primera_conv":20,"primera_noconv":72,"primera_total":92,"primera_ratio":21.7,"ultima_conv":0,"ultima_noconv":66,"aparicion_conv":35,"aparicion_noconv":126,"aparicion_total":161,"aparicion_ratio":21.7,"categoria":"Listado cursos"},"/cursos/peluqueria/":{"primera_conv":7,"primera_noconv":27,"primera_total":34,"primera_ratio":20.6,"ultima_conv":11,"ultima_noconv":27,"aparicion_conv":14,"aparicion_noconv":44,"aparicion_total":58,"aparicion_ratio":24.1,"categoria":"Ficha curso"},"/cursos/office-word-excel-access-y-power-point-2/":{"primera_conv":5,"primera_noconv":22,"primera_total":27,"primera_ratio":18.5,"ultima_conv":10,"ultima_noconv":27,"aparicion_conv":22,"aparicion_noconv":41,"aparicion_total":63,"aparicion_ratio":34.9,"categoria":"Ficha curso"},"/cursos/terapia-del-dolor/":{"primera_conv":0,"primera_noconv":6,"primera_total":6,"primera_ratio":0.0,"ultima_conv":13,"ultima_noconv":9,"aparicion_conv":34,"aparicion_noconv":38,"aparicion_total":72,"aparicion_ratio":47.2,"categoria":"Ficha curso"},"/organismo/cursos-soc/":{"primera_conv":13,"primera_noconv":93,"primera_total":106,"primera_ratio":12.3,"ultima_conv":1,"ultima_noconv":82,"aparicion_conv":17,"aparicion_noconv":115,"aparicion_total":132,"aparicion_ratio":12.9,"categoria":"Listado organismo"},"/certificado-profesionalidad-actividades-gestion-administrativa/":{"primera_conv":2,"primera_noconv":32,"primera_total":34,"primera_ratio":5.9,"ultima_conv":2,"ultima_noconv":27,"aparicion_conv":3,"aparicion_noconv":35,"aparicion_total":38,"aparicion_ratio":7.9,"categoria":"Otro"},"/cursos/desarrollo-de-proyectos-de-sistemas-de-automatizacion-industrial/":{"primera_conv":1,"primera_noconv":2,"primera_total":3,"primera_ratio":33.3,"ultima_conv":7,"ultima_noconv":10,"aparicion_conv":14,"aparicion_noconv":16,"aparicion_total":30,"aparicion_ratio":46.7,"categoria":"Ficha curso"},"/centro/gijon-c-belgica/":{"primera_conv":1,"primera_noconv":39,"primera_total":40,"primera_ratio":2.5,"ultima_conv":0,"ultima_noconv":29,"aparicion_conv":3,"aparicion_noconv":56,"aparicion_total":59,"aparicion_ratio":5.1,"categoria":"Centros"},"/cursos/diseno-de-personajes-para-producciones-de-animacion-y-videojuegos/":{"primera_conv":5,"primera_noconv":27,"primera_total":32,"primera_ratio":15.6,"ultima_conv":11,"ultima_noconv":33,"aparicion_conv":32,"aparicion_noconv":90,"aparicion_total":122,"aparicion_ratio":26.2,"categoria":"Ficha curso"},"/practicas-en-empresas/":{"primera_conv":0,"primera_noconv":21,"primera_total":21,"primera_ratio":0.0,"ultima_conv":1,"ultima_noconv":106,"aparicion_conv":43,"aparicion_noconv":313,"aparicion_total":356,"aparicion_ratio":12.1,"categoria":"Otro"},"/cursos/administracion-y-gestion-de-recursos-humanos/":{"primera_conv":0,"primera_noconv":2,"primera_total":2,"primera_ratio":0.0,"ultima_conv":12,"ultima_noconv":16,"aparicion_conv":28,"aparicion_noconv":42,"aparicion_total":70,"aparicion_ratio":40.0,"categoria":"Ficha curso"},"/cursos/mercado-energetico-y-contratacion-de-la-energia/":{"primera_conv":11,"primera_noconv":37,"primera_total":48,"primera_ratio":22.9,"ultima_conv":11,"ultima_noconv":40,"aparicion_conv":13,"aparicion_noconv":41,"aparicion_total":54,"aparicion_ratio":24.1,"categoria":"Ficha curso"},"/cursos/actividades-de-gestion-administrativa/":{"primera_conv":31,"primera_noconv":97,"primera_total":128,"primera_ratio":24.2,"ultima_conv":66,"ultima_noconv":132,"aparicion_conv":116,"aparicion_noconv":271,"aparicion_total":387,"aparicion_ratio":30.0,"categoria":"Ficha curso"},"/centro/los-realejos/":{"primera_conv":4,"primera_noconv":46,"primera_total":50,"primera_ratio":8.0,"ultima_conv":0,"ultima_noconv":36,"aparicion_conv":8,"aparicion_noconv":68,"aparicion_total":76,"aparicion_ratio":10.5,"categoria":"Centros"},"/cursos/emision-y-gestion-de-llamadas-salientes-en-un-servicio-de-teleasistencia/":{"primera_conv":45,"primera_noconv":69,"primera_total":114,"primera_ratio":39.5,"ultima_conv":50,"ultima_noconv":76,"aparicion_conv":58,"aparicion_noconv":102,"aparicion_total":160,"aparicion_ratio":36.2,"categoria":"Ficha curso"},"/cursos/inteligencia-artificial-aplicada-a-la-empresa/":{"primera_conv":9,"primera_noconv":53,"primera_total":62,"primera_ratio":14.5,"ultima_conv":18,"ultima_noconv":58,"aparicion_conv":40,"aparicion_noconv":81,"aparicion_total":121,"aparicion_ratio":33.1,"categoria":"Ficha curso"},"/cursos/desarrollo-de-aplicaciones-para-dispositivos-moviles-2/":{"primera_conv":0,"primera_noconv":7,"primera_total":7,"primera_ratio":0.0,"ultima_conv":9,"ultima_noconv":17,"aparicion_conv":21,"aparicion_noconv":66,"aparicion_total":87,"aparicion_ratio":24.1,"categoria":"Ficha curso"},"/cursos/mejora-de-la-productividad-en-las-actividades-de-gestion-administrativa/":{"primera_conv":1,"primera_noconv":5,"primera_total":6,"primera_ratio":16.7,"ultima_conv":13,"ultima_noconv":14,"aparicion_conv":37,"aparicion_noconv":52,"aparicion_total":89,"aparicion_ratio":41.6,"categoria":"Ficha curso"},"/cursos-en/barcelona/":{"primera_conv":16,"primera_noconv":81,"primera_total":97,"primera_ratio":16.5,"ultima_conv":2,"ultima_noconv":96,"aparicion_conv":50,"aparicion_noconv":202,"aparicion_total":252,"aparicion_ratio":19.8,"categoria":"Listado cursos"},"/tema-cursos/fontaneria/":{"primera_conv":16,"primera_noconv":155,"primera_total":171,"primera_ratio":9.4,"ultima_conv":2,"ultima_noconv":139,"aparicion_conv":17,"aparicion_noconv":165,"aparicion_total":182,"aparicion_ratio":9.3,"categoria":"Listado cursos"},"/centro/valencia-c-impresor-monfort/":{"primera_conv":6,"primera_noconv":56,"primera_total":62,"primera_ratio":9.7,"ultima_conv":1,"ultima_noconv":38,"aparicion_conv":11,"aparicion_noconv":67,"aparicion_total":78,"aparicion_ratio":14.1,"categoria":"Centros"},"/centro/salamanca/":{"primera_conv":6,"primera_noconv":75,"primera_total":81,"primera_ratio":7.4,"ultima_conv":0,"ultima_noconv":57,"aparicion_conv":7,"aparicion_noconv":79,"aparicion_total":86,"aparicion_ratio":8.1,"categoria":"Centros"},"/cursos/microbiologia-de-los-lacteos/":{"primera_conv":1,"primera_noconv":3,"primera_total":4,"primera_ratio":25.0,"ultima_conv":8,"ultima_noconv":15,"aparicion_conv":16,"aparicion_noconv":41,"aparicion_total":57,"aparicion_ratio":28.1,"categoria":"Ficha curso"},"/cursos/soldadura-tig-para-automocion/":{"primera_conv":5,"primera_noconv":17,"primera_total":22,"primera_ratio":22.7,"ultima_conv":10,"ultima_noconv":20,"aparicion_conv":13,"aparicion_noconv":50,"aparicion_total":63,"aparicion_ratio":20.6,"categoria":"Ficha curso"},"/destinatario/empleados-as/cursos-empleados-madrid/":{"primera_conv":5,"primera_noconv":30,"primera_total":35,"primera_ratio":14.3,"ultima_conv":0,"ultima_noconv":24,"aparicion_conv":7,"aparicion_noconv":32,"aparicion_total":39,"aparicion_ratio":17.9,"categoria":"Otro"},"/tipo-de-curso/aula-virtual-on-line/":{"primera_conv":2,"primera_noconv":110,"primera_total":112,"primera_ratio":1.8,"ultima_conv":3,"ultima_noconv":252,"aparicion_conv":150,"aparicion_noconv":636,"aparicion_total":786,"aparicion_ratio":19.1,"categoria":"Listado cursos"},"/cursos/gestion-de-eventos-de-marketing-y-comunicacion/":{"primera_conv":4,"primera_noconv":13,"primera_total":17,"primera_ratio":23.5,"ultima_conv":7,"ultima_noconv":15,"aparicion_conv":17,"aparicion_noconv":35,"aparicion_total":52,"aparicion_ratio":32.7,"categoria":"Ficha curso"},"/cursos-de/transporte-y-logistica/":{"primera_conv":13,"primera_noconv":56,"primera_total":69,"primera_ratio":18.8,"ultima_conv":1,"ultima_noconv":59,"aparicion_conv":29,"aparicion_noconv":87,"aparicion_total":116,"aparicion_ratio":25.0,"categoria":"Listado cursos"},"/cursos/confeccion-y-publicacion-de-paginas-web/":{"primera_conv":6,"primera_noconv":38,"primera_total":44,"primera_ratio":13.6,"ultima_conv":23,"ultima_noconv":66,"aparicion_conv":50,"aparicion_noconv":119,"aparicion_total":169,"aparicion_ratio":29.6,"categoria":"Ficha curso"},"https://formacion.aspasia.es/newsletter-cat/":{"primera_conv":6,"primera_noconv":21,"primera_total":27,"primera_ratio":22.2,"ultima_conv":6,"ultima_noconv":22,"aparicion_conv":6,"aparicion_noconv":22,"aparicion_total":28,"aparicion_ratio":21.4,"categoria":"Otro"},"/centro/burgos-3/":{"primera_conv":3,"primera_noconv":47,"primera_total":50,"primera_ratio":6.0,"ultima_conv":0,"ultima_noconv":27,"aparicion_conv":3,"aparicion_noconv":62,"aparicion_total":65,"aparicion_ratio":4.6,"categoria":"Centros"},"/cursos/organizacion-y-gestion-de-almacenes/":{"primera_conv":10,"primera_noconv":48,"primera_total":58,"primera_ratio":17.2,"ultima_conv":22,"ultima_noconv":72,"aparicion_conv":54,"aparicion_noconv":123,"aparicion_total":177,"aparicion_ratio":30.5,"categoria":"Ficha curso"},"/tipo-de-curso/semipresencial/":{"primera_conv":0,"primera_noconv":3,"primera_total":3,"primera_ratio":0.0,"ultima_conv":0,"ultima_noconv":20,"aparicion_conv":35,"aparicion_noconv":98,"aparicion_total":133,"aparicion_ratio":26.3,"categoria":"Listado cursos"},"/politica-de-privacidad/":{"primera_conv":3,"primera_noconv":23,"primera_total":26,"primera_ratio":11.5,"ultima_conv":4,"ultima_noconv":30,"aparicion_conv":36,"aparicion_noconv":59,"aparicion_total":95,"aparicion_ratio":37.9,"categoria":"Otro"},"/cursos/procesos-y-tecnicas-de-soldadura-tig/":{"primera_conv":4,"primera_noconv":22,"primera_total":26,"primera_ratio":15.4,"ultima_conv":8,"ultima_noconv":30,"aparicion_conv":19,"aparicion_noconv":74,"aparicion_total":93,"aparicion_ratio":20.4,"categoria":"Ficha curso"},"/cursos/dermofarmacia-y-cosmetologia/":{"primera_conv":19,"primera_noconv":52,"primera_total":71,"primera_ratio":26.8,"ultima_conv":49,"ultima_noconv":63,"aparicion_conv":69,"aparicion_noconv":115,"aparicion_total":184,"aparicion_ratio":37.5,"categoria":"Ficha curso"},"/cursos/normativa-juridica-en-materia-laboral-actualizacion/":{"primera_conv":2,"primera_noconv":23,"primera_total":25,"primera_ratio":8.0,"ultima_conv":4,"ultima_noconv":24,"aparicion_conv":9,"aparicion_noconv":35,"aparicion_total":44,"aparicion_ratio":20.5,"categoria":"Ficha curso"},"/cursos-de/seguridad-privada/":{"primera_conv":9,"primera_noconv":135,"primera_total":144,"primera_ratio":6.2,"ultima_conv":1,"ultima_noconv":122,"aparicion_conv":17,"aparicion_noconv":169,"aparicion_total":186,"aparicion_ratio":9.1,"categoria":"Listado cursos"},"/cursos/fisioterapia-y-rehabilitacion-en-personas-mayores/":{"primera_conv":0,"primera_noconv":3,"primera_total":3,"primera_ratio":0.0,"ultima_conv":17,"ultima_noconv":14,"aparicion_conv":28,"aparicion_noconv":55,"aparicion_total":83,"aparicion_ratio":33.7,"categoria":"Ficha curso"},"/cursos/inteligencia-de-negocio/":{"primera_conv":93,"primera_noconv":893,"primera_total":986,"primera_ratio":9.4,"ultima_conv":93,"ultima_noconv":874,"aparicion_conv":120,"aparicion_noconv":945,"aparicion_total":1065,"aparicion_ratio":11.3,"categoria":"Ficha curso"},"/cursos/operacion-y-control-del-sistema-electrico/":{"primera_conv":5,"primera_noconv":12,"primera_total":17,"primera_ratio":29.4,"ultima_conv":11,"ultima_noconv":14,"aparicion_conv":19,"aparicion_noconv":30,"aparicion_total":49,"aparicion_ratio":38.8,"categoria":"Ficha curso"},"/tema-cursos/mecanica/":{"primera_conv":10,"primera_noconv":153,"primera_total":163,"primera_ratio":6.1,"ultima_conv":0,"ultima_noconv":138,"aparicion_conv":10,"aparicion_noconv":155,"aparicion_total":165,"aparicion_ratio":6.1,"categoria":"Listado cursos"},"/cursos/gestion-logistica/":{"primera_conv":9,"primera_noconv":28,"primera_total":37,"primera_ratio":24.3,"ultima_conv":37,"ultima_noconv":49,"aparicion_conv":68,"aparicion_noconv":100,"aparicion_total":168,"aparicion_ratio":40.5,"categoria":"Ficha curso"},"/cursos-en/burgos/":{"primera_conv":4,"primera_noconv":53,"primera_total":57,"primera_ratio":7.0,"ultima_conv":0,"ultima_noconv":56,"aparicion_conv":5,"aparicion_noconv":96,"aparicion_total":101,"aparicion_ratio":5.0,"categoria":"Listado cursos"},"/cursos/amadeus/":{"primera_conv":72,"primera_noconv":116,"primera_total":188,"primera_ratio":38.3,"ultima_conv":79,"ultima_noconv":109,"aparicion_conv":82,"aparicion_noconv":120,"aparicion_total":202,"aparicion_ratio":40.6,"categoria":"Ficha curso"},"/organismo/cursos-soc-barcelona/":{"primera_conv":15,"primera_noconv":106,"primera_total":121,"primera_ratio":12.4,"ultima_conv":0,"ultima_noconv":83,"aparicion_conv":19,"aparicion_noconv":126,"aparicion_total":145,"aparicion_ratio":13.1,"categoria":"Listado organismo"},"/cursos/contabilidad-general-contaplus-y-fiscalidad/":{"primera_conv":3,"primera_noconv":34,"primera_total":37,"primera_ratio":8.1,"ultima_conv":37,"ultima_noconv":61,"aparicion_conv":62,"aparicion_noconv":119,"aparicion_total":181,"aparicion_ratio":34.3,"categoria":"Ficha curso"},"/tipo-de-curso/on-line/":{"primera_conv":82,"primera_noconv":536,"primera_total":618,"primera_ratio":13.3,"ultima_conv":19,"ultima_noconv":905,"aparicion_conv":518,"aparicion_noconv":1808,"aparicion_total":2326,"aparicion_ratio":22.3,"categoria":"Listado cursos"},"/organismo/cursos-sepe-barcelona/":{"primera_conv":6,"primera_noconv":36,"primera_total":42,"primera_ratio":14.3,"ultima_conv":0,"ultima_noconv":22,"aparicion_conv":8,"aparicion_noconv":38,"aparicion_total":46,"aparicion_ratio":17.4,"categoria":"Listado organismo"},"/cursos/atencion-sociosanitaria-a-personas-dependientes-en-instituciones-sociales/":{"primera_conv":34,"primera_noconv":106,"primera_total":140,"primera_ratio":24.3,"ultima_conv":48,"ultima_noconv":113,"aparicion_conv":80,"aparicion_noconv":174,"aparicion_total":254,"aparicion_ratio":31.5,"categoria":"Ficha curso"},"/empresa/aula-activa/":{"primera_conv":0,"primera_noconv":152,"primera_total":152,"primera_ratio":0.0,"ultima_conv":0,"ultima_noconv":109,"aparicion_conv":1,"aparicion_noconv":189,"aparicion_total":190,"aparicion_ratio":0.5,"categoria":"Otro"},"/cursos/servicios-auxiliares-de-estetica/":{"primera_conv":1,"primera_noconv":2,"primera_total":3,"primera_ratio":33.3,"ultima_conv":7,"ultima_noconv":13,"aparicion_conv":14,"aparicion_noconv":45,"aparicion_total":59,"aparicion_ratio":23.7,"categoria":"Ficha curso"},"/cursos-de/actividades-fisico-deportivas/":{"primera_conv":8,"primera_noconv":41,"primera_total":49,"primera_ratio":16.3,"ultima_conv":0,"ultima_noconv":38,"aparicion_conv":20,"aparicion_noconv":80,"aparicion_total":100,"aparicion_ratio":20.0,"categoria":"Listado cursos"},"/tema-cursos/actividades-sociosanitarias/":{"primera_conv":16,"primera_noconv":71,"primera_total":87,"primera_ratio":18.4,"ultima_conv":2,"ultima_noconv":70,"aparicion_conv":24,"aparicion_noconv":98,"aparicion_total":122,"aparicion_ratio":19.7,"categoria":"Listado cursos"},"/cursos/nutricion-y-dietetica-deportiva/":{"primera_conv":7,"primera_noconv":27,"primera_total":34,"primera_ratio":20.6,"ultima_conv":24,"ultima_noconv":41,"aparicion_conv":40,"aparicion_noconv":88,"aparicion_total":128,"aparicion_ratio":31.2,"categoria":"Ficha curso"},"/":{"primera_conv":582,"primera_noconv":4776,"primera_total":5358,"primera_ratio":10.9,"ultima_conv":17,"ultima_noconv":2478,"aparicion_conv":772,"aparicion_noconv":5637,"aparicion_total":6409,"aparicion_ratio":12.0,"categoria":"Home"},"/organismo/cursos-sepe-valencia/":{"primera_conv":4,"primera_noconv":18,"primera_total":22,"primera_ratio":18.2,"ultima_conv":2,"ultima_noconv":17,"aparicion_conv":7,"aparicion_noconv":22,"aparicion_total":29,"aparicion_ratio":24.1,"categoria":"Listado organismo"},"/cursos/dispositivos-y-circuitos-electricos/":{"primera_conv":7,"primera_noconv":31,"primera_total":38,"primera_ratio":18.4,"ultima_conv":18,"ultima_noconv":38,"aparicion_conv":31,"aparicion_noconv":77,"aparicion_total":108,"aparicion_ratio":28.7,"categoria":"Ficha curso"},"/cursos/sap-logistica-de-produccion/":{"primera_conv":16,"primera_noconv":40,"primera_total":56,"primera_ratio":28.6,"ultima_conv":26,"ultima_noconv":65,"aparicion_conv":65,"aparicion_noconv":140,"aparicion_total":205,"aparicion_ratio":31.7,"categoria":"Ficha curso"},"/organismo/cursos-lanbide-vitoria/":{"primera_conv":5,"primera_noconv":18,"primera_total":23,"primera_ratio":21.7,"ultima_conv":0,"ultima_noconv":18,"aparicion_conv":7,"aparicion_noconv":22,"aparicion_total":29,"aparicion_ratio":24.1,"categoria":"Listado organismo"},"/cursos/educacion-inclusiva-centrada-en-el-trastorno-de-espectro-autista/":{"primera_conv":2,"primera_noconv":11,"primera_total":13,"primera_ratio":15.4,"ultima_conv":8,"ultima_noconv":17,"aparicion_conv":25,"aparicion_noconv":48,"aparicion_total":73,"aparicion_ratio":34.2,"categoria":"Ficha curso"},"/cursos/ia-puesto-de-trabajo/":{"primera_conv":209,"primera_noconv":974,"primera_total":1183,"primera_ratio":17.7,"ultima_conv":196,"ultima_noconv":914,"aparicion_conv":247,"aparicion_noconv":1089,"aparicion_total":1336,"aparicion_ratio":18.5,"categoria":"Ficha curso"},"/cursos/autocad-2d/":{"primera_conv":10,"primera_noconv":39,"primera_total":49,"primera_ratio":20.4,"ultima_conv":13,"ultima_noconv":40,"aparicion_conv":14,"aparicion_noconv":45,"aparicion_total":59,"aparicion_ratio":23.7,"categoria":"Ficha curso"},"/cursos/ciberseguridad-para-microempresas/":{"primera_conv":0,"primera_noconv":4,"primera_total":4,"primera_ratio":0.0,"ultima_conv":6,"ultima_noconv":22,"aparicion_conv":28,"aparicion_noconv":76,"aparicion_total":104,"aparicion_ratio":26.9,"categoria":"Ficha curso"},"/planes-de-mejora-de-empleo-del-sepe-quien-puede-apuntarse/":{"primera_conv":4,"primera_noconv":269,"primera_total":273,"primera_ratio":1.5,"ultima_conv":1,"ultima_noconv":246,"aparicion_conv":5,"aparicion_noconv":269,"aparicion_total":274,"aparicion_ratio":1.8,"categoria":"Otro"},"/cursos/gestion-sostenible-de-los-residuos/":{"primera_conv":2,"primera_noconv":7,"primera_total":9,"primera_ratio":22.2,"ultima_conv":3,"ultima_noconv":11,"aparicion_conv":10,"aparicion_noconv":26,"aparicion_total":36,"aparicion_ratio":27.8,"categoria":"Ficha curso"},"/contrato-formacion-alternancia/":{"primera_conv":1,"primera_noconv":7,"primera_total":8,"primera_ratio":12.5,"ultima_conv":2,"ultima_noconv":28,"aparicion_conv":22,"aparicion_noconv":110,"aparicion_total":132,"aparicion_ratio":16.7,"categoria":"Otro"},"/cursos/nominas-y-seguridad-social-i/":{"primera_conv":37,"primera_noconv":159,"primera_total":196,"primera_ratio":18.9,"ultima_conv":40,"ultima_noconv":154,"aparicion_conv":49,"aparicion_noconv":175,"aparicion_total":224,"aparicion_ratio":21.9,"categoria":"Ficha curso"},"/organismo/cursos-sae/":{"primera_conv":1,"primera_noconv":39,"primera_total":40,"primera_ratio":2.5,"ultima_conv":0,"ultima_noconv":30,"aparicion_conv":4,"aparicion_noconv":47,"aparicion_total":51,"aparicion_ratio":7.8,"categoria":"Listado organismo"},"/tema-cursos/atencion-al-cliente/":{"primera_conv":6,"primera_noconv":91,"primera_total":97,"primera_ratio":6.2,"ultima_conv":0,"ultima_noconv":69,"aparicion_conv":11,"aparicion_noconv":93,"aparicion_total":104,"aparicion_ratio":10.6,"categoria":"Listado cursos"},"/cursos/planificacion-y-gestion-del-departamento-de-limpieza-en-establecimientos-hoteleros/":{"primera_conv":0,"primera_noconv":0,"primera_total":0,"primera_ratio":0,"ultima_conv":6,"ultima_noconv":8,"aparicion_conv":18,"aparicion_noconv":30,"aparicion_total":48,"aparicion_ratio":37.5,"categoria":"Ficha curso"},"/cursos/servicios-asistenciales-a-personas-con-dependencia/":{"primera_conv":5,"primera_noconv":7,"primera_total":12,"primera_ratio":41.7,"ultima_conv":23,"ultima_noconv":9,"aparicion_conv":41,"aparicion_noconv":32,"aparicion_total":73,"aparicion_ratio":56.2,"categoria":"Ficha curso"},"/cursos/manipulacion-de-cargas-con-carretillas-elevadoras/":{"primera_conv":6,"primera_noconv":7,"primera_total":13,"primera_ratio":46.2,"ultima_conv":12,"ultima_noconv":7,"aparicion_conv":14,"aparicion_noconv":21,"aparicion_total":35,"aparicion_ratio":40.0,"categoria":"Ficha curso"},"/quienes-somos/":{"primera_conv":1,"primera_noconv":60,"primera_total":61,"primera_ratio":1.6,"ultima_conv":2,"ultima_noconv":164,"aparicion_conv":59,"aparicion_noconv":493,"aparicion_total":552,"aparicion_ratio":10.7,"categoria":"Sobre nosotros"},"/cursos/instalacion-de-climatizacion/":{"primera_conv":17,"primera_noconv":50,"primera_total":67,"primera_ratio":25.4,"ultima_conv":23,"ultima_noconv":53,"aparicion_conv":28,"aparicion_noconv":63,"aparicion_total":91,"aparicion_ratio":30.8,"categoria":"Ficha curso"},"/tema-cursos/nutricion/":{"primera_conv":18,"primera_noconv":121,"primera_total":139,"primera_ratio":12.9,"ultima_conv":0,"ultima_noconv":104,"aparicion_conv":20,"aparicion_noconv":129,"aparicion_total":149,"aparicion_ratio":13.4,"categoria":"Listado cursos"},"/nuestros-cursos/":{"primera_conv":214,"primera_noconv":1483,"primera_total":1697,"primera_ratio":12.6,"ultima_conv":8,"ultima_noconv":1252,"aparicion_conv":307,"aparicion_noconv":1909,"aparicion_total":2216,"aparicion_ratio":13.9,"categoria":"Listado cursos"},"/cursos/marketing-online-diseno-y-promocion-de-sitios-web-2/":{"primera_conv":1,"primera_noconv":4,"primera_total":5,"primera_ratio":20.0,"ultima_conv":12,"ultima_noconv":10,"aparicion_conv":30,"aparicion_noconv":59,"aparicion_total":89,"aparicion_ratio":33.7,"categoria":"Ficha curso"},"/certificados/certificados-profesionalidad/":{"primera_conv":12,"primera_noconv":149,"primera_total":161,"primera_ratio":7.5,"ultima_conv":1,"ultima_noconv":149,"aparicion_conv":42,"aparicion_noconv":251,"aparicion_total":293,"aparicion_ratio":14.3,"categoria":"Otro"},"/cursos/interpretacion-de-planos/":{"primera_conv":30,"primera_noconv":101,"primera_total":131,"primera_ratio":22.9,"ultima_conv":32,"ultima_noconv":98,"aparicion_conv":36,"aparicion_noconv":115,"aparicion_total":151,"aparicion_ratio":23.8,"categoria":"Ficha curso"},"/cursos/crea-tu-tienda-online-con-prestashop/":{"primera_conv":8,"primera_noconv":18,"primera_total":26,"primera_ratio":30.8,"ultima_conv":9,"ultima_noconv":16,"aparicion_conv":9,"aparicion_noconv":24,"aparicion_total":33,"aparicion_ratio":27.3,"categoria":"Ficha curso"},"/organismo/cursos-sepe-asturias/":{"primera_conv":6,"primera_noconv":27,"primera_total":33,"primera_ratio":18.2,"ultima_conv":0,"ultima_noconv":24,"aparicion_conv":14,"aparicion_noconv":42,"aparicion_total":56,"aparicion_ratio":25.0,"categoria":"Listado organismo"},"/tema-cursos/electricidad/":{"primera_conv":22,"primera_noconv":214,"primera_total":236,"primera_ratio":9.3,"ultima_conv":3,"ultima_noconv":197,"aparicion_conv":24,"aparicion_noconv":234,"aparicion_total":258,"aparicion_ratio":9.3,"categoria":"Listado cursos"},"/cursos/docencia-de-la-formacion-profesional-para-el-empleo/":{"primera_conv":94,"primera_noconv":344,"primera_total":438,"primera_ratio":21.5,"ultima_conv":108,"ultima_noconv":366,"aparicion_conv":124,"aparicion_noconv":435,"aparicion_total":559,"aparicion_ratio":22.2,"categoria":"Ficha curso"},"/tema-cursos/prevencion-riesgos-laborales/":{"primera_conv":39,"primera_noconv":220,"primera_total":259,"primera_ratio":15.1,"ultima_conv":3,"ultima_noconv":189,"aparicion_conv":41,"aparicion_noconv":226,"aparicion_total":267,"aparicion_ratio":15.4,"categoria":"Listado cursos"},"/cursos/chatgpt-e-inteligencia-artificial/":{"primera_conv":11,"primera_noconv":24,"primera_total":35,"primera_ratio":31.4,"ultima_conv":19,"ultima_noconv":41,"aparicion_conv":44,"aparicion_noconv":98,"aparicion_total":142,"aparicion_ratio":31.0,"categoria":"Ficha curso"},"/cursos/actuaciones-en-primeros-auxilios/":{"primera_conv":3,"primera_noconv":22,"primera_total":25,"primera_ratio":12.0,"ultima_conv":7,"ultima_noconv":23,"aparicion_conv":9,"aparicion_noconv":30,"aparicion_total":39,"aparicion_ratio":23.1,"categoria":"Ficha curso"},"/cursos-en/valladolid/":{"primera_conv":13,"primera_noconv":103,"primera_total":116,"primera_ratio":11.2,"ultima_conv":0,"ultima_noconv":87,"aparicion_conv":25,"aparicion_noconv":169,"aparicion_total":194,"aparicion_ratio":12.9,"categoria":"Listado cursos"},"/cursos/entornos-profesionales-con-microsoft-365/":{"primera_conv":4,"primera_noconv":5,"primera_total":9,"primera_ratio":44.4,"ultima_conv":5,"ultima_noconv":9,"aparicion_conv":14,"aparicion_noconv":27,"aparicion_total":41,"aparicion_ratio":34.1,"categoria":"Ficha curso"},"/tema-cursos/vigilante/":{"primera_conv":14,"primera_noconv":201,"primera_total":215,"primera_ratio":6.5,"ultima_conv":1,"ultima_noconv":187,"aparicion_conv":16,"aparicion_noconv":219,"aparicion_total":235,"aparicion_ratio":6.8,"categoria":"Listado cursos"},"/cursos/lengua-de-signos-espanola-nivel-usuario-basico-a1/":{"primera_conv":0,"primera_noconv":1,"primera_total":1,"primera_ratio":0.0,"ultima_conv":7,"ultima_noconv":6,"aparicion_conv":19,"aparicion_noconv":26,"aparicion_total":45,"aparicion_ratio":42.2,"categoria":"Ficha curso"},"/organismo/cursos-sepe-alicante/":{"primera_conv":4,"primera_noconv":22,"primera_total":26,"primera_ratio":15.4,"ultima_conv":0,"ultima_noconv":20,"aparicion_conv":6,"aparicion_noconv":25,"aparicion_total":31,"aparicion_ratio":19.4,"categoria":"Listado organismo"},"/cursos/tratamiento-de-trastornos-afectivos-y-neurodegenerantes/":{"primera_conv":1,"primera_noconv":3,"primera_total":4,"primera_ratio":25.0,"ultima_conv":18,"ultima_noconv":13,"aparicion_conv":47,"aparicion_noconv":75,"aparicion_total":122,"aparicion_ratio":38.5,"categoria":"Ficha curso"},"/cursos/reposteria/":{"primera_conv":18,"primera_noconv":72,"primera_total":90,"primera_ratio":20.0,"ultima_conv":18,"ultima_noconv":74,"aparicion_conv":23,"aparicion_noconv":89,"aparicion_total":112,"aparicion_ratio":20.5,"categoria":"Ficha curso"},"/cursos/wordpress-en-el-sector-de-publicidad/":{"primera_conv":2,"primera_noconv":2,"primera_total":4,"primera_ratio":50.0,"ultima_conv":7,"ultima_noconv":7,"aparicion_conv":12,"aparicion_noconv":13,"aparicion_total":25,"aparicion_ratio":48.0,"categoria":"Ficha curso"},"/cursos/cuidados-de-la-persona-anciana-con-trastornos-degenerativos-enfermedades-de-parkinson-y-alzheimer-en-el-ambito-sanitario/":{"primera_conv":0,"primera_noconv":5,"primera_total":5,"primera_ratio":0.0,"ultima_conv":13,"ultima_noconv":7,"aparicion_conv":36,"aparicion_noconv":38,"aparicion_total":74,"aparicion_ratio":48.6,"categoria":"Ficha curso"},"/cursos/atencion-sociosanitaria-a-personas-en-el-domicilio/":{"primera_conv":48,"primera_noconv":183,"primera_total":231,"primera_ratio":20.8,"ultima_conv":58,"ultima_noconv":183,"aparicion_conv":91,"aparicion_noconv":228,"aparicion_total":319,"aparicion_ratio":28.5,"categoria":"Ficha curso"},"/cursos/diseno-de-moda-3d-inicial/":{"primera_conv":0,"primera_noconv":4,"primera_total":4,"primera_ratio":0.0,"ultima_conv":6,"ultima_noconv":17,"aparicion_conv":20,"aparicion_noconv":49,"aparicion_total":69,"aparicion_ratio":29.0,"categoria":"Ficha curso"},"/cursos-en/sevilla/":{"primera_conv":7,"primera_noconv":52,"primera_total":59,"primera_ratio":11.9,"ultima_conv":0,"ultima_noconv":45,"aparicion_conv":19,"aparicion_noconv":82,"aparicion_total":101,"aparicion_ratio":18.8,"categoria":"Listado cursos"},"/cursos/operaciones-basicas-de-cocina/":{"primera_conv":6,"primera_noconv":22,"primera_total":28,"primera_ratio":21.4,"ultima_conv":18,"ultima_noconv":41,"aparicion_conv":30,"aparicion_noconv":79,"aparicion_total":109,"aparicion_ratio":27.5,"categoria":"Ficha curso"},"/preguntas-frecuentes/sobre-los-cursos-en-aula-virtual/":{"primera_conv":0,"primera_noconv":90,"primera_total":90,"primera_ratio":0.0,"ultima_conv":0,"ultima_noconv":77,"aparicion_conv":3,"aparicion_noconv":168,"aparicion_total":171,"aparicion_ratio":1.8,"categoria":"Sobre nosotros"},"/glosario/materiales-didacticos/":{"primera_conv":0,"primera_noconv":257,"primera_total":257,"primera_ratio":0.0,"ultima_conv":0,"ultima_noconv":258,"aparicion_conv":0,"aparicion_noconv":259,"aparicion_total":259,"aparicion_ratio":0.0,"categoria":"Otro"},"/diferencias-entre-educacion-formal-no-formal-e-informal/":{"primera_conv":0,"primera_noconv":132,"primera_total":132,"primera_ratio":0.0,"ultima_conv":0,"ultima_noconv":133,"aparicion_conv":0,"aparicion_noconv":136,"aparicion_total":136,"aparicion_ratio":0.0,"categoria":"Otro"},"/organismo/cursos-sepe-tenerife/":{"primera_conv":2,"primera_noconv":26,"primera_total":28,"primera_ratio":7.1,"ultima_conv":0,"ultima_noconv":27,"aparicion_conv":2,"aparicion_noconv":33,"aparicion_total":35,"aparicion_ratio":5.7,"categoria":"Listado organismo"},"/cursos/teleasistencia/":{"primera_conv":14,"primera_noconv":54,"primera_total":68,"primera_ratio":20.6,"ultima_conv":15,"ultima_noconv":56,"aparicion_conv":25,"aparicion_noconv":87,"aparicion_total":112,"aparicion_ratio":22.3,"categoria":"Ficha curso"},"/empresa/aspasia-catalunya/":{"primera_conv":11,"primera_noconv":82,"primera_total":93,"primera_ratio":11.8,"ultima_conv":2,"ultima_noconv":39,"aparicion_conv":14,"aparicion_noconv":98,"aparicion_total":112,"aparicion_ratio":12.5,"categoria":"Otro"},"/tema-cursos/soldadura/":{"primera_conv":5,"primera_noconv":91,"primera_total":96,"primera_ratio":5.2,"ultima_conv":0,"ultima_noconv":87,"aparicion_conv":5,"aparicion_noconv":96,"aparicion_total":101,"aparicion_ratio":5.0,"categoria":"Listado cursos"},"/tecnicas-estudio-como-pueden-ayudar-a-tu-formacion/":{"primera_conv":0,"primera_noconv":126,"primera_total":126,"primera_ratio":0.0,"ultima_conv":0,"ultima_noconv":124,"aparicion_conv":0,"aparicion_noconv":126,"aparicion_total":126,"aparicion_ratio":0.0,"categoria":"Otro"},"/metodos-educativos-populares-educacion-infantil/":{"primera_conv":0,"primera_noconv":148,"primera_total":148,"primera_ratio":0.0,"ultima_conv":0,"ultima_noconv":144,"aparicion_conv":0,"aparicion_noconv":148,"aparicion_total":148,"aparicion_ratio":0.0,"categoria":"Otro"},"/cursos/venta-de-productos-y-servicios-turisticos/":{"primera_conv":0,"primera_noconv":5,"primera_total":5,"primera_ratio":0.0,"ultima_conv":8,"ultima_noconv":13,"aparicion_conv":15,"aparicion_noconv":35,"aparicion_total":50,"aparicion_ratio":30.0,"categoria":"Ficha curso"},"/cursos/tecnicas-de-prevencion-y-extincion-de-incendios/":{"primera_conv":4,"primera_noconv":13,"primera_total":17,"primera_ratio":23.5,"ultima_conv":5,"ultima_noconv":14,"aparicion_conv":16,"aparicion_noconv":22,"aparicion_total":38,"aparicion_ratio":42.1,"categoria":"Ficha curso"},"/funciones-ayudante-cocina/":{"primera_conv":0,"primera_noconv":168,"primera_total":168,"primera_ratio":0.0,"ultima_conv":0,"ultima_noconv":166,"aparicion_conv":1,"aparicion_noconv":168,"aparicion_total":169,"aparicion_ratio":0.6,"categoria":"Otro"},"/cursos/supervisor-a-de-limpieza/":{"primera_conv":1,"primera_noconv":1,"primera_total":2,"primera_ratio":50.0,"ultima_conv":6,"ultima_noconv":3,"aparicion_conv":11,"aparicion_noconv":17,"aparicion_total":28,"aparicion_ratio":39.3,"categoria":"Ficha curso"},"/cursos-en/madrid/":{"primera_conv":57,"primera_noconv":227,"primera_total":284,"primera_ratio":20.1,"ultima_conv":7,"ultima_noconv":239,"aparicion_conv":136,"aparicion_noconv":442,"aparicion_total":578,"aparicion_ratio":23.5,"categoria":"Listado cursos"},"/cursos/habilitacion-para-la-docencia-en-grados-a-b-c-del-sistema-de-formacion-profesional/":{"primera_conv":27,"primera_noconv":143,"primera_total":170,"primera_ratio":15.9,"ultima_conv":36,"ultima_noconv":158,"aparicion_conv":54,"aparicion_noconv":230,"aparicion_total":284,"aparicion_ratio":19.0,"categoria":"Ficha curso"},"/contacto/":{"primera_conv":3,"primera_noconv":119,"primera_total":122,"primera_ratio":2.5,"ultima_conv":5,"ultima_noconv":412,"aparicion_conv":79,"aparicion_noconv":698,"aparicion_total":777,"aparicion_ratio":10.2,"categoria":"Contacto"},"/cursos/ingles-b1-medio/":{"primera_conv":0,"primera_noconv":2,"primera_total":2,"primera_ratio":0.0,"ultima_conv":4,"ultima_noconv":19,"aparicion_conv":31,"aparicion_noconv":55,"aparicion_total":86,"aparicion_ratio":36.0,"categoria":"Ficha curso"},"/cursos-en/valencia/":{"primera_conv":9,"primera_noconv":48,"primera_total":57,"primera_ratio":15.8,"ultima_conv":0,"ultima_noconv":44,"aparicion_conv":26,"aparicion_noconv":96,"aparicion_total":122,"aparicion_ratio":21.3,"categoria":"Listado cursos"},"/destinatario/empleados-as/":{"primera_conv":11,"primera_noconv":145,"primera_total":156,"primera_ratio":7.1,"ultima_conv":4,"ultima_noconv":384,"aparicion_conv":224,"aparicion_noconv":957,"aparicion_total":1181,"aparicion_ratio":19.0,"categoria":"Otro"},"/cursos/masaje-estetico-manual-y-mecanico/":{"primera_conv":0,"primera_noconv":3,"primera_total":3,"primera_ratio":0.0,"ultima_conv":15,"ultima_noconv":8,"aparicion_conv":38,"aparicion_noconv":47,"aparicion_total":85,"aparicion_ratio":44.7,"categoria":"Ficha curso"},"/tema-cursos/monitor-ocio/":{"primera_conv":13,"primera_noconv":75,"primera_total":88,"primera_ratio":14.8,"ultima_conv":0,"ultima_noconv":63,"aparicion_conv":15,"aparicion_noconv":83,"aparicion_total":98,"aparicion_ratio":15.3,"categoria":"Listado cursos"},"/cursos/aleman-a1/":{"primera_conv":8,"primera_noconv":72,"primera_total":80,"primera_ratio":10.0,"ultima_conv":11,"ultima_noconv":64,"aparicion_conv":19,"aparicion_noconv":82,"aparicion_total":101,"aparicion_ratio":18.8,"categoria":"Ficha curso"},"/cursos/basico-de-prevencion-de-riesgos-laborales/":{"primera_conv":14,"primera_noconv":53,"primera_total":67,"primera_ratio":20.9,"ultima_conv":45,"ultima_noconv":80,"aparicion_conv":60,"aparicion_noconv":161,"aparicion_total":221,"aparicion_ratio":27.1,"categoria":"Ficha curso"},"/destinatario/desempleados-as/":{"primera_conv":37,"primera_noconv":270,"primera_total":307,"primera_ratio":12.1,"ultima_conv":10,"ultima_noconv":579,"aparicion_conv":332,"aparicion_noconv":1370,"aparicion_total":1702,"aparicion_ratio":19.5,"categoria":"Otro"},"/cursos/ingles-b1/":{"primera_conv":20,"primera_noconv":89,"primera_total":109,"primera_ratio":18.3,"ultima_conv":32,"ultima_noconv":94,"aparicion_conv":62,"aparicion_noconv":137,"aparicion_total":199,"aparicion_ratio":31.2,"categoria":"Ficha curso"},"/glosario/aula-virtual/":{"primera_conv":0,"primera_noconv":50,"primera_total":50,"primera_ratio":0.0,"ultima_conv":1,"ultima_noconv":74,"aparicion_conv":3,"aparicion_noconv":149,"aparicion_total":152,"aparicion_ratio":2.0,"categoria":"Otro"},"/cursos/ingles-a2/":{"primera_conv":11,"primera_noconv":29,"primera_total":40,"primera_ratio":27.5,"ultima_conv":33,"ultima_noconv":47,"aparicion_conv":61,"aparicion_noconv":78,"aparicion_total":139,"aparicion_ratio":43.9,"categoria":"Ficha curso"},"/cursos/atencion-sociosanitaria-a-personas-en-situacion-de-dependencia-y-o-con-discapacidad-en-el-domicilio-y-en-instituciones-sociales/":{"primera_conv":6,"primera_noconv":3,"primera_total":9,"primera_ratio":66.7,"ultima_conv":40,"ultima_noconv":19,"aparicion_conv":49,"aparicion_noconv":80,"aparicion_total":129,"aparicion_ratio":38.0,"categoria":"Ficha curso"},"/certificado-profesionalidad-gestion-integrada-rrhh/":{"primera_conv":3,"primera_noconv":25,"primera_total":28,"primera_ratio":10.7,"ultima_conv":0,"ultima_noconv":23,"aparicion_conv":9,"aparicion_noconv":32,"aparicion_total":41,"aparicion_ratio":22.0,"categoria":"Otro"},"/cursos/ingles-b2/":{"primera_conv":23,"primera_noconv":74,"primera_total":97,"primera_ratio":23.7,"ultima_conv":39,"ultima_noconv":85,"aparicion_conv":67,"aparicion_noconv":129,"aparicion_total":196,"aparicion_ratio":34.2,"categoria":"Ficha curso"},"/cursos/usuario-profesional-de-productos-fitosanitarios-nivel-basico/":{"primera_conv":26,"primera_noconv":66,"primera_total":92,"primera_ratio":28.3,"ultima_conv":28,"ultima_noconv":70,"aparicion_conv":28,"aparicion_noconv":77,"aparicion_total":105,"aparicion_ratio":26.7,"categoria":"Ficha curso"},"/cursos/aplicaciones-informaticas-de-hojas-de-calculo-nivel-inicial/":{"primera_conv":0,"primera_noconv":1,"primera_total":1,"primera_ratio":0.0,"ultima_conv":10,"ultima_noconv":9,"aparicion_conv":26,"aparicion_noconv":32,"aparicion_total":58,"aparicion_ratio":44.8,"categoria":"Ficha curso"},"/centro/guimar/":{"primera_conv":6,"primera_noconv":61,"primera_total":67,"primera_ratio":9.0,"ultima_conv":0,"ultima_noconv":41,"aparicion_conv":8,"aparicion_noconv":76,"aparicion_total":84,"aparicion_ratio":9.5,"categoria":"Centros"},"/cursos/adgd0031-gestion-de-recursos-humanos/":{"primera_conv":9,"primera_noconv":12,"primera_total":21,"primera_ratio":42.9,"ultima_conv":32,"ultima_noconv":25,"aparicion_conv":77,"aparicion_noconv":107,"aparicion_total":184,"aparicion_ratio":41.8,"categoria":"Ficha curso"}}};
+
+// ===== STATIC DATA =====
+const TOUCHES = [
+    {tipo:'Ficha curso',     conv_pct:96.9, noconv_pct:48.5},
+    {tipo:'Listado cursos',  conv_pct:38.5, noconv_pct:30.3},
+    {tipo:'Otro',            conv_pct:20.0, noconv_pct:28.6},
+    {tipo:'Home',            conv_pct:16.8, noconv_pct:16.3},
+    {tipo:'Centros',         conv_pct:6.8,  noconv_pct:6.9},
+    {tipo:'Listado organismo', conv_pct:6.1, noconv_pct:5.5},
+    {tipo:'Contacto',        conv_pct:1.7,  noconv_pct:2.0},
+    {tipo:'Sobre nosotros',  conv_pct:1.7,  noconv_pct:2.0},
+];
+
+const BEHAVIORS = [
+    {nombre:'Comparador intensivo', total:2270, conv:855, tasa:37.7, desc:'Alterna 3+ veces Ficha ↔ Listado', tag:'winner', key:'Comparador intensivo'},
+    {nombre:'Explorador desde home', total:1562, conv:359, tasa:23.0, desc:'Entra por home y explora cursos', tag:'', key:'Explorador desde home'},
+    {nombre:'Enfocado en fichas',    total:1399, conv:314, tasa:22.4, desc:'Solo visita fichas de curso', tag:'', key:'Enfocado en fichas'},
+    {nombre:'Comparador',            total:3632, conv:702, tasa:19.3, desc:'Alterna 1-2 veces Ficha ↔ Listado', tag:'', key:'Comparador'},
+    {nombre:'Directo a ficha',       total:11048,conv:1915,tasa:17.3, desc:'Entra directo a una ficha (SEO, Ads)', tag:'', key:'Directo a ficha'},
+    {nombre:'Mixto',                 total:2773, conv:288, tasa:10.4, desc:'Combina varios tipos de página', tag:'', key:'Mixto'},
+    {nombre:'Solo navega listados',  total:1716, conv:39,  tasa:2.3,  desc:'No entra a ninguna ficha', tag:'loser', key:'Solo navega listados'},
+    {nombre:'Una sola página',       total:6701, conv:34,  tasa:0.5,  desc:'Rebota en la primera página', tag:'loser', key:'Una sola página'},
+    {nombre:'Solo listado',          total:5063, conv:30,  tasa:0.6,  desc:'Solo ve un listado y se va', tag:'loser', key:'Solo listado'},
+    {nombre:'Solo home',             total:1483, conv:5,   tasa:0.3,  desc:'Solo ve la home y se va', tag:'loser', key:'Solo home'},
+];
+
+// ===== UTILS =====
+function fmt(n) { return Number(n).toLocaleString('es-ES'); }
+function fmtPct(n) { return Number(n).toFixed(1).replace('.',','); }
+function fmtSec(s) {
+    if (!s) return '0 s';
+    if (s < 60) return Math.round(s) + ' s';
+    const m = Math.floor(s/60), r = Math.round(s%60);
+    return m + 'm ' + r + 's';
+}
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]); }
+
+function ratioBadge(ratio) {
+    const cls = ratio >= 25 ? 'badge-green' : ratio >= 10 ? 'badge-amber' : 'badge-red';
+    return `<span class="badge ${cls}">${fmtPct(ratio)}%</span>`;
+}
+function ratioBadgeInline(ratio) {
+    let bg = '#FFF0EF', color = '#c0392b';
+    if (ratio >= 25) { bg = '#e8f5ee'; color = '#1a7a45'; }
+    else if (ratio >= 10) { bg = '#fff8e1'; color = '#856404'; }
+    return `<span class="panel-url-ratio" style="background:${bg};color:${color};">${fmtPct(ratio)}%</span>`;
+}
+
+function formatJourney(patron) {
+    const steps = patron.split(' → ');
+    return '<div class="journey-pattern">' + steps.map((s, i) => {
+        let cls = '';
+        if (s === 'Ficha curso') cls = 'ficha';
+        if (s === 'Home') cls = 'home';
+        return `<span class="journey-step ${cls}">${escapeHtml(s)}</span>${i < steps.length-1 ? '<span class="journey-arrow">→</span>' : ''}`;
+    }).join('') + '</div>';
+}
+
+// ===== RENDER TOUCH POINTS =====
+const touchGrid = document.getElementById('touchGrid');
+TOUCHES.forEach(t => {
+    const delta = +(t.conv_pct - t.noconv_pct).toFixed(1);
+    let dClass = 'neutral';
+    if (delta > 5) dClass = 'pos';
+    if (delta < -5) dClass = 'neg';
+    const deltaText = (delta > 0 ? '+' : '') + delta + 'pp';
+    const maxVal = Math.max(t.conv_pct, t.noconv_pct, 50);
+    const row = document.createElement('div');
+    row.className = 'touch-row';
+    row.dataset.touchCat = t.tipo;
+    row.innerHTML = `
+        <div class="touch-label">${escapeHtml(t.tipo)}</div>
+        <div class="touch-bars">
+            <div class="touch-bar-wrap">
+                <div class="touch-bar-label">Conv</div>
+                <div class="touch-bar-track"><div class="touch-bar-fill conv" style="width:${t.conv_pct/maxVal*100}%"></div></div>
+                <div class="touch-bar-value">${t.conv_pct}%</div>
+            </div>
+            <div class="touch-bar-wrap">
+                <div class="touch-bar-label">No</div>
+                <div class="touch-bar-track"><div class="touch-bar-fill noconv" style="width:${t.noconv_pct/maxVal*100}%"></div></div>
+                <div class="touch-bar-value">${t.noconv_pct}%</div>
+            </div>
+        </div>
+        <div></div>
+        <div class="touch-delta ${dClass}">${deltaText}</div>
+    `;
+    row.addEventListener('click', () => openTouchPanel(t));
+    touchGrid.appendChild(row);
+});
+
+// ===== RENDER BEHAVIORS =====
+const bGrid = document.getElementById('behaviorGrid');
+BEHAVIORS.forEach(b => {
+    const cardClass = b.tag === 'winner' ? 'winner' : (b.tag === 'loser' ? 'loser' : '');
+    const tasaClass = b.tasa >= 20 ? 'high' : '';
+    const barClass = b.tasa >= 20 ? 'high' : '';
+    const card = document.createElement('div');
+    card.className = 'behavior-card ' + cardClass;
+    card.innerHTML = `
+        <div class="behavior-name">${escapeHtml(b.nombre)}</div>
+        <div class="behavior-tasa ${tasaClass}">${fmtPct(b.tasa)}%</div>
+        <div class="behavior-meta">${fmt(b.total)} sesiones · ${fmt(b.conv)} leads</div>
+        <div style="font-size:11px; color:#7685AF; margin-top:10px; font-style:italic;">${escapeHtml(b.desc)}</div>
+        <div class="behavior-bar"><div class="behavior-bar-fill ${barClass}" style="width:${Math.min(b.tasa*2.5, 100)}%"></div></div>
+        <div class="behavior-click-hint">Ver detalle →</div>
+    `;
+    card.addEventListener('click', () => openBehaviorPanel(b));
+    bGrid.appendChild(card);
+});
+
+// ===== JOURNEYS TABLE =====
+const JOURNEYS = [
+    {patron:'Ficha curso', con_conv:1915, total:11048, tasa:17.3},
+    {patron:'Otro', con_conv:30, total:5864, tasa:0.5},
+    {patron:'Listado cursos', con_conv:28, total:4297, tasa:0.7},
+    {patron:'Home', con_conv:5, total:1483, tasa:0.3},
+    {patron:'Listado cursos → Ficha curso → Listado cursos', con_conv:185, total:1284, tasa:14.4},
+    {patron:'Listado cursos → Ficha curso', con_conv:212, total:896, tasa:23.7},
+    {patron:'Listado organismo', con_conv:2, total:766, tasa:0.3},
+    {patron:'Centros', con_conv:3, total:618, tasa:0.5},
+    {patron:'Listado cursos → Ficha curso → Listado cursos → Ficha curso → Listado cursos → Ficha curso', con_conv:234, total:488, tasa:47.9},
+    {patron:'Home → Otro', con_conv:3, total:389, tasa:0.8},
+    {patron:'Listado cursos → Ficha curso → Listado cursos → Ficha curso → Listado cursos', con_conv:75, total:334, tasa:22.5},
+    {patron:'Ficha curso → Listado cursos', con_conv:35, total:251, tasa:13.9},
+    {patron:'Home → Listado cursos', con_conv:2, total:247, tasa:0.8},
+    {patron:'Ficha curso → Listado cursos → Ficha curso', con_conv:68, total:245, tasa:27.8},
+    {patron:'Home → Otro → Ficha curso', con_conv:54, total:238, tasa:22.7},
+    {patron:'Listado organismo → Ficha curso → Listado organismo', con_conv:26, total:230, tasa:11.3},
+    {patron:'Listado cursos → Ficha curso → Listado cursos → Ficha curso', con_conv:90, total:223, tasa:40.4},
+    {patron:'Home → Ficha curso', con_conv:30, total:215, tasa:14.0},
+    {patron:'Home → Otro → Ficha curso → Otro → Ficha curso → Otro', con_conv:75, total:214, tasa:35.0},
+    {patron:'Centros → Ficha curso → Centros', con_conv:15, total:175, tasa:8.6},
+    {patron:'Ficha curso → Listado cursos → Ficha curso → Listado cursos → Ficha curso → Listado cursos', con_conv:91, total:168, tasa:54.2},
+    {patron:'Otro → Ficha curso', con_conv:29, total:134, tasa:21.6},
+    {patron:'Home → Otro → Home', con_conv:2, total:132, tasa:1.5},
+    {patron:'Listado organismo → Ficha curso', con_conv:23, total:128, tasa:18.0},
+    {patron:'Centros → Ficha curso', con_conv:23, total:123, tasa:18.7},
+    {patron:'Ficha curso → Home', con_conv:15, total:115, tasa:13.0},
+    {patron:'Ficha curso → Listado cursos → Ficha curso → Listado cursos', con_conv:38, total:107, tasa:35.5},
+    {patron:'Ficha curso → Otro → Ficha curso', con_conv:43, total:106, tasa:40.6},
+    {patron:'Home → Otro → Ficha curso → Otro', con_conv:26, total:101, tasa:25.7},
+    {patron:'Ficha curso → Otro', con_conv:12, total:92, tasa:13.0},
+    {patron:'Otro → Ficha curso → Otro', con_conv:20, total:87, tasa:23.0},
+    {patron:'Ficha curso → Listado cursos → Ficha curso → Listado cursos → Ficha curso', con_conv:30, total:85, tasa:35.3},
+    {patron:'Centros → Ficha curso → Centros → Ficha curso', con_conv:8, total:75, tasa:10.7},
+    {patron:'Home → Listado cursos → Ficha curso', con_conv:33, total:72, tasa:45.8},
+    {patron:'Otro → Ficha curso → Listado cursos → Ficha curso', con_conv:20, total:70, tasa:28.6},
+    {patron:'Otro → Ficha curso → Otro → Ficha curso', con_conv:18, total:64, tasa:28.1},
+    {patron:'Listado organismo → Ficha curso → Listado organismo → Ficha curso', con_conv:14, total:58, tasa:24.1},
+    {patron:'Home → Listado cursos → Ficha curso → Listado cursos', con_conv:20, total:55, tasa:36.4},
+    {patron:'Home → Listado cursos → Ficha curso → Listado cursos → Ficha curso → Listado cursos', con_conv:45, total:54, tasa:83.3},
+    {patron:'Otro → Listado cursos', con_conv:6, total:50, tasa:12.0},
+];
+
+let currentFilter = 'all';
+let currentSort = {field: 'tasa', asc: false};
+
+function renderJourneys() {
+    let rows = [...JOURNEYS];
+    if (currentFilter === 'high') rows = rows.filter(r => r.tasa >= 20);
+    else if (currentFilter === 'low') rows = rows.filter(r => r.tasa < 5);
+    else if (currentFilter === 'volume') rows = rows.sort((a,b) => b.total - a.total).slice(0, 20);
+    rows.sort((a, b) => {
+        const va = a[currentSort.field], vb = b[currentSort.field];
+        if (typeof va === 'string') return currentSort.asc ? va.localeCompare(vb) : vb.localeCompare(va);
+        return currentSort.asc ? va - vb : vb - va;
+    });
+    const tbody = document.getElementById('journeysTable');
+    tbody.innerHTML = '';
+    rows.forEach(r => {
+        let badgeClass = r.tasa >= 25 ? 'badge-green' : r.tasa >= 10 ? 'badge-amber' : 'badge-red';
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${formatJourney(r.patron)}</td>
+            <td class="num">${fmt(r.total)}</td>
+            <td class="num highlight">${fmt(r.con_conv)}</td>
+            <td class="num"><span class="badge ${badgeClass}">${fmtPct(r.tasa)}%</span></td>
+        `;
+        tr.addEventListener('click', () => openJourneyPanel(r));
+        tbody.appendChild(tr);
+    });
+    document.querySelectorAll('th[data-sort]').forEach(th => {
+        th.classList.remove('sort-asc', 'sort-desc');
+        if (th.dataset.sort === currentSort.field) th.classList.add(currentSort.asc ? 'sort-asc' : 'sort-desc');
+    });
+}
+renderJourneys();
+
+document.querySelectorAll('[data-filter]').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderJourneys();
+    });
+});
+
+document.querySelectorAll('th[data-sort]').forEach(th => {
+    th.addEventListener('click', () => {
+        if (currentSort.field === th.dataset.sort) currentSort.asc = !currentSort.asc;
+        else { currentSort.field = th.dataset.sort; currentSort.asc = false; }
+        renderJourneys();
+    });
+});
+
+// ===== URLS TABLE =====
+const URLS_BY_CAT = {
+    'Ficha curso': [
+        '/cursos/ia-puesto-de-trabajo/',
+        '/cursos/inteligencia-de-negocio/',
+        '/cursos/agentes-del-cambio/',
+        '/cursos/docencia-de-la-formacion-profesional-para-el-empleo/',
+        '/cursos/gestion-de-llamadas-de-teleasistencia/',
+        '/cursos/actividades-de-gestion-administrativa/',
+        '/cursos/transporte-sanitario/',
+        '/cursos/amadeus/',
+        '/cursos/ingles-a1/',
+        '/cursos/monitor-de-tiempo-libre/',
+        '/cursos/emision-y-gestion-de-llamadas-salientes-en-un-servicio-de-teleasistencia/',
+        '/cursos/atencion-sociosanitaria-a-personas-en-el-domicilio/',
+        '/cursos/dermofarmacia-y-cosmetologia/',
+        '/cursos/ingles-b2/',
+    ],
+    'Listado cursos': [
+        '/tipo-de-curso/on-line/',
+        '/nuestros-cursos/',
+        '/cursos-en/madrid/',
+        '/tipo-de-curso/aula-virtual-on-line/',
+        '/tipo-de-curso/presencial/',
+        '/cursos-de/administracion-y-gestion/',
+        '/cursos-de/sanidad/',
+        '/tema-cursos/estetica/',
+        '/cursos-de/servicios-socioculturales-y-a-la-comunidad/',
+        '/tema-cursos/prevencion-riesgos-laborales/',
+        '/cursos-en/barcelona/',
+        '/cursos-en/valencia/',
+    ],
+    'Otro': [
+        '/destinatario/desempleados-as/',
+        '/destinatario/empleados-as/',
+        '/certificados/certificados-profesionalidad/',
+        '/practicas-en-empresas/',
+        '/destinatario/autonomos/',
+        '/planes-de-mejora-de-empleo-del-sepe-quien-puede-apuntarse/',
+        '/glosario/materiales-didacticos/',
+        '/formacion-compromiso-contratacion/',
+        '/empresa/ibecon/',
+        '/empresa/aula-activa/',
+        '/funciones-ayudante-cocina/',
+        '/tecnicas-estudio-como-pueden-ayudar-a-tu-formacion/',
+    ],
+    'Centros': [
+        '/centros/centro-madrid/',
+        '/centros/centro-valladolid/',
+        '/centros/centro-bilbao/',
+        '/centros/centro-vigo/',
+        '/centros/centro-sevilla/',
+        '/centros/centro-las-palmas/',
+    ],
+    'Home': ['/'],
+};
+
+let currentCat = 'Ficha curso';
+function renderURLs() {
+    const urls = URLS_BY_CAT[currentCat] || [];
+    const tbody = document.getElementById('urlsTable');
+    tbody.innerHTML = '';
+    urls.forEach(url => {
+        const u = PANEL_DATA.urls[url];
+        if (!u) return;
+        let badgeClass = u.aparicion_ratio >= 25 ? 'badge-green' : u.aparicion_ratio >= 10 ? 'badge-amber' : 'badge-red';
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td style="font-family:ui-monospace,monospace; font-size:11px;">${escapeHtml(url)}</td>
+            <td class="num">${fmt(u.aparicion_total)}</td>
+            <td class="num highlight">${fmt(u.aparicion_conv)}</td>
+            <td class="num">${fmt(u.primera_total)}</td>
+            <td class="num"><span class="badge ${badgeClass}">${fmtPct(u.aparicion_ratio)}%</span></td>
+        `;
+        tr.addEventListener('click', () => openUrlPanel(url));
+        tbody.appendChild(tr);
+    });
+}
+renderURLs();
+
+document.querySelectorAll('[data-cat]').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-cat]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentCat = btn.dataset.cat;
+        renderURLs();
+    });
+});
+
+// ====================================================================
+// PANEL — ¡LA CLAVE!
+// ====================================================================
+const panelEl = document.getElementById('sidePanel');
+const overlayEl = document.getElementById('overlay');
+
+function openPanel() {
+    panelEl.classList.add('open');
+    overlayEl.classList.add('visible');
+}
+function closePanel() {
+    panelEl.classList.remove('open');
+    overlayEl.classList.remove('visible');
+}
+document.getElementById('panelClose').addEventListener('click', closePanel);
+overlayEl.addEventListener('click', closePanel);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
+
+function setPanelHeader(badge, title, subtitle) {
+    document.getElementById('panelBadge').textContent = badge;
+    document.getElementById('panelTitle').innerHTML = title;
+    document.getElementById('panelSubtitle').textContent = subtitle || '';
+}
+
+// ----- Render helpers -----
+function blockUrlList(title, items, formatter, hint) {
+    if (!items || items.length === 0) return '';
+    return `
+    <div class="panel-block">
+        <div class="panel-block-title">${title}${hint ? '<span class="panel-block-hint">'+hint+'</span>' : ''}</div>
+        <div class="panel-url-list">
+            ${items.map(formatter).join('')}
+        </div>
+    </div>`;
+}
+
+function formatUrlRow(item) {
+    const ratio = item.ratio !== undefined ? item.ratio : (item.total > 0 ? Math.round(item.conv/item.total*1000)/10 : 0);
+    return `
+    <div class="panel-url-item" data-url="${escapeHtml(item.url)}">
+        <div class="panel-url-path">${escapeHtml(item.url)}</div>
+        <div class="panel-url-stats">
+            <span class="panel-url-stat"><strong>${fmt(item.conv || 0)}</strong> conv</span>
+            <span class="panel-url-stat">/ ${fmt(item.noconv || 0)} no</span>
+        </div>
+        ${ratioBadgeInline(ratio)}
+    </div>`;
+}
+
+function formatLeadUrlRow(item) {
+    return `
+    <div class="panel-url-item" data-url="${escapeHtml(item.url)}">
+        <div class="panel-url-path">${escapeHtml(item.url)}</div>
+        <div class="panel-url-stats">
+            <span class="panel-url-stat"><strong style="color:#FF7F7A;">${fmt(item.leads)}</strong> leads</span>
+        </div>
+        <span></span>
+    </div>`;
+}
+
+function blockChannels(channels, totalConv, totalAll) {
+    if (!channels || channels.length === 0) return '';
+    const maxTotal = Math.max(...channels.map(c => c.total || c.count || 0));
+    const rows = channels.map(c => {
+        const conv = c.conv !== undefined ? c.conv : c.count;
+        const noconv = c.noconv !== undefined ? c.noconv : 0;
+        const total = c.total !== undefined ? c.total : c.count;
+        const ratio = c.ratio !== undefined ? c.ratio : null;
+        const barW = (total / maxTotal * 100).toFixed(1);
+        return `
+        <div class="panel-channel-row">
+            <div>
+                <div class="panel-channel-name">${escapeHtml(c.canal)}</div>
+                <div class="panel-mini-bar"><div class="panel-mini-bar-fill ${ratio && ratio >= 20 ? 'salmon' : ''}" style="width:${barW}%"></div></div>
+            </div>
+            <div class="panel-channel-stats">
+                <span><strong>${fmt(conv)}</strong> ${noconv > 0 ? '/ ' + fmt(noconv) : 'leads'}</span>
+                ${ratio !== null ? ratioBadgeInline(ratio) : ''}
+            </div>
+        </div>`;
+    }).join('');
+    return `
+    <div class="panel-block">
+        <div class="panel-block-title">Canales de adquisición<span class="panel-block-hint">Top ${channels.length}</span></div>
+        ${rows}
+    </div>`;
+}
+
+function blockKpis(kpis) {
+    return `
+    <div class="panel-kpis">
+        ${kpis.map(k => `
+            <div class="panel-kpi ${k.salmon ? 'salmon' : ''}">
+                <div class="panel-kpi-label">${escapeHtml(k.label)}</div>
+                <div class="panel-kpi-value">${k.value}</div>
+            </div>
+        `).join('')}
+    </div>`;
+}
+
+function blockInterpretation(text, type) {
+    return `<div class="panel-interpretation ${type || ''}">
+        <div class="panel-interpretation-title">${type === 'success' ? '✅ Interpretación' : type === 'warn' ? '⚠️ Interpretación' : '💡 Interpretación'}</div>
+        <p>${text}</p>
+    </div>`;
+}
+
+// ----- INTERPRETERS -----
+function interpretTasa(tasa) {
+    if (tasa >= 30) return {type:'success', text:'Ratio excelente. Este patrón es de los más eficientes del sitio — identificar qué lo facilita y replicarlo en otros flujos.'};
+    if (tasa >= 15) return {type:'success', text:'Por encima de la media. Buen comportamiento que merece reforzar con más enlaces internos y CTAs.'};
+    if (tasa >= 5)  return {type:'', text:'Ratio en rango medio. Hay margen de mejora afinando CTAs o reduciendo fricción en el paso crítico.'};
+    return {type:'warn', text:'Ratio muy bajo. El usuario navega pero no llega al formulario. Revisar visibilidad de fichas de curso y llamadas a la acción.'};
+}
+
+// ----- OPEN: TOUCH POINT (categoría) -----
+function openTouchPanel(touch) {
+    setPanelHeader('TOUCH POINT · CATEGORÍA', escapeHtml(touch.tipo), `Presencia por sesión: ${touch.conv_pct}% convertidos vs ${touch.noconv_pct}% no convertidos`);
+    
+    const delta = +(touch.conv_pct - touch.noconv_pct).toFixed(1);
+    const deltaStr = (delta > 0 ? '+' : '') + delta + 'pp';
+    
+    // Buscar URLs de esta categoría
+    const cat = touch.tipo;
+    const urlsEn = Object.entries(PANEL_DATA.urls)
+        .filter(([_, u]) => u.categoria === cat)
+        .sort((a,b) => b[1].aparicion_total - a[1].aparicion_total)
+        .slice(0, 12)
+        .map(([url, u]) => ({
+            url, conv: u.aparicion_conv, noconv: u.aparicion_noconv,
+            total: u.aparicion_total, ratio: u.aparicion_ratio
+        }));
+    
+    const kpis = [
+        {label: 'En convertidas', value: touch.conv_pct + '%', salmon: true},
+        {label: 'En no convertidas', value: touch.noconv_pct + '%'},
+        {label: 'Delta', value: deltaStr},
+    ];
+    
+    let interp = '';
+    if (delta >= 20) interp = blockInterpretation('Este tipo de página es un marcador claro de intención de conversión. Si el usuario pasa por aquí, la probabilidad de lead se dispara. Asegurar que es accesible desde cualquier parte del sitio.', 'success');
+    else if (delta >= 5) interp = blockInterpretation('Aparece algo más en sesiones convertidas. Refuerza la conversión pero no es determinante por sí solo.', '');
+    else if (delta <= -5) interp = blockInterpretation('Aparece más en sesiones que NO convierten. Puede estar distrayendo al usuario de su camino al curso. Revisar enlaces salientes de estas páginas.', 'warn');
+    else interp = blockInterpretation('Presencia neutral — está en sesiones convertidas y no convertidas por igual. No ayuda ni estorba.', '');
+    
+    document.getElementById('panelContent').innerHTML = `
+        ${blockKpis(kpis)}
+        ${interp}
+        ${blockUrlList('URLs principales en esta categoría', urlsEn, formatUrlRow, `Top ${urlsEn.length}`)}
+    `;
+    
+    attachUrlClicks();
+    openPanel();
+}
+
+// ----- OPEN: BEHAVIOR (tipo de comportamiento) -----
+function openBehaviorPanel(b) {
+    const data = PANEL_DATA.behaviors[b.key];
+    if (!data) { openPanel(); return; }
+    
+    setPanelHeader('TIPO DE COMPORTAMIENTO', escapeHtml(b.nombre), b.desc);
+    
+    const kpis = [
+        {label: 'Sesiones', value: fmt(b.total)},
+        {label: 'Leads', value: fmt(b.conv), salmon: true},
+        {label: 'Tasa', value: fmtPct(b.tasa) + '%'},
+    ];
+    
+    const engBlock = `
+        <div class="panel-block">
+            <div class="panel-block-title">Engagement en este perfil</div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                <div>
+                    <div style="font-size:10px; color:#7685AF; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:4px;">Convertidos</div>
+                    <div style="font-size:14px; color:#001F78; font-weight:600;">${fmtSec(data.duracion_mediana_conv)} · ${Math.round(data.paginas_mediana_conv)} páginas</div>
+                </div>
+                <div>
+                    <div style="font-size:10px; color:#7685AF; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:4px;">No convertidos</div>
+                    <div style="font-size:14px; color:#001F78; font-weight:600;">${fmtSec(data.duracion_mediana_noconv)} · ${Math.round(data.paginas_mediana_noconv)} páginas</div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    const dispoTotal = data.mobile_conv + data.mobile_noconv + data.desktop_conv + data.desktop_noconv;
+    const mobileTotal = data.mobile_conv + data.mobile_noconv;
+    const desktopTotal = data.desktop_conv + data.desktop_noconv;
+    const dispoBlock = dispoTotal > 0 ? `
+        <div class="panel-block">
+            <div class="panel-block-title">Reparto por dispositivo</div>
+            <div style="display:grid; gap:10px;">
+                <div>
+                    <div style="display:flex; justify-content:space-between; font-size:12px; color:#001F78; margin-bottom:4px;">
+                        <span>📱 Mobile</span>
+                        <span><strong>${fmt(mobileTotal)}</strong> sesiones · ${Math.round(mobileTotal/dispoTotal*100)}%</span>
+                    </div>
+                    <div class="panel-mini-bar"><div class="panel-mini-bar-fill salmon" style="width:${mobileTotal/dispoTotal*100}%"></div></div>
+                </div>
+                <div>
+                    <div style="display:flex; justify-content:space-between; font-size:12px; color:#001F78; margin-bottom:4px;">
+                        <span>🖥️ Desktop</span>
+                        <span><strong>${fmt(desktopTotal)}</strong> sesiones · ${Math.round(desktopTotal/dispoTotal*100)}%</span>
+                    </div>
+                    <div class="panel-mini-bar"><div class="panel-mini-bar-fill" style="width:${desktopTotal/dispoTotal*100}%"></div></div>
+                </div>
+            </div>
+        </div>
+    ` : '';
+    
+    const interp = interpretTasa(b.tasa);
+    
+    document.getElementById('panelContent').innerHTML = `
+        ${blockKpis(kpis)}
+        ${blockInterpretation(interp.text + ' ' + (b.tag === 'winner' ? 'Este perfil es uno de los más valiosos del sitio.' : b.tag === 'loser' ? 'Este perfil supone un desperdicio importante de tráfico.' : ''), interp.type)}
+        ${engBlock}
+        ${dispoBlock}
+        ${blockUrlList('🎯 Páginas de entrada más habituales', data.top_primeras, formatUrlRow, `Top ${data.top_primeras.length}`)}
+        ${blockUrlList('✅ Páginas donde convierten (última vista)', data.top_ultimas, formatLeadUrlRow, `Top ${data.top_ultimas.length}`)}
+        ${blockChannels(data.top_canales)}
+    `;
+    
+    attachUrlClicks();
+    openPanel();
+}
+
+// ----- OPEN: JOURNEY (patrón de ruta) -----
+function openJourneyPanel(j) {
+    const data = PANEL_DATA.journeys[j.patron];
+    setPanelHeader('PATRÓN DE RUTA', formatJourney(j.patron), `${fmt(j.total)} sesiones · ${fmt(j.con_conv)} leads · tasa ${fmtPct(j.tasa)}%`);
+    
+    const kpis = [
+        {label: 'Sesiones', value: fmt(j.total)},
+        {label: 'Leads', value: fmt(j.con_conv), salmon: true},
+        {label: 'Tasa', value: fmtPct(j.tasa) + '%'},
+    ];
+    
+    let content = blockKpis(kpis);
+    
+    const interp = interpretTasa(j.tasa);
+    content += blockInterpretation(interp.text, interp.type);
+    
+    if (data) {
+        const engBlock = `
+            <div class="panel-block">
+                <div class="panel-block-title">Engagement del patrón</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div>
+                        <div style="font-size:10px; color:#7685AF; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:4px;">Duración mediana</div>
+                        <div style="font-size:14px; color:#001F78; font-weight:600;">${fmtSec(data.duracion_mediana)}</div>
+                    </div>
+                    <div>
+                        <div style="font-size:10px; color:#7685AF; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:4px;">Páginas mediana</div>
+                        <div style="font-size:14px; color:#001F78; font-weight:600;">${Math.round(data.paginas_mediana)} páginas</div>
+                    </div>
+                </div>
+            </div>
+        `;
+        content += engBlock;
+        content += blockUrlList('🎯 Páginas por las que empieza este patrón', data.top_primeras, formatUrlRow, `Top ${data.top_primeras.length}`);
+        content += blockUrlList('✅ Páginas donde convierten (última vista)', data.top_ultimas, formatLeadUrlRow, `Top ${data.top_ultimas.length}`);
+        if (data.top_canales && data.top_canales.length > 0) {
+            content += blockChannels(data.top_canales);
+        }
+    } else {
+        content += `<div class="panel-empty">No hay datos detallados para este patrón.</div>`;
+    }
+    
+    document.getElementById('panelContent').innerHTML = content;
+    attachUrlClicks();
+    openPanel();
+}
+
+// ----- OPEN: URL (drill-down URL específica) -----
+function openUrlPanel(url) {
+    const data = PANEL_DATA.urls[url];
+    if (!data) { openPanel(); return; }
+    
+    setPanelHeader('URL · ' + escapeHtml(data.categoria).toUpperCase(), 
+                   `<span style="font-family:ui-monospace,monospace;font-size:15px;">${escapeHtml(url)}</span>`, 
+                   `Aparece en ${fmt(data.aparicion_total)} sesiones · ratio ${fmtPct(data.aparicion_ratio)}% convierten`);
+    
+    const kpis = [
+        {label: 'Apariciones', value: fmt(data.aparicion_total)},
+        {label: 'En convertidas', value: fmt(data.aparicion_conv), salmon: true},
+        {label: 'Ratio conv.', value: fmtPct(data.aparicion_ratio) + '%'},
+    ];
+    
+    // Bloque: como landing vs como página interna
+    const asLandingBlock = `
+        <div class="panel-block">
+            <div class="panel-block-title">Rol dentro de la sesión</div>
+            <div style="display:grid; gap:14px;">
+                <div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; font-size:12px; color:#001F78; margin-bottom:6px;">
+                        <span><strong>Como primera página (landing)</strong></span>
+                        <span>${fmt(data.primera_total)} sesiones</span>
+                    </div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:11px; color:#7685AF;">
+                        <div>Convertidas: <strong style="color:#FF7F7A;">${fmt(data.primera_conv)}</strong></div>
+                        <div>No convertidas: <strong style="color:#3a4a7a;">${fmt(data.primera_noconv)}</strong></div>
+                    </div>
+                    <div style="margin-top:6px;">
+                        ${ratioBadgeInline(data.primera_ratio)} <span style="font-size:11px; color:#7685AF; margin-left:6px;">ratio conversión como landing</span>
+                    </div>
+                </div>
+                <div style="border-top:1px solid rgba(0,31,120,0.08); padding-top:14px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; font-size:12px; color:#001F78; margin-bottom:6px;">
+                        <span><strong>Como última página (cierre de sesión)</strong></span>
+                        <span>${fmt(data.ultima_conv + data.ultima_noconv)} sesiones</span>
+                    </div>
+                    <div style="font-size:11px; color:#7685AF;">
+                        Cerró la sesión con lead: <strong style="color:#FF7F7A;">${fmt(data.ultima_conv)}</strong> veces
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Interpretación
+    let interp = '';
+    if (data.aparicion_ratio >= 30 && data.aparicion_total >= 200) {
+        interp = blockInterpretation('Página muy potente: aparece en muchas sesiones y un % alto convierte. Mantener y reforzar enlaces internos hacia ella.', 'success');
+    } else if (data.aparicion_ratio < 3 && data.aparicion_total >= 150) {
+        interp = blockInterpretation('Página con mucho tráfico pero apenas convierte. Revisar: puede ser contenido atractivo para SEO pero mal conectado con los cursos. Añadir CTAs y enlaces a fichas relacionadas.', 'warn');
+    } else if (data.primera_conv > data.ultima_conv * 2 && data.primera_total >= 100) {
+        interp = blockInterpretation('Buena como landing pero pocas veces es la página final. El usuario entra aquí, navega y convierte en otra. Funciona como puerta de entrada — cuidar su posicionamiento.', 'success');
+    } else if (data.ultima_conv >= 30) {
+        interp = blockInterpretation('Página donde cierra el lead. La ficha/landing convierte en sí misma — es una página de decisión. Reforzar CTAs y formularios visibles.', 'success');
+    } else {
+        interp = blockInterpretation('Página de paso dentro del journey. Cumple función de navegación intermedia.', '');
+    }
+    
+    document.getElementById('panelContent').innerHTML = `
+        ${blockKpis(kpis)}
+        ${interp}
+        ${asLandingBlock}
+    `;
+    
+    openPanel();
+}
+
+// Attach click delegation for URL items within the panel
+function attachUrlClicks() {
+    document.querySelectorAll('#panelContent .panel-url-item').forEach(el => {
+        const url = el.dataset.url;
+        if (!url || !PANEL_DATA.urls[url]) return;
+        el.addEventListener('click', () => openUrlPanel(url));
+    });
+}
+
+</script>
+</body>
+</html>
