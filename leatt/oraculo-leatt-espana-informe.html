@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oráculo Leatt España — Mayo 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #001F78;
+    --blue-medium: #2B88D8;
+    --blue-light: #DDEFFF;
+    --bg-surface: #F3F8FF;
+    --bg-white: #ffffff;
+    --salmon: #FF7F7A;
+    --salmon-bg: #FFF0EF;
+    --text-primary: #001F78;
+    --text-secondary: #3a4a7a;
+    --text-muted: #7685AF;
+    --border: rgba(0,31,120,0.10);
+    --border-strong: rgba(0,31,120,0.18);
+    --green: #1a7a45;
+    --green-bg: #e8f5ee;
+    --amber: #856404;
+    --amber-bg: #fff8e1;
+    --red: #c0392b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-white); color: var(--text-primary); line-height: 1.7; font-size: 15px; }
+
+  nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.96); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-strong); display: flex; align-items: center; padding: 0 32px; height: 52px; gap: 4px; }
+  .nav-brand { color: var(--navy); font-weight: 700; font-size: 13px; margin-right: 20px; white-space: nowrap; flex-shrink: 0; }
+  .nav-brand span { color: var(--salmon); }
+  .nav-links { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; }
+  .nav-links::-webkit-scrollbar { display: none; }
+  nav a { color: var(--text-muted); text-decoration: none; font-size: 12.5px; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.15s; white-space: nowrap; }
+  nav a:hover { background: var(--bg-surface); color: var(--navy); }
+  nav a.active { background: var(--navy); color: #fff; }
+
+  .hero { background: var(--navy); color: #fff; padding: 60px 48px 52px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -80px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(43,136,216,0.18) 0%, transparent 70%); pointer-events: none; }
+  .hero::after { content: ''; position: absolute; bottom: -60px; left: 200px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,127,122,0.12) 0%, transparent 70%); pointer-events: none; }
+  .hero-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue-medium); margin-bottom: 14px; }
+  .hero h1 { font-size: clamp(22px,3.5vw,34px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 10px; max-width: 680px; }
+  .hero-sub { font-size: 14px; color: rgba(255,255,255,0.65); max-width: 620px; margin-bottom: 44px; }
+  .hero-kpis { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; max-width: 1000px; }
+  .hero-kpi { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 18px 20px; }
+  .hero-kpi-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.50); margin-bottom: 6px; }
+  .hero-kpi-value { font-size: 26px; font-weight: 700; color: var(--salmon); letter-spacing: -0.02em; line-height: 1.1; }
+  .hero-kpi-desc { font-size: 11.5px; color: rgba(255,255,255,0.50); margin-top: 4px; }
+
+  .section-wrap { border-bottom: 1px solid var(--border); }
+  .section-wrap:nth-child(odd) { background: var(--bg-surface); }
+  .section-wrap:nth-child(even) { background: var(--bg-white); }
+  .section { padding: 64px 48px; max-width: 1080px; margin: 0 auto; }
+
+  .section-header { display: flex; align-items: flex-start; gap: 18px; margin-bottom: 40px; padding-bottom: 28px; border-bottom: 2px solid var(--border); }
+  .section-tag { background: var(--navy); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 12px; border-radius: 20px; white-space: nowrap; margin-top: 5px; flex-shrink: 0; }
+  .section-tag.e2 { background: #1a4a9e; }
+  .section-tag.e3 { background: #2a6aaa; }
+  .section-tag.e4 { background: var(--salmon); }
+  .section-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue-medium); margin-bottom: 6px; }
+  .section-title { font-size: clamp(22px,3.5vw,30px); font-weight: 700; color: var(--navy); letter-spacing: -0.02em; line-height: 1.2; }
+  .section-desc { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+  .content-block { margin-bottom: 40px; }
+  .block-title { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .block-title::before { content: ''; display: block; width: 4px; height: 18px; background: var(--salmon); border-radius: 2px; flex-shrink: 0; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  .card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; }
+  .card-surface { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; }
+  .card-title { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+  .card-text { font-size: 13px; color: var(--text-secondary); line-height: 1.65; }
+  .card-text strong { color: var(--navy); }
+
+  .kpi-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 20px; border-top: 3px solid var(--blue-medium); }
+  .kpi-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+  .kpi-value { font-size: 26px; font-weight: 700; color: var(--navy); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 6px; }
+  .kpi-value.salmon { color: var(--salmon); }
+  .kpi-sub { font-size: 12.5px; color: var(--text-secondary); line-height: 1.6; }
+  .kpi-sub strong { color: var(--navy); }
+
+  .badge { display: inline-block; font-size: 10.5px; font-weight: 600; padding: 3px 9px; border-radius: 20px; letter-spacing: 0.04em; margin-bottom: 8px; }
+  .badge-green { background: var(--green-bg); color: var(--green); }
+  .badge-amber { background: var(--amber-bg); color: var(--amber); }
+  .badge-red { background: #fee2e2; color: var(--red); }
+  .badge-blue { background: var(--blue-light); color: var(--navy); }
+  .badge-salmon { background: var(--salmon-bg); color: #9a3412; }
+  .badge-gray { background: #f0f0f0; color: #616268; }
+  .badge-navy { background: var(--blue-light); color: var(--navy); }
+  .badge-purple { background: #ede9fe; color: #5b21b6; }
+  .badge-v { background: var(--green-bg); color: var(--green); font-size: 10px; padding: 1px 7px; }
+  .badge-e { background: var(--amber-bg); color: var(--amber); font-size: 10px; padding: 1px 7px; }
+  .badge-h { background: #f1f5f9; color: #475569; font-size: 10px; padding: 1px 7px; }
+
+  .insight { background: var(--bg-surface); border-left: 3px solid var(--blue-medium); border-radius: 0 10px 10px 0; padding: 16px 20px; margin-top: 12px; font-size: 13.5px; color: var(--text-secondary); line-height: 1.7; }
+  .insight strong { color: var(--navy); }
+  .insight.alert { background: var(--salmon-bg); border-color: var(--salmon); }
+  .insight.success { background: var(--green-bg); border-color: var(--green); }
+  .insight.amber { background: var(--amber-bg); border-color: #d97706; }
+
+  .bar-row { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
+  .bar-label { font-size: 13px; font-weight: 500; color: var(--navy); width: 230px; flex-shrink: 0; }
+  .bar-track { flex: 1; background: var(--blue-light); border-radius: 3px; height: 8px; }
+  .bar-fill { height: 8px; border-radius: 3px; }
+  .bar-fill.high { background: var(--red); }
+  .bar-fill.mid { background: #d97706; }
+  .bar-fill.low { background: var(--green); }
+  .bar-num { font-size: 12px; font-weight: 700; color: var(--navy); width: 34px; text-align: right; }
+
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .data-table th { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); border-bottom: 2px solid var(--border-strong); padding: 10px 14px; text-align: left; }
+  .data-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: var(--bg-surface); }
+
+  .ficha-row { display: grid; grid-template-columns: 160px 1fr; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 8px; }
+  .ficha-key { background: var(--navy); color: rgba(255,255,255,0.75); font-size: 11px; font-weight: 600; padding: 12px 16px; display: flex; align-items: center; }
+  .ficha-val { background: #fff; font-size: 13px; color: var(--text-secondary); padding: 12px 16px; line-height: 1.6; }
+  .ficha-val strong { color: var(--navy); }
+
+  .comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .comp-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .comp-head { background: var(--bg-surface); padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+  .comp-name { font-size: 14px; font-weight: 700; color: var(--navy); }
+  .comp-url { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  .comp-body { padding: 16px 18px; }
+  .comp-text { font-size: 12.5px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 10px; }
+  .comp-sublabel { font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; margin-top: 10px; }
+  .comp-list { list-style: none; padding: 0; }
+  .comp-list.pros li::before { content: '+'; color: var(--green); font-weight: 700; margin-right: 5px; }
+  .comp-list.cons li::before { content: '−'; color: var(--red); font-weight: 700; margin-right: 5px; }
+  .comp-list li { font-size: 12.5px; color: var(--text-secondary); padding: 3px 0; line-height: 1.5; }
+
+  .quad-grid { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .quad-cell { padding: 22px; }
+  .quad-cell:nth-child(1) { background: #d1fae5; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .quad-cell:nth-child(2) { background: #fee2e2; border-bottom: 1px solid var(--border); }
+  .quad-cell:nth-child(3) { background: #dbeafe; border-right: 1px solid var(--border); }
+  .quad-cell:nth-child(4) { background: #fef3c7; }
+  .quad-label { font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; }
+  .quad-cell:nth-child(1) .quad-label { color: #065f46; }
+  .quad-cell:nth-child(2) .quad-label { color: #991b1b; }
+  .quad-cell:nth-child(3) .quad-label { color: #1e40af; }
+  .quad-cell:nth-child(4) .quad-label { color: #92400e; }
+  .quad-list { list-style: none; padding: 0; }
+  .quad-list li { font-size: 12.5px; color: #2a3a6a; padding: 4px 0 4px 14px; position: relative; line-height: 1.55; }
+  .quad-list li::before { content: '→'; position: absolute; left: 0; font-size: 11px; }
+
+  .ctx-card { background: #fff; border: 1px solid var(--border); border-left: 4px solid; border-radius: 8px; padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; }
+  .ctx-card.favorable { border-left-color: var(--green); }
+  .ctx-card.desfavorable { border-left-color: var(--red); }
+  .ctx-card.neutral { border-left-color: #94a3b8; }
+  .ctx-card-meta { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .ctx-dim { background: #f0f0f0; color: #616268; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 8px; border-radius: 3px; }
+  .ctx-valence { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 2px 8px; border-radius: 3px; }
+  .ctx-card.favorable .ctx-valence { background: var(--green-bg); color: var(--green); }
+  .ctx-card.desfavorable .ctx-valence { background: #fee2e2; color: var(--red); }
+  .ctx-card.neutral .ctx-valence { background: #f1f5f9; color: #475569; }
+  .ctx-title { font-size: 14px; font-weight: 700; color: var(--navy); line-height: 1.3; }
+  .ctx-text { font-size: 12.5px; color: var(--text-secondary); line-height: 1.6; }
+  .ctx-text strong { color: var(--navy); }
+  .ctx-impact { background: var(--bg-surface); padding: 8px 10px; border-radius: 5px; }
+  .ctx-impact-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin-bottom: 2px; }
+  .ctx-impl { background: rgba(43,136,216,0.06); border-left: 2px solid var(--blue-medium); padding: 8px 10px; border-radius: 0 5px 5px 0; }
+  .ctx-impl-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--blue-medium); margin-bottom: 2px; }
+  .ctx-source { font-size: 11px; color: var(--text-muted); font-style: italic; }
+
+  .comp-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; }
+  .comp-table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 700px; }
+  .comp-table th { background: var(--navy); color: #fff; font-size: 10.5px; font-weight: 600; letter-spacing: 0.04em; padding: 10px 12px; text-align: left; }
+  .comp-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; line-height: 1.5; }
+  .comp-table tr:last-child td { border-bottom: none; }
+  .comp-table tr:hover td { background: var(--bg-surface); }
+  .comp-table .client-row td { font-weight: 600; color: var(--navy); background: rgba(0,31,120,0.03); }
+
+  .persona-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .persona-head { background: var(--navy); color: #fff; padding: 22px 24px; }
+  .persona-emoji { font-size: 32px; margin-bottom: 10px; }
+  .persona-name { font-size: 19px; font-weight: 700; margin-bottom: 4px; }
+  .persona-role { font-size: 12.5px; color: rgba(255,255,255,0.65); line-height: 1.5; }
+  .persona-body { padding: 18px 22px; }
+  .persona-field { margin-bottom: 12px; }
+  .pf-label { font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 3px; }
+  .pf-value { font-size: 13px; color: var(--text-secondary); line-height: 1.65; }
+  .pf-value strong { color: var(--navy); }
+
+  .persona-full { background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--blue-medium); border-radius: 12px; padding: 22px 24px; margin-bottom: 24px; }
+  .persona-full-head { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .persona-full-name { font-size: 17px; font-weight: 700; color: var(--navy); }
+  .persona-section { margin-bottom: 14px; }
+  .persona-section-title { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+  .persona-section-num { background: var(--bg-surface); color: var(--text-muted); font-size: 10px; font-weight: 700; width: 18px; height: 18px; border-radius: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .persona-section-text { font-size: 13px; color: var(--text-secondary); line-height: 1.65; }
+  .persona-section-text strong { color: var(--navy); }
+  .msg-card { background: var(--bg-surface); border-radius: 8px; padding: 12px 14px; margin-bottom: 8px; }
+  .msg-card-title { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .msg-why { font-size: 11.5px; color: var(--text-muted); margin-bottom: 2px; }
+  .msg-cta { font-size: 11.5px; color: var(--blue-medium); font-weight: 500; }
+  .obj-card { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; margin-bottom: 8px; }
+  .obj-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 3px; }
+  .obj-text { font-size: 12.5px; color: var(--text-secondary); line-height: 1.6; }
+  .obj-text strong { color: var(--navy); }
+
+  .hyp-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; margin-bottom: 14px; }
+  .hyp-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .hyp-origin { font-size: 11px; color: var(--text-muted); font-weight: 500; }
+  .hyp-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+  .hyp-text { font-size: 12.5px; color: var(--text-secondary); line-height: 1.65; margin-top: 6px; }
+  .hyp-text strong { color: var(--navy); }
+  .veredicto { font-size: 10.5px; font-weight: 700; padding: 3px 10px; border-radius: 20px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .v-ok { background: var(--green-bg); color: var(--green); }
+  .v-partial { background: var(--amber-bg); color: var(--amber); }
+  .v-none { background: #f0f0f0; color: #616268; }
+
+  .move-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px 18px 24px; margin-bottom: 12px; border-left: 4px solid; }
+  .move-card.qw { border-left-color: var(--green); }
+  .move-card.mp { border-left-color: var(--blue-medium); }
+  .move-card.ae { border-left-color: #7c3aed; }
+  .move-type { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 5px; }
+  .move-card.qw .move-type { color: var(--green); }
+  .move-card.mp .move-type { color: var(--blue-medium); }
+  .move-card.ae .move-type { color: #7c3aed; }
+  .move-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+  .move-text { font-size: 12.5px; color: var(--text-secondary); line-height: 1.65; margin-top: 6px; }
+  .move-text strong { color: var(--navy); }
+
+  .risk { border-left: 4px solid; border-radius: 0 10px 10px 0; padding: 16px 20px; margin-bottom: 12px; }
+  .risk.high { background: #fef2f2; border-color: var(--red); }
+  .risk.mid { background: var(--amber-bg); border-color: #d97706; }
+  .risk-title { font-size: 13.5px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .risk-text { font-size: 12.5px; color: var(--text-secondary); line-height: 1.65; }
+  .risk-text strong { color: var(--navy); }
+
+  .subsection-title { font-size: 17px; font-weight: 700; color: var(--navy); margin: 36px 0 18px; display: flex; align-items: center; gap: 12px; }
+  .subsection-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .action-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; margin-bottom: 12px; }
+  .action-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
+  .action-title { font-size: 14px; font-weight: 700; color: var(--navy); }
+  .action-text { font-size: 12.5px; color: var(--text-secondary); line-height: 1.65; }
+  .action-text strong { color: var(--navy); }
+
+  .conclusion { background: var(--navy); border-radius: 12px; padding: 32px 36px; margin-top: 12px; color: #fff; }
+  .conclusion h3 { font-size: 17px; font-weight: 700; color: var(--salmon); margin-bottom: 14px; line-height: 1.3; }
+  .conclusion p { font-size: 14.5px; color: rgba(255,255,255,0.80); line-height: 1.8; margin-bottom: 10px; }
+  .conclusion p:last-child { margin-bottom: 0; }
+  .conclusion strong { color: #fff; }
+
+  footer { background: var(--navy); color: rgba(255,255,255,0.40); text-align: center; padding: 28px; font-size: 12px; }
+  footer span { color: rgba(255,255,255,0.75); }
+
+  .scroll-top { position: fixed; bottom: 24px; right: 24px; width: 40px; height: 40px; background: var(--salmon); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 8px rgba(255,127,122,0.4); transition: opacity 0.2s; opacity: 0; }
+  .scroll-top.visible { opacity: 1; }
+  .scroll-top svg { width: 16px; height: 16px; fill: #fff; }
+
+  @media (max-width: 900px) {
+    .hero { padding: 40px 24px 36px; }
+    .hero-kpis { grid-template-columns: repeat(2,1fr); }
+    .section { padding: 48px 24px; }
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .comp-grid { grid-template-columns: 1fr; }
+    .quad-grid { grid-template-columns: 1fr; }
+    .quad-cell { border-right: none !important; }
+    nav { padding: 0 16px; }
+    .nav-brand { display: none; }
+    .ficha-row { grid-template-columns: 130px 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">Leatt España · <span>Oráculo</span></div>
+  <div class="nav-links">
+    <a href="#e1">E1 — Análisis Web</a>
+    <a href="#e2">E2 — Mercado</a>
+    <a href="#e3">E3 — Buyer Personas</a>
+    <a href="#e4">E4 — Performance Real</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">Oráculo · Leatt España · Mayo 2026 · Nivel 2</div>
+  <h1>Diagnóstico estratégico integral de Leatt España</h1>
+  <p class="hero-sub">Análisis web, estudio de mercado, buyer personas y performance real con datos de GSC (18.822 clics · 929.661 impresiones) y GA4 (69.879 sesiones · funnel completo).</p>
+  <div class="hero-kpis">
+    <div class="hero-kpi">
+      <div class="hero-kpi-label">Sesiones / trimestre</div>
+      <div class="hero-kpi-value">69.879</div>
+      <div class="hero-kpi-desc">orgánico + directo + referral</div>
+    </div>
+    <div class="hero-kpi">
+      <div class="hero-kpi-label">Impresiones Google</div>
+      <div class="hero-kpi-value">929.661</div>
+      <div class="hero-kpi-desc">CTR 2,02% · 18.822 clics</div>
+    </div>
+    <div class="hero-kpi">
+      <div class="hero-kpi-label">Tasa conversión</div>
+      <div class="hero-kpi-value">0,68%</div>
+      <div class="hero-kpi-desc">478 purchases · benchmark 1-3%</div>
+    </div>
+    <div class="hero-kpi">
+      <div class="hero-kpi-label">Add-to-cart → compra</div>
+      <div class="hero-kpi-value">21%</div>
+      <div class="hero-kpi-desc">2.283 carrito → 478 compras</div>
+    </div>
+    <div class="hero-kpi">
+      <div class="hero-kpi-label">Tráfico orgánico no-marca</div>
+      <div class="hero-kpi-value">~0%</div>
+      <div class="hero-kpi-desc">top nonbrand: 25 clics (guantes mtb)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ E1 — ANÁLISIS WEB ════════════ -->
+<div class="section-wrap" id="e1-wrap">
+<div class="section" id="e1">
+  <div class="section-header">
+    <div class="section-tag">E1</div>
+    <div>
+      <div class="section-eyebrow">Entregable 1</div>
+      <div class="section-title">Análisis Web</div>
+      <div class="section-desc">Contexto del negocio, estructura digital, autoridad y oportunidades de mejora</div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Ficha de contexto</div>
+    <div class="ficha-row"><div class="ficha-key">Nombre</div><div class="ficha-val">Leatt España · leatt.es</div></div>
+    <div class="ficha-row"><div class="ficha-key">Sector</div><div class="ficha-val">Deporte y equipamiento outdoor — motociclismo y ciclismo off-road</div></div>
+    <div class="ficha-row"><div class="ficha-key">Subsector</div><div class="ficha-val">Equipación y protección técnica para motocross, enduro, MTB y adventure</div></div>
+    <div class="ficha-row"><div class="ficha-key">Modelo</div><div class="ficha-val"><strong>B2C</strong> — Tienda DTC oficial en España (Shopify)</div></div>
+    <div class="ficha-row"><div class="ficha-key">Producto</div><div class="ficha-val">Venta directa de equipación y protección técnica: collarines cervicales, cascos, petos, rodilleras, botas, gafas, guantes y ropa para Moto (MX/enduro), MTB y ADV</div></div>
+    <div class="ficha-row"><div class="ficha-key">Cliente</div><div class="ficha-val">Pilotos y riders de motocross, enduro, MTB y adventure con perfil exigente en seguridad, desde amateur hasta profesional</div></div>
+    <div class="ficha-row"><div class="ficha-key">Geografía</div><div class="ficha-val">España (tienda oficial nacional). La marca matriz Leatt Corporation opera globalmente desde Sudáfrica/EEUU.</div></div>
+    <div class="ficha-row"><div class="ficha-key">Propuesta de valor</div><div class="ficha-val">Equipación de protección técnica con tecnología propia validada científicamente, desarrollada por un médico para maximizar la seguridad en deportes de riesgo. <strong>«La Ciencia de la Emoción.»</strong></div></div>
+    <div class="ficha-row"><div class="ficha-key">Estado digital</div><div class="ficha-val">Tienda Shopify B2C oficial con catálogo completo. Web renovada recientemente. Presencia en distribuidores online (Motocard, 24MX, Quadest). Sin blog activo visible. Canal DTC en consolidación en España.</div></div>
+    <div class="ficha-row"><div class="ficha-key">Gaps (resumen)</div><div class="ficha-val">Sin blog/contenido SEO propio en español · sin captación de leads · sin reviews en web propia · canal DTC compite sin diferencial claro frente a distribuidores con mayor tráfico</div></div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">El negocio en una frase</div>
+    <div class="insight">
+      <strong>Leatt.es</strong> es la tienda oficial de Leatt Corporation en España: la marca fundada por un neurocirujano que inventó el collarín cervical para motocross y que hoy ofrece protección técnica de cabeza a pies para pilotos y riders que no quieren comprometer la seguridad.
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Qué ofrecen y a quién</div>
+    <div class="card">
+      <div class="card-text">Leatt vende equipación y protección técnica bajo tres grandes líneas: <strong>Moto</strong> (collarines, cascos, petos, botas, gafas, ropa MX/enduro), <strong>MTB</strong> (cascos, rodilleras, codos, guantes, gafas, ropa para descenso, enduro y trail) y <strong>ADV</strong> (línea específica para adventure y touring off-road de largo recorrido). El producto estrella y fundacional es el collarín cervical, que reduce hasta un <strong>89% las lesiones cervicales críticas</strong> según sus tests internos. El cliente es el piloto o rider que antepone la seguridad al precio: desde el endurista de fin de semana hasta el corredor profesional del campeonato de España o circuitos internacionales.</div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Propuesta de valor diferencial</div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="badge badge-blue">Fundada 2004</div>
+        <div class="card-title">Origen médico genuino</div>
+        <div class="card-text">El Dr. Chris Leatt, neurocirujano sudafricano, inventó el primer collarín cervical específico para deportes de motor tras presenciar la muerte de un piloto en carrera. Esta historia de propósito médico real —no de marketing— impregna toda la cultura de producto.</div>
+      </div>
+      <div class="card">
+        <div class="badge badge-green">CE certificado</div>
+        <div class="card-title">Tecnología propia verificable</div>
+        <div class="card-text">Tecnologías 6.5 Carbon Neck Brace, 3DF AirFit, CoreFlex, SureFit certificadas CE (norma 89/686/EEC) y testadas con estándares más exigentes que la normativa. Dato publicado: <strong>89% de reducción de lesiones cervicales críticas</strong>.</div>
+      </div>
+      <div class="card">
+        <div class="badge badge-salmon">Posición única</div>
+        <div class="card-title">La marca que nació para proteger</div>
+        <div class="card-text">En un mercado donde Fox Racing se vende por estilo y Alpinestars por historia de competición, Leatt ocupa la posición única de la marca que nació para proteger. Pilotos de élite que eligen Leatt por seguridad real —no solo por dinero del patrocinio— son la validación más potente.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Estructura, tono y experiencia web</div>
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-text">La web leatt.es opera sobre Shopify con estructura clara dividida en tres grandes categorías (Moto / MTB / ADV) y subcategorías por tipo de producto. El tono es técnico-aspiracional: el claim <strong>«La Ciencia de la Emoción»</strong> captura bien la dualidad de la marca (rigor técnico + pasión por el deporte). El diseño es limpio, orientado a producto, con fichas técnicas detalladas que incluyen tecnologías propias, certificaciones y especificaciones. La web funciona correctamente como tienda DTC y canal de comunicación oficial en España.</div>
+    </div>
+    <div class="block-title">Observaciones UX</div>
+    <div class="grid-2">
+      <div class="card-surface">
+        <div class="badge badge-amber">Fricción</div>
+        <div class="card-title">Arquitectura Moto / MTB / ADV</div>
+        <div class="card-text">Intuitiva para quien ya conoce su disciplina, pero puede generar fricción para nuevos usuarios que no identifican en qué segmento están (ej. un rider de enduro que practica también MTB).</div>
+      </div>
+      <div class="card-surface">
+        <div class="badge badge-red">Crítico</div>
+        <div class="card-title">Sin blog ni contenido editorial</div>
+        <div class="card-text">La web no genera tráfico informacional propio sobre técnicas de selección de protecciones, comparativas o noticias del sector. Las páginas «Explore Moto» y «Explore MTB» son landings estáticas, no un hub de contenido activo.</div>
+      </div>
+      <div class="card-surface">
+        <div class="badge badge-red">Revenue perdido</div>
+        <div class="card-title">Productos agotados sin gestión</div>
+        <div class="card-text">Productos con stock agotado visibles sin mensaje de alternativa ni opción de «avísame cuando esté disponible». Genera fricción y sensación de catálogo incompleto.</div>
+      </div>
+      <div class="card-surface">
+        <div class="badge badge-red">Conversión</div>
+        <div class="card-title">Sin reviews propias de clientes</div>
+        <div class="card-text">Las fichas de producto no incluyen reseñas propias de clientes. Las opiniones están dispersas en distribuidores externos (24MX, Motocard, Bike24). Para un producto de seguridad, el social proof es crítico para la decisión.</div>
+      </div>
+      <div class="card-surface">
+        <div class="badge badge-red">Captación</div>
+        <div class="card-title">Sin captación de leads</div>
+        <div class="card-text">No hay mecanismo visible de captación de leads (newsletter, pop-up de bienvenida, descuento por suscripción). El tráfico que llega y no compra se pierde sin posibilidad de recuperación.</div>
+      </div>
+      <div class="card-surface">
+        <div class="badge badge-amber">DTC</div>
+        <div class="card-title">Sin diferencial del canal oficial</div>
+        <div class="card-text">No hay propuesta exclusiva para comprar en leatt.es vs distribuidores: garantía extendida, acceso a productos limitados, atención directa de la marca. El comprador no tiene razón concreta para elegir la tienda oficial.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Señales de autoridad</div>
+    <div class="insight alert" style="margin-bottom:16px;">
+      La mayor señal de autoridad de Leatt es estructural: una marca fundada por un médico para resolver un problema de seguridad real tiene una credibilidad de origen que ningún departamento de marketing puede fabricar. Sin embargo, esta autoridad no se explota al máximo en la web española: no hay testimonios propios, no hay sección visible de embajadores con nombres y palmarés, y las reviews de producto están dispersas en distribuidores externos.
+    </div>
+    <table class="data-table">
+      <thead><tr><th>Tipo</th><th>Estado</th><th>Detalle</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Certificaciones</strong></td><td><span class="badge badge-green">Sí</span></td><td>Productos certificados CE según norma 89/686/EEC (EPI). Tecnologías propias testadas con estándares superiores a la normativa. Dato publicado: 89% reducción lesiones cervicales.</td></tr>
+        <tr><td><strong>Medios</strong></td><td><span class="badge badge-green">Sí</span></td><td>Cobertura editorial al lanzar la tienda oficial en España en medios especializados: Moto1Pro, MTBPro, MountainBike.es.</td></tr>
+        <tr><td><strong>Logos/pilotos</strong></td><td><span class="badge badge-red">No visible</span></td><td>No hay logos de equipos o pilotos patrocinadores visibles en leatt.es.</td></tr>
+        <tr><td><strong>Reseñas propias</strong></td><td><span class="badge badge-red">No presente</span></td><td>No hay reviews propias en leatt.es. Las opiniones de producto están en distribuidores externos (Bike24, Motocard, 24MX).</td></tr>
+        <tr><td><strong>Casos de éxito</strong></td><td><span class="badge badge-red">No presente</span></td><td>Referencia genérica a «pilotos de clase mundial» y ambassadors sin nombres ni palmarés publicados en la web española.</td></tr>
+        <tr><td><strong>Premios</strong></td><td><span class="badge badge-red">No presente</span></td><td>No se detectan premios o reconocimientos del sector publicados en leatt.es.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Estado del marketing digital</div>
+    <div class="grid-2">
+      <div class="kpi-card">
+        <div class="kpi-label">Presencia en buscadores</div>
+        <div class="kpi-value">Marca · sí</div>
+        <div class="kpi-sub">La marca Leatt tiene presencia orgánica consolidada a nivel global. La tienda leatt.es está indexada y recibe tráfico de marca. <strong>Sin blog propio activo, la captación de tráfico informacional es prácticamente nula desde el dominio .es.</strong></div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Contenidos</div>
+        <div class="kpi-value salmon">No activo</div>
+        <div class="kpi-sub">No se detecta blog ni estrategia de contenidos activa en leatt.es. Las páginas «Explore Moto» y «Explore MTB» son landings editoriales estáticas. La producción de contenido en español sobre la marca o el sector es mínima.</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Captación de leads</div>
+        <div class="kpi-value salmon">No visible</div>
+        <div class="kpi-sub">No hay mecanismo visible de captación de leads (newsletter, pop-up, leadmagnet, concurso). El tráfico que visita la web sin comprar no tiene ninguna vía de retención.</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Paid media</div>
+        <div class="kpi-value">No detectado</div>
+        <div class="kpi-sub">No se detectan evidencias de campaña paid específica para España (sin UTMs en URLs visibles, sin landing pages de campaña). Es probable que haya inversión paid a nivel global pero sin segmentación geográfica visible.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Oportunidades de mejora digital</div>
+    <div class="subsection-title" style="margin-top:0;">SEO y Contenido</div>
+    <div class="grid-2" style="margin-bottom:16px;">
+      <div class="action-card">
+        <div class="action-head"><div class="action-title">Blog técnico en español</div><span class="badge badge-red">Alta</span></div>
+        <div class="action-text">Guías de selección de protecciones («cómo elegir collarín», «diferencias entre niveles de protección», «qué significa la certificación CE») que posicionen leatt.es como referencia técnica y capturen tráfico informacional del sector. Ningún competidor en España tiene este contenido.</div>
+      </div>
+      <div class="action-card">
+        <div class="action-head"><div class="action-title">Contenido sobre tecnologías propias</div><span class="badge badge-amber">Media</span></div>
+        <div class="action-text">Crear contenido específico sobre 3DF AirFit, 6.5 Carbon, CoreFlex que compita en búsquedas de comparativas de protecciones entre marcas. La historia del Dr. Leatt y los datos clínicos son argumentos únicos que ningún competidor puede replicar.</div>
+      </div>
+    </div>
+    <div class="subsection-title">CRO</div>
+    <div class="grid-2" style="margin-bottom:16px;">
+      <div class="action-card">
+        <div class="action-head"><div class="action-title">Reviews propias en fichas de producto</div><span class="badge badge-red">Alta</span></div>
+        <div class="action-text">Especialmente en collarines y cascos, donde el social proof de seguridad es determinante para la decisión. Las reviews están en los distribuidores — recuperarlas y centralizarlas en leatt.es es prioritario.</div>
+      </div>
+      <div class="action-card">
+        <div class="action-head"><div class="action-title">Diferencial exclusivo del canal DTC</div><span class="badge badge-red">Alta</span></div>
+        <div class="action-text">Beneficios exclusivos de comprar en leatt.es frente a distribuidores: garantía extendida, acceso a productos limitados, atención directa de la marca. Razones concretas para no ir a Motocard o 24MX.</div>
+      </div>
+      <div class="action-card">
+        <div class="action-head"><div class="action-title">«Avísame cuando esté disponible»</div><span class="badge badge-amber">Media</span></div>
+        <div class="action-text">Resolver la fricción de productos agotados: añadir botón de notificación en lugar de mostrar stock agotado sin alternativa. Varios SKU top están en posición #1 de Google con 0% CTR por estar agotados.</div>
+      </div>
+      <div class="action-card">
+        <div class="action-head"><div class="action-title">Bundles por disciplina</div><span class="badge badge-amber">Media</span></div>
+        <div class="action-text">«Kit enduro completo Leatt»: collarín + casco + peto + rodilleras con precio especial DTC exclusivo. Aumenta el ticket medio y refuerza la razón para comprar directo.</div>
+      </div>
+    </div>
+    <div class="subsection-title">Email y SEM</div>
+    <div class="grid-2">
+      <div class="action-card">
+        <div class="action-head"><div class="action-title">Newsletter + leadmagnet técnico</div><span class="badge badge-red">Alta</span></div>
+        <div class="action-text">«Guía de protección completa para enduro: qué necesitas, por qué y cómo elegirlo». El rider que está considerando comprar equipación por primera vez es el cliente más valioso. La guía posiciona a Leatt como referencia antes de la decisión de compra.</div>
+      </div>
+      <div class="action-card">
+        <div class="action-head"><div class="action-title">Google Shopping + retargeting</div><span class="badge badge-amber">Media</span></div>
+        <div class="action-text">Activar Google Shopping en España para collarines 6.5 Carbon y cascos GPX con keywords de intención de compra directa. Retargeting a visitantes de fichas de producto de collarines y cascos premium que no compraron — son los productos con mayor valor de pedido.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Gaps detectados</div>
+    <div class="grid-2">
+      <div class="card-surface"><div class="badge badge-red">Crítico</div><div class="card-title">Sin blog ni contenido editorial en español</div><div class="card-text">Leatt pierde todo el tráfico informacional del sector (guías de collarines, comparativas de cascos, noticias enduro/MTB) que Fox Racing y Alpinestars sí capturan con sus webs locales.</div></div>
+      <div class="card-surface"><div class="badge badge-red">Crítico</div><div class="card-title">Sin captación de leads</div><div class="card-text">No hay newsletter, pop-up ni leadmagnet visible. El tráfico que no convierte en primera visita se pierde sin posibilidad de recuperación.</div></div>
+      <div class="card-surface"><div class="badge badge-red">Crítico</div><div class="card-title">Reviews fuera de la web oficial</div><div class="card-text">Las opiniones de clientes están en 24MX, Motocard y Bike24 pero no en leatt.es. Para un producto de seguridad donde el social proof es crítico, esto es un gap de conversión relevante.</div></div>
+      <div class="card-surface"><div class="badge badge-amber">Medio</div><div class="card-title">DTC sin diferencial vs distribuidores</div><div class="card-text">Motocard, 24MX y Motardinn tienen más tráfico, más reviews y mejor posicionamiento orgánico en muchas búsquedas de producto Leatt. Sin propuesta exclusiva, el comprador no tiene razón para ir a leatt.es.</div></div>
+      <div class="card-surface"><div class="badge badge-amber">Medio</div><div class="card-title">Sin comunidad propia en España</div><div class="card-text">Presencia en redes sociales en español prácticamente inexistente. La marca no genera engagement local ni aprovecha el potencial del contenido de motocross/MTB en Instagram y YouTube.</div></div>
+      <div class="card-surface"><div class="badge badge-amber">Medio</div><div class="card-title">Sin embajadores identificados en España</div><div class="card-text">La marca tiene una historia de adopción por pilotos profesionales pero no la muestra de forma visible en leatt.es, perdiendo uno de sus diferenciales más potentes.</div></div>
+    </div>
+  </div>
+
+  <div class="conclusion">
+    <h3>Valoración global E1</h3>
+    <p>Leatt.es es la expresión digital de una marca con un diferencial genuino y difícilmente replicable: nació para proteger cuando otros nacieron para competir en precio o estilo. La historia del Dr. Chris Leatt inventando el collarín cervical es un activo de marca del que pocas empresas del sector pueden presumir, y los pilotos profesionales que eligen Leatt por seguridad —no solo por dinero— son la validación más potente que existe.</p>
+    <p>El problema es que esta historia y esta credibilidad no se traducen suficientemente en la presencia digital española. La tienda funciona bien como escaparate de producto, pero le falta el motor de atracción (contenido, SEO, email) que convierta leatt.es en el destino natural del piloto español que quiere la mejor protección. Mientras tanto, los distribuidores establecidos absorben gran parte del tráfico de intención de compra.</p>
+    <p>El potencial de crecimiento del canal DTC en España es alto: el mercado off-road crece (CAGR ~7%), el piloto español es técnicamente exigente y la propuesta de valor de Leatt conecta directamente con sus prioridades. <strong>El trabajo es construir el canal de atracción propio.</strong></p>
+  </div>
+</div>
+</div>
+
+<!-- ════════════ E2 — ESTUDIO DE MERCADO ════════════ -->
+<div class="section-wrap" id="e2-wrap">
+<div class="section" id="e2">
+  <div class="section-header">
+    <div class="section-tag e2">E2</div>
+    <div>
+      <div class="section-eyebrow">Entregable 2</div>
+      <div class="section-title">Estudio de Mercado</div>
+      <div class="section-desc">Contexto sectorial, estructura competitiva, benchmark de competidores y diagnóstico estratégico</div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Resumen de partida</div>
+    <div class="insight">
+      Leatt España (leatt.es) es la tienda DTC oficial de Leatt Corporation en el mercado español: equipación y protección técnica para motocross, enduro, MTB y adventure. Opera en el sector deportivo off-road con un diferencial fundacional único — tecnología de protección diseñada por un médico. Geografía: España (tienda .es), con potencial en LATAM.
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Contexto sectorial</div>
+    <div class="grid-2">
+      <div class="ctx-card favorable">
+        <div class="ctx-card-meta"><span class="ctx-dim">Político</span><span class="ctx-valence">Favorable</span></div>
+        <div class="ctx-title">Endurecimiento normativo DGT: más protección obligatoria</div>
+        <div class="ctx-text">La Orden INT/210/2025 de la DGT amplía los requisitos de equipación obligatoria para motoristas. A partir de 2026 se implementan nuevas reformas. La UE impulsa legislación para hacer obligatoria más equipación con certificación CE (EN 1621, EN 17092).</div>
+        <div class="ctx-impact"><div class="ctx-impact-label">Impacto en el sector</div><div class="ctx-text">Aumenta la adopción de protecciones certificadas, especialmente en categorías (espalda, pecho) que hasta ahora eran opcionales. Crece la demanda de productos con certificación CE verificada.</div></div>
+        <div class="ctx-impl"><div class="ctx-impl-label">Implicación</div><div class="ctx-text">Leatt, cuyos productos cumplen y superan la normativa CE, está bien posicionada para beneficiarse. La comunicación de sus certificaciones gana relevancia frente a productos sin aval.</div></div>
+        <div class="ctx-source">maximo-moto.com — Seguridad moto España 2026: normativa DGT <span class="badge badge-v">✓ Verificado</span></div>
+      </div>
+      <div class="ctx-card favorable">
+        <div class="ctx-card-meta"><span class="ctx-dim">Económico</span><span class="ctx-valence">Favorable</span></div>
+        <div class="ctx-title">Crecimiento sostenido del mercado off-road (CAGR 7,15%)</div>
+        <div class="ctx-text">El mercado global de motocicletas off-road se proyecta de 14.810M USD en 2025 a 22.410M USD en 2031 (CAGR 7,15%). Leatt Corporation reportó ingresos de <strong>61,91M USD en 2025 (+41% interanual)</strong>, con ingresos internacionales de 44,64M (+47%).</div>
+        <div class="ctx-impact"><div class="ctx-impact-label">Impacto en el sector</div><div class="ctx-text">Expansión del número de practicantes de enduro, motocross y MTB, generando más demanda de equipación en todos los segmentos de precio.</div></div>
+        <div class="ctx-impl"><div class="ctx-impl-label">Implicación</div><div class="ctx-text">Mercado en expansión que favorece el crecimiento del canal DTC de leatt.es. La palanca es capturar riders nuevos antes de que los fidelice la competencia.</div></div>
+        <div class="ctx-source">GlobeNewswire — Off-Road Motorcycle Market Analysis 2026 <span class="badge badge-v">✓ Verificado</span></div>
+      </div>
+      <div class="ctx-card favorable">
+        <div class="ctx-card-meta"><span class="ctx-dim">Social</span><span class="ctx-valence">Favorable</span></div>
+        <div class="ctx-title">Creciente concienciación sobre la seguridad en deportes de riesgo</div>
+        <div class="ctx-text">El piloto moderno de enduro y MTB es más consciente del riesgo que hace una década. En campeonatos profesionales, el airbag ya es obligatorio. La comunidad de riders (foros, YouTube, Instagram) difunde contenido comparativo sobre protecciones y tecnología.</div>
+        <div class="ctx-impact"><div class="ctx-impact-label">Impacto en el sector</div><div class="ctx-text">Aumenta la disposición a pagar por protección premium verificada. El boca a boca técnico entre pilotos se convierte en el principal canal de recomendación.</div></div>
+        <div class="ctx-impl"><div class="ctx-impl-label">Implicación</div><div class="ctx-text">La historia de Leatt (fundada para proteger, collarines con datos científicos) conecta directamente con el rider que prioriza la seguridad. Es el momento más favorable de la historia de la marca para comunicar este diferencial en España.</div></div>
+        <div class="ctx-source">moremotoracing.com — Equipamiento para enduro y motocross 2025 <span class="badge badge-e">≈ Estimación</span></div>
+      </div>
+      <div class="ctx-card neutral">
+        <div class="ctx-card-meta"><span class="ctx-dim">Tecnológico</span><span class="ctx-valence">Neutral</span></div>
+        <div class="ctx-title">Airbags y materiales avanzados como tecnología disruptiva</div>
+        <div class="ctx-text">Los sistemas de airbag (Alpinestars Tech-Air, Dainese D-Air) y materiales inteligentes (D3O, compuestos de carbono) están redefiniendo el concepto de protección más allá de las protecciones rígidas tradicionales.</div>
+        <div class="ctx-impact"><div class="ctx-impact-label">Impacto en el sector</div><div class="ctx-text">Las marcas que no innoven quedan relegadas a segmentos de precio/estilo. La percepción de innovación es clave para el segmento premium.</div></div>
+        <div class="ctx-impl"><div class="ctx-impl-label">Implicación</div><div class="ctx-text">Leatt ya innova en collarines y materiales (6.5 Carbon, 3DF AirFit, CoreFlex). El riesgo es que Alpinestars posicione su Tech-Air como alternativa superior en algunos segmentos. Leatt debe comunicar activamente sus ventajas tecnológicas.</div></div>
+        <div class="ctx-source">alpinestars.com — Tech-Air Autonomous Airbag Systems <span class="badge badge-e">≈ Estimación</span></div>
+      </div>
+      <div class="ctx-card neutral">
+        <div class="ctx-card-meta"><span class="ctx-dim">Ecológico</span><span class="ctx-valence">Neutral</span></div>
+        <div class="ctx-title">Presión medioambiental sobre el motocross y auge del eléctrico</div>
+        <div class="ctx-text">El motocross y el enduro de gasolina enfrentan creciente presión (ruido, emisiones, restricciones). Emergen motos eléctricas off-road (KTM Freeride E-XC, Stark Varg) que atraen a nuevos perfiles de rider sin barrera de ruido.</div>
+        <div class="ctx-impact"><div class="ctx-impact-label">Impacto en el sector</div><div class="ctx-text">A corto plazo, el mercado de gasolina sigue dominando. A medio plazo, el eléctrico puede expandir el número de practicantes y la demanda de equipación.</div></div>
+        <div class="ctx-impl"><div class="ctx-impl-label">Implicación</div><div class="ctx-text">La línea MTB de Leatt (sin dependencia del motor de gasolina) es un hedge natural ante la transición energética. El segmento adventure/gravel también se beneficia de esta tendencia.</div></div>
+        <div class="ctx-source">Hipótesis de mercado <span class="badge badge-h">Hipótesis</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Estructura competitiva</div>
+    <div class="bar-row"><div class="bar-label">Rivalidad entre competidores</div><div class="bar-track"><div class="bar-fill high" style="width:80%"></div></div><div class="bar-num">4/5</div></div>
+    <div class="bar-row"><div class="bar-label">Poder de los clientes</div><div class="bar-track"><div class="bar-fill high" style="width:80%"></div></div><div class="bar-num">4/5</div></div>
+    <div class="bar-row"><div class="bar-label">Amenaza de sustitutos</div><div class="bar-track"><div class="bar-fill mid" style="width:60%"></div></div><div class="bar-num">3/5</div></div>
+    <div class="bar-row"><div class="bar-label">Amenaza de nuevos entrantes</div><div class="bar-track"><div class="bar-fill low" style="width:40%"></div></div><div class="bar-num">2/5</div></div>
+    <div class="bar-row"><div class="bar-label">Poder de proveedores</div><div class="bar-track"><div class="bar-fill low" style="width:40%"></div></div><div class="bar-num">2/5</div></div>
+    <div class="insight" style="margin-top:16px;">
+      <strong>Sector de competencia moderada — barreras altas en protección premium.</strong> El sector de equipación técnica off-road en España tiene competencia moderada. Las barreras de entrada en protección premium certificada son altas (certificaciones CE, laboratorios, credibilidad científica, adopción por élite). La rivalidad es intensa entre marcas establecidas, pero el mercado crece y hay hueco para quien se diferencie con credencial técnica verificable.
+    </div>
+    <div class="insight alert" style="margin-top:10px;">
+      Leatt puede crecer sin entrar en guerra de precios si consolida su posición como la marca de referencia en tecnología de protección. El riesgo no es un entrante nuevo, sino perder cuota ante Fox Racing o Alpinestars si no activa su canal de contenidos y comunidad en España.
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Análisis de competidores</div>
+    <div class="comp-grid">
+      <div class="comp-card">
+        <div class="comp-head"><div><div class="comp-name">Fox Racing España</div><div class="comp-url">foxracing.es</div></div><span class="badge badge-red">Líder de mercado</span></div>
+        <div class="comp-body">
+          <div class="comp-text"><strong>Líder de reconocimiento en MX/MTB en España.</strong> Sede Fox Racing Europe en Barcelona. Presencia en más de 100 países. Desde 1974. Combina protección, estilo y lifestyle — la elección del piloto que también quiere lucir fuera de la pista.</div>
+          <div class="comp-sublabel">Fortalezas</div>
+          <ul class="comp-list pros">
+            <li>Líder de reconocimiento de marca en España y a nivel global</li>
+            <li>Presencia en todas las disciplinas: MX, MTB, ADV, lifestyle casual</li>
+            <li>foxracing.es con blog activo, envío gratuito desde 49 € y pago en 3 cuotas con Klarna</li>
+            <li>Red de distribución muy amplia: tienda propia + shop in shop + distribuidores</li>
+            <li>Atletas patrocinados de alto perfil con gran comunidad en redes</li>
+          </ul>
+          <div class="comp-sublabel">Debilidades</div>
+          <ul class="comp-list cons">
+            <li>Tecnología de protección propia menos diferencial que Leatt o Alpinestars</li>
+            <li>Posicionamiento lifestyle diluye la credibilidad técnica de seguridad</li>
+            <li>Mayor dependencia del factor estético/moda que del dato científico</li>
+          </ul>
+          <div class="comp-sublabel">Presencia digital</div>
+          <div class="comp-text">La más fuerte del sector en España. foxracing.es tiene tráfico orgánico relevante gracias al blog y la notoriedad de marca. Redes sociales con cientos de miles de seguidores globales. Campañas de paid social activas.</div>
+        </div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-head"><div><div class="comp-name">Alpinestars España</div><div class="comp-url">es.alpinestars.com</div></div><span class="badge badge-amber">Premium MotoGP/F1</span></div>
+        <div class="comp-body">
+          <div class="comp-text"><strong>La marca premium del motorismo profesional.</strong> Elegida por campeones del mundo. Tecnología Tech-Air (airbag autónomo) como innovación de protección más avanzada del mercado.</div>
+          <div class="comp-sublabel">Fortalezas</div>
+          <ul class="comp-list pros">
+            <li>Tech-Air (airbag autónomo CE) como diferencial tecnológico de primer nivel</li>
+            <li>Historia y credibilidad en MotoGP, F1 y competición de máximo nivel</li>
+            <li>Gama muy completa: moto (carretera, MX, off-road), MTB, auto y sportswear</li>
+            <li>Pilotos de MotoGP, F1, MX y enduro de primer nivel mundial</li>
+          </ul>
+          <div class="comp-sublabel">Debilidades</div>
+          <ul class="comp-list cons">
+            <li>Tech-Air (600-1.000 €) limita la adopción en enduro/MX por precio</li>
+            <li>Menos presencia activa en el segmento enduro puro frente a Leatt o Fox</li>
+            <li>Distribución mayorista (CDC Sport) puede generar fricción en el canal DTC</li>
+          </ul>
+          <div class="comp-sublabel">Presencia digital</div>
+          <div class="comp-text">Sólida a nivel global. La web española tiene catálogo completo y actualizado. Blog técnico activo. Fuerte presencia en MotoGP como canal de visibilidad.</div>
+        </div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-head"><div><div class="comp-name">Troy Lee Designs EU</div><div class="comp-url">troyleedesigns.eu</div></div><span class="badge badge-blue">Premium MTB/Estilo</span></div>
+        <div class="comp-body">
+          <div class="comp-text"><strong>El arte aplicado a la protección.</strong> Marca estadounidense con fuerte identidad artística y gráfica. Cascos y equipación con diseño gráfico diferencial, adoptados por pilotos profesionales de DH y Enduro MTB.</div>
+          <div class="comp-sublabel">Fortalezas</div>
+          <ul class="comp-list pros">
+            <li>Identidad visual y artística muy diferencial — diseños de casco inconfundibles</li>
+            <li>Fuerte en MTB descenso (DH) y enduro bike donde el casco es el producto estrella</li>
+            <li>Comunidad de riders muy fiel a la marca</li>
+          </ul>
+          <div class="comp-sublabel">Debilidades</div>
+          <ul class="comp-list cons">
+            <li>Sin tecnología de protección propia diferencial como Leatt</li>
+            <li>Sin tienda oficial .es — solo vía terceros (Alltricks, Lordgun, Pedalmoto)</li>
+            <li>Gama limitada frente a Fox o Alpinestars (gama moto menos completa)</li>
+          </ul>
+          <div class="comp-sublabel">Presencia digital</div>
+          <div class="comp-text">Buena a nivel global, más débil en España específicamente. No tiene dominio .es propio — la web es troyleedesigns.eu. Fuerte presencia en redes con contenido artístico y de pilotos DH.</div>
+        </div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-head"><div><div class="comp-name">O'Neal</div><div class="comp-url">oneal.eu</div></div><span class="badge badge-gray">Precio medio-bajo MX</span></div>
+        <div class="comp-body">
+          <div class="comp-text"><strong>Equipación de motocross accesible y funcional.</strong> Marca alemana para el piloto amateur y el rider de fin de semana que busca la relación calidad-precio sin necesidad de producto premium. Distribución en España vía 24MX y Motocard.</div>
+          <div class="comp-sublabel">Fortalezas</div>
+          <ul class="comp-list pros">
+            <li>Precio muy competitivo en el segmento entrada/medio</li>
+            <li>Buena distribución en España vía 24MX y Motocard</li>
+            <li>Oferta completa de ropa, cascos y protecciones básicas para MX</li>
+          </ul>
+          <div class="comp-sublabel">Debilidades</div>
+          <ul class="comp-list cons">
+            <li>Sin tecnología de protección propia certificada de alto nivel</li>
+            <li>Percepción de marca económica que limita el upsell hacia productos premium</li>
+            <li>Nula presencia en MTB y adventure de gama alta</li>
+          </ul>
+          <div class="comp-sublabel">Presencia digital</div>
+          <div class="comp-text">Baja en España. Sin web propia .es con contenido editorial. Presencia principalmente a través de distribuidores.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Tabla comparativa de competidores</div>
+    <div class="comp-table-wrap">
+      <table class="comp-table">
+        <thead><tr><th>Competidor</th><th>Catálogo Moto/MTB/ADV</th><th>Tecnología protección</th><th>Precio</th><th>Presencia digital España</th><th>Distribución local</th><th>Embajadores/pilotos</th><th>Modelo venta</th></tr></thead>
+        <tbody>
+          <tr class="client-row"><td>Leatt España</td><td>Alta: Moto (MX, Enduro), MTB y ADV completo</td><td>Muy alta: 6.5 Carbon, 3DF AirFit — 89% reducción lesiones</td><td>Premium (collarín 200-500 €, cascos 200-600 €)</td><td>Media-baja: tienda sólida, sin blog ni RRSS locales</td><td>Amplia vía terceros (24MX, Motocard, Quadest). DTC en construcción.</td><td>Sí global. Sin embajadores .es identificados.</td><td>DTC + distribuidores. DTC prioritario.</td></tr>
+          <tr><td>Fox Racing España</td><td>Muy alta: MX, MTB, lifestyle, ADV</td><td>Media. Sin aval científico diferencial propio.</td><td>Alto-Medio. Envío gratis desde 49 €, pago en cuotas Klarna.</td><td>Muy alta: foxracing.es + blog activo + RRSS masivas</td><td>Muy amplia: tienda propia + shop in shop + distribuidores</td><td>Muy alta: decenas de pilotos MX y MTB de alto perfil</td><td>DTC + distribución muy amplia. DTC con gran peso.</td></tr>
+          <tr><td>Alpinestars España</td><td>Muy alta: Moto (carretera, MX, enduro, ADV), MTB, auto, sportswear</td><td>Muy alta: Tech-Air (airbag autónomo CE). D-Air en MotoGP.</td><td>Premium-muy alto. Tech-Air desde 600 €.</td><td>Alta: es.alpinestars.com catálogo completo. Blog menos activo que Fox.</td><td>Amplia vía CDC Sport + distribuidores online</td><td>Muy alta: MotoGP, F1, MX y enduro de primer nivel</td><td>Principalmente distribuidores. DTC en construcción.</td></tr>
+          <tr><td>Troy Lee Designs EU</td><td>Media: fuerte en MTB. Gama moto más limitada.</td><td>Media-baja. Sin datos científicos propios certificados.</td><td>Premium: cascos MTB 209-350 €+</td><td>Media-baja. Sin dominio .es. Solo vía terceros en España.</td><td>Media: Alltricks, Lordgun, Pedalmoto, Hibike. Sin tienda oficial .es.</td><td>Alta en MTB DH y enduro bike. Pilotos de descenso top.</td><td>Principalmente distribuidores. Sin DTC propio en España.</td></tr>
+          <tr><td>O'Neal</td><td>Media: ropa, cascos y protecciones básicas MX. Sin ADV ni MTB premium.</td><td>Baja. Sin certificaciones ni tecnología propia.</td><td>Económico: entrada/medio.</td><td>Baja en España. Sin web .es con contenido editorial.</td><td>Media vía 24MX y Motocard.</td><td>Baja. Sin pilotos de alto perfil patrocinados.</td><td>Principalmente distribuidores.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Diagnóstico estratégico</div>
+    <div class="quad-grid">
+      <div class="quad-cell">
+        <div class="quad-label">Fortalezas</div>
+        <ul class="quad-list">
+          <li><strong>Historia fundacional médica real:</strong> Dr. Chris Leatt, neurocirujano, inventó el collarín después de presenciar la muerte de un piloto. Activo irreplicable.</li>
+          <li><strong>Tecnología certificada con datos cuantificables:</strong> 6.5 Carbon, 3DF AirFit, CoreFlex, SureFit — certificadas CE y testadas con estándares superiores. 89% reducción lesiones cervicales publicado en revista médica.</li>
+          <li><strong>Catálogo completo Moto / MTB / ADV:</strong> ningún competidor especializado en protección cubre el mismo espectro.</li>
+          <li><strong>Tienda DTC oficial en España:</strong> canal propio consolidado en Shopify. Margen superior a la distribución.</li>
+          <li><strong>Adopción por pilotos de élite por mérito técnico:</strong> la validación más potente que existe en el sector.</li>
+        </ul>
+      </div>
+      <div class="quad-cell">
+        <div class="quad-label">Debilidades</div>
+        <ul class="quad-list">
+          <li><strong>Sin contenido editorial en español:</strong> Leatt pierde todo el tráfico informacional del sector que Fox captura con su blog activo.</li>
+          <li><strong>DTC sin diferencial claro:</strong> Motocard y 24MX capturan más tráfico de búsqueda de producto Leatt que la propia tienda oficial.</li>
+          <li><strong>Sin embajadores ni pilotos identificados públicamente en España:</strong> la marca depende del reconocimiento global pero no lo traduce en presencia local.</li>
+          <li><strong>Sin captación de leads ni email marketing activo.</strong></li>
+          <li><strong>Asociación principalmente al collarín cervical:</strong> el resto del catálogo tiene menor notoriedad y puede percibirse como extensión forzada.</li>
+        </ul>
+      </div>
+      <div class="quad-cell">
+        <div class="quad-label">Oportunidades</div>
+        <ul class="quad-list">
+          <li><strong>Endurecimiento normativo DGT (Orden INT/210/2025)</strong> y tendencia UE hacia más protección obligatoria CE: creciente demanda de productos con aval técnico verificable.</li>
+          <li><strong>Mercado off-road en expansión (CAGR 7,15%)</strong> y boom del MTB en España post-COVID: más practicantes = más demanda de equipación.</li>
+          <li><strong>Hueco comunicacional:</strong> ningún competidor ha construido en España un hub de contenido técnico sobre protección off-road. El primero se convierte en referencia.</li>
+          <li><strong>Segmento ADV en crecimiento</strong> sin líder de protección técnica claro: la línea ADV de Leatt puede ser la primera en posicionarse.</li>
+          <li><strong>Canal DTC con mayor margen</strong> que la distribución: activar el canal propio mejora la rentabilidad y la relación directa con el cliente.</li>
+        </ul>
+      </div>
+      <div class="quad-cell">
+        <div class="quad-label">Amenazas</div>
+        <ul class="quad-list">
+          <li><strong>Fox Racing tiene presencia digital, comunidad y presupuesto muy superiores.</strong> Si Leatt no activa su canal propio, Fox seguirá capturando a los riders nuevos.</li>
+          <li><strong>Alpinestars Tech-Air (airbag autónomo)</strong> puede percibirse como tecnología del futuro frente a protecciones rígidas, especialmente en adventure y enduro de largo recorrido.</li>
+          <li><strong>Distribuidores online (24MX, Motocard) capturan el tráfico de intención de compra</strong> de productos Leatt y pueden presionar precios o priorizar otras marcas.</li>
+          <li><strong>Falta de visibilidad de embajadores locales</strong> hace vulnerable el posicionamiento ante pilotos españoles que no se identifican con figuras internacionales.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Cruces estratégicos</div>
+    <div class="grid-2">
+      <div class="card"><div class="badge badge-green">F + O · Estrategia ofensiva</div><div class="card-text">La historia fundacional médica (F1) + la normativa más exigente (O1) + el mercado creciendo (O2) son el contexto perfecto para construir un hub de contenido técnico en español que convierta a leatt.es en la referencia del rider que quiere entender la protección antes de comprar. Nadie lo ha hecho aún (O3) y Leatt tiene la credibilidad para hacerlo.</div></div>
+      <div class="card"><div class="badge badge-red">D + A · Estrategia defensiva</div><div class="card-text">El gap de presencia digital (D1, D2) unido a la amenaza de los distribuidores (A3) puede resolverse construyendo propuesta exclusiva DTC: bundles, acceso anticipado a producto, guía de selección personalizada y reviews propias de clientes. Razones concretas para comprar en leatt.es y no en Motocard.</div></div>
+      <div class="card"><div class="badge badge-blue">F + A · Estrategia de protección</div><div class="card-text">La tecnología verificable (F2) es el mejor escudo ante el Tech-Air de Alpinestars (A2): los datos de eficacia del collarín en prevención de lesiones cervicales son irrebatibles y ningún airbag puede sustituir esa función en off-road puro. Comunicar eso activamente es la defensa estratégica más sólida.</div></div>
+      <div class="card"><div class="badge badge-amber">D + O · Estrategia de reorientación</div><div class="card-text">La debilidad en comunidad local (D3, D4) puede convertirse en oportunidad: identificar y patrocinar a 2-3 pilotos españoles de enduro/MTB con presencia orgánica en redes (no necesariamente top de campeonato, sí con comunidad real) que sean embajadores auténticos del posicionamiento de seguridad de la marca.</div></div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Plan de acción</div>
+    <div class="subsection-title" style="margin-top:0;">⚡ Quick Wins — Alta prioridad</div>
+    <div class="action-card">
+      <div class="action-head"><div class="action-title">Lanzar blog técnico en leatt.es con 6-10 artículos fundacionales</div><div style="display:flex;gap:6px;flex-wrap:wrap;"><span class="badge badge-red">Alta</span><span class="badge badge-amber">Media dificultad</span></div></div>
+      <div class="action-text">Guía de selección de collarín, cómo elegir el nivel de protección, qué significa CE EN 1621, diferencias entre cascos de enduro y MTB.<br><strong>Por qué:</strong> Ningún competidor en España tiene este contenido en español. El tráfico informacional de búsquedas de «mejor collarín moto», «cómo elegir protección enduro» es muy alto y leatt.es no captura nada de él actualmente.</div>
+    </div>
+    <div class="action-card">
+      <div class="action-head"><div class="action-title">Implementar captura de leads con leadmagnet técnico</div><div style="display:flex;gap:6px;flex-wrap:wrap;"><span class="badge badge-red">Alta</span><span class="badge badge-green">Baja dificultad</span></div></div>
+      <div class="action-text">«Guía de protección completa para enduro: qué necesitas, por qué y cómo elegirlo». El rider que está considerando comprar equipación por primera vez es el cliente más valioso. Una guía técnica gratuita posiciona a Leatt como la referencia antes de la decisión de compra.</div>
+    </div>
+    <div class="action-card">
+      <div class="action-head"><div class="action-title">Reviews propias de clientes + «avísame cuando esté disponible»</div><div style="display:flex;gap:6px;flex-wrap:wrap;"><span class="badge badge-red">Alta</span><span class="badge badge-green">Baja dificultad</span></div></div>
+      <div class="action-text">El social proof en un producto de seguridad es crítico para la decisión. Las reviews están en los distribuidores, no en la tienda oficial. Recuperarlas y centralizarlas en leatt.es es prioritario. Resolver el botón de notificación en productos agotados es la palanca de revenue inmediato más fácil.</div>
+    </div>
+    <div class="subsection-title">📅 Medio Plazo — 1-3 meses</div>
+    <div class="action-card">
+      <div class="action-head"><div class="action-title">Identificar 2-3 embajadores españoles de enduro o MTB con comunidad real</div><div style="display:flex;gap:6px;flex-wrap:wrap;"><span class="badge badge-red">Alta</span><span class="badge badge-amber">Media dificultad</span></div></div>
+      <div class="action-text">Riders con 10.000-100.000 seguidores como embajadores auténticos de la seguridad Leatt en España. La adopción por razón técnica (no solo por dinero) es el diferencial de Leatt. Mostrar eso con figuras locales que la comunidad española reconozca convierte el argumento corporativo en algo personal y creíble.</div>
+    </div>
+    <div class="action-card">
+      <div class="action-head"><div class="action-title">Desarrollar bundles de equipación por disciplina exclusivos en leatt.es</div><div style="display:flex;gap:6px;flex-wrap:wrap;"><span class="badge badge-red">Alta</span><span class="badge badge-amber">Media dificultad</span></div></div>
+      <div class="action-text">«Kit Enduro Completo Leatt», «Kit MTB Enduro Leatt» con precio y condiciones exclusivos no disponibles en distribuidores. Es la razón más concreta para comprar en leatt.es frente a Motocard o 24MX. Aumenta el ticket medio y establece el canal DTC como la mejor opción para el equipado completo.</div>
+    </div>
+    <div class="action-card">
+      <div class="action-head"><div class="action-title">Activar Google Shopping en España para collarines y cascos premium</div><div style="display:flex;gap:6px;flex-wrap:wrap;"><span class="badge badge-amber">Media</span><span class="badge badge-amber">Media dificultad</span></div></div>
+      <div class="action-text">Google Shopping + retargeting a visitantes de fichas de producto de alto valor que no compraron. El piloto que busca «collarín Leatt» en Google y aterriza en Motocard está perdido para el DTC. Recuperar esa búsqueda es la palanca de captación más directa.</div>
+    </div>
+    <div class="subsection-title">🎯 Apuesta Estratégica — 6-24 meses</div>
+    <div class="action-card">
+      <div class="action-head"><div class="action-title">Posicionar la línea ADV como el referente de protección técnica para adventure/enduro de largo recorrido</div><div style="display:flex;gap:6px;flex-wrap:wrap;"><span class="badge badge-amber">Media</span><span class="badge badge-red">Alta dificultad</span></div></div>
+      <div class="action-text">El motorista de adventure es un perfil con mayor poder adquisitivo, mayor concienciación sobre seguridad y menor fidelidad a marcas de MX puro. Fox Racing y Troy Lee Designs no tienen línea ADV propia. Leatt puede ser el primero en este espacio.<br><strong>Recursos:</strong> Contenido específico ADV, embajadores de adventure touring (motoristas con ruta larga, Dakar amateur, viajeros en moto off-road), campañas en medios especializados adventure.<br><strong>Riesgo:</strong> El segmento ADV en España está aún madurando. Si el mercado tarda en crecer, la inversión puede tardar en rentabilizarse.</div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Riesgos a vigilar</div>
+    <div class="risk mid">
+      <div class="risk-title">Monitorear la penetración de Alpinestars Tech-Air en el segmento enduro español</div>
+      <div class="risk-text">Si el airbag se convierte en estándar de facto, Leatt necesita posicionar el collarín como tecnología complementaria (no sustituible) con datos científicos. El airbag protege el torso pero no la cervical como el collarín. Son tecnologías complementarias, no sustitutivas. Sin embargo, la percepción del mercado puede no entenderlo así si Alpinestars lo comunica mejor.</div>
+      <div class="risk-text" style="margin-top:8px;"><strong>Cómo monitorizarlo:</strong> Seguimiento mensual de menciones «Tech-Air vs collarín» en foros españoles, YouTube y grupos de Facebook. KPI: porcentaje de riders que conocen que collarín y airbag son complementarios.</div>
+    </div>
+  </div>
+
+  <div class="conclusion">
+    <h3>Valoración y próximos pasos E2</h3>
+    <p>Leatt tiene el diferencial más sólido y auténtico del sector de protección off-road en España: una historia fundacional médica real, tecnología certificada con datos cuantificables y la validación de pilotos que eligen la marca por mérito técnico. En un mercado en expansión (+7,15% CAGR) y con regulaciones que cada vez exigen más protección certificada, el viento sopla a favor.</p>
+    <p>El problema es que todo ese activo no está explotado en el mercado español: sin contenido editorial, sin embajadores locales, sin email marketing y con el canal DTC compitiendo en desventaja frente a distribuidores con mayor tráfico. <strong>Los próximos 12 meses son la ventana para construir la presencia digital que la marca merece</strong> antes de que Fox Racing consolide aún más su liderazgo comunicacional en España.</p>
+  </div>
+</div>
+</div>
+
+<!-- ════════════ E3 — BUYER PERSONAS ════════════ -->
+<div class="section-wrap" id="e3-wrap">
+<div class="section" id="e3">
+  <div class="section-header">
+    <div class="section-tag e3">E3</div>
+    <div>
+      <div class="section-eyebrow">Entregable 3</div>
+      <div class="section-title">Buyer Personas</div>
+      <div class="section-desc">Los tres perfiles de compra principales de Leatt España con dolores, canales y palancas de comunicación</div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Tarjetas resumen de los buyer personas</div>
+    <div class="grid-3">
+      <div class="persona-card">
+        <div class="persona-head"><div class="persona-emoji">🏍️</div><div class="persona-name">Marcos, 36</div><div class="persona-role">B2C · Piloto de enduro y motocross amateur-intermedio<br>No negocia con su seguridad</div></div>
+        <div class="persona-body">
+          <div class="persona-field"><div class="pf-label">Dolor principal</div><div class="pf-value">Tiene miedo real a las consecuencias de una caída grave. Ha visto accidentes cerca de él y sabe que el equipo barato no protege de verdad.</div></div>
+          <div class="persona-field"><div class="pf-label">Mensaje clave</div><div class="pf-value"><strong>«Leatt no es caro. Es lo que tienes que pagar para no jugártela con tu cuello y tu espalda.»</strong></div></div>
+          <div class="persona-field"><div class="pf-label">Canal prioritario</div><div class="pf-value">YouTube reviews técnicos + foros enduro españoles + Instagram</div></div>
+        </div>
+      </div>
+      <div class="persona-card">
+        <div class="persona-head" style="background:#1a4a9e;"><div class="persona-emoji">🚵</div><div class="persona-name">Javier, 31</div><div class="persona-role">B2C · Rider de MTB descenso y enduro bike<br>Nivel técnico alto</div></div>
+        <div class="persona-body">
+          <div class="persona-field"><div class="pf-label">Dolor principal</div><div class="pf-value">El mercado está lleno de equipación de moda que prioriza el look. Él necesita protección certificada que no le frene en la bici.</div></div>
+          <div class="persona-field"><div class="pf-label">Mensaje clave</div><div class="pf-value"><strong>«Certificado CE. Diseñado por un neurocirujano. Los demás fabrican ropa. Leatt fabrica protección.»</strong></div></div>
+          <div class="persona-field"><div class="pf-label">Canal prioritario</div><div class="pf-value">YouTube MTB específico + Instagram + foros Pinkbike/Mtbmad</div></div>
+        </div>
+      </div>
+      <div class="persona-card">
+        <div class="persona-head" style="background:#2a6aaa;"><div class="persona-emoji">🏕️</div><div class="persona-name">Carlos, 46</div><div class="persona-role">B2C · Motorista adventure/ADV de largo recorrido<br>Conciencia del riesgo</div></div>
+        <div class="persona-body">
+          <div class="persona-field"><div class="pf-label">Dolor principal</div><div class="pf-value">Hace rutas largas solo o en grupo pequeño, lejos de asistencia médica. Una caída en pista puede ser catastrófica. No se fía de marcas que no justifican científicamente su protección.</div></div>
+          <div class="persona-field"><div class="pf-label">Mensaje clave</div><div class="pf-value"><strong>«Cuando estás a 200 km de civilización, no quieres llevar protección bonita. Quieres llevar la mejor.»</strong></div></div>
+          <div class="persona-field"><div class="pf-label">Canal prioritario</div><div class="pf-value">Grupos Facebook ADV Spain + YouTube de viajeros en moto + foros TT y Horizonte Infinito</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARCOS -->
+  <div class="subsection-title">Desarrollo extendido — Marcos, 36</div>
+  <div class="persona-full">
+    <div class="persona-full-head">
+      <div style="font-size:40px;">🏍️</div>
+      <div><div class="persona-full-name">Marcos, 36 — Piloto de enduro y motocross amateur-intermedio que no negocia con su seguridad</div><div style="font-size:12px;color:var(--text-muted);margin-top:4px;">B2C · YouTube + Foros + Instagram · Decisión en 2-6 semanas de investigación</div></div>
+    </div>
+    <div class="grid-2">
+      <div>
+        <div class="persona-section"><div class="persona-section-title"><span class="persona-section-num">1</span>Demográficos</div><div class="persona-section-text">Varón, 34-40 años, residente en ciudad mediana o zona con acceso a pistas (Madrid, Valencia, Murcia, Andalucía). Ingreso medio-alto (35.000-55.000 €/año). Trabaja en sector técnico, construcción, ingeniería o comercial. Con pareja e hijos pequeños.</div></div>
+        <div class="persona-section"><div class="persona-section-title"><span class="persona-section-num">2</span>Entorno</div><div class="persona-section-text">Su entorno familiar convive con cierta tensión respecto al motocross — la pareja acepta pero no entiende el riesgo. Eso refuerza su necesidad de justificar la inversión en seguridad con argumentos sólidos. Sus amigos del grupo de riders son su comunidad de referencia técnica. La experiencia de un compañero con una lesión cervical es el detonante más frecuente de la compra Leatt.</div></div>
+        <div class="persona-section"><div class="persona-section-title"><span class="persona-section-num">3</span>Trabajo y motivación</div><div class="persona-section-text">Trabaja a jornada completa. El fin de semana es su tiempo de libertad y disfrute físico. No puede permitirse un accidente que le deje fuera de juego semanas — económica ni emocionalmente. Eso convierte la protección en una inversión racional, no en un gasto.</div></div>
+        <div class="persona-section"><div class="persona-section-title"><span class="persona-section-num">4</span>Comportamiento de búsqueda</div><div class="persona-section-text">Investiga durante semanas antes de comprar. Ve reviews completos en YouTube (EnduroPal, Moto1Pro, Vital MX). Lee foros como enduristas.com. Compara fichas técnicas. Desconfía del marketing sin datos. Valora enormemente el respaldo científico y los testimonios de pilotos profesionales.</div></div>
+        <div class="persona-section"><div class="persona-section-title"><span class="persona-section-num">5</span>Problema</div><div class="persona-section-text">Sabe que las protecciones baratas no están realmente certificadas para los impactos que sufre en enduro o motocross. La pregunta no es si caerá, sino cuándo. El collarín de cuello y el protector de espalda son sus mayores preocupaciones.</div></div>
+        <div class="persona-section"><div class="persona-section-title"><span class="persona-section-num">6</span>Miedos</div><div class="persona-section-text">Miedo profundo a una lesión cervical o medular que le invalide o le cambie la vida. Miedo secundario a «haber elegido mal» si algo sale mal. Inseguridad respecto a si realmente la diferencia de precio está justificada con datos reales, o si es solo marketing.</div></div>
+      </div>
+      <div>
+        <div class="persona-section"><div class="persona-section-title"><span class="persona-section-num">7</span>Mensajes clave</div>
+          <div class="msg-card"><div class="msg-card-title">Leatt nació de una tragedia real. El Dr. Chris Leatt inventó el collarín después de presenciar la muerte de un piloto en 2001.</div><div class="msg-why">La historia de origen conecta emocionalmente y diferencia radicalmente de competidores que venden ropa con protección.</div><div class="msg-cta">→ Generar confianza y urgencia emocional en la fase de consideración</div></div>
+          <div class="msg-card"><div class="msg-card-title">89% de reducción en lesiones cervicales. Certificado CE. Validado en MotoGP, Enduro World Series y EWS.</div><div class="msg-why">Marcos necesita datos para justificar la compra ante sí mismo y ante su pareja. Los datos reales son el argumento más poderoso.</div><div class="msg-cta">→ Superar la objeción de precio con evidencia racional</div></div>
+          <div class="msg-card"><div class="msg-card-title">La pregunta no es si el collarín Leatt es caro. La pregunta es cuánto vale tu columna vertebral.</div><div class="msg-why">Reencuadra el precio como inversión en integridad física, no como gasto en equipación.</div><div class="msg-cta">→ Cierre de compra o petición de más información</div></div>
+        </div>
+        <div class="persona-section"><div class="persona-section-title"><span class="persona-section-num">8</span>Objeciones principales</div>
+          <div class="obj-card"><div class="obj-label">Objeción 1</div><div class="obj-text"><strong>«Hay collarines más baratos que también tienen CE»</strong><br>→ El certificado CE es el mínimo legal, no el estándar de referencia. El Leatt Brace tiene el único estudio clínico independiente publicado en revista médica que demuestra un 89% de reducción en lesiones cervicales. Ningún competidor ha publicado datos equivalentes.</div></div>
+          <div class="obj-card"><div class="obj-label">Objeción 2</div><div class="obj-text"><strong>«Fox también tiene protección cervical y tiene más presencia en el mundo enduro»</strong><br>→ Fox Racing es una empresa de indumentaria que añadió protección a su catálogo. Leatt es una empresa de protección que después amplió a indumentaria. El enfoque y el origen son opuestos. Leatt es el inventor del collarín cervical moderno para motoristas.</div></div>
+          <div class="obj-card"><div class="obj-label">Objeción 3</div><div class="obj-text"><strong>«No puedo probármelo en tienda»</strong><br>→ La guía de talla está basada en medidas objetivas (circunferencia de hombros, peso). Política de cambios clara si la talla no encaja.</div></div>
+        </div>
+        <div class="persona-section"><div class="persona-section-title"><span class="persona-section-num">9</span>Canales y frente a la competencia</div>
+          <div class="persona-section-text"><strong>YouTube</strong>: canal donde se forma la opinión definitiva. Pasa horas viendo contenido de enduro antes de comprar.<br><strong>Instagram</strong>: sigue a pilotos semiprofesionales y clubs. Las fotos reales con equipación Leatt generan aspiración y confianza social.<br><strong>Foros enduristas.com y grupos WhatsApp de club</strong>: la recomendación de un compañero es el cierre de compra más eficaz.</div>
+          <div class="data-table" style="margin-top:10px;">
+            <table class="data-table" style="font-size:12px;"><thead><tr><th>Competidor</th><th>Qué decir</th><th>Qué NO decir</th></tr></thead>
+            <tbody>
+              <tr><td>Fox Racing</td><td>Fox es moda. Leatt es medicina. Los datos de protección están publicados en revistas médicas, no en catálogos de temporada.</td><td>Que Fox tiene mala calidad. La diferencia es de propósito y origen, no de calidad genérica.</td></tr>
+              <tr><td>Alpinestars (Tech-Air)</td><td>El airbag es una capa de protección activa para impactos del torso. El collarín Leatt protege específicamente la columna cervical — son complementarios, no sustitutos.</td><td>Que el airbag es inútil. La narrativa debe ser de complementariedad.</td></tr>
+            </tbody></table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVIER -->
+  <div class="subsection-title">Desarrollo extendido — Javier, 31</div>
+  <div class="persona-full" style="border-left-color:#1a4a9e;">
+    <div class="persona-full-head">
+      <div style="font-size:40px;">🚵</div>
+      <div><div class="persona-full-name">Javier, 31 — Rider de MTB descenso y enduro bike con nivel técnico alto</div><div style="font-size:12px;color:var(--text-muted);margin-top:4px;">B2C · YouTube MTB + Instagram + Pinkbike/Mtbmad · Compra principalmente online</div></div>
+    </div>
+    <div class="grid-2">
+      <div>
+        <div class="persona-section"><div class="persona-section-title"><span class="persona-section-num">1</span>Demográficos</div><div class="persona-section-text">Varón, 28-35 años, ciudad o zona con trail y bikepark cercano (Madrid, Barcelona, País Vasco, norte de España). Trabaja en sector digital, diseño, tecnología o servicios. Ingreso 28.000-45.000 €/año. Soltero o en pareja sin hijos. El MTB es su actividad social y deportiva principal.</div></div>
+        <div class="persona-section"><div class="persona-section-title"><span class="persona-section-num">2</span>Entorno</div><div class="persona-section-text">Su grupo social está formado mayoritariamente por riders. Instagram y YouTube son parte esencial de cómo consume información y cómo se identifica con la cultura MTB. El look importa, pero no más que la función. Ha visto caídas serias en bikepark. La cultura del enduro bike ha profesionalizado mucho el nivel de protección.</div></div>
+        <div class="persona-section"><div class="persona-section-title"><span class="persona-section-num">3</span>Comportamiento</div><div class="persona-section-text">Muy activo en redes y foros. Sigue canales como GMBN, Pinkbike, Kilian Bron, Adrien Loron. Compra mayoritariamente online. Lee reviews detallados en Mtbmad o foros específicos. Valora el sistema completo de protección (casco fullface + protectores + back protector). La búsqueda de «Leatt DBX» o «casco enduro certificado» es su punto de entrada habitual.</div></div>
+        <div class="persona-section"><div class="persona-section-title"><span class="persona-section-num">4</span>Problema</div><div class="persona-section-text">El mercado MTB está lleno de cascos y protectores con diseños atractivos pero certificaciones poco claras. En bikepark, una caída a 30-40 km/h en roca es una realidad. No puede depender de equipación que no haya sido testada con rigor.</div></div>
+        <div class="persona-section"><div class="persona-section-title"><span class="persona-section-num">5</span>Objeciones</div>
+          <div class="obj-card"><div class="obj-label">Objeción 1</div><div class="obj-text"><strong>«El Bell Super DH tiene mejor ventilación y es igual de seguro»</strong><br>→ Bell es excelente en ventilación. Leatt aporta la 360° Turbine Technology específicamente para impactos rotacionales, que son los principales causantes de lesiones cerebrales en enduro. La comparación de certificaciones es el argumento.</div></div>
+          <div class="obj-card"><div class="obj-label">Objeción 2</div><div class="obj-text"><strong>«Troy Lee Designs tiene más estilo y se usa en el EWS»</strong><br>→ TLD es una marca de diseño gráfico que hace cascos. Leatt es una empresa de protección médica que hace cascos. Los riders del EWS que eligen Leatt lo hacen por protección, no por look.</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="persona-section"><div class="persona-section-title"><span class="persona-section-num">6</span>Mensajes clave</div>
+          <div class="msg-card"><div class="msg-card-title">360° Turbine Technology: diseñada para absorber tanto los impactos lineales como los rotacionales — los que realmente causan TCE en enduro.</div><div class="msg-why">Javier sabe que los TCE por rotación son los más peligrosos. Leatt tiene respuesta tecnológica específica.</div><div class="msg-cta">→ Diferenciación técnica en fase de consideración</div></div>
+          <div class="msg-card"><div class="msg-card-title">Un neurocirujano diseñó el primer collarín cervical de la historia para motoristas. Esa misma mentalidad está en cada producto Leatt.</div><div class="msg-why">El origen médico de la marca dota de credibilidad que ningún competidor de indumentaria puede igualar.</div><div class="msg-cta">→ Generar preferencia de marca</div></div>
+          <div class="msg-card"><div class="msg-card-title">El sistema completo Leatt (casco + back protector + rodilleras) está diseñado para funcionar juntos. No es equipación random combinada — es un sistema de protección integrado.</div><div class="msg-why">Aumenta el ticket medio y refuerza la propuesta de ecosistema de protección.</div><div class="msg-cta">→ Upsell al sistema completo</div></div>
+        </div>
+        <div class="persona-section"><div class="persona-section-title"><span class="persona-section-num">7</span>CTAs por fase del funnel</div>
+          <div class="persona-section-text"><strong>Descubrimiento:</strong> ¿Qué diferencia hay entre un casco «seguro» y uno realmente certificado? · La tecnología anti-rotacional que los neurocirujanos recomiendan<br><strong>Consideración:</strong> Compara el sistema de protección Leatt DBX con el tuyo actual · Lee los reviews de campo de riders de enduro que usan Leatt a diario<br><strong>Decisión:</strong> Configura tu sistema completo de protección Leatt para enduro · Envío gratis a España en pedidos superiores a [X] €</div>
+        </div>
+        <div class="persona-section"><div class="persona-section-title"><span class="persona-section-num">8</span>Canales y frente a la competencia</div>
+          <div class="persona-section-text"><strong>YouTube MTB (GMBN, canales enduro españoles):</strong> consumo de vídeo técnico muy alto. Los reviews de campo son el momento de mayor influencia.<br><strong>Instagram:</strong> sigue a riders del EWS y figuras locales. Ver equipación Leatt en uso real genera aspiración directa.<br><strong>Foros Pinkbike y Mtbmad:</strong> búsqueda activa de opiniones técnicas antes de comprar. Presencia orgánica crítica.</div>
+          <div class="data-table" style="margin-top:10px;">
+            <table class="data-table" style="font-size:12px;"><thead><tr><th>Competidor</th><th>Qué decir</th><th>Qué NO decir</th></tr></thead>
+            <tbody>
+              <tr><td>Troy Lee Designs</td><td>TLD tiene un diseño brillante. Leatt tiene la tecnología. Para quien prioriza protección real sobre estética, la elección es clara.</td><td>Que TLD tiene mala protección — sus certificaciones son correctas. La diferencia está en el foco y en el origen.</td></tr>
+              <tr><td>Bell (Super DH)</td><td>Bell lidera en ventilación y confort. Leatt lidera en protección anti-rotacional y en el sistema completo integrado.</td><td>Que Bell es de baja calidad — no es verdad y cualquier rider lo sabe.</td></tr>
+            </tbody></table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARLOS -->
+  <div class="subsection-title">Desarrollo extendido — Carlos, 46</div>
+  <div class="persona-full" style="border-left-color:#2a6aaa;">
+    <div class="persona-full-head">
+      <div style="font-size:40px;">🏕️</div>
+      <div><div class="persona-full-name">Carlos, 46 — Motorista adventure/ADV de largo recorrido con conciencia del riesgo</div><div style="font-size:12px;color:var(--text-muted);margin-top:4px;">B2C · Grupos WhatsApp ADV · YouTube de viajeros · Foros Horizonte Infinito</div></div>
+    </div>
+    <div class="grid-2">
+      <div>
+        <div class="persona-section"><div class="persona-section-title"><span class="persona-section-num">1</span>Demográficos</div><div class="persona-section-text">Varón, 42-52 años. Perfil profesional consolidado — directivo, ingeniero, médico, empresario. Ingreso alto (60.000+ €/año). Con familia. La moto es su forma de desconexión, aventura y comunidad. Tiene motos de mediana y gran cilindrada (BMW GS, KTM 1290, Honda Africa Twin).</div></div>
+        <div class="persona-section"><div class="persona-section-title"><span class="persona-section-num">2</span>Entorno</div><div class="persona-section-text">Viaja en moto solo o con grupos organizados. Ha hecho rutas por Marruecos, Pirineos, Europa del Este. Sus amigos de ruta son hombres de su perfil — con experiencia, con criterio y con presupuesto para equiparse bien. La consciencia del riesgo está muy presente: ya han vivido caídas propias o de compañeros.</div></div>
+        <div class="persona-section"><div class="persona-section-title"><span class="persona-section-num">3</span>Comportamiento</div><div class="persona-section-text">Profesional senior. Su tiempo es escaso y valioso. No investiga semanas — toma decisiones rápidas basadas en fuentes de confianza. Si alguien en su grupo de WhatsApp recomienda Leatt, eso vale más que diez anuncios. Lee foros como Horizonte Infinito cuando prepara rutas largas. Compra equipación de alta gama sin fricción de precio — si está convencido de que es lo mejor, compra.</div></div>
+        <div class="persona-section"><div class="persona-section-title"><span class="persona-section-num">4</span>Problema</div><div class="persona-section-text">En rutas adventure off-road, un accidente lejos de una carretera principal puede ser muy grave. La protección de cuello y espalda en moto trail o gravel track es su preocupación principal. Muchas marcas de indumentaria de aventura tienen buen aspecto pero protectores mediocres.</div></div>
+        <div class="persona-section"><div class="persona-section-title"><span class="persona-section-num">5</span>Objeciones</div>
+          <div class="obj-card"><div class="obj-label">Objeción 1</div><div class="obj-text"><strong>«El collarín es incómodo en etapas largas de carretera»</strong><br>→ El Leatt Brace está disponible en versiones para conducción en ruta, con ajuste de la posición del apoyo mentonero para posición erguida y diseño de baja interferencia. Muchos riders adventure lo usan en etapas de 400-500 km sin reportar fatiga significativa. Testimonios de riders adventure con rutas reales (Marruecos, Ruta 40, Europa del Este).</div></div>
+          <div class="obj-card"><div class="obj-label">Objeción 2</div><div class="obj-text"><strong>«Alpinestars Tech-Air también protege la columna y tiene más presencia en moto de ruta»</strong><br>→ El Tech-Air es un airbag torácico excelente para impactos de torso. El collarín Leatt protege específicamente la columna cervical (C1-C7) — las más vulnerables en una caída de moto en off-road. Son sistemas complementarios. El riesgo cervical en trail y gravel es mayor que el torácico.</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="persona-section"><div class="persona-section-title"><span class="persona-section-num">6</span>Mensajes clave</div>
+          <div class="msg-card"><div class="msg-card-title">El Dr. Chris Leatt creó el collarín cervical para motos porque presenció la muerte de un piloto en 2001. Lleva 20 años perfeccionando la protección que ninguna marca de indumentaria ha igualado.</div><div class="msg-why">Carlos valora la historia real y el propósito. Este mensaje construye confianza instantánea en un perfil que desconfía del marketing genérico.</div><div class="msg-cta">→ Generar confianza de marca en primera exposición</div></div>
+          <div class="msg-card"><div class="msg-card-title">Para rutas de largo recorrido lejos de asistencia médica, llevar el mejor collarín y protector de espalda del mercado no es un lujo. Es gestión inteligente del riesgo.</div><div class="msg-why">Reencuadra la compra como decisión racional de gestión del riesgo — lenguaje que un perfil profesional comprende.</div><div class="msg-cta">→ Superar la objeción de precio y generar intención de compra</div></div>
+          <div class="msg-card"><div class="msg-card-title">El collarín Leatt está diseñado para uso en ruta: compatible con casco de touring, ajustable en 3 posiciones para conducción erguida, sin restricción del giro de cabeza en maniobras normales.</div><div class="msg-why">Su objeción más concreta es la comodidad en ruta larga. Este mensaje la ataca directamente con especificaciones reales.</div><div class="msg-cta">→ Superar la objeción de comodidad y cerrar la compra</div></div>
+        </div>
+        <div class="persona-section"><div class="persona-section-title"><span class="persona-section-num">7</span>CTAs por fase del funnel</div>
+          <div class="persona-section-text"><strong>Descubrimiento:</strong> La historia del médico que cambió la seguridad en moto para siempre · ¿Por qué los riders de enduro world series confían en Leatt?<br><strong>Consideración:</strong> Guía: cómo elegir el collarín correcto para tu estilo de conducción adventure · Comparativa técnica: collarín cervical vs airbag de torso<br><strong>Decisión:</strong> Asesórate gratis sobre tu sistema de protección Leatt para rutas de largo recorrido · Compra con garantía oficial Leatt en España</div>
+        </div>
+        <div class="persona-section"><div class="persona-section-title"><span class="persona-section-num">8</span>Canales y frente a la competencia</div>
+          <div class="persona-section-text"><strong>Grupos Facebook y WhatsApp ADV Spain:</strong> Carlos confía en las recomendaciones de su comunidad de riders. Estar presente en estas conversaciones es la forma más eficaz de generar prescripción.<br><strong>YouTube de viajeros en moto (Horizonte Infinito, Charly Sinewan):</strong> un review de equipación en este formato tiene enorme credibilidad.<br><strong>Foros Horizonte Infinito y Mundo de la Moto:</strong> búsqueda de consejos de equipación antes de rutas grandes.</div>
+          <div class="data-table" style="margin-top:10px;">
+            <table class="data-table" style="font-size:12px;"><thead><tr><th>Competidor</th><th>Qué decir</th><th>Qué NO decir</th></tr></thead>
+            <tbody>
+              <tr><td>Alpinestars (Tech-Air + Nucleon)</td><td>Alpinestars tiene el mejor airbag del mercado para torso. Leatt tiene la mejor protección cervical. Para rutas adventure en off-road, el riesgo cervical es el más grave. El collarín Leatt cubre el vacío que el Tech-Air no cubre.</td><td>Que Alpinestars es inferior — en su segmento, Tech-Air es referencia. La narrativa debe ser de complementariedad inteligente.</td></tr>
+              <tr><td>Dainese (D-air / Pro Armor)</td><td>Dainese tiene excelente indumentaria de touring. Leatt tiene la mejor protección cervical del mundo. Leatt complementa perfectamente un traje Dainese con el collarín que ningún traje puede reemplazar.</td><td>Que Dainese es peor — su reputación en touring es sólida y Carlos lo sabe.</td></tr>
+            </tbody></table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Resumen de perfiles y recomendaciones transversales</div>
+    <div class="insight" style="margin-bottom:16px;">
+      Los tres buyer personas de Leatt España comparten un denominador común que los distingue radicalmente del comprador medio de equipación: <strong>la seguridad no es un atributo de compra — es la razón de compra</strong>. Marcos, Javier y Carlos no están eligiendo entre opciones similares con distintos precios. Están eligiendo entre marcas que prometen protección y Leatt, que la demuestra.
+    </div>
+    <div class="grid-3">
+      <div class="card-surface">
+        <div class="badge badge-red">Barrera transversal 1</div>
+        <div class="card-title">Leatt = solo el collarín</div>
+        <div class="card-text">Todos los perfiles desconocen la amplitud del catálogo. La asociación de Leatt exclusivamente con el collarín cervical limita el cross-sell hacia cascos, protectores de espalda y guantes.</div>
+      </div>
+      <div class="card-surface">
+        <div class="badge badge-red">Barrera transversal 2</div>
+        <div class="card-title">Distribución y posventa en España</div>
+        <div class="card-text">La ausencia de distribución visible y servicio posventa claro en España genera fricción real en la decisión — especialmente en Carlos (perfil senior que busca certeza).</div>
+      </div>
+      <div class="card-surface">
+        <div class="badge badge-red">Barrera transversal 3</div>
+        <div class="card-title">Sin contenido en español de uso real</div>
+        <div class="card-text">Falta de contenido en español que hable de los productos Leatt en contexto de uso real español (enduro nacional, rutas adventure ibéricas, bikeparks españoles).</div>
+      </div>
+    </div>
+    <div class="insight alert" style="margin-top:16px;">
+      <strong>La recomendación transversal más urgente:</strong> construir prescriptores locales reales — riders de enduro, MTBers de descenso, viajeros adventure reconocibles en España — que usen y hablen de Leatt en sus canales. La credibilidad de Leatt en España se construirá peer-to-peer antes que con publicidad. <strong>El producto es bueno. Falta la voz local que lo diga.</strong>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════ E4 — PERFORMANCE REAL ════════════ -->
+<div class="section-wrap" id="e4-wrap">
+<div class="section" id="e4">
+  <div class="section-header">
+    <div class="section-tag e4">E4</div>
+    <div>
+      <div class="section-eyebrow">Entregable 4</div>
+      <div class="section-title">Performance Real</div>
+      <div class="section-desc">Datos GSC (18.822 clics · 929.661 impresiones) + GA4 (69.879 sesiones · funnel completo) · Feb–May 2026</div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Pulso del negocio — 5 indicadores clave</div>
+    <div class="grid-2">
+      <div class="kpi-card">
+        <div class="kpi-label">Alcance total del negocio <span class="badge-v">✓ Verificado</span></div>
+        <div class="kpi-value">69.879 sesiones</div>
+        <div class="kpi-sub">Volumen sólido que confirma la existencia de una base de clientes activa e interés de mercado real. El negocio no es pequeño ni invisible — pero tampoco está creciendo con captación orgánica de usuarios nuevos.</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Peso del canal orgánico <span class="badge-e">≈ Estimación</span></div>
+        <div class="kpi-value">~27% orgánico</div>
+        <div class="kpi-sub">18.822 clics GSC / 69.879 sesiones GA4. Solo 1 de cada 4 visitas viene de Google por búsqueda orgánica. El 73% restante llega por canales directos, pagados o referral. El negocio NO depende principalmente de Google — pero tampoco lo está aprovechando como motor de captación.</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Demanda latente en Google España <span class="badge-v">✓ Verificado</span></div>
+        <div class="kpi-value">929.661 imp.</div>
+        <div class="kpi-sub">El mercado español busca en Google los productos de Leatt casi un millón de veces en 90 días. De esas búsquedas, el site capta 18.822 clics — un 2% del potencial teórico. <strong>Existe demanda claramente superior a lo que el canal orgánico está convirtiendo.</strong></div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Tasa de conversión a compra <span class="badge-v">✓ Verificado</span></div>
+        <div class="kpi-value salmon">0,68%</div>
+        <div class="kpi-sub">478 compras / 69.879 sesiones. Menos de 7 de cada 1.000 visitantes acaba comprando. En ecommerce de moto y equipación deportiva, la referencia del sector está entre 1% y 3%. <strong>Leatt está operando por debajo de la mitad del mínimo esperado.</strong></div>
+      </div>
+      <div class="kpi-card" style="grid-column: 1 / -1;">
+        <div class="kpi-label">Intención de compra activa (add-to-cart) <span class="badge-v">✓ Verificado</span></div>
+        <div class="kpi-value">3,27% sesiones → carrito · solo 21% completan la compra</div>
+        <div class="kpi-sub">2.283 sesiones únicas añaden al carrito → 1.192 inician checkout (52%) → 478 compran (40% del checkout). Se pierden 1.091 compras potenciales entre el carrito y el primer paso de pago. <strong>El problema no es la demanda: es la fricción en el proceso de checkout.</strong><br><br>Impacto calculado: si se reduce el abandono carrito→checkout de 48% a 25% (referencia razonable en ecommerce), se recuperan ~500 compras adicionales por trimestre. Al ticket medio estimado (80-180 €), el impacto en revenue puede ser de <strong>40.000-90.000 €/año sin incrementar el tráfico.</strong></div>
+      </div>
+    </div>
+    <div class="insight alert" style="margin-top:16px;">
+      Leatt España opera con un modelo híbrido: una base de clientes que la busca directamente (73% de tráfico no-orgánico) más una presencia en Google que solo funciona cuando el usuario ya sabe el nombre de la marca. El producto y el mercado existen. <strong>El gap está en convertir a quienes llegan y en capturar a quienes no conocen la marca todavía.</strong>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Qué buscan de ti — 4 intenciones principales</div>
+    <div class="hyp-card">
+      <div class="hyp-head"><div class="badge badge-navy">Intención #1 · Navegacional</div><span class="badge-v">✓ Verificado</span></div>
+      <div class="hyp-title">Buscar equipación Leatt específica navegando por el nombre de marca</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> Las canibalizaciones de GSC muestran que queries como «leatt», «leatt moto», «ropa leatt», «leatt kit» son los términos dominantes en el tráfico orgánico. La homepage captura 2.031 clicks con CTR del 13,36% desde posición 3.12 — señal clara de búsqueda de marca directa.</div>
+      <div class="insight" style="margin-top:10px;">El tráfico orgánico confirma que Leatt ya tiene notoriedad de marca en España. Los que llegan a Google con «leatt» ya son potenciales compradores o clientes recurrentes. El reto es que este tráfico de marca convierte poco (0,68% purchase rate global).</div>
+    </div>
+    <div class="hyp-card">
+      <div class="hyp-head"><div class="badge badge-salmon">Intención #2 · Transaccional no-marca</div><span class="badge-v">✓ Verificado</span></div>
+      <div class="hyp-title">Buscar categorías de equipación moto y MTB sin especificar marca</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> Top queries nonbrand: «guantes mtb» (25 clicks, 1.248 imp), «gafas motocross» (19 clicks, 2.356 imp), «peto enduro» (18 clicks, 1.124 imp), «guantes mtb enduro» (12 clicks). Cascos moto collection: 902 clicks desde 64.326 impresiones (CTR 1,4%) — la categoría aparece pero no convence para el clic.</div>
+      <div class="insight alert" style="margin-top:10px;">Existe demanda genérica de producto que Leatt no está capturando. «Gafas motocross» tiene 2.356 impresiones con solo 19 clics — el usuario ve a Leatt en posición 7-8 pero elige otra marca. Para capturar este tráfico no-marca se necesita diferenciación en el propio resultado de búsqueda.</div>
+    </div>
+    <div class="hyp-card">
+      <div class="hyp-head"><div class="badge badge-blue">Intención #3 · Transaccional ADV</div><span class="badge-v">✓ Verificado</span></div>
+      <div class="hyp-title">Buscar equipación adventure/ADV de moto</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> «equipacion-adv»: 226 clicks, 8.955 imp, CTR 2,5%, posición 14,23. «pantalones-adv»: 103 clicks, pos 12,1. «cascos-adv»: 90 clicks, 10.897 imp, CTR 0,83%, pos 10. Botas-adv-hydradri-85: CTR 9,99% desde pos 2,74 (85 clicks, 840 imp) — el mejor CTR del catálogo no-homepage.</div>
+      <div class="insight amber" style="margin-top:10px;">El mercado ADV existe y está buscando producto. Leatt tiene colección ADV completa pero está a posición 12-14 de media — solo el comprador más persistente llega a sus páginas. Es un segmento donde invertir tiene alto potencial de retorno. Las botas ADV ya están mostrando un CTR excepcional cuando están en posición top.</div>
+    </div>
+    <div class="hyp-card">
+      <div class="hyp-head"><div class="badge badge-amber">Intención #4 · Transaccional protección específica</div><span class="badge-v">✓ Verificado</span></div>
+      <div class="hyp-title">Buscar protección específica: collarín y petos integrales</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> «collarin enduro»: 6 clicks, 161 imp (nonbrand). «peto enduro»: 18 clicks, 1.124 imp. Colección collarines: 74 clicks, 2.741 imp, CTR 2,7%, posición 7,58. Peto integral 3DF Airfit: top 2 de view_item en GA4 (379 vistas de producto).</div>
+      <div class="insight alert" style="margin-top:10px;"><strong>La empresa que inventó el collarín cervical para motos captura 6 clics en España cuando alguien busca «collarín enduro» sin marca.</strong> El producto icónico de Leatt no está siendo encontrado por quien aún no la conoce. Este es el gap más estratégico: la marca tiene el mejor argumento de venta pero no está en la conversación inicial del comprador.</div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Demanda no atendida</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="badge badge-red">Gap estratégico</div>
+        <div class="card-title">Collarín cervical como primer punto de contacto no capturado</div>
+        <div class="card-text"><strong>Evidencia:</strong> Solo 161 impresiones para «collarin enduro» nonbrand. El product page del collarín 5.5 tiene CTR 1,74% desde posición 6,82 con 2.420 impresiones — muy por debajo del potencial.<br><br><strong>Implicación:</strong> El collarín es el producto que define la historia de la marca y su mayor diferencial competitivo. Que no aparezca en top 3 cuando alguien busca «collarín moto» sin saber que existe Leatt es una oportunidad no capturada de valor muy alto.</div>
+      </div>
+      <div class="card">
+        <div class="badge badge-red">Revenue perdido</div>
+        <div class="card-title">Outlet como canal de primer contacto bloqueado</div>
+        <div class="card-text"><strong>Evidencia:</strong> La página /collections/outlet está en posición media 1,38 con 5.843 impresiones pero solo 70 clicks y CTR del 1,19% (esperado: 24,9%). Existe búsqueda activa de «leatt outlet» con canibalización entre múltiples URLs.<br><br><strong>Implicación:</strong> Hay usuarios buscando expresamente productos Leatt en outlet. El usuario ve el resultado pero no hace clic — el snippet no comunica el valor. Un outlet bien posicionado puede ser la entrada de compradores de primer contacto.</div>
+      </div>
+      <div class="card">
+        <div class="badge badge-amber">Segmento no identificado en E2</div>
+        <div class="card-title">Junior / equipación infantil de MTB y moto</div>
+        <div class="card-text"><strong>Evidencia:</strong> «cascos-ninos-mtb»: 97 clicks, CTR 3,4%. Botas-35-junior en posición 2,5 con 586 impresiones y 0% CTR. Rodilleras-z-frame-junior: 779 impresiones. Collarín-kart: 630 imp, CTR 2,38%.<br><br><strong>Implicación:</strong> Las familias de riders buscan equipación infantil Leatt. Varios SKU junior aparecen en posición alta con 0 clicks — posiblemente agotados. Este segmento representa una oportunidad real y un riesgo de reputación si el producto aparece pero no está disponible.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Quién te compra — Perfiles y dónde convierten</div>
+    <div class="grid-2">
+      <div class="kpi-card" style="border-top-color:var(--salmon);">
+        <div class="kpi-label">↳ Perfil Marcos · Rider moto que ya conoce la marca</div>
+        <div class="kpi-value">478 compras/trim.</div>
+        <div class="kpi-sub">Las queries dominantes en GSC son de marca ('leatt moto', 'equipacion leatt'). Las botas moto 3.5 v23 son el producto con más view_item (1.037), más form_start (734) y más add_to_cart del trimestre. <strong>El comprador que convierte ya conoce Leatt y llega buscando un producto específico — no está descubriendo la marca.</strong></div>
+      </div>
+      <div class="kpi-card" style="border-top-color:var(--blue-medium);">
+        <div class="kpi-label">↳ Perfil Javier · MTBer que explora categorías técnicas</div>
+        <div class="kpi-value">Indeterminado</div>
+        <div class="kpi-sub">Equipacion-mtb: 474 clicks. Pantalones-mtb: 383 clicks. Kit equipación MTB gravity en top 5 de view_item con 330 vistas. <strong>El MTBer llega por categoría de producto y navega extensamente el catálogo, pero sin segmentación GA4 por perfil no podemos confirmar si termina comprando en leatt.es o en un distribuidor.</strong></div>
+      </div>
+    </div>
+    <div class="insight" style="margin-top:16px;">
+      <strong>Dónde y cómo convierten:</strong><br>
+      • <strong>Ficha de producto de botas moto — principal motor de compra:</strong> Botas moto 3.5 v23 concentra los top 5 puestos en add_to_cart (59+37+26+24+21 eventos por variante). Las botas de moto entry/mid level son el producto que más compras activas genera — no el más caro ni el más icónico.<br>
+      • <strong>Checkout iniciado — cuello de botella crítico:</strong> 1.192 sesiones inician checkout / 2.283 add_to_cart = 52% continúa. El 48% abandona entre el carrito y el primer paso de pago — casi 1.100 compras potenciales por trimestre.<br>
+      • <strong>Conversión final — embudo estrecho:</strong> 478 purchases / 1.192 begin_checkout = 40% completan. De cada 10 personas que inician el checkout, 4 compran y 6 se van. Problemas de fricción en opciones de pago, costes de envío sorpresa, o falta de garantías visibles.
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Hipótesis validadas — E1 / E2 / E3 vs. datos reales</div>
+    <div class="hyp-card">
+      <div class="hyp-head"><span class="veredicto v-ok">✓ Confirmada</span><span class="hyp-origin">E1 gap G1 — Sin blog ni contenido editorial en español</span></div>
+      <div class="hyp-title">La ausencia de contenido editorial impide capturar tráfico informacional</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> Top query nonbrand: «guantes mtb» con solo 25 clicks. Ninguna query informacional («cómo elegir collarín», «protección moto enduro») aparece en el tráfico orgánico. El 100% del tráfico orgánico significativo es transaccional o de marca. Las páginas /explore-moto (154 clicks) y /explore-mtb (269 clicks) funcionan como pseudo-editorial pero sin tracción SEO relevante.</div>
+      <div class="hyp-text"><strong>Implicación:</strong> Sin contenido educativo, Leatt no puede capturar a Marcos, Javier ni Carlos en el momento en que están investigando antes de comprar. Solo puede capturarlos cuando ya han decidido y buscan el producto por nombre. Esto reduce el mercado addressable al subconjunto que ya conoce la marca.</div>
+    </div>
+    <div class="hyp-card">
+      <div class="hyp-head"><span class="veredicto v-ok">✓ Confirmada</span><span class="hyp-origin">E1 gap G5 — Productos agotados sin sistema de notificación</span></div>
+      <div class="hyp-title">Los productos agotados en posición top generan impresiones sin conversión</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> Varios productos aparecen en posiciones top en GSC con 0% CTR: «casco-moto-35-v25» (pos 1,0, 1.456 imp, 0 clicks), «botas-35-junior» (pos 2,5, 586 imp, 0 clicks), «rodilleras-reaflex-ultralite» (pos 1,0, 772 imp, 0 clicks), «pantalon-mtb-enduro-30-corto-v25» (pos 0,5, 1.355 imp, 0 clicks). Total: +4.000 impresiones desperdiciadas/trimestre.</div>
+      <div class="hyp-text"><strong>Implicación:</strong> Productos en posición 1 de Google con 0 clicks son dinero perdido. Cada impresión de un producto agotado sin gestión es un potencial cliente que se va a la competencia. En un catálogo de 1.669 URLs, el impacto acumulado es muy significativo.</div>
+    </div>
+    <div class="hyp-card">
+      <div class="hyp-head"><span class="veredicto v-ok">✓ Confirmada</span><span class="hyp-origin">E2 diagnóstico D2 — DTC sin diferencial claro vs distribuidores</span></div>
+      <div class="hyp-title">El canal DTC de leatt.es no ofrece ventajas exclusivas respecto a comprar en distribuidores</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> La página /collections/outlet está en posición 1,38 de Google con 5.843 impresiones pero solo 70 clicks (CTR 1,19% vs esperado 24,9%). El usuario que busca «leatt outlet» ve el resultado de leatt.es pero no hace clic — prefiere ir a otro site. Esto sugiere que el comprador percibe que el outlet de otros canales es más atractivo.</div>
+      <div class="hyp-text"><strong>Implicación:</strong> El DTC de Leatt no está ganando la batalla del outlet ni de la primera compra. Para convertir leatt.es en el canal preferido se necesitan ventajas exclusivas: precio DTC garantizado, bundles exclusivos, contenido de valor, o acceso anticipado a nuevas colecciones.</div>
+    </div>
+    <div class="hyp-card">
+      <div class="hyp-head"><span class="veredicto v-partial">≈ Parcialmente confirmada</span><span class="hyp-origin">E2 diagnóstico O4 — ADV como segmento sin líder claro</span></div>
+      <div class="hyp-title">El segmento adventure/ADV es el de mayor crecimiento y ningún competidor ha liderado en España</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> Equipacion-adv: 226 clicks, pos 14,23. Pantalones-adv: 103 clicks, pos 12,1. Cascos-adv: 90 clicks, pos 10,03. Botas-adv-hydradri-85: CTR 9,99% desde pos 2,74 (85 clicks, 840 imp) — el mejor CTR del catálogo no-homepage.</div>
+      <div class="hyp-text"><strong>Implicación:</strong> El segmento ADV tiene tracción real en datos — especialmente las botas ADV que son el producto con mejor conversión de clic. Pero Leatt no está en el top 5 para las queries genéricas de ADV. La oportunidad sigue abierta.</div>
+    </div>
+    <div class="hyp-card">
+      <div class="hyp-head"><span class="veredicto v-none">Sin datos suficientes</span><span class="hyp-origin">E2 diagnóstico F1 — Historia médica del Dr. Leatt como diferencial único</span></div>
+      <div class="hyp-title">La historia de origen médico del fundador es el activo narrativo más poderoso</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> No aparecen en GSC queries relacionadas con la historia de la marca («fundador leatt», «doctor leatt», «historia leatt brace»). La página /pages/leatt-lab tiene solo 16 clicks desde 851 impresiones — CTR 1,88% vs esperado 14,21%.</div>
+      <div class="hyp-text"><strong>Implicación:</strong> La historia del Dr. Leatt no se busca porque nadie sabe que existe. El activo más poderoso de la marca está invisible. Convertirlo en contenido orgánico buscable (blog, vídeo, landing «nuestra historia») es la forma de que encuentre a quien aún no conoce Leatt.</div>
+    </div>
+    <div class="hyp-card">
+      <div class="hyp-head"><span class="veredicto v-ok">✓ Confirmada</span><span class="hyp-origin">E2 benchmark — Fox Racing líder en reconocimiento en moto español</span></div>
+      <div class="hyp-title">Fox domina el share of voice en queries de equipación genérica; Leatt solo gana con su nombre</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> Las queries genéricas («ropa motocross», «gafas motocross», «cascos moto») aparecen en el tráfico nonbrand con volúmenes mínimos para Leatt. «gafas motocross» tiene 2.356 impresiones con solo 19 clicks (CTR 0,8%). La colección «cascos moto» tiene 64.326 impresiones con CTR 1,4%, indicando posición baja en queries de casco genérico.</div>
+      <div class="hyp-text"><strong>Implicación:</strong> Fox domina el share of voice en queries de equipación genérica. Leatt solo gana cuando el usuario ya busca «leatt» por nombre. Para cambiar esto se necesita construir tracción no-marca con contenido — no hay atajo a corto plazo.</div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Oportunidades emergentes — Lo que los datos revelan y el E2 no había detectado</div>
+    <div class="move-card qw">
+      <div class="move-type">Oportunidad · Esfuerzo bajo · <span class="badge-v">✓ Verificado</span></div>
+      <div class="move-title">Kits y bundles como producto de compra integrado — demanda validada en GA4</div>
+      <div class="move-text"><strong>Descubrimiento:</strong> Kit-equipacion-mtb-gravity-10-v26 figura en el top 5 de view_item con 330 vistas en GA4. En GSC, kit-moto-35-v26 aparece en posición media 1,5 con 669 impresiones pero 0% CTR — está rankeado en top 2 pero sin clics (posiblemente agotado).</div>
+      <div class="move-text"><strong>Por qué no estaba en E2:</strong> El E2 identificó los bundles como oportunidad recomendada pero sin validación de demanda real. Los datos de GA4 y GSC confirman que existe un comportamiento de compra orientado al kit completo — es un patrón real de usuario, no solo una recomendación estratégica.</div>
+      <div class="move-text"><strong>Siguiente paso:</strong> Priorizar la disponibilidad continua de los kits/bundles más demandados (MTB gravity y moto 3.5) y activarlos como producto estelar en la página principal. La demanda existe — solo hay que no dejarla sin producto disponible.</div>
+    </div>
+    <div class="move-card mp">
+      <div class="move-type">Oportunidad · Esfuerzo medio · <span class="badge-v">✓ Verificado</span></div>
+      <div class="move-title">Segmento junior y familiar — demanda orgánica sin estrategia</div>
+      <div class="move-text"><strong>Descubrimiento:</strong> Cascos-ninos-mtb: 97 clicks, CTR 3,4%. Botas-35-junior en posición 2,5 con 586 impresiones y 0 clicks. Rodilleras-z-frame-junior: 779 impresiones. Collarín-kart: 630 imp, CTR 2,38% — señal de un mercado de karting que busca collarín.</div>
+      <div class="move-text"><strong>Por qué no estaba en E2:</strong> El E2 se centró en los tres perfiles adultos (motocross, MTB, ADV) sin analizar el segmento familiar. Los datos GSC revelan búsquedas activas de producto junior que indican que el rider adulto (Marcos, Carlos) también busca equipación para sus hijos.</div>
+      <div class="move-text"><strong>Siguiente paso:</strong> Asegurar stock continuo en referencias junior de alta demanda (botas 35 junior, cascos niños MTB) y evaluar si existe potencial para una colección junior como sub-segmento diferenciado. El collarín para karting es un nicho adicional sin explorar.</div>
+    </div>
+    <div class="move-card ae">
+      <div class="move-type">Oportunidad · Esfuerzo bajo · <span class="badge-v">✓ Verificado</span></div>
+      <div class="move-title">Outlet como canal de primer contacto — posición top sin conversión de clic</div>
+      <div class="move-text"><strong>Descubrimiento:</strong> La página /collections/outlet está en posición media 1,38 en GSC con 5.843 impresiones pero solo 70 clicks (CTR 1,19% vs esperado de ~25% para esa posición). El usuario busca «leatt outlet» y ve el resultado de leatt.es pero no hace clic.</div>
+      <div class="move-text"><strong>Por qué no estaba en E2:</strong> El E2 mencionó el canal DTC pero no analizó el comportamiento de la demanda de outlet específicamente. El dato de CTR 1,19% desde posición 1 es una anomalía llamativa que solo aparece en los datos reales de GSC.</div>
+      <div class="move-text"><strong>Siguiente paso:</strong> Revisar qué comunica el snippet de /collections/outlet en el SERP. Mejorar la propuesta de valor del outlet (precio, disponibilidad, exclusividad) podría convertir este canal en la puerta de entrada de compradores sensibles al precio que luego se convierten en clientes recurrentes. Potencial de +600-900 visitas adicionales/trimestre.</div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Movimientos estratégicos recomendados</div>
+    <div class="subsection-title" style="margin-top:0;">⚡ Quick Wins — Impacto inmediato</div>
+    <div class="move-card qw">
+      <div class="move-type">Quick Win 1 · Producto / Operaciones</div>
+      <div class="move-title">Resolver urgentemente los SKU agotados que aparecen en posición top de Google sin conversión</div>
+      <div class="move-text"><strong>Por qué:</strong> Casco moto 3.5 v25 (pos 1, 1.456 imp, 0 clics), botas 35 junior (pos 2,5, 586 imp), rodilleras Reaflex Ultralite (pos 1, 772 imp), pantalón MTB enduro 30 (pos 0,5, 1.355 imp). Cada vez que Google los muestra y el usuario no clica, se pierde un comprador que va a la competencia.</div>
+      <div class="move-text"><strong>Impacto esperado:</strong> Los productos en posición 1 con alto volumen de impresiones tienen potencial de 15-25% CTR — en los casos identificados eso son potencialmente cientos de clics/compras adicionales por trimestre sin ninguna inversión en captación.</div>
+    </div>
+    <div class="move-card qw">
+      <div class="move-type">Quick Win 2 · Producto / Dirección</div>
+      <div class="move-title">Activar un proceso activo de reducción de fricción en el checkout — carrito a primer paso de pago</div>
+      <div class="move-text"><strong>Por qué:</strong> El 48% de quienes añaden al carrito nunca inician el checkout. Hay 2.283 sesiones únicas con add_to_cart pero solo 1.192 llegan a begin_checkout — 1.091 compras potenciales perdidas cada trimestre. El problema no es de tráfico ni de producto.</div>
+      <div class="move-text"><strong>Impacto esperado:</strong> Si se reduce el abandono carrito→checkout de 48% a 25%, se recuperan ~500 compras adicionales por trimestre. Al ticket medio estimado (80-180 €), el impacto en revenue puede ser de <strong>40.000-90.000 €/año sin incrementar el tráfico.</strong></div>
+    </div>
+    <div class="move-card qw">
+      <div class="move-type">Quick Win 3 · Marketing / Producto</div>
+      <div class="move-title">Revisar la propuesta de la página outlet para convertirla en punto de entrada de nuevos compradores</div>
+      <div class="move-text"><strong>Por qué:</strong> La página /collections/outlet está rankeada #1 en Google con 5.843 impresiones/trimestre pero solo CTR del 1,19% (esperado ~25%). El snippet no está comunicando el valor. Es una oportunidad de captación casi gratuita que no se está aprovechando.</div>
+      <div class="move-text"><strong>Impacto esperado:</strong> Mejorar el CTR a un 10-15% realista supondría +600-900 visitas adicionales/trimestre desde búsquedas de comprador con alta intención.</div>
+    </div>
+    <div class="subsection-title">📅 Medio Plazo — 1-6 meses</div>
+    <div class="move-card mp">
+      <div class="move-type">Medio Plazo 1 · Producto / Marketing</div>
+      <div class="move-title">Lanzar los kits y bundles como línea de producto estrella en canales propios</div>
+      <div class="move-text"><strong>Por qué:</strong> El kit-equipacion-mtb-gravity-10-v26 es top 5 en view_item GA4 (330 vistas). El E3 identifica que los tres buyer personas buscan protección integral. La venta de kit completo tiene ticket más alto y menor fricción de decisión para el comprador que quiere equiparse de una vez.</div>
+      <div class="move-text"><strong>Impacto esperado:</strong> Si el 20% de los compradores actuales opta por un kit en lugar de un producto individual con ticket 3x superior, el revenue incremental puede ser de 15-30k €/trimestre estimados.</div>
+    </div>
+    <div class="move-card mp">
+      <div class="move-type">Medio Plazo 2 · Dirección / Marketing</div>
+      <div class="move-title">Activar el segmento ADV como vertical propio con inversión diferenciada</div>
+      <div class="move-text"><strong>Por qué:</strong> La colección ADV tiene tracción real (226 clicks equipacion-adv, botas ADV con CTR 9,99%) y está en posición 12-14 — apenas fuera del top 10. El mercado ADV crece (CAGR 7,15%). Ningún competidor ha liderado este espacio en España todavía.</div>
+      <div class="move-text"><strong>Impacto esperado:</strong> Carlos (E3) es el perfil con mayor poder adquisitivo y menor sensibilidad al precio — capturarlo supone revenue de alto ticket con alta fidelización. El mercado ADV es donde el argumento de seguridad de Leatt tiene más resonancia.</div>
+    </div>
+    <div class="move-card mp">
+      <div class="move-type">Medio Plazo 3 · Dirección / Comercial</div>
+      <div class="move-title">Desarrollar una propuesta de ventaja exclusiva DTC para convertir leatt.es en el canal preferido</div>
+      <div class="move-text"><strong>Por qué:</strong> La página outlet está posición 1 pero CTR del 1,19% — el comprador que busca «leatt outlet» no elige comprar en leatt.es. La canibalización de queries de marca entre múltiples URLs indica confusión de navegación. El DTC no tiene ventaja percibida clara.</div>
+      <div class="move-text"><strong>Impacto esperado:</strong> Capturar mayor % del revenue de marca directamente en el canal DTC mejora el margen bruto y el conocimiento del cliente (datos first-party). Una ventaja exclusiva (precio DTC garantizado, acceso anticipado, extras exclusivos) puede reorientar al comprador de marca a leatt.es como primer destino.</div>
+    </div>
+    <div class="subsection-title">🎯 Apuesta Estratégica — 12-24 meses</div>
+    <div class="move-card ae">
+      <div class="move-type">Apuesta Estratégica · Dirección / Marketing</div>
+      <div class="move-title">Invertir en un hub de contenido técnico en español sobre protección en moto y MTB</div>
+      <div class="move-text"><strong>Por qué:</strong> El 100% del tráfico orgánico de Leatt es de marca — el negocio no capta a ningún comprador que no lo conoce previamente. Las queries informacionales («cómo elegir collarín moto», «diferencia peto moto vs chaleco») tienen cero presencia en el tráfico orgánico actual. La única forma de cambiar esto estructuralmente es con contenido. La historia del Dr. Leatt, la tecnología 360° Turbine, los datos clínicos de protección cervical son argumentos únicos que ningún competidor puede replicar.</div>
+      <div class="move-text"><strong>Impacto esperado:</strong> En 12-24 meses, posicionar a Leatt como la referencia de conocimiento sobre protección en moto y MTB en España. El efecto compuesto: captación de clientes nuevos no-marca + mejora de conversión de visitantes que llegan más informados + construcción de activo de marca intangible que refuerza el precio premium.</div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-title">Riesgos y dependencias</div>
+    <div class="risk high">
+      <div class="risk-title">🔴 Alta — Dependencia total del tráfico de marca en el canal orgánico</div>
+      <div class="risk-text"><strong>Evidencia:</strong> Top query nonbrand: 25 clicks (guantes mtb). El 100% del tráfico orgánico significativo es búsqueda de marca. Si la notoriedad de la marca Leatt en España disminuye (crisis de reputación, entrada de competidor más agresivo), el tráfico orgánico colapsa junto con el canal DTC.</div>
+      <div class="risk-text" style="margin-top:8px;"><strong>Mitigación:</strong> Diversificar el tráfico orgánico con contenido no-marca (blog técnico, guías de protección) reduce la dependencia de marca y construye audiencia nueva que no depende de que el usuario ya conozca Leatt.</div>
+    </div>
+    <div class="risk high">
+      <div class="risk-title">🔴 Alta — Tasa de conversión críticamente baja (0,68%) con pérdida masiva en checkout</div>
+      <div class="risk-text"><strong>Evidencia:</strong> 478 purchases / 69.879 sesiones = 0,68% — por debajo del 1-3% de referencia en ecommerce de equipación deportiva. La pérdida carrito→checkout es del 48% (2.283 add_to_cart → 1.192 begin_checkout). La pérdida checkout→compra es del 60% (1.192 begin_checkout → 478 purchase).</div>
+      <div class="risk-text" style="margin-top:8px;"><strong>Mitigación:</strong> Auditar el proceso de checkout de Shopify para identificar los puntos de abandono más críticos: costes de envío, opciones de pago disponibles, plazos de entrega, política de devoluciones visible. Resolver las fricciones en este punto tiene retorno inmediato sin inversión en tráfico adicional.</div>
+    </div>
+    <div class="risk high">
+      <div class="risk-title">🔴 Alta — Productos agotados en posición top de Google generando impresiones sin conversión</div>
+      <div class="risk-text"><strong>Evidencia:</strong> Productos en pos 1-2 con 0% CTR: casco-moto-35-v25 (1.456 imp), rodilleras-reaflex-ultralite (772 imp), botas-35-junior (586 imp), pantalon-mtb-enduro-30-corto-v25 (1.355 imp). Total de impresiones desperdiciadas en SKU agotados identificados: +4.000/trimestre.</div>
+      <div class="risk-text" style="margin-top:8px;"><strong>Mitigación:</strong> Gestión activa del catálogo: productos descontinuados o agotados sin fecha de restock deben redirigirse a la categoría o al producto sucesor. Implementar «notify me when available» en los de alta demanda que van a reponerse.</div>
+    </div>
+    <div class="risk mid">
+      <div class="risk-title">🟡 Media — Canibalización de queries de marca entre múltiples URLs del site</div>
+      <div class="risk-text"><strong>Evidencia:</strong> GSC identifica 25 grupos de canibalización activa: «leatt» disputa entre equipacion-moto, collarines, conjuntos-mtb, petos-integrales-moto, guantes-mtb y proteccion-adv. «leatt moto» disputa entre equipacion-moto, gafas-motocross-outlet y proteccion-adv. La query más valiosa de la marca se fragmenta en 6 URLs distintas.</div>
+      <div class="risk-text" style="margin-top:8px;"><strong>Mitigación:</strong> Definir una página única y definitiva como destino de cada query de marca clave. La homepage o una página de marca consolidada debería ser el destino de «leatt», no 6 colecciones en competencia. La decisión es de arquitectura de negocio (cómo se presenta la marca), no solo de estructura web.</div>
+    </div>
+  </div>
+
+  <div class="conclusion">
+    <h3>Un negocio con demanda real y una conversión que deja revenue sobre la mesa</h3>
+    <p>Leatt España recibe 70.000 visitas por trimestre y tiene casi un millón de impresiones en Google — la demanda existe y el mercado sabe que existe Leatt. El problema no está en la visibilidad ni en el producto: está en la conversión y en la captación de clientes nuevos.</p>
+    <p>El hallazgo más urgente es el funnel roto: solo 1 de cada 150 visitantes compra (0,68%), cuando el sector opera entre 1% y 3%. <strong>Se pierden 1.100 compras potenciales cada trimestre solo entre el carrito y el checkout.</strong> Resolver esto no requiere más tráfico — requiere reducir la fricción en los últimos pasos del proceso de compra.</p>
+    <p>El segundo hallazgo estratégico es la dependencia de marca: prácticamente todo el tráfico orgánico viene de gente que ya sabe qué es Leatt. El negocio no está usando Google para captar clientes nuevos — y sin contenido en español, no puede hacerlo.</p>
+    <p>La oportunidad más inmediata y con menor coste: resolver los productos agotados que aparecen en posición #1 de Google sin conversión, y activar el canal outlet que está en top posición pero con CTR del 1% cuando debería tener 20-25%.</p>
+    <p>El movimiento estratégico de mayor impacto a 12-24 meses es construir contenido técnico en español que posicione a Leatt como la referencia de protección — no solo como una tienda de ropa de moto. <strong>La historia del Dr. Leatt y los datos clínicos de protección cervical son argumentos únicos que ningún competidor tiene. Hoy nadie los está buscando porque nadie los ha contado en español.</strong></p>
+  </div>
+</div>
+</div>
+
+<footer>
+  Oráculo Leatt España · E1 Análisis Web · E2 Estudio de Mercado · E3 Buyer Personas · E4 Performance Real<br>
+  <span>Datos: GSC 18.822 clics · 929.661 imp · GA4 69.879 sesiones · Feb–May 2026 · agenciaSEO.eu · ID 1061d66d-4fea-420c-b524-72cd23d022e1</span>
+</footer>
+
+<div class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+</div>
+
+<script>
+const sections = ['e1','e2','e3','e4'];
+const navLinks = document.querySelectorAll('nav a');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const link = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { threshold: 0.15 });
+sections.forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
+const scrollBtn = document.getElementById('scrollTop');
+window.addEventListener('scroll', () => { scrollBtn.classList.toggle('visible', window.scrollY > 400); });
+</script>
+</body>
+</html>
