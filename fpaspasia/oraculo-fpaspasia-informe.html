@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oráculo FP Aspasia — Mayo 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #001F78;
+    --blue-medium: #2B88D8;
+    --blue-light: #DDEFFF;
+    --bg-surface: #F3F8FF;
+    --bg-white: #ffffff;
+    --salmon: #FF7F7A;
+    --salmon-bg: #FFF0EF;
+    --text-primary: #001F78;
+    --text-secondary: #3a4a7a;
+    --text-muted: #7685AF;
+    --border: rgba(0,31,120,0.10);
+    --border-strong: rgba(0,31,120,0.18);
+    --green: #1a7a45;
+    --green-bg: #e8f5ee;
+    --amber: #856404;
+    --amber-bg: #fff8e1;
+    --red: #c0392b;
+    --red-bg: #FFF0EF;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg-white);
+    color: var(--text-primary);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-strong);
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    height: 52px;
+    gap: 4px;
+  }
+  .nav-brand {
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 13px;
+    margin-right: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .nav-brand span { color: var(--salmon); }
+  .nav-links { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; }
+  .nav-links::-webkit-scrollbar { display: none; }
+  nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 12.5px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  nav a:hover { background: var(--bg-surface); color: var(--navy); }
+  nav a.active { background: var(--navy); color: #fff; }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--navy);
+    color: #fff;
+    padding: 60px 48px 52px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(43,136,216,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: 200px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(255,127,122,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue-medium);
+    margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-size: clamp(22px,3.5vw,34px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 10px;
+    max-width: 680px;
+  }
+  .hero-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+    max-width: 620px;
+    margin-bottom: 44px;
+  }
+  .hero-kpis {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    max-width: 1000px;
+  }
+  .hero-kpi {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+  .hero-kpi-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.50);
+    margin-bottom: 6px;
+  }
+  .hero-kpi-value {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--salmon);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .hero-kpi-desc {
+    font-size: 11.5px;
+    color: rgba(255,255,255,0.50);
+    margin-top: 4px;
+  }
+
+  /* ── LAYOUT ── */
+  .section {
+    padding: 64px 48px;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .section-wrap {
+    border-bottom: 1px solid var(--border);
+  }
+  .section-wrap:nth-child(odd) { background: var(--bg-surface); }
+  .section-wrap:nth-child(even) { background: var(--bg-white); }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    margin-bottom: 40px;
+    padding-bottom: 28px;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-tag {
+    background: var(--navy);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+  .section-tag.e2 { background: #1a4a9e; }
+  .section-tag.e3 { background: #2a6aaa; }
+  .section-tag.e4 { background: var(--salmon); }
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue-medium);
+    margin-bottom: 6px;
+  }
+  .section-title {
+    font-size: clamp(22px,3.5vw,30px);
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+  .section-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* ── CONTENT BLOCK ── */
+  .content-block { margin-bottom: 40px; }
+  .block-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .block-title::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 18px;
+    background: var(--salmon);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* ── GRIDS ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
+  .grid-5 { display: grid; grid-template-columns: repeat(5,1fr); gap: 14px; }
+
+  /* ── CARDS ── */
+  .card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 22px;
+  }
+  .card-surface {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 22px;
+  }
+  .card-accent {
+    background: var(--navy);
+    border-radius: 12px;
+    padding: 20px 22px;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .card-text {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+  .card-text strong { color: var(--navy); }
+
+  /* ── KPI CARDS ── */
+  .kpi-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    border-top: 3px solid var(--blue-medium);
+  }
+  .kpi-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .kpi-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .kpi-value.salmon { color: var(--salmon); }
+  .kpi-sub {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .kpi-sub strong { color: var(--navy); }
+
+  /* ── BADGES ── */
+  .badge {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+  }
+  .badge-green { background: var(--green-bg); color: var(--green); }
+  .badge-amber { background: var(--amber-bg); color: var(--amber); }
+  .badge-red { background: #fee2e2; color: var(--red); }
+  .badge-blue { background: var(--blue-light); color: var(--navy); }
+  .badge-salmon { background: var(--salmon-bg); color: #9a3412; }
+  .badge-gray { background: #f0f0f0; color: #616268; }
+  .badge-navy { background: var(--blue-light); color: var(--navy); }
+  .badge-purple { background: #ede9fe; color: #5b21b6; }
+
+  /* ── INSIGHT BOXES ── */
+  .insight {
+    background: var(--bg-surface);
+    border-left: 3px solid var(--blue-medium);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 20px;
+    margin-top: 12px;
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .insight strong { color: var(--navy); }
+  .insight.alert { background: var(--salmon-bg); border-color: var(--salmon); }
+  .insight.success { background: var(--green-bg); border-color: var(--green); }
+  .insight.amber { background: var(--amber-bg); border-color: #d97706; }
+
+  /* ── PROGRESS BARS ── */
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+  .bar-label { font-size: 13px; font-weight: 500; color: var(--navy); width: 210px; flex-shrink: 0; }
+  .bar-track { flex: 1; background: var(--blue-light); border-radius: 3px; height: 8px; }
+  .bar-fill { height: 8px; border-radius: 3px; background: var(--blue-medium); }
+  .bar-fill.high { background: var(--red); }
+  .bar-fill.mid { background: #d97706; }
+  .bar-fill.low { background: var(--green); }
+  .bar-num { font-size: 12px; font-weight: 700; color: var(--navy); width: 34px; text-align: right; }
+
+  /* ── TABLES ── */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .data-table th {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 2px solid var(--border-strong);
+    padding: 10px 14px;
+    text-align: left;
+  }
+  .data-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+    vertical-align: top;
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: var(--bg-surface); }
+  .data-table .num { font-weight: 700; color: var(--navy); font-size: 15px; }
+
+  /* ── FICHA ROWS ── */
+  .ficha-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .ficha-key {
+    background: var(--navy);
+    color: rgba(255,255,255,0.75);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+  }
+  .ficha-val {
+    background: #fff;
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 12px 16px;
+    line-height: 1.6;
+  }
+  .ficha-val strong { color: var(--navy); }
+
+  /* ── DAFO ── */
+  .dafo { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .dafo-cell { padding: 24px; }
+  .dafo-cell:nth-child(1) { background: #d1fae5; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .dafo-cell:nth-child(2) { background: #fee2e2; border-bottom: 1px solid var(--border); }
+  .dafo-cell:nth-child(3) { background: #dbeafe; border-right: 1px solid var(--border); }
+  .dafo-cell:nth-child(4) { background: #fef3c7; }
+  .dafo-label { font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; }
+  .dafo-cell:nth-child(1) .dafo-label { color: #065f46; }
+  .dafo-cell:nth-child(2) .dafo-label { color: #991b1b; }
+  .dafo-cell:nth-child(3) .dafo-label { color: #1e40af; }
+  .dafo-cell:nth-child(4) .dafo-label { color: #92400e; }
+  .dafo-list { list-style: none; padding: 0; }
+  .dafo-list li { font-size: 12.5px; color: #2a3a6a; padding: 4px 0 4px 14px; position: relative; line-height: 1.55; }
+  .dafo-list li::before { content: '→'; position: absolute; left: 0; font-size: 11px; }
+
+  /* ── COMPETITORS ── */
+  .comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .comp-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .comp-head { background: var(--bg-surface); padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .comp-name { font-size: 15px; font-weight: 700; color: var(--navy); }
+  .comp-body { padding: 16px 18px; }
+  .comp-text { font-size: 12.5px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 10px; }
+  .comp-list { list-style: none; padding: 0; }
+  .comp-list li { font-size: 12.5px; color: var(--text-secondary); padding: 3px 0 3px 14px; position: relative; }
+  .comp-list.pros li::before { content: '+'; position: absolute; left: 2px; color: var(--green); font-weight: 700; }
+  .comp-list.cons li::before { content: '−'; position: absolute; left: 2px; color: var(--red); font-weight: 700; }
+  .comp-sublabel { font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; margin-top: 10px; }
+
+  /* ── PERSONAS ── */
+  .persona-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .persona-head { background: var(--navy); color: #fff; padding: 24px; }
+  .persona-emoji { font-size: 34px; margin-bottom: 10px; }
+  .persona-name { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+  .persona-role { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.5; }
+  .persona-body { padding: 20px 24px; }
+  .persona-field { margin-bottom: 14px; }
+  .pf-label { font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 3px; }
+  .pf-value { font-size: 13px; color: var(--text-secondary); line-height: 1.65; }
+  .pf-value strong { color: var(--navy); }
+
+  /* ── HYPOTHESIS CARDS ── */
+  .hyp-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; margin-bottom: 14px; }
+  .hyp-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .hyp-origin { font-size: 11px; color: var(--text-muted); font-weight: 500; }
+  .hyp-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+  .hyp-text { font-size: 12.5px; color: var(--text-secondary); line-height: 1.65; }
+  .hyp-text strong { color: var(--navy); }
+  .veredicto { font-size: 10.5px; font-weight: 700; padding: 3px 10px; border-radius: 20px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .v-ok { background: var(--green-bg); color: var(--green); }
+  .v-partial { background: var(--amber-bg); color: var(--amber); }
+
+  /* ── MOVE CARDS ── */
+  .move-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px 18px 24px; margin-bottom: 12px; position: relative; border-left: 4px solid; }
+  .move-card.qw { border-left-color: var(--green); }
+  .move-card.mp { border-left-color: var(--blue-medium); }
+  .move-card.ae { border-left-color: #7c3aed; }
+  .move-type { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 5px; }
+  .move-card.qw .move-type { color: var(--green); }
+  .move-card.mp .move-type { color: var(--blue-medium); }
+  .move-card.ae .move-type { color: #7c3aed; }
+  .move-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+  .move-text { font-size: 12.5px; color: var(--text-secondary); line-height: 1.65; }
+  .move-text strong { color: var(--navy); }
+
+  /* ── RISK CARDS ── */
+  .risk { border-left: 4px solid; border-radius: 0 10px 10px 0; padding: 16px 20px; margin-bottom: 12px; }
+  .risk.high { background: #fef2f2; border-color: var(--red); }
+  .risk.mid { background: var(--amber-bg); border-color: #d97706; }
+  .risk-title { font-size: 13.5px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .risk-text { font-size: 12.5px; color: var(--text-secondary); line-height: 1.65; }
+  .risk-text strong { color: var(--navy); }
+
+  /* ── SUBSECTION TITLE ── */
+  .subsection-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 36px 0 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .subsection-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── CONCLUSION BOX ── */
+  .conclusion {
+    background: var(--navy);
+    border-radius: 12px;
+    padding: 32px 36px;
+    margin-top: 12px;
+    color: #fff;
+  }
+  .conclusion h3 { font-size: 17px; font-weight: 700; color: var(--salmon); margin-bottom: 14px; line-height: 1.3; }
+  .conclusion p { font-size: 14.5px; color: rgba(255,255,255,0.80); line-height: 1.8; }
+  .conclusion strong { color: #fff; }
+
+  /* ── AUTHORITY TABLE ── */
+  .auth-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .auth-table th { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); border-bottom: 2px solid var(--border-strong); padding: 10px 14px; text-align: left; }
+  .auth-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: middle; }
+  .auth-table tr:last-child td { border-bottom: none; }
+  .auth-table tr:hover td { background: var(--bg-surface); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy);
+    color: rgba(255,255,255,0.40);
+    text-align: center;
+    padding: 28px;
+    font-size: 12px;
+  }
+  footer span { color: rgba(255,255,255,0.75); }
+
+  /* ── SCROLL TO TOP ── */
+  .scroll-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 40px;
+    height: 40px;
+    background: var(--salmon);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(255,127,122,0.4);
+    transition: opacity 0.2s;
+    opacity: 0;
+  }
+  .scroll-top.visible { opacity: 1; }
+  .scroll-top svg { width: 16px; height: 16px; fill: #fff; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero { padding: 40px 24px 36px; }
+    .hero-kpis { grid-template-columns: repeat(2,1fr); }
+    .section { padding: 48px 24px; }
+    .grid-2, .grid-3, .grid-4, .grid-5 { grid-template-columns: 1fr; }
+    .comp-grid { grid-template-columns: 1fr; }
+    .dafo { grid-template-columns: 1fr; }
+    .dafo-cell { border-right: none !important; }
+    nav { padding: 0 16px; }
+    .nav-brand { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">FP Aspasia · <span>Oráculo</span></div>
+  <div class="nav-links">
+    <a href="#e1">E1 — Análisis Web</a>
+    <a href="#e2">E2 — Mercado</a>
+    <a href="#e3">E3 — Buyer Personas</a>
+    <a href="#e4">E4 — Performance Real</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Oráculo · FP Aspasia · Mayo 2026</div>
+  <h1>Diagnóstico estratégico integral de FP Aspasia</h1>
+  <p class="hero-sub">Análisis web, estudio de mercado, buyer personas y performance real con datos de GSC, GA4 y campañas de paid.</p>
+  <div class="hero-kpis">
+    <div class="hero-kpi">
+      <div class="hero-kpi-label">Visibilidad orgánica</div>
+      <div class="hero-kpi-value">3,23M</div>
+      <div class="hero-kpi-desc">impresiones / 90 días</div>
+    </div>
+    <div class="hero-kpi">
+      <div class="hero-kpi-label">Clics orgánicos</div>
+      <div class="hero-kpi-value">37.015</div>
+      <div class="hero-kpi-desc">CTR 0,83% · pos. media 18,3</div>
+    </div>
+    <div class="hero-kpi">
+      <div class="hero-kpi-label">Sesiones totales</div>
+      <div class="hero-kpi-value">157.951</div>
+      <div class="hero-kpi-desc">orgánico + paid</div>
+    </div>
+    <div class="hero-kpi">
+      <div class="hero-kpi-label">Matrículas</div>
+      <div class="hero-kpi-value">2.392</div>
+      <div class="hero-kpi-desc">1,24% sobre sesiones</div>
+    </div>
+    <div class="hero-kpi">
+      <div class="hero-kpi-label">Ranking Strategik</div>
+      <div class="hero-kpi-value">#2</div>
+      <div class="hero-kpi-desc">715 centros · 80,4 pts</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ E1 — ANÁLISIS WEB ══════════ -->
+<div class="section-wrap" id="e1-wrap">
+<div class="section" id="e1">
+  <div class="section-header">
+    <div class="section-tag">E1</div>
+    <div>
+      <div class="section-eyebrow">Entregable 1</div>
+      <div class="section-title">Análisis Web</div>
+      <div class="section-desc">Contexto de negocio, estructura digital, autoridad y oportunidades de mejora</div>
+    </div>
+  </div>
+
+  <!-- FICHA CONTEXTO -->
+  <div class="content-block">
+    <div class="block-title">Ficha de contexto</div>
+    <div class="ficha-row"><div class="ficha-key">Sector</div><div class="ficha-val">Educación — Formación Profesional reglada (Grado Básico, Medio y Superior)</div></div>
+    <div class="ficha-row"><div class="ficha-key">Modelo</div><div class="ficha-val"><strong>B2C</strong> — Ciclos formativos oficiales online y presencial multi-centro</div></div>
+    <div class="ficha-row"><div class="ficha-key">Cliente objetivo</div><div class="ficha-val">Jóvenes 17-25 post-ESO/Bachillerato + adultos 25-40 en reconversión profesional</div></div>
+    <div class="ficha-row"><div class="ficha-key">Geografía</div><div class="ficha-val">España. Presencial en Valladolid, Vitoria, Asturias, Cantabria, Tenerife, Madrid. Online estatal.</div></div>
+    <div class="ficha-row"><div class="ficha-key">Propuesta de valor</div><div class="ficha-val"><strong>"Tu camino hacia el éxito laboral"</strong> — Red presencial multi-centro + online flexible + 78-80% empleabilidad + Grupo Aspasia (30 años) + #2 Strategik 2024</div></div>
+    <div class="ficha-row"><div class="ficha-key">Estado digital</div><div class="ficha-val">Web madura: 516 URLs · 21 clusters · 233 posts de blog · GTM activo · 22 landings PPC</div></div>
+  </div>
+
+  <!-- DIFERENCIADORES -->
+  <div class="content-block">
+    <div class="block-title">Propuesta de valor diferencial</div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="badge badge-green">Verificado</div>
+        <div class="card-title">Modelo híbrido real</div>
+        <div class="card-text">Pocos competidores online tienen red presencial extensa. FP Aspasia opera centros en <strong>6 comunidades autónomas</strong> con identidad propia por centro.</div>
+      </div>
+      <div class="card">
+        <div class="badge badge-blue">30 años</div>
+        <div class="card-title">Trayectoria del Grupo</div>
+        <div class="card-text">Grupo Aspasia integra Ibecon, Tàdel, Formatec, Isern y Formad. Autoridad frente a marcas más jóvenes como MEDAC (2010) o Linkia FP.</div>
+      </div>
+      <div class="card">
+        <div class="badge badge-salmon">Sello Plata</div>
+        <div class="card-title">Reconocimiento externo</div>
+        <div class="card-text"><strong>#2 ranking Strategik 2024</strong> sobre 715 centros privados. La mención existe pero no se destaca en home con la fuerza que merece.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRÁFICO -->
+  <div class="content-block">
+    <div class="block-title">Estado del tráfico orgánico</div>
+    <div class="grid-2">
+      <div class="kpi-card">
+        <div class="kpi-label">Tráfico orgánico (90 días)</div>
+        <div class="kpi-value salmon">37.015</div>
+        <div class="kpi-sub"><strong>3,23M impresiones</strong> · Posición media 18,3 · CTR 0,83%. El blog aporta el 90% (33.475 clics). Activos comerciales: apenas 2.800 clics (10%). Este desbalance es la principal alerta SEO.</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Blog</div>
+        <div class="kpi-value">233 posts</div>
+        <div class="kpi-sub">Posición media 14,9. Blog activo y productivo: becas MEC, fechas de matrícula, salidas profesionales, comparativas. <strong>8 author archives indexados con 0 clics.</strong></div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Lead gen</div>
+        <div class="kpi-value">Formulario PDF</div>
+        <div class="kpi-sub">Nombre, email, teléfono, provincia en cada ficha. Bolsa de empleo con 126 clics/90d — activo infrautilizado en home. Lead magnets temáticos ausentes en el blog.</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Paid media</div>
+        <div class="kpi-value">22 landings</div>
+        <div class="kpi-sub">Cluster PPC: 22 URLs con 0 clics orgánicos (posición 0,3 — comportamiento esperado). Confirma inversión activa en Google Ads. <strong>Dominio separado: cursos.fpaspasia.com.</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEÑALES AUTORIDAD -->
+  <div class="content-block">
+    <div class="block-title">Señales de autoridad</div>
+    <table class="auth-table">
+      <thead>
+        <tr><th>Tipo</th><th>Presente</th><th>Detalle</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Premios</strong></td><td><span class="badge badge-green">Sí</span></td><td>#2 ranking Strategik 2024. Sello Digital Plata. Aparece en notas de prensa de centros pero no en home.</td></tr>
+        <tr><td><strong>Casos de éxito</strong></td><td><span class="badge badge-amber">Parcial</span></td><td>Existe /alumnos/alexia — inicio de testimonios aislado, 0 clics. Testimoniales cortos en fichas sin estructura de caso completo.</td></tr>
+        <tr><td><strong>Logos clientes</strong></td><td><span class="badge badge-amber">Oculto</span></td><td>/entidades-fp-aspasia con 0 clics. Activo B2B importante que no se exhibe en home.</td></tr>
+        <tr><td><strong>Certificaciones</strong></td><td><span class="badge badge-green">Sí</span></td><td>Ciclos oficiales reconocidos por Consejerías de cada CCAA. Aparece en cada ficha pero no se agrupa como sello.</td></tr>
+        <tr><td><strong>Medios</strong></td><td><span class="badge badge-red">No visible</span></td><td>No se identifican apariciones en prensa nacional integradas en la web.</td></tr>
+        <tr><td><strong>Reseñas</strong></td><td><span class="badge badge-green">Sí</span></td><td>Reseñas en Emagister y TopFormacion. Sin agregadores de rating ni Google Reviews integradas.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- GAPS -->
+  <div class="content-block">
+    <div class="block-title">Gaps detectados</div>
+    <div class="grid-2">
+      <div class="card-surface">
+        <div class="badge badge-red">Crítico</div>
+        <div class="card-title">Concentración blog 90%</div>
+        <div class="card-text">Sin diversificación hacia fichas comerciales, una caída de algoritmo en informacional impacta el negocio entero. Sin alternativa estructural.</div>
+      </div>
+      <div class="card-surface">
+        <div class="badge badge-red">Crítico</div>
+        <div class="card-title">CTR 0,83% vs benchmark 1,5-2%</div>
+        <div class="card-text">Gap claro en titles y metas. Está cediendo decenas de miles de clics trimestrales a la competencia sin necesidad de mejorar posiciones.</div>
+      </div>
+      <div class="card-surface">
+        <div class="badge badge-amber">Medio</div>
+        <div class="card-title">Pruebas sociales infrautilizadas</div>
+        <div class="card-text">Sello Plata Strategik, red multi-centro, 30 años, 78% empleabilidad: todo existe pero disperso. Nada concentrado en home como módulo de autoridad.</div>
+      </div>
+      <div class="card-surface">
+        <div class="badge badge-amber">Medio</div>
+        <div class="card-title">50 canibalizaciones activas</div>
+        <div class="card-text">Arquitectura WordPress con taxonomías superpuestas. Ejemplo: dos URLs de matrícula FP 2026-27 rankeando en posición 3,27 para las mismas queries.</div>
+      </div>
+      <div class="card-surface">
+        <div class="badge badge-amber">Medio</div>
+        <div class="card-title">SEO local infradesarrollado</div>
+        <div class="card-text">Cluster Ciclos Locales en posición media 28,8 con 175 clics. La red presencial multi-centro no se está convirtiendo en activo SEO.</div>
+      </div>
+      <div class="card-surface">
+        <div class="badge badge-gray">Técnico</div>
+        <div class="card-title">Bloat técnico</div>
+        <div class="card-text">50 categorías con 5 clics combinados, 8 author archives con 0 clics, paginaciones indexables, URLs duplicadas con doble slash.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="conclusion">
+    <h3>Conclusión E1 — Valoración global</h3>
+    <p>FP Aspasia tiene <strong>fundamentales sólidos</strong>: marca con historia (Grupo Aspasia), red presencial en seis comunidades autónomas, reconocimiento externo verificable (#2 Strategik 2024), blog que sostiene 33.000 clics/trimestre y un sector con tailwind macro (FP Superior +42% en 5 años). El problema no es de marca sino de <strong>eficiencia digital</strong>: la web está desbalanceada (90% del tráfico viene del blog), las pruebas sociales están dispersas, hay bloat técnico que diluye autoridad y el CTR de SERP regala clics a la competencia.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════ E2 — ESTUDIO DE MERCADO ══════════ -->
+<div class="section-wrap" id="e2-wrap">
+<div class="section" id="e2">
+  <div class="section-header">
+    <div class="section-tag e2">E2</div>
+    <div>
+      <div class="section-eyebrow">Entregable 2</div>
+      <div class="section-title">Estudio de Mercado</div>
+      <div class="section-desc">Contexto sectorial, estructura competitiva, benchmark de competidores y diagnóstico estratégico</div>
+    </div>
+  </div>
+
+  <!-- CONTEXTO SECTORIAL -->
+  <div class="content-block">
+    <div class="block-title">Contexto sectorial</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="badge badge-green">Político · Favorable</div>
+        <div class="card-title">Reforma LO 3/2022</div>
+        <div class="card-text">Unifica FP educativa y FP para el empleo en un sistema único de cinco grados. RD 278/2023 completa la implantación del 2.º curso en 2025/2026. Centros con metodología digital madura salen reforzados. <strong>FP Aspasia tiene tarea técnica inmediata</strong> y oportunidad de marketing: "oferta adaptada al nuevo sistema".</div>
+      </div>
+      <div class="card">
+        <div class="badge badge-green">Social · Favorable</div>
+        <div class="card-title">Récord histórico de matrícula</div>
+        <div class="card-text">España alcanza <strong>1,21M matriculados</strong> en FP en 24/25 (+2,4% YoY). La FP Superior crece +42% en 5 años y ya es la opción del 40% de estudiantes de Bachillerato. La pregunta no es si habrá demanda sino cómo capturarla frente a operadores más grandes.</div>
+      </div>
+      <div class="card">
+        <div class="badge badge-green">Tecnológico · Favorable</div>
+        <div class="card-title">Auge de la FP online</div>
+        <div class="card-text">La FP online creció explosivamente post-pandemia. El modelo <strong>híbrido (online + red presencial real)</strong> es el que más resiste — combina flexibilidad y posibilidad de prácticas/exámenes en zona. FP Aspasia está en la franja correcta del mercado.</div>
+      </div>
+      <div class="card">
+        <div class="badge badge-green">Económico · Favorable</div>
+        <div class="card-title">Empleabilidad alta y comprobada</div>
+        <div class="card-text">Empleabilidad media de FP Grado Superior: <strong>79,5% al primer año</strong> (Observatorio CaixaBank Dualiza). Informática 90%, Sanidad 85%, Mantenimiento 80%, Comercio 70%. La FP tiene mejor ROI tiempo/empleo que la universidad para muchos perfiles.</div>
+      </div>
+      <div class="card">
+        <div class="badge badge-amber">Legal · Oportunidad</div>
+        <div class="card-title">Pricing transparente como diferenciador</div>
+        <div class="card-text">MEDAC ya publica precios públicamente (1.500-4.500 €/año, fraccionable). FP Aspasia mantiene pricing detrás de formulario — <strong>coste en confianza y conversión</strong> que se podría revertir.</div>
+      </div>
+      <div class="card">
+        <div class="badge badge-blue">Demográfico · Creciente</div>
+        <div class="card-title">Adulto en reconversión como segmento emergente</div>
+        <div class="card-text">La demanda de FP entre adultos 25-45 crece impulsada por la digitalización del mercado laboral. Este segmento tiene mayor capacidad de pago. FP Aspasia no tiene contenido específico para capturarlo orgánicamente.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PORTER -->
+  <div class="content-block">
+    <div class="block-title">Estructura competitiva</div>
+    <div class="bar-row"><div class="bar-label">Rivalidad entre competidores</div><div class="bar-track"><div class="bar-fill high" style="width:80%"></div></div><div class="bar-num">4/5</div></div>
+    <div class="bar-row"><div class="bar-label">Poder de los clientes</div><div class="bar-track"><div class="bar-fill high" style="width:80%"></div></div><div class="bar-num">4/5</div></div>
+    <div class="bar-row"><div class="bar-label">Amenaza de sustitutos</div><div class="bar-track"><div class="bar-fill mid" style="width:60%"></div></div><div class="bar-num">3/5</div></div>
+    <div class="bar-row"><div class="bar-label">Amenaza de nuevos entrantes</div><div class="bar-track"><div class="bar-fill low" style="width:40%"></div></div><div class="bar-num">2/5</div></div>
+    <div class="bar-row"><div class="bar-label">Poder de los proveedores</div><div class="bar-track"><div class="bar-fill low" style="width:40%"></div></div><div class="bar-num">2/5</div></div>
+    <div class="insight alert" style="margin-top:16px;">
+      <strong>Puntuación total: 15/25 — Competencia razonable, requiere posicionamiento claro.</strong> FP Aspasia no puede ganar siendo más barato ni más online ni más grande que Ilerna, MEDAC o Cesur. El espacio defendible es el <strong>modelo híbrido por geografía</strong> — donde los puros online no pueden estar y los puros presenciales no tienen plataforma.
+    </div>
+  </div>
+
+  <!-- BENCHMARK -->
+  <div class="content-block">
+    <div class="block-title">Benchmark de competidores</div>
+    <div class="comp-grid">
+      <div class="comp-card">
+        <div class="comp-head">
+          <div class="comp-name">Cesur</div>
+          <span class="badge badge-red">#1 Strategik</span>
+        </div>
+        <div class="comp-body">
+          <div class="comp-text"><strong>25.000+ alumnos</strong> en 2025/2026 (+35% YoY). Posicionamiento: "Mejor centro de FP de España" (ranking Strategik 5 años consecutivos, 93,4 puntos).</div>
+          <div class="comp-sublabel">Fortalezas</div>
+          <ul class="comp-list pros">
+            <li>Top-of-mind del sector — el ranking Strategik lo refuerza en cada comunicación</li>
+            <li>Crecimiento explosivo (+35% en un año)</li>
+            <li>Paid muy agresivo por keywords "FP + ciudad"</li>
+          </ul>
+          <div class="comp-sublabel">Debilidades</div>
+          <ul class="comp-list cons">
+            <li>Concentración en Andalucía; Norte y Cataluña más finos</li>
+            <li>Pricing menos transparente públicamente</li>
+          </ul>
+        </div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-head">
+          <div class="comp-name">MEDAC (Davante MEDAC)</div>
+          <span class="badge badge-amber">#3 Strategik</span>
+        </div>
+        <div class="comp-body">
+          <div class="comp-text"><strong>120 centros</strong> en España, Italia y Portugal. Fusión MasterD + MEDAC = "grupo educativo nº1 en empleo".</div>
+          <div class="comp-sublabel">Fortalezas</div>
+          <ul class="comp-list pros">
+            <li>Red presencial más amplia del top privado</li>
+            <li>Pricing público con financiación 22 meses sin intereses</li>
+          </ul>
+          <div class="comp-sublabel">Debilidades</div>
+          <ul class="comp-list cons">
+            <li>Comunicación genérica, marca menos diferenciada</li>
+            <li>Diversificación a oposiciones puede diluir foco FP</li>
+          </ul>
+        </div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-head">
+          <div class="comp-name">Ilerna</div>
+          <span class="badge badge-blue">Líder FP online</span>
+        </div>
+        <div class="comp-body">
+          <div class="comp-text"><strong>150.000 alumnos formados</strong> (acumulado 2012-2025). 32 ciclos en 8 familias. 93% de empleabilidad declarada.</div>
+          <div class="comp-sublabel">Fortalezas</div>
+          <ul class="comp-list pros">
+            <li>Brand recall asociado a "FP online" — se ha apropiado del genérico</li>
+            <li>SEO informacional muy fuerte: compite con el blog de FP Aspasia</li>
+          </ul>
+          <div class="comp-sublabel">Debilidades</div>
+          <ul class="comp-list cons">
+            <li>Sin red presencial — no puede competir en el espacio híbrido</li>
+            <li>Precios más bajos = menor margen por alumno</li>
+          </ul>
+        </div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-head">
+          <div class="comp-name">Linkia FP</div>
+          <span class="badge badge-gray">Grupo Planeta</span>
+        </div>
+        <div class="comp-body">
+          <div class="comp-text">Respaldo de Grupo Planeta. Pricing transparente desde 1.800 €. Apuesta por instalaciones modernas como diferenciador.</div>
+          <div class="comp-sublabel">Fortalezas</div>
+          <ul class="comp-list pros">
+            <li>Respaldo de marca paraguas corporativa (Planeta)</li>
+            <li>Pricing visible — hook de entrada competitivo</li>
+          </ul>
+          <div class="comp-sublabel">Debilidades</div>
+          <ul class="comp-list cons">
+            <li>Menor reconocimiento de marca propio</li>
+            <li>Sin ranking Strategik relevante en posición</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIAGNÓSTICO -->
+  <div class="content-block">
+    <div class="block-title">Diagnóstico estratégico</div>
+    <div class="dafo">
+      <div class="dafo-cell">
+        <div class="dafo-label">Fortalezas</div>
+        <ul class="dafo-list">
+          <li><strong>#2 ranking Strategik 2025</strong> (80,4 puntos sobre 715 centros) — sello externo verificable</li>
+          <li><strong>Red presencial multi-centro</strong> en 6 CCAA con identidad propia por centro</li>
+          <li><strong>Grupo Aspasia 30 años</strong> (Ibecon, Tàdel, Formatec, Isern, Formad)</li>
+          <li><strong>Blog activo</strong> — 233 posts, 33,5K clics/90d, pos. media 14,9</li>
+          <li><strong>Bolsa de empleo propia</strong> con tracción (126 clics/90d)</li>
+        </ul>
+      </div>
+      <div class="dafo-cell">
+        <div class="dafo-label">Debilidades</div>
+        <ul class="dafo-list">
+          <li><strong>90% del tráfico en blog</strong> — fragilidad estructural ante cambios de algoritmo</li>
+          <li><strong>CTR 0,83% vs benchmark 1,5-2%</strong> — cediendo clics gratis al resto del top</li>
+          <li><strong>Pricing oculto</strong> — coste en confianza y conversión</li>
+          <li><strong>SEO local infradesarrollado</strong> — Ciclos Locales en posición 28,8</li>
+          <li><strong>Pruebas sociales dispersas</strong> — Sello Plata, red, 78% empleabilidad no concentradas en home</li>
+        </ul>
+      </div>
+      <div class="dafo-cell">
+        <div class="dafo-label">Oportunidades</div>
+        <ul class="dafo-list">
+          <li>FP Superior +42% en 5 años, 1,21M matriculados — tailwind estructural</li>
+          <li>Reforma LO 3/2022 — quien comunica adaptación gana confianza</li>
+          <li>Hueco de <strong>FP regional con identidad</strong> — ningún top trabaja esa narrativa</li>
+          <li>Empleabilidad por familia como argumento desagregado (Informática 90%)</li>
+          <li>SEO local geo + centro en ciudades donde ya hay presencia física</li>
+        </ul>
+      </div>
+      <div class="dafo-cell">
+        <div class="dafo-label">Amenazas</div>
+        <ul class="dafo-list">
+          <li>Cesur con +35% YoY — el líder está acelerando en marca y volumen</li>
+          <li>Ilerna domina SEO informacional — compite por las mismas keywords del blog</li>
+          <li>Sustitutos no-FP (bootcamps tech, microformación Coursera/Udemy)</li>
+          <li>Inflación de CPC en "FP + ciudad" — puede dejar fuera a operadores con menos presupuesto</li>
+          <li>LO 3/2022 requiere actualización curricular urgente (riesgo operacional)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="conclusion">
+    <h3>Conclusión E2 — Valoración y próximos pasos</h3>
+    <p>FP Aspasia juega en un sector con <strong>viento a favor estructural</strong> y está en el grupo top-3 (#2 Strategik 2025) pero por debajo de Cesur en notoriedad y compite con Ilerna por el SEO informacional. Los fundamentales son sólidos pero la ejecución digital no los está convirtiendo en cuota. La hoja de ruta tiene tres planos: quick wins en CTR y prueba social (0-30 días), SEO local y hub de empleabilidad (1-3 meses), y reposicionamiento alrededor del modelo "FP regional con identidad" (3-6 meses).</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════ E3 — BUYER PERSONAS ══════════ -->
+<div class="section-wrap" id="e3-wrap">
+<div class="section" id="e3">
+  <div class="section-header">
+    <div class="section-tag e3">E3</div>
+    <div>
+      <div class="section-eyebrow">Entregable 3</div>
+      <div class="section-title">Buyer Personas</div>
+      <div class="section-desc">Los dos perfiles de compra principales con dolores, canales y factores de decisión detallados</div>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:32px;">
+    <!-- LUCÍA -->
+    <div class="persona-card">
+      <div class="persona-head">
+        <div class="persona-emoji">👩‍🎓</div>
+        <div class="persona-name">Lucía García</div>
+        <div class="persona-role">Estudiante post-Bachillerato · 18 años · B2C<br>Ha decidido que la universidad no es para ella</div>
+      </div>
+      <div class="persona-body">
+        <div class="persona-field">
+          <div class="pf-label">Dolor principal</div>
+          <div class="pf-value">Sabe que cuatro años de carrera dan menos garantías que un Grado Superior bien elegido, pero <strong>teme equivocarse de centro</strong> y acabar sin título oficial.</div>
+        </div>
+        <div class="persona-field">
+          <div class="pf-label">Mensaje clave</div>
+          <div class="pf-value"><strong>"FP oficial reconocida en toda Europa, con datos de empleabilidad reales por familia y un centro físico cerca de casa."</strong></div>
+        </div>
+        <div class="persona-field">
+          <div class="pf-label">Canal prioritario</div>
+          <div class="pf-value">Búsqueda en Google + Instagram</div>
+        </div>
+        <div class="persona-field">
+          <div class="pf-label">Comportamiento de búsqueda</div>
+          <div class="pf-value"><strong>Comparadora obsesiva.</strong> Abre 6 pestañas a la vez. Llega a Ilerna por SEO, a Cesur por anuncio y a FP Aspasia por recomendación directa. <strong>Tiempo de decisión: 4-6 semanas.</strong></div>
+        </div>
+        <div class="persona-field">
+          <div class="pf-label">Objeciones principales</div>
+          <div class="pf-value">¿Este título sirve igual que el de un instituto público? · ¿Cuánto cuesta y se puede fraccionar? · ¿Hay sitio en mi ciudad? · ¿En qué se diferencia de los otros centros?</div>
+        </div>
+        <div class="persona-field">
+          <div class="pf-label">Factor de cierre</div>
+          <div class="pf-value">El <strong>encaje del centro físico</strong>: si hay centro en su ciudad con buena fotografía, un grado que encaja y nadie la llama de forma agresiva, convierte.</div>
+        </div>
+      </div>
+    </div>
+    <!-- CARLOS -->
+    <div class="persona-card">
+      <div class="persona-head">
+        <div class="persona-emoji">👨‍💻</div>
+        <div class="persona-name">Carlos Romero</div>
+        <div class="persona-role">Adulto en reconversión profesional · 32 años · B2C<br>Sin dejar el trabajo actual</div>
+      </div>
+      <div class="persona-body">
+        <div class="persona-field">
+          <div class="pf-label">Dolor principal</div>
+          <div class="pf-value">Lleva 7 años en hostelería ganando 1.300 € y sabe que <strong>sin título oficial nadie le va a contratar para algo mejor.</strong> Tiene una hija de 4 años y no puede permitirse un año sabático.</div>
+        </div>
+        <div class="persona-field">
+          <div class="pf-label">Mensaje clave</div>
+          <div class="pf-value"><strong>"Titúlate en FP oficial 100% online compaginándolo con tu trabajo, con tutorización real y exámenes presenciales en tu comunidad."</strong></div>
+        </div>
+        <div class="persona-field">
+          <div class="pf-label">Canal prioritario</div>
+          <div class="pf-value">Google paid + WhatsApp / teléfono</div>
+        </div>
+        <div class="persona-field">
+          <div class="pf-label">Comportamiento de compra</div>
+          <div class="pf-value">Llega <strong>exclusivamente por paid</strong> — no hay contenido orgánico diseñado para capturarlo. Convierte por WhatsApp y teléfono: 5.263 open_whatsapp + 1.524 call_to_phone. <strong>Tiempo de decisión: 2-3 semanas.</strong></div>
+        </div>
+        <div class="persona-field">
+          <div class="pf-label">Oportunidad perdida</div>
+          <div class="pf-value">El negocio lo adquiere a coste de paid y lo cierra por WhatsApp. <strong>No existe contenido orgánico de reconversión profesional</strong> para capturarlo antes y más barato.</div>
+        </div>
+        <div class="persona-field">
+          <div class="pf-label">Queries con su intención</div>
+          <div class="pf-value">"estudiar fp mayores 40" (59 clics) · "hacer grado medio sin eso" (70) · "qué hacer después de DAM/DAW" (63)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPARATIVA -->
+  <div class="content-block">
+    <div class="block-title">Diferencias clave entre perfiles</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Dimensión</th><th>👩‍🎓 Lucía García</th><th>👨‍💻 Carlos Romero</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Tiempo de decisión</strong></td><td>4-6 semanas · compara 6 pestañas</td><td>2-3 semanas · 2-3 centros</td></tr>
+        <tr><td><strong>Motor de elección</strong></td><td>Centro físico + marca + empleabilidad</td><td>Precio + flexibilidad + tutorización</td></tr>
+        <tr><td><strong>Canal de captación</strong></td><td>Google orgánico + Instagram</td><td>Google paid + WhatsApp / email</td></tr>
+        <tr><td><strong>Canal de cierre</strong></td><td>Formulario web + WhatsApp</td><td>WhatsApp Business + llamada</td></tr>
+        <tr><td><strong>CPL actual</strong></td><td>Bajo (llega por orgánico)</td><td>Alto (solo paid · mayor capacidad de pago)</td></tr>
+        <tr><td><strong>Objeción nº1</strong></td><td>¿El título es realmente oficial?</td><td>¿Puedo compaginarlo con mi trabajo?</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- PALANCAS COMUNES -->
+  <div class="content-block">
+    <div class="block-title">Palancas universales para ambos perfiles</div>
+    <div class="grid-3">
+      <div class="insight success" style="margin-top:0;">
+        <strong>Pricing público y financiación clara</strong><br>Resuelve dolor principal de Carlos; refuerza confianza en Lucía que desconfía del precio oculto.
+      </div>
+      <div class="insight" style="margin-top:0;">
+        <strong>Hub de empleabilidad con dato por familia</strong><br>"Informática 90%, Sanidad 85%" (CaixaBank Dualiza) es verificable y diferenciable frente a la competencia.
+      </div>
+      <div class="insight alert" style="margin-top:0;">
+        <strong>#2 ranking Strategik 2025 en home</strong><br>Lo único que diferencia a FP Aspasia frente a Linkia, MEDAC, CCC en ambas comparativas. No aparece con la fuerza que merece.
+      </div>
+    </div>
+  </div>
+
+  <div class="conclusion">
+    <h3>Conclusión E3 — Dos motores de matrícula</h3>
+    <p>Lucía y Carlos comparten tres dolores: miedo al título no oficial, dudas sobre empleabilidad real y necesidad de soporte humano. Se diferencian en tiempo de decisión, motor de elección y canal. La estrategia debe ser diferenciada: para Lucía, activar captación orgánica desde la calculadora de becas; para Carlos, desarrollar contenido de reconversión profesional que lo atraiga antes de que llegue por paid. Sin cubrir aún: <strong>"Padre/Madre como decisor familiar"</strong> y <strong>"Returner / abandono escolar previo"</strong> — candidatos a personas adicionales cuando los hubs de empleabilidad y SEO local estén activos.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════ E4 — PERFORMANCE REAL ══════════ -->
+<div class="section-wrap" id="e4-wrap">
+<div class="section" id="e4">
+  <div class="section-header">
+    <div class="section-tag e4">E4</div>
+    <div>
+      <div class="section-eyebrow">Entregable 4</div>
+      <div class="section-title">Performance Real</div>
+      <div class="section-desc">Indicadores de negocio reales: qué buscan, quién compra, hipótesis validadas con datos GSC + GA4</div>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="content-block">
+    <div class="block-title">Pulso del negocio — 6 indicadores clave</div>
+    <div class="grid-2">
+      <div class="kpi-card">
+        <div class="kpi-label">Visibilidad orgánica total (GSC 90 días)</div>
+        <div class="kpi-value">3,23M impresiones</div>
+        <div class="kpi-sub">37.015 clics · CTR 0,83% · posición media 18,3. FP Aspasia aparece en 3,2M búsquedas pero captura menos del 1% en visitas. <strong>El volumen de demanda latente supera con creces la captación actual.</strong></div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Audiencia captada total (orgánico + paid)</div>
+        <div class="kpi-value">157.951 sesiones</div>
+        <div class="kpi-sub">El orgánico alimenta el top of funnel; el paid lleva a cursos.fpaspasia.com para cerrar. <strong>Dos motores distintos para dos fases distintas del funnel.</strong></div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Tasa de matrícula / compra</div>
+        <div class="kpi-value salmon">1,24%</div>
+        <div class="kpi-sub">2.392 purchases sobre 157.951 sesiones. El funnel de paid está bien ajustado: <strong>2,77% inicia checkout y el 45% completa la compra.</strong> La conversión orgánica es estructuralmente más baja — sin arquitectura de embudo.</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Pipeline de leads captados</div>
+        <div class="kpi-value">2.395 leads</div>
+        <div class="kpi-sub">1,24% generate_lead + 928 contactos directos. Prácticamente en paridad con las compras: el formulario actúa como compra directa — <strong>proceso de venta muy corto y eficiente para quien ya ha decidido.</strong></div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">WhatsApp como canal de cierre</div>
+        <div class="kpi-value">5.263 aperturas</div>
+        <div class="kpi-sub">→ 522 whatsapp_lead (9,9% de tasa de cierre desde apertura). <strong>Cuatro veces superior al formulario web.</strong> Canal dominante para el perfil adulto en reconversión.</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Activo orgánico estrella: calculadora Beca MEC</div>
+        <div class="kpi-value">15.086 clics</div>
+        <div class="kpi-sub">40,8% del total orgánico. Una única herramienta concentra casi la mitad del tráfico del sitio. <strong>Problema: el activo está desconectado del funnel de matrícula — el usuario calcula y se va.</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUÉ BUSCAN -->
+  <div class="content-block">
+    <div class="block-title">Qué buscan de ti — 4 intenciones principales</div>
+    <div class="hyp-card">
+      <div class="hyp-head">
+        <div class="badge badge-salmon">Intención #1</div>
+        <div class="hyp-origin">40,8% del tráfico orgánico</div>
+      </div>
+      <div class="hyp-title">Simular o calcular el importe de la beca MEC</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> ~11.581 clics en queries del cluster beca MEC. Top: "simulador beca mec 2026" (1.154 clics), "calculadora cuantía variable beca mec" (414), "calculadora beca mec" (384). Las dos URLs de la calculadora acumulan 15.086 clics.</div>
+      <div class="insight alert" style="margin-top:10px;">El usuario que llega por este intento es Lucía García — ya sabe que va a estudiar FP y necesita comprobar si puede financiarlo. FP Aspasia es la respuesta a esa pregunta pero todavía no es la respuesta a la siguiente: <strong><em>dónde me matriculo</em></strong>. Hay que cerrar ese gap.</div>
+    </div>
+    <div class="hyp-card">
+      <div class="hyp-head">
+        <div class="badge badge-blue">Intención #2</div>
+        <div class="hyp-origin">Alta intención de matrícula activa</div>
+      </div>
+      <div class="hyp-title">Informarse sobre cambios en la beca MEC 2026-2027</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> 4.980 clics en la URL de cambios en becas MEC con 271.375 impresiones (posición 5,8). "beca mec 2026 2027" (434 clics), "plazo beca mec 2026 27" (96).</div>
+      <div class="insight" style="margin-top:10px;">Tráfico altamente cualificado: quien busca plazos de la beca ya está en proceso de matriculación activo. FP Aspasia captura ese momento de alta intención pero <strong>no tiene CTA claro hacia los ciclos propios.</strong></div>
+    </div>
+    <div class="hyp-card">
+      <div class="hyp-head">
+        <div class="badge badge-navy">Intención #3</div>
+        <div class="hyp-origin">Mayor intención operativa del sitio</div>
+      </div>
+      <div class="hyp-title">Conocer fechas y plazos de matrícula FP por CCAA</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> URL matrícula FP 2026-2027: 2.760 clics, 288.140 impresiones, posición 3,27 (CTR 0,96%). URL alternativa del mismo tema: 1.109 clics. Total cluster matrícula: ~3.869 clics.</div>
+      <div class="insight success" style="margin-top:10px;">Es la audiencia de mayor intención operativa: acaba de decidir estudiar FP. Llega, consulta las fechas y <strong>se marcha sin contactar — las páginas no tienen puente hacia la matrícula en centros propios.</strong></div>
+    </div>
+    <div class="hyp-card">
+      <div class="hyp-head">
+        <div class="badge badge-purple">Intención #4</div>
+        <div class="hyp-origin">Mayor valor comercial por usuario</div>
+      </div>
+      <div class="hyp-title">Orientarse sobre qué ciclo estudiar o qué salidas tiene</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> "fp para acceder a psicología" (292 clics), "salidas laborales fp sistemas electrotécnicos" (65 clics). Test de orientación FP: 347 clics con <strong>8,73% CTR — el mejor ratio del sitio.</strong></div>
+      <div class="insight amber" style="margin-top:10px;">Quien pregunta por salidas laborales de un ciclo concreto está a uno o dos pasos de matricularse. El test de orientación FP tiene el mejor CTR del sitio pero <strong>no está conectado al funnel de conversión.</strong></div>
+    </div>
+  </div>
+
+  <!-- HIPÓTESIS VALIDADAS -->
+  <div class="content-block">
+    <div class="block-title">Hipótesis validadas — E1 / E2 / E3 vs. datos reales</div>
+    <div class="hyp-card">
+      <div class="hyp-head"><span class="veredicto v-ok">✓ Confirmada</span><span class="hyp-origin">E1 — Activos web</span></div>
+      <div class="hyp-title">La calculadora de beca MEC es el activo de captación más valioso de la web</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> Calculadora 2026: 9.147 clics directos, URL nº1 del sitio. Versión 2025 suma 5.939 adicionales. El cluster beca MEC genera el 54% de todo el tráfico orgánico identificable y el 40,8% del total de clics.</div>
+      <div class="hyp-text" style="margin-top:8px;"><strong>Implicación:</strong> La decisión de construir la calculadora fue acertada. Prioridad: mantenerla actualizada en cada convocatoria y conectarla al funnel de matrícula.</div>
+    </div>
+    <div class="hyp-card">
+      <div class="hyp-head"><span class="veredicto v-ok">✓ Confirmada</span><span class="hyp-origin">E1 — Web / E2 — Mercado</span></div>
+      <div class="hyp-title">La arquitectura WordPress genera canibalización interna activa</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> 50 canibalizaciones detectadas. Caso más visible: dos URLs de matrícula FP 2026-2027 rankeando en posición 3,27 con 382.782 impresiones fragmentadas. El cluster podría capturar más de 5.000 clics vs 3.869 actuales si se consolida.</div>
+    </div>
+    <div class="hyp-card">
+      <div class="hyp-head"><span class="veredicto v-ok">✓ Confirmada</span><span class="hyp-origin">E3 — Buyer personas</span></div>
+      <div class="hyp-title">WhatsApp Business es el canal de cierre más eficiente para el perfil adulto</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> 5.263 aperturas de WhatsApp (2,11% de sesiones) → 522 whatsapp_lead (9,9% de tasa de cierre). El formulario web tiene ~1,24% — cuatro veces menor. Canal dominante en ciclos transaccionales de adulto.</div>
+    </div>
+    <div class="hyp-card">
+      <div class="hyp-head"><span class="veredicto v-ok">✓ Confirmada</span><span class="hyp-origin">E1 — Marketing digital</span></div>
+      <div class="hyp-title">La separación de dominios crea una brecha estructural que infla el CPL real</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> Purchases y generate_lead ocurren dominantemente en cursos.fpaspasia.com con UTM de paid. Menos del 20% de los leads proceden del dominio orgánico. El usuario que llega por beca MEC no tiene camino claro hacia el checkout sin salir del dominio.</div>
+    </div>
+    <div class="hyp-card">
+      <div class="hyp-head"><span class="veredicto v-ok">✓ Confirmada</span><span class="hyp-origin">E1 — Diferenciación</span></div>
+      <div class="hyp-title">El test de orientación FP es el activo con mejor ratio de captación de atención del sitio</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> /test-de-orientacion-fp: 347 clics, CTR <strong>8,73%</strong>, posición media 4,13 — el mejor CTR de todo el sitio (media: 0,83%). No tiene lead capture ni arquitectura de conversión al final del flujo.</div>
+    </div>
+    <div class="hyp-card">
+      <div class="hyp-head"><span class="veredicto v-partial">≈ Parcialmente confirmada</span><span class="hyp-origin">E1 — Diferenciación</span></div>
+      <div class="hyp-title">El modelo híbrido es el principal diferenciador frente a competidores puramente online</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> El 90%+ del tráfico orgánico procede de contenido informacional genérico, no de búsquedas sobre presencialidad. La red presencial genera tráfico solo en búsquedas localizadas muy residuales: Galicia 712 clics, Andalucía 173 clics.</div>
+      <div class="hyp-text" style="margin-top:8px;"><strong>Implicación:</strong> El modelo híbrido puede ser argumento de cierre pero no es el motor de captación observable en los datos. La comunicación del diferenciador presencial necesita más presencia en el funnel.</div>
+    </div>
+  </div>
+
+  <!-- MOVIMIENTOS ESTRATÉGICOS -->
+  <div class="content-block">
+    <div class="block-title">Movimientos estratégicos recomendados</div>
+
+    <div class="subsection-title">⚡ Quick Wins — Impacto inmediato</div>
+    <div class="move-card qw">
+      <div class="move-type">Quick Win 1</div>
+      <div class="move-title">Insertar módulo de captación de leads dentro de la calculadora de becas MEC</div>
+      <div class="move-text"><strong>Por qué:</strong> La calculadora recibe 15.086 visitas de usuarios que ya han resuelto su pregunta económica y están en el punto óptimo de propuesta comercial. Actualmente el usuario calcula y se va.</div>
+      <div class="move-text" style="margin-top:8px;"><strong>Impacto esperado:</strong> Con una tasa de conversión conservadora del 2% sobre 15.086 visitantes, ~300 leads orgánicos adicionales por periodo sin incrementar costes de paid.</div>
+    </div>
+    <div class="move-card qw">
+      <div class="move-type">Quick Win 2</div>
+      <div class="move-title">Conectar el test de orientación FP al catálogo de ciclos propios con lead capture</div>
+      <div class="move-text"><strong>Por qué:</strong> Tiene el mejor CTR del sitio (8,73% vs media 0,83%) y captura al usuario en el momento de mayor apertura: eligiendo su futuro profesional. No requiere tráfico nuevo ni inversión en paid.</div>
+      <div class="move-text" style="margin-top:8px;"><strong>Impacto esperado:</strong> Potencial de capturar al perfil Lucía García antes de que la competencia lo haga vía remarketing.</div>
+    </div>
+
+    <div class="subsection-title">📅 Medio Plazo — 1-3 meses</div>
+    <div class="move-card mp">
+      <div class="move-type">Medio Plazo 1</div>
+      <div class="move-title">Construir el puente editorial entre fpaspasia.com y cursos.fpaspasia.com</div>
+      <div class="move-text"><strong>Por qué:</strong> La separación de dominios crea una brecha en el recorrido del usuario que el paid tiene que cubrir a coste. El negocio paga dos veces por el mismo usuario.</div>
+      <div class="move-text" style="margin-top:8px;"><strong>Impacto esperado:</strong> Si el 1% de los 37.000 clics orgánicos se convierte directamente sin pasar por paid, el ahorro en remarketing puede superar varios miles de euros por periodo.</div>
+    </div>
+    <div class="move-card mp">
+      <div class="move-type">Medio Plazo 2</div>
+      <div class="move-title">Desarrollar contenido de orientación profesional para el adulto en reconversión</div>
+      <div class="move-text"><strong>Por qué:</strong> Carlos Romero no llega por orgánico porque no hay contenido para él. Queries como "estudiar fp mayores 40" (59 clics), "hacer grado medio sin eso" (70) muestran demanda real con alta intención.</div>
+      <div class="move-text" style="margin-top:8px;"><strong>Impacto esperado:</strong> Reducir el CPL en el segmento con mayor capacidad de pago. Potencial de 50-100 leads orgánicos adicionales por mes en 6 meses.</div>
+    </div>
+
+    <div class="subsection-title">🎯 Apuesta Estratégica — 6-12 meses</div>
+    <div class="move-card ae">
+      <div class="move-type">Apuesta Estratégica</div>
+      <div class="move-title">Diversificar el motor de tráfico orgánico más allá de la beca MEC</div>
+      <div class="move-text"><strong>Por qué:</strong> FP Aspasia tiene una dependencia crítica en un único activo (40%+ del tráfico orgánico). Si el MEC cambia la convocatoria, Ilerna lanza una herramienta equivalente o la calculadora queda desactualizada, el tráfico orgánico colapsa sin alternativa.</div>
+      <div class="move-text" style="margin-top:8px;"><strong>Impacto esperado:</strong> Construir audiencia orgánica para ciclos de mayor margen (moda, peluquería, cocina, logística, animaciones 3D) ya validados por paid. Horizonte: 6-12 meses para tráfico alternativo relevante.</div>
+    </div>
+  </div>
+
+  <!-- RIESGOS -->
+  <div class="content-block">
+    <div class="block-title">Riesgos y dependencias</div>
+    <div class="risk high">
+      <div class="risk-title">🔴 Alta severidad — Dependencia crítica en el activo beca MEC</div>
+      <div class="risk-text">El 40,8% del tráfico orgánico proviene de las dos calculadoras de beca MEC (15.086 clics sobre 37.015 totales). No hay un segundo activo de captación de escala comparable.</div>
+      <div class="risk-text" style="margin-top:8px;"><strong>Mitigación:</strong> Garantizar actualización en cada convocatoria (ventana crítica: julio-octubre). Desarrollar motores de tráfico alternativos para reducir la concentración a menos del 20% en un activo único.</div>
+    </div>
+    <div class="risk high">
+      <div class="risk-title">🔴 Alta severidad — Separación de dominios sin puente de conversión</div>
+      <div class="risk-text">Menos del 20% de los leads proceden del dominio orgánico fpaspasia.com. El negocio paga dos veces por el mismo usuario: orgánico para atraerlo, remarketing para recuperarlo. El ROAS de paid aparece mejor de lo que es.</div>
+      <div class="risk-text" style="margin-top:8px;"><strong>Mitigación:</strong> Implementar el puente editorial entre dominios. Evaluar si la separación es estratégica o una acumulación histórica sin diseño.</div>
+    </div>
+    <div class="risk mid">
+      <div class="risk-title">🟡 Media severidad — Conversión concentrada en paid sin red de seguridad orgánica</div>
+      <div class="risk-text">Casi la totalidad de los purchases (2.392) procede de Google Ads PMax + Meta Ads. La conversión orgánica directa es residual: gracias (923) + form_submit (217) + whatsapp_lead (522).</div>
+      <div class="risk-text" style="margin-top:8px;"><strong>Mitigación:</strong> Activar la conversión orgánica (calculadora → matrícula, test → ciclo). Objetivo: que el 20-30% de las matrículas proceda de orgánico directo en 12 meses.</div>
+    </div>
+    <div class="risk mid">
+      <div class="risk-title">🟡 Media severidad — 50 canibalizaciones activas que fragmentan los activos clave</div>
+      <div class="risk-text">50 pares de URLs compitiendo internamente. El cluster de matrícula FP podría capturar más de 5.000 clics vs 3.869 actuales si se consolida en una sola URL dominante. Mejora visible en 4-8 semanas.</div>
+    </div>
+  </div>
+
+  <div class="conclusion">
+    <h3>FP Aspasia: líder de contenido informacional con conversión capturada por paid — la oportunidad es cerrar el circuito</h3>
+    <p>FP Aspasia ha construido algo inusual en el mercado de FP privada española: un activo informacional de escala nacional que genera 3,2 millones de impresiones y 37.000 visitas orgánicas sin depender de notoriedad de marca. La calculadora de beca MEC posiciona a FP Aspasia ante el usuario en su momento de mayor ansiedad económica, justo antes de decidir dónde matricularse.<br><br>El problema es que ese liderazgo informacional no cierra matrículas por sí solo. Las <strong>~2.400 matrículas por periodo</strong> proceden casi todas de inversión en paid en cursos.fpaspasia.com. Existe una <strong>brecha estructural entre los dos dominios</strong>: el informacional atrae al usuario, el transaccional lo cierra, pero el puente entre ambos no existe. El negocio paga dos veces por el mismo usuario.<br><br>La <strong>prioridad estratégica inmediata</strong> es convertir los 15.000 visitantes mensuales de la calculadora y los 350 del test de orientación en leads captados antes de que el paid los recupere. Con una tasa de conversión del 2%, eso son <strong>~300 matrículas adicionales de coste de adquisición casi nulo.</strong></p>
+  </div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  Oráculo FP Aspasia · E1 Análisis Web · E2 Estudio de Mercado · E3 Buyer Personas · E4 Performance Real<br>
+  <span>Datos: GSC + GA4 + Paid · Mayo 2026 · agenciaSEO.eu</span>
+</footer>
+
+<!-- SCROLL TO TOP -->
+<div class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+</div>
+
+<script>
+// Nav active on scroll
+const sections = ['e1','e2','e3','e4'];
+const navLinks = document.querySelectorAll('nav a');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const link = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { threshold: 0.2 });
+sections.forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
+
+// Scroll to top
+const scrollBtn = document.getElementById('scrollTop');
+window.addEventListener('scroll', () => {
+  scrollBtn.classList.toggle('visible', window.scrollY > 400);
+});
+</script>
+
+</body>
+</html>
