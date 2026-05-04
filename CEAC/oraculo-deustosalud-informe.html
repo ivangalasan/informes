@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oráculo Deusto Salud — Mayo 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #001F78;
+    --blue-medium: #2B88D8;
+    --blue-light: #DDEFFF;
+    --bg-surface: #F3F8FF;
+    --bg-white: #ffffff;
+    --salmon: #FF7F7A;
+    --salmon-bg: #FFF0EF;
+    --text-primary: #001F78;
+    --text-secondary: #3a4a7a;
+    --text-muted: #7685AF;
+    --border: rgba(0,31,120,0.10);
+    --border-strong: rgba(0,31,120,0.18);
+    --green: #1a7a45;
+    --green-bg: #e8f5ee;
+    --amber: #856404;
+    --amber-bg: #fff8e1;
+    --red: #c0392b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-white); color: var(--text-primary); line-height: 1.7; font-size: 15px; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.96); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-strong); display: flex; align-items: center; padding: 0 32px; height: 52px; gap: 4px; }
+  .nav-brand { color: var(--navy); font-weight: 700; font-size: 13px; margin-right: 20px; white-space: nowrap; flex-shrink: 0; }
+  .nav-brand span { color: var(--salmon); }
+  .nav-links { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; }
+  .nav-links::-webkit-scrollbar { display: none; }
+  nav a { color: var(--text-muted); text-decoration: none; font-size: 12.5px; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.15s; white-space: nowrap; }
+  nav a:hover { background: var(--bg-surface); color: var(--navy); }
+  nav a.active { background: var(--navy); color: #fff; }
+
+  /* HERO */
+  .hero { background: var(--navy); color: #fff; padding: 60px 48px 52px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -80px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(43,136,216,0.18) 0%, transparent 70%); pointer-events: none; }
+  .hero::after { content: ''; position: absolute; bottom: -60px; left: 200px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,127,122,0.12) 0%, transparent 70%); pointer-events: none; }
+  .hero-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue-medium); margin-bottom: 14px; }
+  .hero h1 { font-size: clamp(22px,3.5vw,34px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 10px; max-width: 680px; }
+  .hero-sub { font-size: 14px; color: rgba(255,255,255,0.65); max-width: 620px; margin-bottom: 44px; }
+  .hero-kpis { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; max-width: 1000px; }
+  .hero-kpi { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 18px 20px; }
+  .hero-kpi-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.50); margin-bottom: 6px; }
+  .hero-kpi-value { font-size: 26px; font-weight: 700; color: var(--salmon); letter-spacing: -0.02em; line-height: 1.1; }
+  .hero-kpi-desc { font-size: 11.5px; color: rgba(255,255,255,0.50); margin-top: 4px; }
+
+  /* LAYOUT */
+  .section-wrap { border-bottom: 1px solid var(--border); }
+  .section-wrap:nth-child(odd) { background: var(--bg-surface); }
+  .section-wrap:nth-child(even) { background: var(--bg-white); }
+  .section { padding: 64px 48px; max-width: 1080px; margin: 0 auto; }
+
+  /* SECTION HEADER */
+  .section-header { display: flex; align-items: flex-start; gap: 18px; margin-bottom: 40px; padding-bottom: 28px; border-bottom: 2px solid var(--border); }
+  .section-tag { background: var(--navy); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 12px; border-radius: 20px; white-space: nowrap; margin-top: 5px; flex-shrink: 0; }
+  .section-tag.e2 { background: #1a4a9e; }
+  .section-tag.e3 { background: #2a6aaa; }
+  .section-tag.e4 { background: var(--salmon); }
+  .section-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue-medium); margin-bottom: 6px; }
+  .section-title { font-size: clamp(22px,3.5vw,30px); font-weight: 700; color: var(--navy); letter-spacing: -0.02em; line-height: 1.2; }
+  .section-desc { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+  /* CONTENT BLOCK */
+  .content-block { margin-bottom: 40px; }
+  .block-title { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .block-title::before { content: ''; display: block; width: 4px; height: 18px; background: var(--salmon); border-radius: 2px; flex-shrink: 0; }
+
+  /* GRIDS */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
+
+  /* CARDS */
+  .card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; }
+  .card-surface { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; }
+  .card-title { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+  .card-text { font-size: 13px; color: var(--text-secondary); line-height: 1.65; }
+  .card-text strong { color: var(--navy); }
+
+  /* KPI CARDS */
+  .kpi-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 20px; border-top: 3px solid var(--blue-medium); }
+  .kpi-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+  .kpi-value { font-size: 28px; font-weight: 700; color: var(--navy); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 6px; }
+  .kpi-value.salmon { color: var(--salmon); }
+  .kpi-sub { font-size: 12.5px; color: var(--text-secondary); line-height: 1.6; }
+  .kpi-sub strong { color: var(--navy); }
+
+  /* BADGES */
+  .badge { display: inline-block; font-size: 10.5px; font-weight: 600; padding: 3px 9px; border-radius: 20px; letter-spacing: 0.04em; margin-bottom: 8px; }
+  .badge-green { background: var(--green-bg); color: var(--green); }
+  .badge-amber { background: var(--amber-bg); color: var(--amber); }
+  .badge-red { background: #fee2e2; color: var(--red); }
+  .badge-blue { background: var(--blue-light); color: var(--navy); }
+  .badge-salmon { background: var(--salmon-bg); color: #9a3412; }
+  .badge-gray { background: #f0f0f0; color: #616268; }
+  .badge-navy { background: var(--blue-light); color: var(--navy); }
+  .badge-purple { background: #ede9fe; color: #5b21b6; }
+  .badge-verified { background: var(--green-bg); color: var(--green); font-size: 10px; }
+  .badge-estimated { background: var(--amber-bg); color: var(--amber); font-size: 10px; }
+
+  /* INSIGHT BOXES */
+  .insight { background: var(--bg-surface); border-left: 3px solid var(--blue-medium); border-radius: 0 10px 10px 0; padding: 16px 20px; margin-top: 12px; font-size: 13.5px; color: var(--text-secondary); line-height: 1.7; }
+  .insight strong { color: var(--navy); }
+  .insight.alert { background: var(--salmon-bg); border-color: var(--salmon); }
+  .insight.success { background: var(--green-bg); border-color: var(--green); }
+  .insight.amber { background: var(--amber-bg); border-color: #d97706; }
+
+  /* BARS */
+  .bar-row { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
+  .bar-label { font-size: 13px; font-weight: 500; color: var(--navy); width: 230px; flex-shrink: 0; }
+  .bar-track { flex: 1; background: var(--blue-light); border-radius: 3px; height: 8px; }
+  .bar-fill { height: 8px; border-radius: 3px; background: var(--blue-medium); }
+  .bar-fill.high { background: var(--red); }
+  .bar-fill.mid { background: #d97706; }
+  .bar-fill.low { background: var(--green); }
+  .bar-num { font-size: 12px; font-weight: 700; color: var(--navy); width: 34px; text-align: right; }
+
+  /* TABLES */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .data-table th { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); border-bottom: 2px solid var(--border-strong); padding: 10px 14px; text-align: left; }
+  .data-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: var(--bg-surface); }
+
+  /* FICHA ROWS */
+  .ficha-row { display: grid; grid-template-columns: 160px 1fr; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 8px; }
+  .ficha-key { background: var(--navy); color: rgba(255,255,255,0.75); font-size: 11px; font-weight: 600; padding: 12px 16px; display: flex; align-items: center; }
+  .ficha-val { background: #fff; font-size: 13px; color: var(--text-secondary); padding: 12px 16px; line-height: 1.6; }
+  .ficha-val strong { color: var(--navy); }
+
+  /* COMPETITOR CARDS */
+  .comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .comp-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .comp-head { background: var(--bg-surface); padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .comp-name { font-size: 14px; font-weight: 700; color: var(--navy); }
+  .comp-url { font-size: 11px; color: var(--text-muted); }
+  .comp-body { padding: 16px 18px; }
+  .comp-text { font-size: 12.5px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 10px; }
+  .comp-sublabel { font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; margin-top: 10px; }
+  .comp-list { list-style: none; padding: 0; }
+  .comp-list.pros li::before { content: '+'; color: var(--green); font-weight: 700; margin-right: 5px; }
+  .comp-list.cons li::before { content: '−'; color: var(--red); font-weight: 700; margin-right: 5px; }
+  .comp-list li { font-size: 12.5px; color: var(--text-secondary); padding: 3px 0; line-height: 1.5; }
+
+  /* STRATEGIC DIAGNOSTIC (4-quad grid) */
+  .quad-grid { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .quad-cell { padding: 22px; }
+  .quad-cell:nth-child(1) { background: #d1fae5; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .quad-cell:nth-child(2) { background: #fee2e2; border-bottom: 1px solid var(--border); }
+  .quad-cell:nth-child(3) { background: #dbeafe; border-right: 1px solid var(--border); }
+  .quad-cell:nth-child(4) { background: #fef3c7; }
+  .quad-label { font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; }
+  .quad-cell:nth-child(1) .quad-label { color: #065f46; }
+  .quad-cell:nth-child(2) .quad-label { color: #991b1b; }
+  .quad-cell:nth-child(3) .quad-label { color: #1e40af; }
+  .quad-cell:nth-child(4) .quad-label { color: #92400e; }
+  .quad-list { list-style: none; padding: 0; }
+  .quad-list li { font-size: 12.5px; color: #2a3a6a; padding: 4px 0 4px 14px; position: relative; line-height: 1.55; }
+  .quad-list li::before { content: '→'; position: absolute; left: 0; font-size: 11px; }
+
+  /* PERSONA CARDS */
+  .persona-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .persona-head { background: var(--navy); color: #fff; padding: 22px 24px; }
+  .persona-emoji { font-size: 32px; margin-bottom: 10px; }
+  .persona-name { font-size: 19px; font-weight: 700; margin-bottom: 4px; }
+  .persona-role { font-size: 12.5px; color: rgba(255,255,255,0.65); line-height: 1.5; }
+  .persona-body { padding: 18px 22px; }
+  .persona-field { margin-bottom: 12px; }
+  .pf-label { font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 3px; }
+  .pf-value { font-size: 13px; color: var(--text-secondary); line-height: 1.65; }
+  .pf-value strong { color: var(--navy); }
+
+  /* PERSONA FULL */
+  .persona-full { background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--blue-medium); border-radius: 12px; padding: 22px 24px; margin-bottom: 24px; }
+  .persona-full-head { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .persona-full-name { font-size: 18px; font-weight: 700; color: var(--navy); }
+  .persona-section { margin-bottom: 14px; }
+  .persona-section-title { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+  .persona-section-num { background: var(--bg-surface); color: var(--text-muted); font-size: 10px; font-weight: 700; width: 18px; height: 18px; border-radius: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .persona-section-text { font-size: 13px; color: var(--text-secondary); line-height: 1.65; }
+  .persona-section-text strong { color: var(--navy); }
+  .msg-card { background: var(--bg-surface); border-radius: 8px; padding: 12px 14px; margin-bottom: 8px; }
+  .msg-card-title { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .msg-why { font-size: 11.5px; color: var(--text-muted); margin-bottom: 2px; }
+  .msg-cta { font-size: 11.5px; color: var(--blue-medium); font-weight: 500; }
+  .obj-card { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; margin-bottom: 8px; }
+  .obj-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 3px; }
+  .obj-text { font-size: 12.5px; color: var(--text-secondary); line-height: 1.6; }
+  .obj-text strong { color: var(--navy); }
+
+  /* HYPOTHESIS CARDS */
+  .hyp-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; margin-bottom: 14px; }
+  .hyp-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .hyp-origin { font-size: 11px; color: var(--text-muted); font-weight: 500; }
+  .hyp-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+  .hyp-text { font-size: 12.5px; color: var(--text-secondary); line-height: 1.65; margin-top: 6px; }
+  .hyp-text strong { color: var(--navy); }
+  .veredicto { font-size: 10.5px; font-weight: 700; padding: 3px 10px; border-radius: 20px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .v-ok { background: var(--green-bg); color: var(--green); }
+  .v-partial { background: var(--amber-bg); color: var(--amber); }
+  .v-none { background: #f0f0f0; color: #616268; }
+
+  /* MOVE CARDS */
+  .move-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px 18px 24px; margin-bottom: 12px; border-left: 4px solid; }
+  .move-card.qw { border-left-color: var(--green); }
+  .move-card.mp { border-left-color: var(--blue-medium); }
+  .move-card.ae { border-left-color: #7c3aed; }
+  .move-type { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 5px; }
+  .move-card.qw .move-type { color: var(--green); }
+  .move-card.mp .move-type { color: var(--blue-medium); }
+  .move-card.ae .move-type { color: #7c3aed; }
+  .move-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+  .move-meta { display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+  .move-text { font-size: 12.5px; color: var(--text-secondary); line-height: 1.65; margin-top: 6px; }
+  .move-text strong { color: var(--navy); }
+
+  /* RISK CARDS */
+  .risk { border-left: 4px solid; border-radius: 0 10px 10px 0; padding: 16px 20px; margin-bottom: 12px; }
+  .risk.critical { background: #fce7f3; border-color: #9d174d; }
+  .risk.high { background: #fef2f2; border-color: var(--red); }
+  .risk.mid { background: var(--amber-bg); border-color: #d97706; }
+  .risk-title { font-size: 13.5px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .risk-text { font-size: 12.5px; color: var(--text-secondary); line-height: 1.65; }
+  .risk-text strong { color: var(--navy); }
+
+  /* SUBSECTION TITLE */
+  .subsection-title { font-size: 17px; font-weight: 700; color: var(--navy); margin: 36px 0 18px; display: flex; align-items: center; gap: 12px; }
+  .subsection-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* CONTEXT CARDS (sectorial) */
+  .ctx-card { background: #fff; border: 1px solid var(--border); border-left: 4px solid; border-radius: 8px; padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; }
+  .ctx-card.favorable { border-left-color: var(--green); }
+  .ctx-card.desfavorable { border-left-color: var(--red); }
+  .ctx-card.neutral { border-left-color: #94a3b8; }
+  .ctx-card-meta { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .ctx-dim { background: #f0f0f0; color: #616268; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 8px; border-radius: 3px; }
+  .ctx-valence { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 2px 8px; border-radius: 3px; }
+  .ctx-card.favorable .ctx-valence { background: var(--green-bg); color: var(--green); }
+  .ctx-card.desfavorable .ctx-valence { background: #fee2e2; color: var(--red); }
+  .ctx-card.neutral .ctx-valence { background: #f1f5f9; color: #475569; }
+  .ctx-title { font-size: 14px; font-weight: 700; color: var(--navy); line-height: 1.3; }
+  .ctx-text { font-size: 12.5px; color: var(--text-secondary); line-height: 1.6; }
+  .ctx-text strong { color: var(--navy); }
+  .ctx-impact { background: var(--bg-surface); padding: 8px 10px; border-radius: 5px; }
+  .ctx-impact-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin-bottom: 2px; }
+  .ctx-impl { background: rgba(43,136,216,0.06); border-left: 2px solid var(--blue-medium); padding: 8px 10px; border-radius: 0 5px 5px 0; }
+  .ctx-impl-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--blue-medium); margin-bottom: 2px; }
+  .ctx-source { font-size: 11px; color: var(--text-muted); font-style: italic; }
+
+  /* COMPETITOR TABLE */
+  .comp-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; }
+  .comp-table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 700px; }
+  .comp-table th { background: var(--navy); color: #fff; font-size: 10.5px; font-weight: 600; letter-spacing: 0.04em; padding: 10px 12px; text-align: left; }
+  .comp-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; line-height: 1.5; }
+  .comp-table tr:last-child td { border-bottom: none; }
+  .comp-table tr:hover td { background: var(--bg-surface); }
+  .comp-table .client-row td { font-weight: 600; color: var(--navy); background: rgba(0,31,120,0.03); }
+
+  /* ACTION PLAN */
+  .action-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; margin-bottom: 12px; }
+  .action-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+  .action-title { font-size: 14px; font-weight: 700; color: var(--navy); }
+  .action-meta { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+  .action-text { font-size: 12.5px; color: var(--text-secondary); line-height: 1.65; }
+  .action-text strong { color: var(--navy); }
+
+  /* CONCLUSION BOX */
+  .conclusion { background: var(--navy); border-radius: 12px; padding: 32px 36px; margin-top: 12px; color: #fff; }
+  .conclusion h3 { font-size: 17px; font-weight: 700; color: var(--salmon); margin-bottom: 14px; line-height: 1.3; }
+  .conclusion p { font-size: 14.5px; color: rgba(255,255,255,0.80); line-height: 1.8; margin-bottom: 10px; }
+  .conclusion p:last-child { margin-bottom: 0; }
+  .conclusion strong { color: #fff; }
+
+  /* FOOTER */
+  footer { background: var(--navy); color: rgba(255,255,255,0.40); text-align: center; padding: 28px; font-size: 12px; }
+  footer span { color: rgba(255,255,255,0.75); }
+
+  /* SCROLL TO TOP */
+  .scroll-top { position: fixed; bottom: 24px; right: 24px; width: 40px; height: 40px; background: var(--salmon); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 8px rgba(255,127,122,0.4); transition: opacity 0.2s; opacity: 0; }
+  .scroll-top.visible { opacity: 1; }
+  .scroll-top svg { width: 16px; height: 16px; fill: #fff; }
+
+  /* PERSONA SUMMARY CARDS */
+  .persona-summary { background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .persona-summary-head { background: var(--navy); color: #fff; padding: 18px 20px; display: flex; align-items: center; gap: 12px; }
+  .persona-summary-emoji { font-size: 28px; }
+  .persona-summary-info h4 { font-size: 16px; font-weight: 700; }
+  .persona-summary-info p { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 2px; }
+  .persona-summary-body { padding: 16px 20px; }
+
+  /* POSITIONING MAP */
+  .map-wrap { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; justify-content: center; }
+
+  @media (max-width: 900px) {
+    .hero { padding: 40px 24px 36px; }
+    .hero-kpis { grid-template-columns: repeat(2,1fr); }
+    .section { padding: 48px 24px; }
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .comp-grid { grid-template-columns: 1fr; }
+    .quad-grid { grid-template-columns: 1fr; }
+    .quad-cell { border-right: none !important; }
+    nav { padding: 0 16px; }
+    .nav-brand { display: none; }
+    .ficha-row { grid-template-columns: 130px 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">Deusto Salud · <span>Oráculo</span></div>
+  <div class="nav-links">
+    <a href="#e1">E1 — Análisis Web</a>
+    <a href="#e2">E2 — Mercado</a>
+    <a href="#e3">E3 — Buyer Personas</a>
+    <a href="#e4">E4 — Performance Real</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">Oráculo · Deusto Salud · Mayo 2026 · Nivel 2</div>
+  <h1>Diagnóstico estratégico integral de Deusto Salud</h1>
+  <p class="hero-sub">Análisis web, estudio de mercado, buyer personas y performance real con datos de GA4. Sin Search Console disponible.</p>
+  <div class="hero-kpis">
+    <div class="hero-kpi">
+      <div class="hero-kpi-label">Sesiones totales</div>
+      <div class="hero-kpi-value">57.238</div>
+      <div class="hero-kpi-desc">últimos 90 días</div>
+    </div>
+    <div class="hero-kpi">
+      <div class="hero-kpi-label">Leads generados</div>
+      <div class="hero-kpi-value">1.271</div>
+      <div class="hero-kpi-desc">1,61% conversión total</div>
+    </div>
+    <div class="hero-kpi">
+      <div class="hero-kpi-label">Principal lead magnet</div>
+      <div class="hero-kpi-value">Test MBTI</div>
+      <div class="hero-kpi-desc">95 leads · #1 del sitio</div>
+    </div>
+    <div class="hero-kpi">
+      <div class="hero-kpi-label">Engagement medio</div>
+      <div class="hero-kpi-value">21s</div>
+      <div class="hero-kpi-desc">señal de alarma</div>
+    </div>
+    <div class="hero-kpi">
+      <div class="hero-kpi-label">Sesiones desde LLMs</div>
+      <div class="hero-kpi-value">79</div>
+      <div class="hero-kpi-desc">ChatGPT · Perplexity · Gemini</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     E1 — ANÁLISIS WEB
+════════════════════════════════════════ -->
+<div class="section-wrap" id="e1-wrap">
+<div class="section" id="e1">
+  <div class="section-header">
+    <div class="section-tag">E1</div>
+    <div>
+      <div class="section-eyebrow">Entregable 1</div>
+      <div class="section-title">Análisis Web</div>
+      <div class="section-desc">Contexto del negocio, estructura digital, autoridad y oportunidades de mejora</div>
+    </div>
+  </div>
+
+  <!-- FICHA CONTEXTO -->
+  <div class="content-block">
+    <div class="block-title">Ficha de contexto</div>
+    <div class="ficha-row"><div class="ficha-key">Nombre</div><div class="ficha-val">Deusto Salud · deustosalud.com</div></div>
+    <div class="ficha-row"><div class="ficha-key">Sector</div><div class="ficha-val">Educación — Formación continua online</div></div>
+    <div class="ficha-row"><div class="ficha-key">Subsector</div><div class="ficha-val">Cursos a distancia en salud, bienestar y desarrollo personal</div></div>
+    <div class="ficha-row"><div class="ficha-key">Modelo</div><div class="ficha-val"><strong>B2C</strong> — 100% online · ritmo propio · titulación privada</div></div>
+    <div class="ficha-row"><div class="ficha-key">Producto</div><div class="ficha-val">Cursos en 7 familias: terapias naturales, terapias manuales, nutrición y dietética, coaching, crecimiento personal, gestión sanitaria y medio ambiente sanitario. Precios <strong>1.100–2.300 €</strong>. En algunos cursos, doble diploma con UCAM u otras.</div></div>
+    <div class="ficha-row"><div class="ficha-key">Cliente</div><div class="ficha-val">Adultos 25–50 años. Predominantemente mujeres. Reconversión o complemento profesional en salud y bienestar. España y LATAM.</div></div>
+    <div class="ficha-row"><div class="ficha-key">Geografía</div><div class="ficha-val">España (mercado principal). Presencia declarada en LATAM heredada de Grupo Planeta. Sin estrategia de contenido diferenciada por país.</div></div>
+    <div class="ficha-row"><div class="ficha-key">Propuesta de valor</div><div class="ficha-val">Formación online flexible en salud y bienestar con <strong>15+ años de trayectoria</strong>, respaldo de Grupo Northius (ex-Planeta), aval de FEF, APENB, ANCYPEL y Trustpilot 4,6/5 con 635+ reseñas.</div></div>
+    <div class="ficha-row"><div class="ficha-key">Fase del negocio</div><div class="ficha-val">Consolidado</div></div>
+    <div class="ficha-row"><div class="ficha-key">Estado digital</div><div class="ficha-val">Web por árbol temático (/cursos/bienestar/terapias-naturales/curso-X). Blog activo. Instagram 23K · Facebook 15,7K · YouTube. Sin GSC conectado. Foro externo de quejas activo (deustosaludopiniones.com).</div></div>
+  </div>
+
+  <!-- NEGOCIO -->
+  <div class="content-block">
+    <div class="block-title">El negocio en una frase</div>
+    <div class="insight">
+      <strong>Deusto Salud</strong> es un centro de formación online a distancia especializado en salud y bienestar — terapias naturales, manuales, cosmética, nutrición y coaching — que lleva desde 2009 acompañando a adultos que quieren crecer profesional o personalmente en el mundo de la salud, con el respaldo de Grupo Northius y presencia en España y LATAM.
+    </div>
+  </div>
+
+  <!-- OFERTA -->
+  <div class="content-block">
+    <div class="block-title">Qué ofrecen y a quién</div>
+    <div class="card">
+      <div class="card-text">El catálogo se organiza en <strong>7 familias</strong>: terapias naturales (naturopatía, Bach, homeopatía, cosmética natural), terapias manuales (quiromasaje, reflexología, reiki, osteopatía), nutrición y dietética, coaching (personal, nutricional, emocional), crecimiento personal y profesional, gestión sanitaria y medio ambiente sanitario. Los precios oscilan entre <strong>1.100 y 2.300 €</strong> por curso, con opciones de financiación. La formación es estrictamente <strong>no reglada</strong>: diploma privado de Deusto Salud y, en algunos cursos, título adicional de la UCAM u otras instituciones.<br><br>
+      El cliente objetivo es un <strong>adulto de 25 a 50 años</strong> —predominantemente mujer— que busca formarse en bienestar para uso propio o para abrirse paso como terapeuta, monitor o asesor de salud. Tiene trabajo y necesita flexibilidad. En LATAM el perfil es similar, con mayor sensibilidad al precio.</div>
+    </div>
+  </div>
+
+  <!-- DIFERENCIACIÓN -->
+  <div class="content-block">
+    <div class="block-title">Propuesta de valor diferencial</div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="badge badge-green">15+ años</div>
+        <div class="card-title">Trayectoria y marca reconocida</div>
+        <div class="card-text">Heredera del respaldo editorial de Grupo Planeta e integrada en Grupo Northius junto a CEAC y Campus Training. La marca «Deusto» genera halo de universidad, aunque técnicamente no tiene vinculación con la Universidad de Deusto.</div>
+      </div>
+      <div class="card">
+        <div class="badge badge-blue">Avales sectoriales</div>
+        <div class="card-title">Ecosistema de avales</div>
+        <div class="card-text">FEF (Federación Española de Fisioterapeutas), APENB, ANCYPEL y Centro Oficial Autorizado de Microsoft. En un sector no reglado, estos sellos actúan como señales de legitimidad difíciles de replicar rápidamente.</div>
+      </div>
+      <div class="card">
+        <div class="badge badge-salmon">Trustpilot 4,6/5</div>
+        <div class="card-title">Reputación verificable</div>
+        <div class="card-text">635+ reseñas en Trustpilot, presencia en Emagister, TopFormacion y Cursosypostgrados 4,3/5. Es difícil fabricar ese volumen de reseñas positivas.<br><br><strong>Contrapartida:</strong> deustosaludopiniones.com y menciones en denuncioestafa.com activos y visibles en SERP de marca.</div>
+      </div>
+    </div>
+    <div class="insight alert" style="margin-top:16px;">
+      Lo que <strong>no se explota</strong> con suficiente fuerza: la vinculación a Grupo Northius como grupo educativo sólido (los alumnos no lo ven), el diferencial específico frente a Euroinnova/INESEM en calidad docente, y una propuesta de valor LATAM diferenciada (los textos son genéricos, no hay landing por país).
+    </div>
+  </div>
+
+  <!-- WEB -->
+  <div class="content-block">
+    <div class="block-title">Estructura, tono y experiencia web</div>
+    <div class="card">
+      <div class="card-text">La arquitectura sigue una lógica de <strong>árbol temático por familia de curso</strong>: <code style="background:rgba(0,31,120,0.07);padding:1px 5px;border-radius:3px;font-size:0.9em;">/cursos/bienestar/terapias-naturales/curso-naturopatia/</code>, con páginas de precio específicas en <code style="background:rgba(0,31,120,0.07);padding:1px 5px;border-radius:3px;font-size:0.9em;">/precio</code>. El tono es cálido y aspiracional — «acompañamos tu crecimiento», «aprende a tu ritmo» — con orientación clara al CTA de solicitud de información.<br><br>
+      El blog está organizado por categorías temáticas (osteopatía, mente sana, nutrición) y sirve de captación SEO informacional. La estructura es funcional pero muestra indicios de <strong>falta de actualización reciente</strong>: páginas de precios con años anteriores visibles, y la doble titulación universitaria no siempre especifica la institución con claridad.</div>
+    </div>
+  </div>
+
+  <!-- UX -->
+  <div class="content-block">
+    <div class="block-title">Observaciones UX</div>
+    <div class="grid-2">
+      <div class="card-surface">
+        <div class="badge badge-red">Fricción alta</div>
+        <div class="card-title">Precio separado de la ficha</div>
+        <div class="card-text">Páginas de precio específicas (/precio) separadas de la ficha de curso — genera fricción innecesaria y confusión en el recorrido del usuario.</div>
+      </div>
+      <div class="card-surface">
+        <div class="badge badge-red">Fricción alta</div>
+        <div class="card-title">Titulación privada mal jerarquizada</div>
+        <div class="card-text">El alumno tiene que llegar al detalle del curso para entender que no es un título oficial. La promesa de doble titulación con UCAM está enterrada.</div>
+      </div>
+      <div class="card-surface">
+        <div class="badge badge-amber">Gap</div>
+        <div class="card-title">Blog sin lead magnets</div>
+        <div class="card-text">Blog activo con categorías por temática, pero sin lead magnets propios: el tráfico informacional llega y se va sin convertir.</div>
+      </div>
+      <div class="card-surface">
+        <div class="badge badge-amber">Gap</div>
+        <div class="card-title">Sin compra directa</div>
+        <div class="card-text">Formulario de solicitud de información como CTA principal — sin opción de compra directa en la mayoría de cursos.</div>
+      </div>
+      <div class="card-surface">
+        <div class="badge badge-red">Reputación</div>
+        <div class="card-title">Foro externo de quejas</div>
+        <div class="card-text">deustosaludopiniones.com y menciones en denuncioestafa.com aparecen en búsquedas de marca y dañan la primera impresión.</div>
+      </div>
+      <div class="card-surface">
+        <div class="badge badge-amber">Confusión</div>
+        <div class="card-title">Halo "Universidad de Deusto"</div>
+        <div class="card-text">La asociación visual puede funcionar a favor en captación, pero genera fricción en conversión cuando el alumno descubre que el título no es universitario oficial.</div>
+      </div>
+      <div class="card-surface" style="grid-column: 1 / -1;">
+        <div class="badge badge-amber">LATAM</div>
+        <div class="card-title">Arquitectura LATAM inexistente</div>
+        <div class="card-text">No hay subdominios ni carpetas por país. Todo el tráfico hispanoamericano llega a los mismos contenidos genéricos en euros, sin referencias locales ni testimonios del mercado local.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEÑALES DE AUTORIDAD -->
+  <div class="content-block">
+    <div class="block-title">Señales de autoridad</div>
+    <div class="insight alert" style="margin-bottom:16px;">
+      Deusto Salud tiene <strong>señales de confianza reales y verificables</strong>, pero su distribución es desigual: los avales aparecen en fichas de curso y no en home, las reseñas externas existen pero están contrarrestadas por un ecosistema de quejas con dominio propio. La reputación en el sector no reglado es inherentemente frágil — un foro de denuncia posicionado en Google puede erosionar la conversión aunque las reseñas genuinas sean mayoritariamente positivas.
+    </div>
+    <table class="data-table">
+      <thead><tr><th>Tipo</th><th>Estado</th><th>Detalle</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Reseñas</strong></td><td><span class="badge badge-green">Sí</span></td><td>Trustpilot 4,6/5 con 635+ reseñas. Emagister positivo. Cursosypostgrados 4,3/5. 98% satisfacción declarado en web propia. <strong>Contrapartida:</strong> deustosaludopiniones.com y denuncioestafa.com activos.</td></tr>
+        <tr><td><strong>Certificaciones</strong></td><td><span class="badge badge-green">Sí</span></td><td>Aval FEF, APENB, ANCYPEL. Centro Oficial Autorizado Microsoft. En algunos cursos, doble diploma con UCAM u otras universidades privadas.</td></tr>
+        <tr><td><strong>Casos de éxito</strong></td><td><span class="badge badge-amber">Parcial</span></td><td>Página /opiniones-deusto-salud con testimonios. Playlist YouTube «Experiencias Deusto Salud». Sin casos con datos de empleabilidad o reconversión documentados.</td></tr>
+        <tr><td><strong>Logos clientes</strong></td><td><span class="badge badge-red">No presente</span></td><td>Los avales sectoriales existen pero no se muestran en home como módulo de confianza visual.</td></tr>
+        <tr><td><strong>Premios</strong></td><td><span class="badge badge-red">No presente</span></td><td>No se identifican premios del sector ni rankings de posicionamiento comparables a los que usa la competencia.</td></tr>
+        <tr><td><strong>Medios</strong></td><td><span class="badge badge-red">No presente</span></td><td>No se identifican apariciones en medios generalistas integradas en la web como sala de prensa.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- OPORTUNIDADES DE MEJORA -->
+  <div class="content-block">
+    <div class="block-title">Oportunidades de mejora digital</div>
+    <div class="subsection-title" style="margin-top:0;">Contenidos</div>
+    <div class="grid-2" style="margin-bottom:24px;">
+      <div class="action-card">
+        <div class="action-head"><div class="action-title">Lead magnets en el blog</div><span class="badge badge-red">Alta</span></div>
+        <div class="action-text">El tráfico informacional llega a artículos de naturopatía, quiromasaje, coaching y se va sin convertir. Una guía descargable por temática («Cómo empezar en las terapias naturales», «Test: ¿qué curso de bienestar te conviene?») captaría emails antes de la fase de decisión.</div>
+      </div>
+      <div class="action-card">
+        <div class="action-head"><div class="action-title">Contenido específico para LATAM</div><span class="badge badge-red">Alta</span></div>
+        <div class="action-text">México, Colombia y Perú representan mercados con creciente demanda. Un hub de contenido por país (referencias locales, moneda, normativa) mejoraría la captación orgánica y la conversión en esos mercados.</div>
+      </div>
+      <div class="action-card">
+        <div class="action-head"><div class="action-title">Casos de éxito con datos</div><span class="badge badge-amber">Media</span></div>
+        <div class="action-text">Los testimonios actuales son cualitativos. Añadir casos con datos concretos («María pasó de administrativa a terapeuta en 8 meses») tiene mayor potencia de conversión, especialmente para el perfil adulto en reconversión.</div>
+      </div>
+    </div>
+    <div class="subsection-title">CRO (conversión)</div>
+    <div class="grid-2" style="margin-bottom:24px;">
+      <div class="action-card">
+        <div class="action-head"><div class="action-title">Visibilidad de la titulación desde el inicio</div><span class="badge badge-red">Alta</span></div>
+        <div class="action-text">El alumno descubre que el título no es oficial cuando ya está en el detalle. Poner ese contexto arriba —con su significado real: diploma profesional reconocido por el sector— reduce el abandono tardío y filtra mejor al lead.</div>
+      </div>
+      <div class="action-card">
+        <div class="action-head"><div class="action-title">Módulo de prueba social en home</div><span class="badge badge-red">Alta</span></div>
+        <div class="action-text">Los avales (FEF, APENB, Trustpilot 4,6) no están concentrados en la home. Un bloque visible con sellos, rating y número de alumnos formados reduciría la fricción inicial.</div>
+      </div>
+      <div class="action-card">
+        <div class="action-head"><div class="action-title">Unificar precio con ficha de curso</div><span class="badge badge-amber">Media</span></div>
+        <div class="action-text">La separación /curso y /curso/precio genera fricción innecesaria. El pricing debería estar visible en la ficha con un módulo de financiación claro.</div>
+      </div>
+    </div>
+    <div class="subsection-title">SEO y Email</div>
+    <div class="grid-2">
+      <div class="action-card">
+        <div class="action-head"><div class="action-title">Capas de contenido LATAM</div><span class="badge badge-red">Alta</span></div>
+        <div class="action-text">Crear subdirectorios /mx/, /co/, /pe/ o subdominio por país con contenido adaptado: precios en moneda local, normativa local, testimonios de alumnos de esa zona.</div>
+      </div>
+      <div class="action-card">
+        <div class="action-head"><div class="action-title">Gestión de reputación en SERP de marca</div><span class="badge badge-red">Alta</span></div>
+        <div class="action-text">Las búsquedas «Deusto Salud opiniones» muestran el foro de quejas externo. Una estrategia de reputación activa (más reseñas Trustpilot, página de preguntas frecuentes, video respuesta de alumnos) empuja ese resultado hacia abajo.</div>
+      </div>
+      <div class="action-card">
+        <div class="action-head"><div class="action-title">Nurturing post-solicitud</div><span class="badge badge-red">Alta</span></div>
+        <div class="action-text">No se observa secuencia automatizada de emails entre la solicitud y la matrícula. En cursos de 1.100–2.300 € la decisión tarda semanas — el nurturing es crítico para no perder el lead en ese intervalo.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="conclusion">
+    <h3>Valoración global E1</h3>
+    <p>Deusto Salud tiene lo fundamental: catálogo amplio en un mercado en crecimiento, 15 años de trayectoria, reseñas reales verificables y respaldo de un grupo educativo sólido (Northius). El 98% de satisfacción declarado tiene correlato en plataformas externas — el producto funciona.</p>
+    <p>El problema no es el producto sino la <strong>ejecución digital y la narrativa de confianza</strong>. La web no concentra sus señales de autoridad donde importa (home, primeros 3 segundos). El blog genera tráfico pero no leads. La reputación en SERP de marca está contaminada por un foro que la marca no ha neutralizado. Y LATAM, que debería ser una ventaja estructural heredada de Grupo Planeta, es un mercado sin estrategia propia.</p>
+    <p>La oportunidad de los próximos 90 días es doble: <strong>(1)</strong> limpiar el recorrido de conversión —módulo de confianza en home, transparencia de titulación, pricing visible— y <strong>(2)</strong> activar el blog como captador de leads con lead magnets temáticos. A medio plazo, la apuesta más rentable es desarrollar presencia diferenciada en LATAM antes de que Euroinnova consolide esa posición.</p>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════════════════════════
+     E2 — ESTUDIO DE MERCADO
+════════════════════════════════════════ -->
+<div class="section-wrap" id="e2-wrap">
+<div class="section" id="e2">
+  <div class="section-header">
+    <div class="section-tag e2">E2</div>
+    <div>
+      <div class="section-eyebrow">Entregable 2</div>
+      <div class="section-title">Estudio de Mercado</div>
+      <div class="section-desc">Contexto sectorial, estructura competitiva, benchmark de competidores y diagnóstico estratégico</div>
+    </div>
+  </div>
+
+  <!-- RESUMEN -->
+  <div class="content-block">
+    <div class="block-title">Resumen de partida</div>
+    <div class="insight">
+      Deusto Salud ofrece formación continua online en salud y bienestar desde 2009, con presencia en España y LATAM. Opera en el mercado de la formación <strong>no reglada</strong>, con titulación privada y algunos cursos con doble diploma universitario. Pertenece al Grupo Northius (ex-Grupo Planeta/Campus Training), lo que aporta respaldo estructural pero escasa visibilidad de marca hacia el alumno.
+    </div>
+  </div>
+
+  <!-- CONTEXTO SECTORIAL -->
+  <div class="content-block">
+    <div class="block-title">Contexto sectorial</div>
+    <div class="grid-2">
+      <div class="ctx-card neutral">
+        <div class="ctx-card-meta"><span class="ctx-dim">Político</span><span class="ctx-valence">Neutral</span></div>
+        <div class="ctx-title">Vacío legal en terapias naturales — oportunidad y riesgo</div>
+        <div class="ctx-text">No existe regulación específica que limite la formación en terapias naturales. El sector cuenta con <strong>10.500 empresas y 62.000 profesionales</strong> en España, pero sin reserva de título oficial. Las principales organizaciones (COFENAT, APENB) reclaman regulación.</div>
+        <div class="ctx-impact"><div class="ctx-impact-label">Impacto en el sector</div><div class="ctx-text">Corto plazo: la ausencia de regulación reduce barreras de entrada. Si se regula, los operadores con avales sectoriales ganarían ventaja inmediata.</div></div>
+        <div class="ctx-impl"><div class="ctx-impl-label">Implicación</div><div class="ctx-text">La asociación con FEF y APENB es hoy una barrera de diferenciación real. Fortalecerla antes de una posible regulación posiciona a Deusto Salud en el grupo de referencia.</div></div>
+        <div class="ctx-source">redaccionmedica.com — Terapias naturales: 10.500 empresas y 62.000 profesionales en España <span class="badge badge-verified">✓ Verificado</span></div>
+      </div>
+      <div class="ctx-card favorable">
+        <div class="ctx-card-meta"><span class="ctx-dim">Económico</span><span class="ctx-valence">Favorable</span></div>
+        <div class="ctx-title">Crecimiento global del mercado de salud y bienestar</div>
+        <div class="ctx-text">El mercado global fue valorado en <strong>6.800 billones USD en 2024</strong>, con proyección a 11.573 billones USD en 2032 (CAGR 6,8%). En España, los cursos de inteligencia emocional, relajación y medicina natural están entre los más demandados en formación online en 2025.</div>
+        <div class="ctx-impact"><div class="ctx-impact-label">Impacto en el sector</div><div class="ctx-text">La demanda estructural es creciente y resiliente — el alumno que quiere formarse en nutrición o cosmética natural lo hará independientemente del ciclo económico.</div></div>
+        <div class="ctx-impl"><div class="ctx-impl-label">Implicación</div><div class="ctx-text">El mercado tiene tailwind. La cuestión no es si hay demanda, sino cómo capturarla mejor que la competencia.</div></div>
+        <div class="ctx-source">Fortune Business Insights — Health and Wellness Market 2024-2032 <span class="badge badge-verified">✓ Verificado</span></div>
+      </div>
+      <div class="ctx-card favorable">
+        <div class="ctx-card-meta"><span class="ctx-dim">Social</span><span class="ctx-valence">Favorable</span></div>
+        <div class="ctx-title">Auge del bienestar como segunda carrera profesional</div>
+        <div class="ctx-text">La pandemia aceleró un cambio de valores: más adultos en la franja 30–55 quieren reconvertirse hacia profesiones ligadas al bienestar. El perfil de mujer adulta que trabaja y busca un primer paso hacia las terapias, la nutrición o el coaching es el segmento de mayor crecimiento en formación continua no reglada.</div>
+        <div class="ctx-impact"><div class="ctx-impact-label">Impacto en el sector</div><div class="ctx-text">Incrementa el volumen de leads cualificados para cursos de entrada media-alta (1.000–2.000 €). El alumno no busca solo conocimiento personal — quiere un camino profesional creíble.</div></div>
+        <div class="ctx-impl"><div class="ctx-impl-label">Implicación</div><div class="ctx-text">Los casos de éxito de reconversión profesional son el argumento más potente para este segmento. Deusto Salud tiene los testimonios pero no los estructura como historias de reconversión con datos.</div></div>
+        <div class="ctx-source">Shopify — Tendencias en salud y bienestar 2025 <span class="badge badge-estimated">≈ Estimación</span></div>
+      </div>
+      <div class="ctx-card desfavorable">
+        <div class="ctx-card-meta"><span class="ctx-dim">Tecnológico</span><span class="ctx-valence">Desfavorable</span></div>
+        <div class="ctx-title">Plataformas gratuitas y creadores como sustitutos directos</div>
+        <div class="ctx-text">YouTube, Instagram, TikTok y plataformas como Domestika o Udemy ofrecen contenido de calidad creciente en yoga, meditación, cosmética natural y nutrición a precio cero o muy bajo. Los creadores individuales generan comunidades que compiten directamente sin estructura empresarial.</div>
+        <div class="ctx-impact"><div class="ctx-impact-label">Impacto en el sector</div><div class="ctx-text">El umbral de «por qué pagar» sube continuamente. El alumno exige más a cambio: mejor docencia, acompañamiento real, certificado con peso sectorial.</div></div>
+        <div class="ctx-impl"><div class="ctx-impl-label">Implicación</div><div class="ctx-text">La respuesta no es bajar precio sino elevar el valor percibido: certificación con avales reales, tutoría visible y concreta, comunidad de práctica y casos de alumni verificables.</div></div>
+        <div class="ctx-source">Docencia Online — Temáticas más demandadas en cursos online 2025 <span class="badge badge-verified">✓ Verificado</span></div>
+      </div>
+      <div class="ctx-card neutral">
+        <div class="ctx-card-meta"><span class="ctx-dim">Tecnológico</span><span class="ctx-valence">Neutral</span></div>
+        <div class="ctx-title">Integración de IA en plataformas educativas online</div>
+        <div class="ctx-text">Los principales operadores (Euroinnova/INESEM con su plataforma EDUCA LXP) están integrando IA para personalizar itinerarios, adaptar contenidos al ritmo del alumno y automatizar el soporte. Esto eleva el estándar esperado de la experiencia de campus virtual.</div>
+        <div class="ctx-impact"><div class="ctx-impact-label">Impacto en el sector</div><div class="ctx-text">Los operadores que no inviertan en tecnología de campus quedarán por debajo del estándar percibido en 2–3 años.</div></div>
+        <div class="ctx-impl"><div class="ctx-impl-label">Implicación</div><div class="ctx-text">Como parte de Grupo Northius, Deusto Salud debería beneficiarse de inversiones tecnológicas grupales. Si no lo está haciendo, es un riesgo de obsolescencia frente a INESEM.</div></div>
+        <div class="ctx-source">Docenzia.com — INESEM Business School <span class="badge badge-estimated">≈ Estimación</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ESTRUCTURA COMPETITIVA -->
+  <div class="content-block">
+    <div class="block-title">Estructura competitiva</div>
+    <div class="bar-row"><div class="bar-label">Rivalidad entre competidores</div><div class="bar-track"><div class="bar-fill high" style="width:90%"></div></div><div class="bar-num">Alta</div></div>
+    <div class="bar-row"><div class="bar-label">Poder de los clientes</div><div class="bar-track"><div class="bar-fill high" style="width:80%"></div></div><div class="bar-num">Alto</div></div>
+    <div class="bar-row"><div class="bar-label">Amenaza de sustitutos</div><div class="bar-track"><div class="bar-fill high" style="width:75%"></div></div><div class="bar-num">Alta</div></div>
+    <div class="bar-row"><div class="bar-label">Amenaza de nuevos entrantes</div><div class="bar-track"><div class="bar-fill mid" style="width:50%"></div></div><div class="bar-num">Media</div></div>
+    <div class="bar-row"><div class="bar-label">Poder de los proveedores</div><div class="bar-track"><div class="bar-fill low" style="width:25%"></div></div><div class="bar-num">Bajo</div></div>
+    <div class="insight alert" style="margin-top:16px;">
+      <strong>Sector hostil.</strong> Alta rivalidad, clientes con poder alto y sustitutos gratuitos omnipresentes. Deusto Salud no puede ganar siendo más barato (Euroinnova lo bate), ni siendo más amplio en catálogo (Euroinnova también), ni siendo más especializado (la Escuela Europea de Terapias Naturales va más al fondo). El espacio defendible es la combinación de <strong>trayectoria + avales sectoriales reales + acompañamiento docente percibido + amplitud de catálogo</strong> — ningún competidor tiene exactamente esa combinación.
+    </div>
+    <div style="margin-top:14px; font-size:13px; color:var(--text-secondary); line-height:1.65;">
+      <strong style="color:var(--navy)">Rivalidad:</strong> Docenas de operadores compiten en las mismas familias temáticas. El catálogo está comoditizado; el precio es el primer filtro del alumno en comparadores.
+      <br><strong style="color:var(--navy)">Entrantes peligrosos:</strong> No son operadores institucionales nuevos sino creadores con audiencia preexistente (coaches, terapeutas con seguidores en Instagram/YouTube).
+      <br><strong style="color:var(--navy)">Poder del cliente:</strong> Compara en Emagister, TopFormacion, DondeEstudiar y Google simultáneamente. El precio de 1.000–2.500 € alarga el ciclo de decisión a semanas — una mala reseña puede desviar al lead.
+      <br><strong style="color:var(--navy)">Sustitutos:</strong> YouTube, Domestika, Udemy cubren casi todas las temáticas de Deusto Salud a precio cero. El diferenciador es el certificado con peso sectorial y el acompañamiento — pero ambos son difíciles de percibir antes de pagar.
+    </div>
+  </div>
+
+  <!-- BENCHMARK COMPETIDORES -->
+  <div class="content-block">
+    <div class="block-title">Análisis de competidores</div>
+    <div class="comp-grid">
+      <div class="comp-card">
+        <div class="comp-head">
+          <div><div class="comp-name">Euroinnova International Online Education</div><div class="comp-url">euroinnova.com</div></div>
+          <span class="badge badge-red">Líder del mercado</span>
+        </div>
+        <div class="comp-body">
+          <div class="comp-text"><strong>Líder hispanohablante.</strong> Presencia en 18+ países. Catálogo con miles de cursos. Mayor operador online de habla hispana en formación no reglada. Cursos desde 195 €. Plataforma propia con IA (EDUCA LXP).</div>
+          <div class="comp-sublabel">Fortalezas</div>
+          <ul class="comp-list pros">
+            <li>Catálogo inmenso — todas las temáticas y muchas más</li>
+            <li>Precios competitivos y descuentos frecuentes</li>
+            <li>Fuerte presencia SEO en España y LATAM</li>
+            <li>Plataforma tecnológica avanzada con IA (EDUCA LXP)</li>
+            <li>INESEM como marca hermana para titulaciones con más peso académico</li>
+          </ul>
+          <div class="comp-sublabel">Debilidades</div>
+          <ul class="comp-list cons">
+            <li>Percepción de «fábrica de cursos»: poca personalización y acompañamiento real</li>
+            <li>Opinión dividida en plataformas de reseñas sobre la calidad del contenido</li>
+            <li>Amplitud del catálogo diluye la especialidad en salud y bienestar</li>
+          </ul>
+          <div class="comp-sublabel">Marketing visible</div>
+          <div class="comp-text">SEO muy agresivo en todas las keywords de bienestar. Blog con cientos de artículos. Comparadores con inversiones en CPL. Paid muy activo.</div>
+        </div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-head">
+          <div><div class="comp-name">INESEM Business School</div><div class="comp-url">inesem.es</div></div>
+          <span class="badge badge-amber">Grupo Euroinnova</span>
+        </div>
+        <div class="comp-body">
+          <div class="comp-text"><strong>Calidad académica con peso universitario.</strong> 150.000+ estudiantes. Cursos con titulación universitaria frecuente, doble titulación y másters. Tecnología educativa propia con IA. Foco en el profesional que quiere un título con más peso que un diploma privado.</div>
+          <div class="comp-sublabel">Fortalezas</div>
+          <ul class="comp-list pros">
+            <li>Titulaciones universitarias frecuentes — mayor peso percibido que Deusto Salud</li>
+            <li>Tecnología educativa avanzada (EDUCA LXP con IA)</li>
+            <li>Fuerte en el nicho de nutrición y dietología con orientación clínica</li>
+          </ul>
+          <div class="comp-sublabel">Debilidades</div>
+          <ul class="comp-list cons">
+            <li>Imagen más «académica/empresarial», menos cálida para el público de terapias alternativas</li>
+            <li>Solapamiento con Euroinnova genera confusión de marca</li>
+            <li>Menos foco en terapias naturales, cosmética o coaching personal</li>
+          </ul>
+          <div class="comp-sublabel">Presencia digital</div>
+          <div class="comp-text">Alta autoridad de dominio. Campus virtual propio bien valorado. Redes activas con comunidad más pequeña que Euroinnova.</div>
+        </div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-head">
+          <div><div class="comp-name">Escuela Europea de Terapias Naturales y Bienestar</div><div class="comp-url">escuelaterapiasbienestar.com</div></div>
+          <span class="badge badge-blue">Especialista</span>
+        </div>
+        <div class="comp-body">
+          <div class="comp-text"><strong>Especialista puro en terapias naturales.</strong> 35+ cursos en terapias alternativas. Sede en Tarragona. Presencia en LATAM con dominio propio (escuelaterapiasbienestar.lat). Precios más bajos (395–620 €).</div>
+          <div class="comp-sublabel">Fortalezas</div>
+          <ul class="comp-list pros">
+            <li>Especialista único — percepción de mayor profundidad y credibilidad en el nicho</li>
+            <li>Presencia activa en LATAM con dominio y página de Facebook propios por país</li>
+            <li>Precios más accesibles que Deusto Salud</li>
+            <li>Menor ruido de marca negativa</li>
+          </ul>
+          <div class="comp-sublabel">Debilidades</div>
+          <ul class="comp-list cons">
+            <li>Menor reconocimiento de marca</li>
+            <li>Catálogo limitado — no cubre nutrición clínica, coaching de negocio ni gestión sanitaria</li>
+            <li>Menos avales sectoriales reconocibles</li>
+            <li>Presencia de redes sociales limitada</li>
+          </ul>
+        </div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-head">
+          <div><div class="comp-name">Creadores individuales (coaches, terapeutas con audiencia)</div><div class="comp-url">consuelozacares.com / sarasierra.com / otros</div></div>
+          <span class="badge badge-gray">Fragmentado</span>
+        </div>
+        <div class="comp-body">
+          <div class="comp-text"><strong>Autenticidad, comunidad y precio accesible.</strong> Decenas de creadores con audiencias de 5.000 a 100.000 seguidores en Instagram/YouTube que lanzan sus propios cursos. Alta tasa de conversión en su comunidad propia (50–300 € por curso).</div>
+          <div class="comp-sublabel">Fortalezas</div>
+          <ul class="comp-list pros">
+            <li>Conexión emocional fuerte — conversión muy alta en comunidad propia</li>
+            <li>Precio bajo (50–300 €)</li>
+            <li>Autenticidad percibida muy alta</li>
+          </ul>
+          <div class="comp-sublabel">Debilidades</div>
+          <ul class="comp-list cons">
+            <li>Sin aval sectorial ni titulación con peso institucional</li>
+            <li>Escalabilidad limitada (depende del creador)</li>
+            <li>Sin soporte docente formal ni acompañamiento estructurado</li>
+            <li>Muy vulnerable si el creador cambia de proyecto</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLA COMPARATIVA -->
+  <div class="content-block">
+    <div class="block-title">Tabla comparativa de competidores</div>
+    <div class="comp-table-wrap">
+      <table class="comp-table">
+        <thead>
+          <tr><th>Competidor</th><th>Amplitud catálogo</th><th>Precio medio</th><th>Titulación / avales</th><th>Presencia LATAM</th><th>Acompañamiento docente</th><th>Plataforma</th><th>Reputación</th></tr>
+        </thead>
+        <tbody>
+          <tr class="client-row"><td>Deusto Salud</td><td>Alta — 7 familias</td><td>1.100–2.300 €</td><td>Privada + FEF, APENB, ANCYPEL + UCAM en algunos</td><td>Baja — sin contenido diferenciado</td><td>Alta — punto fuerte según reseñas</td><td>Media — sin datos destacados</td><td>Alta (TP 4,6/5) con ruido externo</td></tr>
+          <tr><td>Euroinnova</td><td>Muy alta — miles de cursos</td><td>195–800 € (descuentos)</td><td>Propia + APENB, INESALUD y otros</td><td>Muy alta — 18 países</td><td>Baja — percepción de masificación</td><td>Muy alta — EDUCA LXP con IA</td><td>Media — dividida por volumen</td></tr>
+          <tr><td>INESEM Business School</td><td>Alta en sanidad y nutrición</td><td>800–1.400 €</td><td>Alta — titulaciones universitarias</td><td>Alta — subdominios por país</td><td>Media — tutores activos pero en escala</td><td>Muy alta — EDUCA LXP</td><td>Media-alta</td></tr>
+          <tr><td>Escuela Europea Terapias Naturales</td><td>Media — especializada</td><td>395–620 €</td><td>Media — titulación propia, pocos avales</td><td>Media — dominio .lat y FB por país</td><td>Media</td><td>Media — plataforma estándar</td><td>Media — menos volumen</td></tr>
+          <tr><td>Creadores individuales</td><td>Baja — nicho muy específico</td><td>50–300 €</td><td>Muy baja — sin peso institucional</td><td>Variable</td><td>Alta en conexión, baja en estructura</td><td>Baja — Teachable o similar</td><td>Muy alta en su nicho</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- MAPA DE POSICIONAMIENTO -->
+  <div class="content-block">
+    <div class="block-title">Mapa de posicionamiento</div>
+    <div class="map-wrap">
+      <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mapa de posicionamiento" style="width:100%;max-width:560px;height:auto;display:block;margin:0 auto;font-family:'Inter',system-ui,sans-serif;">
+        <rect x="60" y="60" width="480" height="480" fill="#fafbfc"/>
+        <g stroke="#e5e7eb" stroke-opacity="0.7" stroke-width="1">
+          <line x1="180" y1="60" x2="180" y2="540"/><line x1="60" y1="180" x2="540" y2="180"/>
+          <line x1="420" y1="60" x2="420" y2="540"/><line x1="60" y1="420" x2="540" y2="420"/>
+        </g>
+        <line x1="300" y1="60" x2="300" y2="540" stroke="#94a3b8" stroke-opacity="0.6" stroke-width="1" stroke-dasharray="4 3"/>
+        <line x1="60" y1="300" x2="540" y2="300" stroke="#94a3b8" stroke-opacity="0.6" stroke-width="1" stroke-dasharray="4 3"/>
+        <rect x="60" y="60" width="480" height="480" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+        <text x="60" y="582" font-size="11" fill="#64748b" text-anchor="start">Generalista</text>
+        <text x="540" y="582" font-size="11" fill="#64748b" text-anchor="end">Especializado en bienestar</text>
+        <text x="32" y="60" font-size="11" fill="#64748b" text-anchor="end" transform="rotate(-90 32 60)">Precio alto / premium</text>
+        <text x="32" y="540" font-size="11" fill="#64748b" text-anchor="start" transform="rotate(-90 32 540)">Precio bajo / accesible</text>
+        <!-- Deusto Salud -->
+        <circle cx="372" cy="180" r="9" fill="#001F78" stroke="#fff" stroke-width="2"/>
+        <text x="388" y="184" font-size="13" font-weight="700" fill="#001F78">Deusto Salud</text>
+        <!-- Euroinnova -->
+        <circle cx="204" cy="396" r="6" fill="#475569"/>
+        <text x="218" y="400" font-size="12" fill="#334155">Euroinnova</text>
+        <!-- INESEM -->
+        <circle cx="276" cy="276" r="6" fill="#475569"/>
+        <text x="290" y="280" font-size="12" fill="#334155">INESEM</text>
+        <!-- Escuela Europea -->
+        <circle cx="454" cy="420" r="6" fill="#475569"/>
+        <text x="340" y="444" font-size="11" fill="#334155">Escuela Europea Terapias Naturales</text>
+        <!-- Creadores -->
+        <circle cx="482" cy="492" r="6" fill="#475569"/>
+        <text x="390" y="508" font-size="11" fill="#334155">Creadores individuales</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- DIAGNÓSTICO ESTRATÉGICO -->
+  <div class="content-block">
+    <div class="block-title">Diagnóstico estratégico</div>
+    <div class="quad-grid">
+      <div class="quad-cell">
+        <div class="quad-label">Fortalezas</div>
+        <ul class="quad-list">
+          <li><strong>Trayectoria y marca reconocida</strong>: 15+ años, heredera de Grupo Planeta, parte de Grupo Northius. La marca «Deusto» genera halo de seriedad y rigor percibido.</li>
+          <li><strong>Avales sectoriales reales y verificables</strong>: FEF, APENB, ANCYPEL, Centro Oficial Autorizado Microsoft. En un mercado sin regulación, estos sellos son el único sustituto de la oficialidad.</li>
+          <li><strong>Reputación alta en plataformas de terceros</strong>: Trustpilot 4,6/5 con 635+ reseñas. El atributo más difícil de fabricar y el más valioso para la conversión.</li>
+          <li><strong>Catálogo amplio y bien estructurado</strong>: 7 familias temáticas con rutas de aprendizaje claras. Ningún otro operador especializado en bienestar cubre el mismo espectro.</li>
+          <li><strong>Acompañamiento docente percibido como diferencial</strong>: las reseñas destacan consistentemente la cercanía del equipo, diferenciando de la masificación de Euroinnova.</li>
+        </ul>
+      </div>
+      <div class="quad-cell">
+        <div class="quad-label">Debilidades</div>
+        <ul class="quad-list">
+          <li><strong>Titulación privada sin percepción de valor clara</strong>: el alumno no entiende qué vale el diploma de Deusto Salud en el mercado laboral. La narrativa está mal construida.</li>
+          <li><strong>Reputación online contaminada</strong>: deustosaludopiniones.com y denuncioestafa.com aparecen en búsquedas de marca y erosionan la conversión.</li>
+          <li><strong>Blog sin conversión</strong>: el tráfico informacional no tiene lead magnets ni CTAs contextuales. El contenido no está conectado al funnel de matrícula.</li>
+          <li><strong>Ausencia de estrategia LATAM diferenciada</strong>: sin contenido, estructura ni experiencia específica para ningún país de LATAM, pese a tener base histórica de Grupo Planeta.</li>
+          <li><strong>Comunidad en redes moderada para su trayectoria</strong>: 23K en Instagram para 15 años de marca es un resultado bajo.</li>
+        </ul>
+      </div>
+      <div class="quad-cell">
+        <div class="quad-label">Oportunidades</div>
+        <ul class="quad-list">
+          <li><strong>Mercado de salud y bienestar con CAGR 6,8% hasta 2032</strong>: la demanda estructural sigue creciendo sin canibalizar.</li>
+          <li><strong>LATAM como mercado sin líder claro en el segmento medio-alto</strong>: Euroinnova cubre el segmento económico; nadie tiene posición sólida en calidad percibida en México, Colombia y Perú.</li>
+          <li><strong>Posible regulación del sector de terapias naturales</strong>: si se regulara, los operadores con avales sectoriales existentes quedarían en posición ventajosa.</li>
+          <li><strong>Cosmética natural como nicho emergente sin dueño institucional</strong>: los creadores dominan el contenido pero no el aval. Deusto Salud puede reclamar la posición de referente.</li>
+          <li><strong>Reconversión profesional adulta como segmento en crecimiento</strong>: el perfil 30–50 que quiere «cambiar de vida» necesita un relato de empleabilidad que Deusto Salud puede construir.</li>
+        </ul>
+      </div>
+      <div class="quad-cell">
+        <div class="quad-label">Amenazas</div>
+        <ul class="quad-list">
+          <li><strong>Euroinnova consolida LATAM antes de que Deusto Salud actúe</strong>: cada mes sin estrategia LATAM es un mes más de ventaja para el líder.</li>
+          <li><strong>Creadores individuales con audiencia convierten mejor</strong> en su nicho que cualquier operador institucional — la autenticidad supera el peso de la marca para una parte del público.</li>
+          <li><strong>Posible regulación que eleve el estándar formativo</strong> y deje fuera a operadores con contenido desactualizado.</li>
+          <li><strong>Foro de quejas externo activo</strong>: sin respuesta activa, este activo negativo seguirá creciendo y erosionando la conversión de leads que investigan.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- CRUCES ESTRATÉGICOS -->
+  <div class="content-block">
+    <div class="block-title">Cruces estratégicos</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="badge badge-green">F + O · Estrategia ofensiva</div>
+        <div class="card-text">Usar la trayectoria + avales + Trustpilot como credenciales para entrar en LATAM con posicionamiento de calidad. El mensaje: «la formación en bienestar con más rigor y acompañamiento del mercado hispanohablante», respaldado por reseñas reales y sellos sectoriales que Euroinnova no tiene en igual medida.</div>
+      </div>
+      <div class="card">
+        <div class="badge badge-red">D + A · Estrategia defensiva</div>
+        <div class="card-text">Neutralizar el foro de quejas externo con una estrategia de reputación activa: más reseñas positivas en Trustpilot, página de preguntas frecuentes sobre titulación y valor del diploma, presencia en foros de respuesta antes de que el lead llegue al foro de quejas.</div>
+      </div>
+      <div class="card">
+        <div class="badge badge-blue">F + A · Estrategia de protección</div>
+        <div class="card-text">Antes de que los creadores individuales sigan ganando cuota en cosmética natural y yoga, crear programas con doble titulación explícita en estos nichos y contenidos de comunidad (grupos de alumni, eventos online) que recreen el sentido de pertenencia de las comunidades de creadores.</div>
+      </div>
+      <div class="card">
+        <div class="badge badge-amber">D + O · Estrategia de reorientación</div>
+        <div class="card-text">Transformar el blog sin conversión en un motor de captación con lead magnets temáticos, aprovechando la oportunidad de mercado LATAM: crear contenido específico por país («guía de cosmética natural para emprendedoras en México») que capture email y abra el funnel de venta asistida con contexto local.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLAN DE ACCIÓN -->
+  <div class="content-block">
+    <div class="block-title">Plan de acción</div>
+    <div class="subsection-title" style="margin-top:0;">⚡ Quick Wins — 0–30 días · bajo esfuerzo / alto impacto</div>
+    <div class="action-card">
+      <div class="action-head"><div class="action-title">Módulo de confianza en home</div><div class="action-meta"><span class="badge badge-red">Alta prioridad</span><span class="badge badge-green">Baja dificultad</span></div></div>
+      <div class="action-text">Añadir en la primera pantalla del home un bloque con Trustpilot 4,6 (número de reseñas), avales FEF/APENB/ANCYPEL, años de trayectoria y alumnos formados. No requiere desarrollo complejo — es edición de contenido.<br><strong>Por qué:</strong> Las señales de confianza existen pero no están donde el alumno las necesita (primer contacto). La competencia (Euroinnova) abre con sus sellos; Deusto Salud los esconde en las fichas.</div>
+    </div>
+    <div class="action-card">
+      <div class="action-head"><div class="action-title">Lead magnet en el blog</div><div class="action-meta"><span class="badge badge-red">Alta prioridad</span><span class="badge badge-amber">Media dificultad</span></div></div>
+      <div class="action-text">Crear una guía descargable por temática («Introducción a la naturopatía», «Test: ¿qué terapia encaja contigo?») y añadirla como CTA en los posts más visitados del blog.<br><strong>Por qué:</strong> El tráfico informacional llega y se va sin convertir. Un lead magnet captura el email antes de la fase de decisión y permite nutrir al lead con una secuencia de emails.</div>
+    </div>
+    <div class="action-card">
+      <div class="action-head"><div class="action-title">Narrar el valor del diploma privado desde el inicio</div><div class="action-meta"><span class="badge badge-red">Alta prioridad</span><span class="badge badge-green">Baja dificultad</span></div></div>
+      <div class="action-text">Añadir en home y en cada ficha un bloque «¿Qué vale mi diploma?» que explique: qué puertas abre, qué organizaciones lo avalan, cómo lo usa un alumni real.<br><strong>Por qué:</strong> La objeción de titulación es la primera barrera de conversión. Si no se trabaja al inicio del recorrido, el lead investiga por su cuenta, llega al foro de quejas y abandona.</div>
+    </div>
+    <div class="subsection-title">📅 Medio Plazo — 1–3 meses</div>
+    <div class="action-card">
+      <div class="action-head"><div class="action-title">Estrategia de reputación en SERP de marca</div><div class="action-meta"><span class="badge badge-red">Alta prioridad</span><span class="badge badge-amber">Media dificultad</span></div></div>
+      <div class="action-text">Activar campaña de recogida de reseñas en Trustpilot, Google Business y comparadores. Crear página propia /opiniones-y-preguntas que responda a las dudas más comunes. Publicar testimonios de alumni en YouTube y redes con etiqueta de historial.<br><strong>Por qué:</strong> deustosaludopiniones.com está activo y posicionado. Sin respuesta activa, su peso crecerá. Un volumen mayor de reseñas positivas en plataformas de autoridad empuja ese resultado.</div>
+    </div>
+    <div class="action-card">
+      <div class="action-head"><div class="action-title">Secuencia de nurturing post-solicitud</div><div class="action-meta"><span class="badge badge-red">Alta prioridad</span><span class="badge badge-amber">Media dificultad</span></div></div>
+      <div class="action-text">Diseñar una cadencia de 5–7 emails entre la solicitud de información y la decisión de matrícula, con contenido específico por temática (naturopatía, quiromasaje, nutrición…) que refuerce la decisión.<br><strong>Por qué:</strong> En cursos de 1.100–2.300 € la decisión tarda semanas. Sin nurturing, el lead tiene tiempo de comparar y irse con la competencia.</div>
+    </div>
+    <div class="action-card">
+      <div class="action-head"><div class="action-title">Cosmética natural como producto estrella reforzado</div><div class="action-meta"><span class="badge badge-amber">Media prioridad</span><span class="badge badge-amber">Media dificultad</span></div></div>
+      <div class="action-text">Elevar la visibilidad del curso de cosmética natural con contenido propio en Instagram/YouTube, colaboraciones con creadores del nicho y aval APENB explícito en todas las comunicaciones.<br><strong>Por qué:</strong> La cosmética natural tiene alta demanda, baja penetración institucional y ningún referente sólido. Deusto Salud puede reclamar ese hueco antes que Euroinnova.</div>
+    </div>
+    <div class="subsection-title">🎯 Apuesta Estratégica — 3–6 meses</div>
+    <div class="action-card">
+      <div class="action-head"><div class="action-title">Estrategia LATAM diferenciada</div><div class="action-meta"><span class="badge badge-red">Alta prioridad</span><span class="badge badge-red">Alta dificultad</span></div></div>
+      <div class="action-text">Crear una experiencia web específica para México, Colombia y Perú (subdirectorios /mx/, /co/, /pe/ o subdominio), con precios en moneda local, testimonios de alumni de esos países y contenido del blog por país.<br><strong>Por qué:</strong> LATAM tiene creciente demanda en bienestar y ningún operador con la combinación de marca + calidad + catálogo amplio está bien posicionado en el segmento medio-alto. La Escuela Europea de Terapias Naturales ya tiene dominio .lat — si Deusto Salud no actúa en 6–12 meses, el hueco desaparecerá.<br><strong>Recursos necesarios:</strong> Traducción/adaptación de contenidos, gestores de comunidad locales, integración de sistemas de pago locales (Mercado Pago en México/Argentina, PSE en Colombia). Inversión estimada: media-alta.<br><strong>Riesgo:</strong> Si el grupo Northius no prioriza la inversión digital, el proyecto puede quedar en versión reducida sin impacto real.</div>
+    </div>
+  </div>
+
+  <!-- RIESGOS -->
+  <div class="content-block">
+    <div class="block-title">Riesgos a vigilar — Monitorización continua</div>
+    <div class="risk high">
+      <div class="risk-title">🔴 Si Euroinnova lanza campaña agresiva de precios en España</div>
+      <div class="risk-text">Reforzar el argumento de calidad y acompañamiento docente frente al precio — nunca responder bajando precios. Euroinnova tiene escala para una guerra de precios que Deusto Salud no puede ganar. El terreno correcto es la calidad percibida.</div>
+      <div class="risk-text" style="margin-top:8px;"><strong>Cómo monitorizarlo:</strong> Revisar mensualmente el posicionamiento de Euroinnova en keywords clave del sector y las novedades de su catálogo en bienestar. Alertas de Google por marca + temáticas.</div>
+    </div>
+  </div>
+
+  <div class="conclusion">
+    <h3>Valoración y próximos pasos E2</h3>
+    <p>Deusto Salud opera en un mercado con viento de cola estructural (6,8% CAGR global en bienestar hasta 2032) pero con hostilidad competitiva alta: Euroinnova domina por volumen y precio, los creadores individuales atacan por autenticidad y los sustitutos gratuitos presionan el umbral de pago.</p>
+    <p>El diagnóstico es claro: <strong>los activos de valor existen pero no están comunicados donde importa</strong>. La trayectoria, los avales sectoriales y las reseñas genuinas son la base de una propuesta diferencial sólida frente a Euroinnova. El acompañamiento docente es el argumento que Euroinnova no puede replicar a escala. Y LATAM es un mercado abierto que la Escuela Europea de Terapias Naturales ya está tocando con una propuesta más débil.</p>
+    <p>La hoja de ruta tiene tres planos: <strong>Quick wins (0–30 días)</strong>: concentrar las señales de confianza en home, crear el primer lead magnet temático y narrar el valor del diploma. <strong>Medio plazo (1–3 meses)</strong>: gestionar la reputación en SERP de marca, activar el nurturing post-solicitud y reforzar cosmética natural. <strong>Apuesta estratégica (3–12 meses)</strong>: construir la presencia LATAM diferenciada antes de que Euroinnova consolide ese espacio.</p>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════════════════════════
+     E3 — BUYER PERSONAS
+════════════════════════════════════════ -->
+<div class="section-wrap" id="e3-wrap">
+<div class="section" id="e3">
+  <div class="section-header">
+    <div class="section-tag e3">E3</div>
+    <div>
+      <div class="section-eyebrow">Entregable 3</div>
+      <div class="section-title">Buyer Personas</div>
+      <div class="section-desc">Los tres perfiles de compra principales de Deusto Salud con dolores, canales y palancas de comunicación</div>
+    </div>
+  </div>
+
+  <!-- TARJETAS RESUMEN -->
+  <div class="content-block">
+    <div class="block-title">Tarjetas resumen de los buyer personas</div>
+    <div class="grid-3">
+      <div class="persona-summary">
+        <div class="persona-summary-head">
+          <div class="persona-summary-emoji">👩‍⚕️</div>
+          <div class="persona-summary-info">
+            <h4>Ana García, 39</h4>
+            <p>B2C · Técnica sanitaria</p>
+          </div>
+        </div>
+        <div class="persona-summary-body">
+          <div class="persona-field">
+            <div class="pf-label">Dolor principal</div>
+            <div class="pf-value">Trabaja en el sistema sanitario convencional pero ve demanda creciente de alternativas y quiere diversificar su práctica con titulación real.</div>
+          </div>
+          <div class="persona-field">
+            <div class="pf-label">Mensaje clave</div>
+            <div class="pf-value"><strong>«Amplía tu perfil profesional con formación avalada que puedes compaginar con tu turno»</strong></div>
+          </div>
+          <div class="persona-field">
+            <div class="pf-label">Canal prioritario</div>
+            <div class="pf-value">Google + grupos Facebook de sanitarias</div>
+          </div>
+        </div>
+      </div>
+      <div class="persona-summary">
+        <div class="persona-summary-head" style="background:#1a4a9e;">
+          <div class="persona-summary-emoji">👩‍💼</div>
+          <div class="persona-summary-info">
+            <h4>María López, 46</h4>
+            <p>B2C · Reconversión profesional</p>
+          </div>
+        </div>
+        <div class="persona-summary-body">
+          <div class="persona-field">
+            <div class="pf-label">Dolor principal</div>
+            <div class="pf-value">Agotada en su carrera actual, quiere reinventarse como terapeuta o coach pero le preocupa no tener base formativa ni credibilidad.</div>
+          </div>
+          <div class="persona-field">
+            <div class="pf-label">Mensaje clave</div>
+            <div class="pf-value"><strong>«Empieza tu segunda carrera desde cero con una formación que te da herramientas y te prepara para emprender»</strong></div>
+          </div>
+          <div class="persona-field">
+            <div class="pf-label">Canal prioritario</div>
+            <div class="pf-value">Instagram + YouTube + Google</div>
+          </div>
+        </div>
+      </div>
+      <div class="persona-summary">
+        <div class="persona-summary-head" style="background:#2a6aaa;">
+          <div class="persona-summary-emoji">🌎</div>
+          <div class="persona-summary-info">
+            <h4>Valentina Reyes, 33</h4>
+            <p>B2C · Profesional LATAM</p>
+          </div>
+        </div>
+        <div class="persona-summary-body">
+          <div class="persona-field">
+            <div class="pf-label">Dolor principal</div>
+            <div class="pf-value">Quiere un título con aval europeo que le dé credibilidad frente a formadores locales sin respaldo institucional.</div>
+          </div>
+          <div class="persona-field">
+            <div class="pf-label">Mensaje clave</div>
+            <div class="pf-value"><strong>«Formación española 100% online, con sello europeo y cuota accesible desde cualquier país de LATAM»</strong></div>
+          </div>
+          <div class="persona-field">
+            <div class="pf-label">Canal prioritario</div>
+            <div class="pf-value">Instagram + TikTok + YouTube + WhatsApp Business</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ANA GARCÍA -->
+  <div class="subsection-title">Desarrollo extendido — Ana García, 39</div>
+  <div class="persona-full">
+    <div class="persona-full-head">
+      <div style="font-size:40px;">👩‍⚕️</div>
+      <div>
+        <div class="persona-full-name">Ana García, 39 — Técnica sanitaria que quiere ampliar hacia terapias naturales</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">B2C · Google + Facebook sanitarias · Decisión en 2–4 semanas</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">1</span>Demográficos</div>
+          <div class="persona-section-text">Mujer, 39 años, residente en ciudad media española (Bilbao, Zaragoza, Málaga o similar). Formación de grado medio o superior en el área sanitaria (auxiliar de enfermería, técnico en farmacia, fisioterapia en ejercicio). Ingresos netos ~1.400–1.700 €/mes. Con hipoteca o alquiler. Pareja estable, sin hijos o con hijos medianos.</div>
+        </div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">2</span>Entorno</div>
+          <div class="persona-section-text">Trabaja en clínica privada o centro de salud en régimen de turnos. Sigue en Instagram a cuentas de bienestar, nutrición y autocuidado. Experimenta personalmente con terapias naturales (acupuntura, fitoterapia, mindfulness) desde posición de usuaria.</div>
+        </div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">3</span>Trabajo</div>
+          <div class="persona-section-text">Su trabajo actual le da estabilidad pero percibe un techo de crecimiento. Observa que los pacientes preguntan cada vez más por alternativas complementarias. Valora la opción de atender en consulta privada o complementar con sesiones propias.</div>
+        </div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">4</span>Comportamiento de búsqueda</div>
+          <div class="persona-section-text">Queries: <em>'curso terapias naturales con titulación oficial'</em>, <em>'formación naturópata compatible con trabajo enfermería'</em>. Lee foros de sanitarias en Facebook. Compara precios y modalidades antes de contactar. Valora testimonios de otras profesionales sanitarias.</div>
+        </div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">5</span>Problema</div>
+          <div class="persona-section-text">Quiere ampliar su práctica hacia terapias naturales pero no sabe qué formación es realmente válida. El mercado está lleno de cursos sin respaldo institucional y teme invertir en algo que luego no reconozcan sus clientes. También necesita compatibilidad con sus turnos.</div>
+        </div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">6</span>Miedos e inseguridades</div>
+          <div class="persona-section-text">Miedo a gastar dinero en formación que no le abra puertas reales. Inseguridad sobre si podrá compaginarlo con su trabajo. Duda de si el mercado de terapias naturales está saturado en su ciudad.</div>
+        </div>
+      </div>
+      <div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">7</span>Objeciones principales</div>
+          <div class="obj-card"><div class="obj-label">Objeción 1</div><div class="obj-text"><strong>«¿Este título me sirve para ejercer o es solo orientativo?»</strong><br>→ En España las terapias naturales no tienen regulación sanitaria oficial aún. Pero el título acredita formación especializada reconocida por asociaciones como COFENAT. Mostrar convenios con asociaciones del sector y el marco legal real de forma transparente.</div></div>
+          <div class="obj-card"><div class="obj-label">Objeción 2</div><div class="obj-text"><strong>«He visto cursos similares en Euroinnova por la mitad de precio»</strong><br>→ Deusto Salud está especializado exclusivamente en salud y bienestar — el claustro y materiales están diseñados por profesionales del sector. El acompañamiento es personalizado, no solo acceso a vídeos.</div></div>
+        </div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">8</span>Mensajes clave</div>
+          <div class="msg-card"><div class="msg-card-title">Formación específica en salud, diseñada para profesionales sanitarios que quieren ampliar su carrera</div><div class="msg-why">Se diferencia de los cursos generalistas y responde a su necesidad de credibilidad profesional</div><div class="msg-cta">→ CTA: Descargar dossier del programa o pedir más información</div></div>
+          <div class="msg-card"><div class="msg-card-title">100% online y flexible: estúdialo a tu ritmo, sin afectar a tu turno</div><div class="msg-why">Elimina su principal barrera: la compatibilidad con el trabajo a turnos</div><div class="msg-cta">→ CTA: Solicitar demo del campus o acceso de prueba</div></div>
+          <div class="msg-card"><div class="msg-card-title">Miles de profesionales sanitarios ya han ampliado su práctica con nosotros</div><div class="msg-why">Proof social de su mismo perfil — reduce el miedo a equivocarse</div><div class="msg-cta">→ CTA: Leer testimonios de exalumnos sanitarios</div></div>
+        </div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">9</span>Canales prioritarios</div>
+          <div class="persona-section-text"><strong>Google Search</strong>: busca de forma activa con queries específicas y alta intención de matrícula.<br><strong>Grupos de Facebook de sanitarias</strong>: comunidades privadas donde pide recomendaciones de formaciones. Prescripción entre pares muy alta.<br><strong>Email nurturing</strong>: responde bien a secuencias de email con contenido especializado (casos de éxito de sanitarias, novedades del sector).</div>
+        </div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">10</span>Frente a la competencia</div>
+          <div class="data-table" style="font-size:12px;">
+            <table class="data-table"><thead><tr><th>Competidor</th><th>Qué decir</th><th>Qué NO decir</th></tr></thead>
+            <tbody>
+              <tr><td>Euroinnova</td><td>En Deusto Salud toda nuestra oferta es salud y bienestar — nuestros tutores son especialistas activos, no formadores generalistas.</td><td>No atacar el precio directamente; enfatizar valor del acompañamiento</td></tr>
+              <tr><td>INESEM</td><td>Formación aplicada desde el primer día, con casos prácticos reales del entorno sanitario. No solo teoría universitaria.</td><td>No hacer comparaciones de precio; INESEM suele ser más caro</td></tr>
+            </tbody></table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARÍA LÓPEZ -->
+  <div class="subsection-title">Desarrollo extendido — María López, 46</div>
+  <div class="persona-full" style="border-left-color:#1a4a9e;">
+    <div class="persona-full-head">
+      <div style="font-size:40px;">👩‍💼</div>
+      <div>
+        <div class="persona-full-name">María López, 46 — Profesional en reconversión hacia el sector del bienestar</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">B2C · Instagram + YouTube + Google · Decisión en 1–3 meses</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">1</span>Demográficos</div>
+          <div class="persona-section-text">Mujer, 46 años, residente en ciudad española media-grande. Formación universitaria en área no relacionada con salud (ADE, derecho, magisterio, comunicación). Ingresos familiares suficientes pero no holgados. Con hijos adolescentes. Pareja estable.</div>
+        </div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">2</span>Entorno</div>
+          <div class="persona-section-text">Ha vivido un punto de inflexión personal: burnout, separación, pérdida de un familiar, o la sensación de que su trabajo no tiene sentido. Empezó a interesarse por el bienestar personal (yoga, meditación, alimentación consciente) y quiere convertir esa pasión en profesión. Su entorno familiar puede ser escéptico.</div>
+        </div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">3</span>Trabajo y motivación</div>
+          <div class="persona-section-text">Sigue en su trabajo actual por estabilidad económica mientras explora la transición. Fantasea con poner un centro de bienestar propio, trabajar como coach nutricional o impartir clases de yoga. Tiene poca base teórica formal pero mucha experiencia vital y motivación.</div>
+        </div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">4</span>Comportamiento</div>
+          <div class="persona-section-text">Empieza de forma exploratoria: <em>'cómo convertirme en terapeuta'</em>, <em>'formación nutrición holística'</em>. Consume mucho contenido en YouTube e Instagram. Necesita más tiempo de consideración que Ana. Se identifica fuertemente con testimonios de personas que han hecho el cambio.</div>
+        </div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">5</span>Objeciones</div>
+          <div class="obj-card"><div class="obj-label">Objeción 1</div><div class="obj-text"><strong>«¿Hay mercado real para esto? ¿Podré vivir de ello?»</strong><br>→ El sector del bienestar crece a un CAGR del 6–8% en España y LATAM. Los profesionales con titulación formal tienen ventaja. No garantizamos ingresos, pero preparamos para competir con ventaja. Datos de crecimiento del sector + casos de exalumnos con negocio propio.</div></div>
+          <div class="obj-card"><div class="obj-label">Objeción 2</div><div class="obj-text"><strong>«¿Con 46 años es tarde para empezar?»</strong><br>→ La mayoría de alumnos en reconversión profesional tienen entre 38 y 55 años. La experiencia de vida es un activo enorme para trabajar con personas. Los mejores casos de emprendimiento exitoso vienen de este perfil. Galería de alumni con edad de inicio y situación actual.</div></div>
+        </div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">6</span>Miedos</div>
+          <div class="persona-section-text">Miedo a que sea demasiado tarde para cambiar. Inseguridad sobre si tendrá clientes. Miedo a la reacción familiar. Duda de si podrá estudiar mientras trabaja.</div>
+        </div>
+      </div>
+      <div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">7</span>Mensajes clave</div>
+          <div class="msg-card"><div class="msg-card-title">Miles de personas han reinventado su carrera en bienestar después de los 40. Este es tu momento.</div><div class="msg-why">Neutraliza el síndrome del impostor y la barrera de la edad</div><div class="msg-cta">→ CTA: Ver testimonios de alumni en su misma situación</div></div>
+          <div class="msg-card"><div class="msg-card-title">De cero a profesional del bienestar: un itinerario diseñado para quien empieza desde otra carrera</div><div class="msg-why">Le explica que no necesita base previa y que hay un camino estructurado</div><div class="msg-cta">→ CTA: Descubrir el itinerario formativo completo</div></div>
+          <div class="msg-card"><div class="msg-card-title">Empieza a tiempo parcial, sin dejarlo todo de golpe — y decide cuándo dar el salto definitivo</div><div class="msg-why">Reduce el riesgo percibido: no tiene que apostar todo de una vez</div><div class="msg-cta">→ CTA: Solicitar información sobre cómo compaginar formación y trabajo</div></div>
+        </div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">8</span>CTAs por fase del funnel</div>
+          <div class="persona-section-text"><strong>Descubrimiento:</strong> Descarga la guía 'Cómo convertir tu pasión por el bienestar en una profesión' · Calcula qué carrera en bienestar se adapta mejor a tu perfil<br><strong>Consideración:</strong> Únete al próximo webinar gratuito: De profesional a terapeuta · Habla con alguien del equipo<br><strong>Decisión:</strong> Empieza cuando quieras: acceso inmediato, a tu ritmo · Sin riesgos: primeros 14 días con devolución garantizada</div>
+        </div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">9</span>Canales prioritarios</div>
+          <div class="persona-section-text"><strong>Instagram y YouTube</strong>: consume contenido inspiracional de forma pasiva. El descubrimiento de la marca ocurre por contenido de valor (testimonios, historias de reconversión).<br><strong>Google Search</strong>: cuando llega a la fase de consideración activa. Canal de captura más que de descubrimiento.<br><strong>Webinars y eventos online gratuitos</strong>: altamente predispuesta a asistir. Es un canal de conversión muy eficaz para este perfil.</div>
+        </div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">10</span>Frente a la competencia</div>
+          <div class="data-table" style="font-size:12px;">
+            <table class="data-table"><thead><tr><th>Competidor</th><th>Qué decir</th><th>Qué NO decir</th></tr></thead>
+            <tbody>
+              <tr><td>Escuela Europea de Terapias Naturales</td><td>Deusto Salud ofrece más amplitud de catálogo para que explores qué especialidad te apasiona más antes de especializarte.</td><td>No atacar el precio si EETN es más barata</td></tr>
+              <tr><td>Creadores individuales</td><td>Con Deusto Salud tienes el respaldo institucional de una escuela con años de trayectoria y un título formal — no dependes de la personal brand de una sola persona.</td><td>No desprestigiar a los creadores — posicionarse como 'el complemento que da estructura'</td></tr>
+            </tbody></table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VALENTINA REYES -->
+  <div class="subsection-title">Desarrollo extendido — Valentina Reyes, 33</div>
+  <div class="persona-full" style="border-left-color:#2a6aaa;">
+    <div class="persona-full-head">
+      <div style="font-size:40px;">🌎</div>
+      <div>
+        <div class="persona-full-name">Valentina Reyes, 33 — Profesional LATAM que busca titulación española para diferenciarse</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">B2C · Colombia · México · Argentina · Decisión en 2–6 semanas</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">1</span>Demográficos</div>
+          <div class="persona-section-text">Mujer, 33 años, residente en LATAM (Colombia, México o Argentina principalmente, también Chile y Perú). Formación universitaria en ciencias de la salud o humanidades. Trabaja como profesional independiente o en empresa. Tiene acceso a tarjeta de crédito internacional. Habituada a consumir servicios digitales.</div>
+        </div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">2</span>Entorno</div>
+          <div class="persona-section-text">Vive en ciudad grande latinoamericana. Sigue activamente cuentas de bienestar, health coaching y emprendimiento femenino en Instagram y TikTok. Su entorno profesional valora la formación extranjera como diferenciador. Puede haber tomado ya cursos locales o en Udemy/Coursera pero siente que le falta «el título que cierre el círculo».</div>
+        </div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">3</span>Trabajo</div>
+          <div class="persona-section-text">Trabaja como profesional independiente o quiere emprender en bienestar: consultoría nutricional, clases de yoga o pilates, coaching personal, terapias alternativas. El mercado local tiene demanda pero también mucha oferta no cualificada. Quiere diferenciarse con una titulación europea.</div>
+        </div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">4</span>Comportamiento</div>
+          <div class="persona-section-text">Descubre Deusto Salud en Instagram/TikTok o por recomendación. Busca: <em>'formación terapias naturales España'</em>, <em>'cursos salud con título español'</em>. Consulta en grupos de WhatsApp de su especialidad. Evalúa el precio en su moneda local — la cuota mensual puede ser muy accesible desde LATAM.</div>
+        </div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">5</span>Problema</div>
+          <div class="persona-section-text"><strong>Principal:</strong> credibilidad — un título español/europeo la diferencia en su mercado. <strong>Secundario:</strong> comodidad — quiere algo 100% online sin desplazamiento a España. El pago en euros puede ser una fricción operativa.</div>
+        </div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">6</span>Miedos</div>
+          <div class="persona-section-text">Miedo a que el título no sea reconocido en su país. Desconfianza si no conoce la marca de antemano. Preocupación por la comunicación con tutores en diferente zona horaria. Miedo a contenido demasiado teórico y poco aplicable.</div>
+        </div>
+      </div>
+      <div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">7</span>Objeciones</div>
+          <div class="obj-card"><div class="obj-label">Objeción 1</div><div class="obj-text"><strong>«¿El título sirve en mi país (México, Colombia, Argentina)?»</strong><br>→ Las terapias naturales no están reguladas de forma homogénea en ningún país hispanohablante. Lo que marca la diferencia es la credibilidad del centro formador — un título de una escuela española especializada en salud posiciona por encima de la oferta local no cualificada. Testimonios de exalumnos LATAM que ejercen con éxito.</div></div>
+          <div class="obj-card"><div class="obj-label">Objeción 2</div><div class="obj-text"><strong>«Euroinnova también tiene muchos cursos y es más conocida en LATAM»</strong><br>→ Deusto Salud está exclusivamente especializado en salud y bienestar — no somos un marketplace de miles de cursos. Nuestros tutores son profesionales activos del sector sanitario. Comparativa de especialización + ratio tutor/alumno + profundidad del temario.</div></div>
+        </div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">8</span>Mensajes clave</div>
+          <div class="msg-card"><div class="msg-card-title">Titulación española en salud y bienestar, válida en toda Latinoamérica, 100% online</div><div class="msg-why">Resuelve su principal motivación: el sello europeo accesible sin viajar</div><div class="msg-cta">→ CTA: Ver el catálogo de cursos disponibles para su área de interés</div></div>
+          <div class="msg-card"><div class="msg-card-title">Únete a miles de alumnos de México, Colombia, Argentina y Chile que ya estudian con nosotros</div><div class="msg-why">Social proof específico de LATAM — le dice que no es la primera ni la única</div><div class="msg-cta">→ CTA: Leer testimonios de alumnos latinoamericanos o contactar por WhatsApp</div></div>
+          <div class="msg-card"><div class="msg-card-title">Cuota mensual accesible desde cualquier país — invierte en tu carrera desde hoy</div><div class="msg-why">Contextualiza el precio en su realidad local — la cuota puede ser muy accesible desde LATAM</div><div class="msg-cta">→ CTA: Ver precio en cuotas y opción de pago</div></div>
+        </div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">9</span>Canales prioritarios</div>
+          <div class="persona-section-text"><strong>Instagram y TikTok</strong>: canal principal de descubrimiento en LATAM. Los reels sobre bienestar, salidas profesionales y testimonios de alumni son el punto de entrada más efectivo.<br><strong>WhatsApp Business</strong>: canal de comunicación preferido en LATAM para consultas comerciales. Espera responder por WhatsApp antes de rellenar un formulario.<br><strong>YouTube</strong>: consume contenido largo de bienestar. Las clases muestra o webinars grabados funcionan bien como contenido de consideración.</div>
+        </div>
+        <div class="persona-section">
+          <div class="persona-section-title"><span class="persona-section-num">10</span>Frente a la competencia</div>
+          <div class="data-table" style="font-size:12px;">
+            <table class="data-table"><thead><tr><th>Competidor</th><th>Qué decir</th><th>Qué NO decir</th></tr></thead>
+            <tbody>
+              <tr><td>Euroinnova</td><td>Deusto Salud es especialista: todo lo que enseñamos es salud y bienestar. Nuestros docentes vienen del sector, no son formadores genéricos.</td><td>No atacar la presencia de Euroinnova en LATAM — posicionarse como 'el especialista frente al generalista'</td></tr>
+              <tr><td>Creadores individuales</td><td>Con Deusto Salud tienes un título de escuela, no un diploma de una persona. Para tus clientes y tu posicionamiento profesional, eso importa.</td><td>No atacar a los creadores — posicionarse como complementario</td></tr>
+            </tbody></table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESUMEN TRANSVERSAL -->
+  <div class="content-block">
+    <div class="block-title">Resumen de perfiles y recomendaciones transversales</div>
+    <div class="insight" style="margin-bottom:16px;">
+      Los tres buyer personas de Deusto Salud comparten una motivación central: <strong>buscan credibilidad y estructuración en un mercado de bienestar percibido como poco riguroso</strong>. Todos valoran el respaldo institucional por encima de la notoriedad personal del formador, todos prefieren modalidad 100% online con flexibilidad horaria, y todos comparan activamente con 2–3 alternativas antes de decidir.
+    </div>
+    <div class="grid-3">
+      <div class="card-surface">
+        <div class="badge badge-blue">Recomendación 1</div>
+        <div class="card-title">Testimonios segmentados por perfil</div>
+        <div class="card-text">Un testimonio de una auxiliar de enfermería que amplió su práctica vale más para Ana que diez testimonios genéricos. Lo mismo aplica para María y Valentina. La segmentación de prueba social no es opcional.</div>
+      </div>
+      <div class="card-surface">
+        <div class="badge badge-red">Recomendación 2</div>
+        <div class="card-title">Abordar proactivamente la reputación online</div>
+        <div class="card-text">Los tres perfiles consultan opiniones externas antes de decidir. La existencia de un sitio de opiniones negativas es la principal amenaza al funnel — independientemente del canal de entrada.</div>
+      </div>
+      <div class="card-surface">
+        <div class="badge badge-amber">Recomendación 3</div>
+        <div class="card-title">LATAM como mercado diferenciado</div>
+        <div class="card-text">Valentina no es una variante de Ana o María: es un segmento con fricción específica (pago, idioma cultural, zona horaria). Sin propuesta explícita para LATAM, se pierde este segmento por defecto.</div>
+      </div>
+    </div>
+    <div class="insight amber" style="margin-top:16px;">
+      <strong>Diferencias clave a gestionar:</strong> Ana (técnica sanitaria) decide más rápido y con criterios profesionales; María (reconversión) necesita inspiración y tiempo; Valentina (LATAM) necesita adaptación local y WhatsApp como canal. Comunicar igual a los tres es perder efectividad en al menos dos de ellos.
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════════════════════════
+     E4 — PERFORMANCE REAL
+════════════════════════════════════════ -->
+<div class="section-wrap" id="e4-wrap">
+<div class="section" id="e4">
+  <div class="section-header">
+    <div class="section-tag e4">E4</div>
+    <div>
+      <div class="section-eyebrow">Entregable 4</div>
+      <div class="section-title">Performance Real</div>
+      <div class="section-desc">Indicadores de negocio con datos de GA4 · Sin Search Console disponible</div>
+    </div>
+  </div>
+
+  <!-- PULSO DEL NEGOCIO -->
+  <div class="content-block">
+    <div class="block-title">Pulso del negocio — 6 indicadores clave</div>
+    <div class="grid-2">
+      <div class="kpi-card">
+        <div class="kpi-label">Alcance digital trimestral <span class="badge-verified" style="font-size:10px;background:var(--green-bg);color:var(--green);padding:1px 6px;border-radius:10px;">Verificado</span></div>
+        <div class="kpi-value">57.238 sesiones</div>
+        <div class="kpi-sub">Volumen considerable para una escuela especializada, pero el tiempo medio de sesión (21 segundos) indica que una parte significativa del tráfico no está encontrando lo que busca o abandona antes de comprometerse.</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Tráfico sin origen claro <span class="badge-estimated" style="font-size:10px;background:var(--amber-bg);color:var(--amber);padding:1px 6px;border-radius:10px;">Estimación</span></div>
+        <div class="kpi-value salmon">58% directo</div>
+        <div class="kpi-sub">El 58% del tráfico aparece como «directo» en GA4. En una escuela con campus digital, esto probablemente incluye accesos de alumnos ya matriculados. <strong>El tráfico real de captación de nuevos potenciales clientes es sensiblemente menor</strong> — y las métricas de conversión pueden estar infladas por este efecto.</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Dependencia publicitaria <span class="badge-verified" style="font-size:10px;background:var(--green-bg);color:var(--green);padding:1px 6px;border-radius:10px;">Verificado</span></div>
+        <div class="kpi-value">~19,4% paid</div>
+        <div class="kpi-sub">Google CPC 16,81% + IG paid 1,79% + FB paid 0,85% + AN paid 0,76% = 11.564 sesiones paid totales. El canal de pago aporta casi 1 de cada 5 sesiones. <strong>Cortar el presupuesto publicitario reduciría a la mitad la captación medible.</strong></div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Captación de leads <span class="badge-verified" style="font-size:10px;background:var(--green-bg);color:var(--green);padding:1px 6px;border-radius:10px;">Verificado</span></div>
+        <div class="kpi-value">1.271 leads</div>
+        <div class="kpi-sub">1,61% de conversión total. El lead magnet más potente <strong>no son las fichas de cursos sino los tests de personalidad y autoconocimiento</strong> — el test MBTI solo genera más leads que cualquier ficha de curso individual.</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Calidad del engagement <span class="badge-verified" style="font-size:10px;background:var(--green-bg);color:var(--green);padding:1px 6px;border-radius:10px;">Verificado</span></div>
+        <div class="kpi-value salmon">21s / sesión</div>
+        <div class="kpi-sub">21 segundos de tiempo medio de sesión es una señal de alarma. El blog atrae tráfico orgánico masivo (reflexología, reiki, mente sana) pero los visitantes leen el artículo y abandonan sin avanzar hacia las fichas de cursos. <strong>El contenido funciona como atractor pero no como embudo.</strong></div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Presencia en LLMs <span class="badge-verified" style="font-size:10px;background:var(--green-bg);color:var(--green);padding:1px 6px;border-radius:10px;">Verificado · Crece</span></div>
+        <div class="kpi-value">79 sesiones</div>
+        <div class="kpi-sub">~50 desde chatgpt.com + 21 desde perplexity.ai + 8 desde gemini.google.com. Volumen residual hoy, pero es la primera señal de que los LLMs están indexando la marca en consultas sobre formación en bienestar y terapias naturales.</div>
+      </div>
+    </div>
+    <div class="insight alert" style="margin-top:16px;">
+      Deusto Salud tiene un volumen de tráfico sólido para su sector, pero enfrenta dos problemas de fondo: el tráfico «directo» incluye probablemente alumnos actuales (lo que infla las métricas de alcance), y el tiempo medio de sesión de 21 segundos revela que el blog atrae visitantes que no avanzan hacia la matrícula. <strong>Lo más relevante del trimestre es que el principal generador de leads no son las fichas de cursos sino los tests de personalidad</strong> — un activo diferencial que la competencia directa no replica.
+    </div>
+  </div>
+
+  <!-- QUÉ BUSCAN -->
+  <div class="content-block">
+    <div class="block-title">Qué buscan de ti — 4 intenciones principales</div>
+    <div class="hyp-card">
+      <div class="hyp-head"><div class="badge badge-salmon">Intención #1 · Informacional</div><span class="badge-verified" style="font-size:10px;background:var(--green-bg);color:var(--green);padding:1px 6px;border-radius:10px;">Verificado</span></div>
+      <div class="hyp-title">Informarse sobre terapias concretas antes de decidir si formarse</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> Las URLs con más tráfico son artículos de blog: «localizar áreas reflejas del pie reflexología» (2.308 eventos view_content), «cuándo no hacer reiki» (888), «cómo hacer reiki a uno mismo» (443), «síntomas después de una sesión de reiki» (510). El usuario llega buscando información práctica sobre una terapia específica, no buscando directamente formación.</div>
+      <div class="insight" style="margin-top:10px;">El buyer persona predominante en el tráfico orgánico no está en fase de compra — está en fase de descubrimiento. Deusto Salud está pagando (con contenido y posicionamiento) para atraer a personas que aún no han decidido si quieren formarse. <strong>El blog funciona como atractor pero hay un gap hasta la matrícula.</strong></div>
+    </div>
+    <div class="hyp-card">
+      <div class="hyp-head"><div class="badge badge-blue">Intención #2 · Informacional</div><span class="badge-verified" style="font-size:10px;background:var(--green-bg);color:var(--green);padding:1px 6px;border-radius:10px;">Verificado</span></div>
+      <div class="hyp-title">Buscar herramientas de autoconocimiento sin intención formativa inicial clara</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> Los tests de personalidad MBTI, estilo de aprendizaje, autoconocimiento y motivación concentran el 35% del evento open_form y el 53% del evento generate_lead. El test MBTI solo genera 2.276 tests completados y 95 leads — más que cualquier ficha de curso.</div>
+      <div class="insight success" style="margin-top:10px;">Existe una audiencia activa que usa la web de Deusto Salud como herramienta de autoconocimiento, no (inicialmente) como escuela de formación. Es tráfico de alta calidad porque ya está interesado en el bienestar personal, pero <strong>necesita un puente para conectar el test con la formación relevante.</strong></div>
+    </div>
+    <div class="hyp-card">
+      <div class="hyp-head"><div class="badge badge-navy">Intención #3 · Transaccional</div><span class="badge-verified" style="font-size:10px;background:var(--green-bg);color:var(--green);padding:1px 6px;border-radius:10px;">Verificado</span></div>
+      <div class="hyp-title">Explorar el catálogo de cursos de bienestar y terapias manuales</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> El evento view_item se disparó 26.654 veces con 11.277 sesiones únicas (19,7% del total). Cursos más vistos: Reiki (555 views), Quiromasaje (142), Cosmética dermofarmacia (104), Cosmética natural. begin_checkout: 2.705 veces pero leads confirmados: 1.271 — <strong>gap de conversión significativo.</strong></div>
+      <div class="insight amber" style="margin-top:10px;">Hay demanda real de formación en terapias manuales, especialmente reiki y quiromasaje. El embudo de compra existe (view_item → begin_checkout → generate_lead) pero hay una fuga significativa. Sin datos GSC no podemos cuantificar la demanda orgánica total.</div>
+    </div>
+    <div class="hyp-card">
+      <div class="hyp-head"><div class="badge badge-purple">Intención #4 · Transaccional</div><span class="badge-estimated" style="font-size:10px;background:var(--amber-bg);color:var(--amber);padding:1px 6px;border-radius:10px;">Estimación</span></div>
+      <div class="hyp-title">Acceder a formación en coaching e inteligencia emocional</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> Las landing pages de cursos de coaching (IE, PNL, coaching nutricional, coaching personal) concentran las mayores tasas de video_impression (106, 105, 62 vistas respectivamente) y video_progress. Las UTMs de CPC de Google apuntan específicamente a estas páginas.</div>
+      <div class="insight" style="margin-top:10px;">El coaching e IE es el área más activa en conversión asistida por paid media. El paid está apoyando categorías donde el orgánico probablemente no alcanza las posiciones objetivo.</div>
+    </div>
+  </div>
+
+  <!-- DEMANDA NO ATENDIDA -->
+  <div class="content-block">
+    <div class="block-title">Demanda no atendida</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="badge badge-amber">Estimación</div>
+        <div class="card-title">LATAM con demanda orgánica sin propuesta específica</div>
+        <div class="card-text"><strong>Evidencia:</strong> Referrals desde Yahoo México, Perú, Argentina, Colombia, Chile; desde la Universidad Javeriana de Colombia e ITSON (México).<br><br><strong>Implicación:</strong> Existe demanda orgánica desde LATAM que llega a una web pensada para España — en euros, sin testimonios locales, sin WhatsApp proactivo. Esta demanda llega sola pero se va sin convertir.</div>
+      </div>
+      <div class="card">
+        <div class="badge badge-amber">Estimación</div>
+        <div class="card-title">Alumnos actuales buscando el campus (contaminación métrica)</div>
+        <div class="card-text"><strong>Evidencia:</strong> La búsqueda interna 'campus' es la más frecuente en el buscador de la web. Tráfico desde northius.com y campustraining.lightning.force.com. El 58% de tráfico directo probablemente incluye este segmento.<br><br><strong>Implicación:</strong> La mezcla de alumnos actuales y potenciales distorsiona la foto real de captación. Resolver esto daría una imagen mucho más precisa del funnel.</div>
+      </div>
+    </div>
+    <div class="insight alert" style="margin-top:16px;">
+      Sin datos de Search Console, no podemos cuantificar la demanda orgánica total. Pero los datos GA4 confirman que los visitantes llegan principalmente en fase informacional (blog, tests) y solo una fracción llega en fase transaccional. El reto del negocio es <strong>convertir el blog y los tests — que funcionan excelentemente como atractores — en embudos efectivos hacia la matrícula.</strong>
+    </div>
+  </div>
+
+  <!-- QUIÉN COMPRA -->
+  <div class="content-block">
+    <div class="block-title">Quién te compra — Perfiles que convierten</div>
+    <div class="grid-2">
+      <div class="kpi-card" style="border-top-color:var(--green);">
+        <div class="kpi-label">↳ Perfil María · Tests → Lead · ~1,6% conv.</div>
+        <div class="kpi-value">95 leads/mes</div>
+        <div class="kpi-sub">desde tests (extrapolado del trimestre). El test MBTI genera 95 generate_lead (top de todos los eventos), 2.218 open_form y 83 call_to_phone. El test de autoconocimiento genera 20 leads adicionales. El perfil que hace un test de personalidad antes de decidir qué estudiar encaja con María (reconversión profesional) en fase exploratoria.<br><br><strong>Los tests de personalidad están actuando como el primer paso del proceso de decisión de María. Son la puerta de entrada más efectiva del negocio y un activo diferencial único respecto a la competencia directa.</strong></div>
+      </div>
+      <div class="kpi-card" style="border-top-color:var(--blue-medium);">
+        <div class="kpi-label">↳ Perfil Transaccional · Paid → Landing → Purchase</div>
+        <div class="kpi-value">30–50 mat/mes</div>
+        <div class="kpi-sub">estimado desde paid. Las landing pages de coaching en cursos.deustosalud.com concentran video_impression y video_progress altos. La URL /gracias?mercado=ES confirma conversiones post-paid. UTMs visibles de campañas dsa_product_coaching-personal.<br><br><strong>El canal paid es el más eficiente en conversión directa. Es el único camino donde el recorrido sesión→conversión es directo y medible.</strong></div>
+      </div>
+      <div class="kpi-card" style="border-top-color:var(--salmon); grid-column: 1 / -1;">
+        <div class="kpi-label">↳ Perfil Ana · Blog terapias → Ficha curso → Lead (bajo)</div>
+        <div class="kpi-value">&lt; 30 leads/mes</div>
+        <div class="kpi-sub">estimado desde blog + fichas directas. Desde el blog «cuando no hacer reiki» hay 40 select_item y 6 open_whatsapp. La URL de cosmética natural genera 14 leads directos y nutricosmética 13 leads — son las únicas fichas de curso con leads directos sin pasar por tests.<br><br>El tráfico de blog sí avanza hacia fichas de cursos, pero la conversión final es baja. El paso de «leer un artículo de reiki» a «matricularse en el curso de reiki» tiene <strong>fricción no resuelta.</strong><br><br><strong>El negocio convierte principalmente por dos vías: los tests de personalidad (funnel largo, orgánico, perfil María) y las landing pages de paid media (funnel corto, directo). El perfil Ana que llega por blog existe en los datos pero convierte con menor frecuencia.</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HIPÓTESIS VALIDADAS -->
+  <div class="content-block">
+    <div class="block-title">Hipótesis validadas — E1 / E2 / E3 vs. datos reales</div>
+    <div class="hyp-card">
+      <div class="hyp-head"><span class="veredicto v-ok">✓ Confirmada</span><span class="hyp-origin">E1 — Marketing digital / presencia en buscadores</span></div>
+      <div class="hyp-title">El blog está bien posicionado en temas informativos pero hay un gap entre el tráfico informacional y la conversión a matrícula</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> El blog domina en view_content: reflexología (2.308), reiki (888+510+443), mente sana (631). Pero generate_lead desde artículos de blog es marginal — el 53% de los leads vienen de tests, no del blog. El gap blog→matrícula es real y cuantificable.</div>
+      <div class="hyp-text"><strong>Implicación:</strong> El negocio tiene un atractor informacional poderoso desconectado del funnel de compra. Hay oportunidad de mejora sin necesidad de más tráfico — solo mejorando el puente blog→producto.</div>
+    </div>
+    <div class="hyp-card">
+      <div class="hyp-head"><span class="veredicto v-partial">≈ Parcialmente confirmada</span><span class="hyp-origin">E2 — Benchmark / gap LATAM</span></div>
+      <div class="hyp-title">Existe demanda de formación en bienestar desde LATAM que llega a la web pero no tiene propuesta comercial específica</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> Se confirma tráfico LATAM: Yahoo MX, PE, AR, CO, CL; referrals desde Universidad Javeriana (Colombia) e ITSON (México). Sin GSC, no se puede cuantificar el tráfico orgánico LATAM total. Solo vemos la punta del iceberg.</div>
+      <div class="hyp-text"><strong>Implicación:</strong> El segmento LATAM existe y llega a la web. La hipótesis de que llega sin convertir sigue en pie — WhatsApp (canal clave LATAM) solo registra 456 sesiones únicas.</div>
+    </div>
+    <div class="hyp-card">
+      <div class="hyp-head"><span class="veredicto v-partial">≈ Parcialmente confirmada</span><span class="hyp-origin">E2 — Sector hostil / presión competitiva</span></div>
+      <div class="hyp-title">La presión competitiva obliga a sostener visibilidad vía paid, creando dependencia estructural de la inversión publicitaria</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> El paid media aporta ~19,4% del tráfico y probablemente una proporción superior de las conversiones directas. Las campañas DSA activas (Google CPC) sugieren que el orgánico no es suficiente para cubrir la demanda transaccional sin soporte paid.</div>
+      <div class="hyp-text"><strong>Implicación:</strong> La dependencia de paid para sostener la captación es un síntoma de la presión competitiva. Es un riesgo estructural si no se desarrollan canales propios alternativos.</div>
+    </div>
+    <div class="hyp-card">
+      <div class="hyp-head"><span class="veredicto v-ok">✓ Confirmada</span><span class="hyp-origin">E1 — Gaps detectados / ausencia de email marketing</span></div>
+      <div class="hyp-title">No hay evidencias visibles de email marketing activo hacia la base de alumnos o leads</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> El canal email (sfmc / email) solo generó 4 sesiones en el trimestre. Es el dato más contundente: la herramienta de email existe (Salesforce Marketing Cloud) pero prácticamente no se usa para generar tráfico.</div>
+      <div class="hyp-text"><strong>Implicación:</strong> Una base de datos de alumnos y leads captados que no recibe comunicación sistemática es una oportunidad perdida de upsell, cross-sell y prescripción.</div>
+    </div>
+    <div class="hyp-card">
+      <div class="hyp-head"><span class="veredicto v-partial">≈ Parcialmente confirmada</span><span class="hyp-origin">E3 — Buyer persona Valentina / canal WhatsApp LATAM</span></div>
+      <div class="hyp-title">El perfil LATAM necesita WhatsApp como canal de contacto prioritario antes de matricularse</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> 622 aperturas de WhatsApp en el trimestre (456 sesiones únicas, 0,8% de conversión). Canal activo pero con volumen que sugiere uso más reactivo (soporte) que proactivo (captación).</div>
+      <div class="hyp-text"><strong>Implicación:</strong> WhatsApp existe y funciona, pero podría actuar como canal de captación proactivo para el segmento LATAM en lugar de ser solo un botón de contacto reactivo.</div>
+    </div>
+    <div class="hyp-card">
+      <div class="hyp-head"><span class="veredicto v-none">Sin datos suficientes</span><span class="hyp-origin">E2 — Reputación online en foros externos</span></div>
+      <div class="hyp-title">La existencia de plataformas de opiniones negativas externas puede frenar la decisión de compra en la fase de consideración</div>
+      <div class="hyp-text"><strong>Evidencia:</strong> GA4 no registra referrals desde plataformas de opiniones externas. Sin GSC y sin herramienta de branded search no se puede medir el impacto en el funnel.</div>
+      <div class="hyp-text"><strong>Implicación:</strong> La hipótesis sigue en pie: la reputación online puede estar frenando conversiones silenciosamente. Requiere monitoreo activo de branded search.</div>
+    </div>
+  </div>
+
+  <!-- OPORTUNIDADES EMERGENTES -->
+  <div class="content-block">
+    <div class="block-title">Oportunidades emergentes — Lo que los datos revelan y el E2 no había detectado</div>
+    <div class="move-card qw">
+      <div class="move-type">Oportunidad · Esfuerzo bajo</div>
+      <div class="move-title">Los tests de personalidad como motor de captación propio — activo diferencial no explotado</div>
+      <div class="move-text"><strong>Descubrimiento:</strong> El test MBTI genera más leads que cualquier ficha de curso individual (95 generate_lead vs. 14 de cosmética natural, el siguiente). Los tests de estilo de aprendizaje, autoconocimiento y motivación completan un funnel de captación basado en valor gratuito que ningún competidor directo (Euroinnova, INESEM, EETN) replica.</div>
+      <div class="move-text"><strong>Por qué no estaba en E2:</strong> El E2 analizó el benchmark desde el ángulo de la oferta formativa — no desde los mecanismos de captación de leads. El poder de los tests como lead magnet no era visible en el análisis de mercado.</div>
+      <div class="move-text"><strong>Siguiente paso:</strong> Diseñar un flujo de nurturing post-test: conectar el resultado de cada test con una recomendación de curso personalizada y una secuencia de email que lleve al usuario de «conocer su perfil» a «conocer su formación ideal».</div>
+    </div>
+    <div class="move-card mp">
+      <div class="move-type">Oportunidad · Esfuerzo medio</div>
+      <div class="move-title">Presencia incipiente en LLMs (ChatGPT, Perplexity, Gemini) como canal emergente de reputación y referral</div>
+      <div class="move-text"><strong>Descubrimiento:</strong> 50 sesiones desde chatgpt.com, 21 desde perplexity.ai y 8 desde gemini.google.com en el trimestre. Los LLMs ya mencionan a Deusto Salud en respuestas sobre formación en salud y bienestar — ~79 sesiones/trimestre hoy, con tendencia exponencial en el sector.</div>
+      <div class="move-text"><strong>Por qué no estaba en E2:</strong> El E2 se centró en la competencia en buscadores tradicionales. El canal de los LLMs como fuente de referrals no estaba en el radar del análisis de mercado.</div>
+      <div class="move-text"><strong>Siguiente paso:</strong> Desarrollar contenido estructurado (FAQs, artículos de autoridad, presencia en directorios que los LLMs indexan) para mejorar la presencia de marca en respuestas de IA sobre formación en bienestar y terapias naturales.</div>
+    </div>
+  </div>
+
+  <!-- MOVIMIENTOS ESTRATÉGICOS -->
+  <div class="content-block">
+    <div class="block-title">Movimientos estratégicos recomendados</div>
+    <div class="subsection-title" style="margin-top:0;">⚡ Quick Wins — 1–3 meses</div>
+    <div class="move-card qw">
+      <div class="move-type">Quick Win 1 · Marketing</div>
+      <div class="move-title">Activar un flujo de email nurturing post-test</div>
+      <div class="move-text"><strong>Por qué:</strong> El test MBTI genera ~95 leads/trimestre pero el canal SFMC email solo generó 4 sesiones en el mismo periodo. Los usuarios que hacen el test han dado su email y tienen un perfil identificado — es el momento más caliente del funnel y no se está aprovechando.</div>
+      <div class="move-text"><strong>Impacto esperado:</strong> Aumentar la tasa de conversión de test a matrícula del estimado actual (&lt;10%) a un 15–20%, lo que podría suponer 10–20 matrículas adicionales por trimestre solo desde el canal de tests.</div>
+    </div>
+    <div class="move-card qw">
+      <div class="move-type">Quick Win 2 · Marketing + Contenidos</div>
+      <div class="move-title">Crear un puente editorial entre artículos de blog y fichas de cursos relacionados (clúster reiki y reflexología)</div>
+      <div class="move-text"><strong>Por qué:</strong> El blog de reiki concentra miles de view_content pero la conversión hacia fichas de curso es muy baja. Los artículos más visitados («cuándo no hacer reiki», «cómo hacer reiki», «síntomas post-sesión») tienen una audiencia interesada en reiki que no está viendo una propuesta formativa clara en el contexto del artículo.</div>
+      <div class="move-text"><strong>Impacto esperado:</strong> Con el volumen actual, un incremento del 1% en conversión blog→curso representaría decenas de leads adicionales por trimestre sin generar más tráfico.</div>
+    </div>
+    <div class="subsection-title">📅 Medio Plazo — 3–9 meses</div>
+    <div class="move-card mp">
+      <div class="move-type">Medio Plazo 1 · Dirección + Marketing</div>
+      <div class="move-title">Construir una propuesta explícita para el mercado LATAM</div>
+      <div class="move-text"><strong>Por qué:</strong> Hay tráfico LATAM orgánico desde múltiples países que llega a una web pensada exclusivamente para España. La fricción de precio en euros, sin testimonios locales y sin WhatsApp proactivo, hace que este tráfico no convierta. Euroinnova ya tiene presencia consolidada en LATAM con 18 países — la ventana se está cerrando.</div>
+      <div class="move-text"><strong>Impacto esperado:</strong> Si el 5–10% del tráfico LATAM actual convirtiera (estimado 2.000–5.000 sesiones/trimestre desde LATAM), supondría 100–500 leads adicionales con alta intención.</div>
+    </div>
+    <div class="move-card mp">
+      <div class="move-type">Medio Plazo 2 · Marketing + Tecnología</div>
+      <div class="move-title">Separar analíticamente el tráfico de alumnos actuales del tráfico de potenciales nuevos alumnos</div>
+      <div class="move-text"><strong>Por qué:</strong> El 58% del tráfico «directo» probablemente incluye alumnos ya matriculados accediendo al campus. Mezclar ambos segmentos hace imposible medir la eficiencia real de captación, el CAC y el ROI de la inversión publicitaria.</div>
+      <div class="move-text"><strong>Impacto esperado:</strong> Tener una imagen real del embudo de captación: cuánto tráfico es genuinamente nuevo, cuál es la tasa de conversión real y cuánto se invierte por cada alumno nuevo captado. Es la base para tomar decisiones de inversión con datos fiables.</div>
+    </div>
+    <div class="move-card mp">
+      <div class="move-type">Medio Plazo 3 · Marketing + Comercial</div>
+      <div class="move-title">Activar email marketing hacia la base de alumnos existente para upsell, cross-sell y prescripción</div>
+      <div class="move-text"><strong>Por qué:</strong> SFMC solo generó 4 sesiones en el trimestre — la herramienta existe pero prácticamente no se usa. Una base de ex-alumnos satisfechos es el activo comercial más barato y efectivo disponible.</div>
+      <div class="move-text"><strong>Impacto esperado:</strong> Incrementar el LTV por alumno mediante matrículas adicionales y reducir el CAC de nuevas matrículas vía referidos. Coste de comunicación prácticamente nulo sobre infraestructura ya existente.</div>
+    </div>
+    <div class="subsection-title">🎯 Apuesta Estratégica — 6–18 meses</div>
+    <div class="move-card ae">
+      <div class="move-type">Apuesta Estratégica · Dirección + Producto + Marketing</div>
+      <div class="move-title">Posicionar los tests de personalidad y bienestar como el principal producto de entrada gratuito de la marca</div>
+      <div class="move-text"><strong>Por qué:</strong> Ningún competidor directo tiene una herramienta de tests integrada en su funnel. Es una ventaja competitiva real que los datos del trimestre confirman: los tests generan más leads que las fichas de curso. Si se invierte en ampliar el catálogo de tests y optimizar el nurturing post-test, este activo podría convertirse en el principal canal de captación orgánica de la marca.</div>
+      <div class="move-text"><strong>Impacto esperado:</strong> Crear un canal de captación propio, gratuito, escalable y diferenciado que no depende de presupuesto publicitario ni de algoritmos. A 18 meses, podría gestionar el 30–40% de los leads totales sin coste incremental significativo.</div>
+    </div>
+  </div>
+
+  <!-- RIESGOS -->
+  <div class="content-block">
+    <div class="block-title">Riesgos y dependencias</div>
+    <div class="risk high">
+      <div class="risk-title">🔴 Alta — Alta dependencia de paid media para sostener la captación</div>
+      <div class="risk-text"><strong>Evidencia:</strong> ~19% del tráfico es pagado y probablemente una proporción superior de las conversiones directas. La landing /gracias?mercado=ES confirma conversiones post-paid. Si el presupuesto se corta o el CPC sube, la captación se resiente inmediatamente.</div>
+      <div class="risk-text" style="margin-top:8px;"><strong>Mitigación:</strong> Fortalecer el canal orgánico propio (tests como lead magnet, blog conectado al funnel, email marketing activo) para reducir la dependencia de paid a menos del 30% de las conversiones totales.</div>
+    </div>
+    <div class="risk high">
+      <div class="risk-title">🔴 Alta — Tiempo medio de sesión de 21 segundos: alto porcentaje de tráfico que no se compromete</div>
+      <div class="risk-text"><strong>Evidencia:</strong> GA4 engagement: tiempo_medio_sesion_seg = 21 segundos. Para una escuela de formación donde la decisión requiere leer temarios, condiciones y comparar precios, 21 segundos sugiere que la mayoría abandona antes de llegar a esa fase.</div>
+      <div class="risk-text" style="margin-top:8px;"><strong>Mitigación:</strong> Analizar las páginas de entrada con mayor abandono y los primeros elementos que ve el usuario. La solución es de experiencia de usuario y propuesta de valor en el primer pantallado — no de más tráfico.</div>
+    </div>
+    <div class="risk mid">
+      <div class="risk-title">🟡 Media — Contaminación de métricas por mezcla de tráfico alumnos-actuales / potenciales-nuevos</div>
+      <div class="risk-text"><strong>Evidencia:</strong> 58% de sesiones clasificadas como «directas», referencias desde northius.com y campustraining.lightning.force.com, búsqueda interna «campus» como la más frecuente.</div>
+      <div class="risk-text" style="margin-top:8px;"><strong>Mitigación:</strong> Implementar segmentación GA4 por tipo de usuario (nuevo visitante vs. alumno activo) o separar el campus a un subdominio con propiedad GA4 distinta.</div>
+    </div>
+    <div class="risk critical">
+      <div class="risk-title">🔴 Crítica — Ausencia de datos Search Console: ceguera estratégica en el canal orgánico más importante</div>
+      <div class="risk-text"><strong>Evidencia:</strong> GSC no conectado para este proyecto. Sin datos de impresiones, clics, CTR y posiciones, no es posible saber qué keywords generan tráfico, en qué posiciones compite el sitio ni cómo evoluciona el posicionamiento.</div>
+      <div class="risk-text" style="margin-top:8px;"><strong>Mitigación:</strong> Conectar Google Search Console de forma inmediata. Es el primer paso antes de tomar cualquier decisión de inversión en contenido orgánico o SEO.</div>
+    </div>
+  </div>
+
+  <div class="conclusion">
+    <h3>Un negocio con activos diferenciales reales operando con ceguera en sus métricas más importantes</h3>
+    <p>Deusto Salud llega a este trimestre con un activo diferencial que sus competidores no tienen: <strong>los tests de personalidad y autoconocimiento como principal generador de leads</strong>. No es una táctica menor — es el mecanismo de captación más efectivo de la web, por encima de cualquier ficha de curso. El negocio que entienda esto y construya sobre ello tiene una ventaja competitiva real y sostenible.</p>
+    <p>Pero ese mismo negocio está operando con tres puntos ciegos críticos: <strong>sin Search Console conectado</strong> (no sabe cómo le va en Google), <strong>con el 58% del tráfico sin origen claro</strong> (no sabe cuántos son alumnos vs. nuevos visitantes), y <strong>con 21 segundos de engagement medio</strong> (no sabe por qué la mayoría abandona). Sin resolver estas tres cegueras, no es posible tomar decisiones de inversión con datos fiables.</p>
+    <p>El movimiento más urgente no es atraer más tráfico. Es <strong>activar el tráfico que ya llega</strong>: nutrir a los usuarios que hacen un test pero no reciben ningún email de seguimiento, conectar los artículos de blog de reiki y reflexología con las fichas de cursos relacionados, y estructurar el canal de WhatsApp para el segmento LATAM que ya está llegando solo.</p>
+    <p>A 6–18 meses, la gran apuesta estratégica tiene dos frentes: <strong>LATAM</strong> (hay demanda orgánica real que llega sin propuesta y la ventana antes de que Euroinnova consolide ese mercado se está cerrando) y <strong>el hub de tests propio</strong> (ningún competidor lo tiene, los datos lo confirman como el mejor canal de captación del negocio, y es un activo escalable sin coste incremental).</p>
+  </div>
+</div>
+</div>
+
+<footer>
+  Oráculo Deusto Salud · E1 Análisis Web · E2 Estudio de Mercado · E3 Buyer Personas · E4 Performance Real<br>
+  <span>Datos: GA4 · Sin GSC · Mayo 2026 · agenciaSEO.eu · Report ID 8d4a6712-928a-4e87-9d97-a72b62e6390a</span>
+</footer>
+
+<div class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+</div>
+
+<script>
+const sections = ['e1','e2','e3','e4'];
+const navLinks = document.querySelectorAll('nav a');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const link = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { threshold: 0.15 });
+sections.forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
+const scrollBtn = document.getElementById('scrollTop');
+window.addEventListener('scroll', () => { scrollBtn.classList.toggle('visible', window.scrollY > 400); });
+</script>
+</body>
+</html>
